@@ -1,0 +1,27 @@
+{
+  "name": "matt-ui-consumer-fixture",
+  "version": "0.0.0",
+  "private": true,
+  "description": "模拟一个真实的使用者项目：从 tarball 安装 @matt-ui/ui，验证包可以被安装、类型可用、样式生效。",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "preview": "vite preview --port 3200 --strictPort",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.nodenext.json && tsc --noEmit -p tsconfig.e2e.json",
+    "e2e": "playwright test"
+  },
+  "dependencies": {
+    "@matt-ui/ui": "file:./.tarballs/ui.tgz",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.65.1",
+    "@types/node": "26.6.6",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.8"
+  }
+}

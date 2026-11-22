@@ -21,3 +21,10 @@ coverage/
 next-env.d.ts
 test-results/
 playwright-report/
+
+# 消费方验证项目：tarball 与锁文件每次构建都会变化，不纳入版本管理
+tests/consumer-fixture/.tarballs/
+tests/consumer-fixture/pnpm-lock.yaml
+
+# Storybook 的静态构建产物
+storybook-static/

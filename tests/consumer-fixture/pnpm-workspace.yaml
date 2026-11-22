@@ -1,0 +1,9 @@
+# 这个文件让本目录成为独立的 pnpm 根，不属于仓库的工作区。
+# 这样它只能像真实的使用者项目那样，通过打包出的 tarball 安装 @matt-ui 的包。
+
+# 与仓库相同的供应链策略：只安装发布满 7 天的版本
+minimumReleaseAge: 10080
+
+overrides:
+  # @matt-ui/ui 依赖的 @matt-ui/utils 尚未发布到 npm，指向本地打包出的 tarball
+  "@matt-ui/utils": "file:./.tarballs/utils.tgz"

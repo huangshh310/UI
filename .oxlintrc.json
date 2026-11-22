@@ -36,5 +36,11 @@
       }
     }
   ],
-  "ignorePatterns": ["**/dist/**", "**/node_modules/**", "**/.next/**", "**/test-results/**"]
+  "ignorePatterns": [
+    "**/dist/**",
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/test-results/**",
+    "**/storybook-static/**"
+  ]
 }

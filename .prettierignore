@@ -14,3 +14,10 @@ UI-Platform-Implementation-Blueprint.md
 next-env.d.ts
 test-results/
 playwright-report/
+
+# Storybook 的静态构建产物
+storybook-static/
+
+# 消费方验证项目的生成物
+tests/consumer-fixture/.tarballs/
+tests/consumer-fixture/pnpm-lock.yaml

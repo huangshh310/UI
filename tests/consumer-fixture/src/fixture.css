@@ -1,0 +1,39 @@
+/*
+ * 展示页自身的布局样式。
+ * 颜色全部取自 Token，面板的底色与文字色因此跟随各自的主题。
+ */
+body {
+  margin: 0;
+  font-family: var(--ui-font-sans);
+  background: var(--ui-background);
+  color: var(--ui-foreground);
+}
+
+main {
+  padding: 24px;
+}
+
+.panel {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  background: var(--ui-background);
+  color: var(--ui-foreground);
+  border: 1px solid var(--ui-border);
+}
+
+.panel h2 {
+  margin: 0;
+  font-family: var(--ui-font-mono);
+  font-size: var(--ui-text-xs);
+  letter-spacing: var(--ui-tracking-wide);
+  text-transform: uppercase;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}

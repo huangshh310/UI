@@ -1,0 +1,18 @@
+{
+  // 使用者项目最常见的配置：由打包器解析模块。
+  // 刻意不继承仓库的 tsconfig.base.json，保证这里看到的类型与真实使用者一致。
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "lib": ["es2022", "dom", "dom.iterable"],
+    // vite/client 提供 *.css 等资源模块的类型声明，是 Vite 项目的标准配置
+    "types": ["vite/client"],
+    "jsx": "react-jsx",
+    "strict": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": false,
+    "noEmit": true
+  },
+  "include": ["src"]
+}

@@ -1,0 +1,16 @@
+{
+  // 第二种解析方式：Node 原生 ESM。
+  // 只检查类型入口文件，用来确认 .d.ts 中的相对导入在 nodenext 下也能解析。
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "nodenext",
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "types": [],
+    "jsx": "react-jsx",
+    "strict": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": false,
+    "noEmit": true
+  },
+  "include": ["src/types-check.ts"]
+}

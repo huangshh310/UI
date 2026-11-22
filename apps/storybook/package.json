@@ -1,0 +1,27 @@
+{
+  "name": "@matt-ui/storybook",
+  "version": "0.0.0",
+  "private": true,
+  "description": "开发期的组件工作台：展示每个组件的各种状态。不是面向使用者的文档站。",
+  "type": "module",
+  "scripts": {
+    "dev": "storybook dev --port 6006",
+    "build": "storybook build --output-dir storybook-static",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@matt-ui/ui": "workspace:*",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^10.6.7",
+    "@storybook/react-vite": "^10.6.7",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "storybook": "^10.6.7",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8"
+  }
+}
