@@ -40,10 +40,23 @@ test("Press Button：按住时缩小，松开后恢复", async ({ page }) => {
 test("Liquid Ripple Button：按下时生成一道波纹，扩散结束后移除", async ({ page }) => {
   const main = await openMain(page, "liquid-ripple-button");
   const button = main.locator('[data-slot="liquid-ripple-button"]');
+  // 波纹只存在约 650ms。在页面内记录出现过的最大波纹数，
+  // 这样断言不依赖测试进程与浏览器之间的往返速度，慢机器上也稳定
+  await button.evaluate((el) => {
+    const seen = { max: 0 };
+    Object.assign(window, { rippleCount: seen });
+    new MutationObserver(() => {
+      seen.max = Math.max(seen.max, el.querySelectorAll('[data-slot="ripple"]').length);
+    }).observe(el, { childList: true });
+  });
 
   await button.click();
 
-  await expect(button.locator('[data-slot="ripple"]')).toHaveCount(1);
+  await expect
+    .poll(() =>
+      page.evaluate(() => (window as unknown as { rippleCount: { max: number } }).rippleCount.max),
+    )
+    .toBe(1);
   await expect(button.locator('[data-slot="ripple"]')).toHaveCount(0);
 });
 
