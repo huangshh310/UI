@@ -14,13 +14,7 @@ export const useCommandPalette = () => {
       }
     };
     window.addEventListener("keydown", onKeyDown);
-    // 标记快捷键已经可用。页面在服务端渲染后要等脚本加载完才会响应按键，
-    // 这个标记让自动化测试知道从何时起按键不会丢失
-    document.documentElement.dataset.shortcutsReady = "";
-    return () => {
-      window.removeEventListener("keydown", onKeyDown);
-      delete document.documentElement.dataset.shortcutsReady;
-    };
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
   return { open, setOpen };

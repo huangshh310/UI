@@ -3,7 +3,8 @@
  * 每个组件在自己的详情页主面板里检查它最核心的那一个交互，并做一次 axe 扫描。
  */
 import { AxeBuilder } from "@axe-core/playwright";
-import { expect, test, type Locator, type Page } from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
+import { expect, test } from "./support/test";
 import { waitForEntranceAnimations } from "./support/animations";
 
 const SLUGS = [

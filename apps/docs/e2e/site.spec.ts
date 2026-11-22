@@ -3,7 +3,8 @@
  * 在详情页查看预览与源码、切换主题、复制安装命令，以及各页面的可访问性。
  */
 import { AxeBuilder } from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
+import type { Page } from "@playwright/test";
+import { expect, test } from "./support/test";
 import { waitForEntranceAnimations } from "./support/animations";
 
 const CLI_COMMAND = "pnpm dlx shadcn@latest add huangshh310/UI/button";
@@ -159,8 +160,6 @@ test.describe("组件详情页", () => {
 test.describe("命令面板", () => {
   test("快捷键打开，输入后回车跳转到匹配的组件", async ({ page }) => {
     await page.goto("/");
-    // 快捷键在页面脚本加载完成后才生效；在较慢的机器上，过早的按键会丢失
-    await expect(page.locator("html[data-shortcuts-ready]")).toBeAttached();
     await page.keyboard.press("ControlOrMeta+k");
     const dialog = page.getByRole("dialog", { name: "搜索" });
     await expect(dialog).toBeVisible();

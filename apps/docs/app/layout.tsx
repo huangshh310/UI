@@ -9,6 +9,7 @@ import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { SITE_NAME, THEME_INIT_SCRIPT } from "@/site/constants";
+import { HydrationMarker } from "@/site/hydration-marker";
 import { SiteFooter } from "@/site/site-footer";
 import { SiteHeader } from "@/site/site-header";
 import "./globals.css";
@@ -40,6 +41,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
         {children}
       </main>
       <SiteFooter />
+      <HydrationMarker />
     </body>
   </html>
 );
