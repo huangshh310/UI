@@ -3,14 +3,14 @@
  *
  * 流程：
  *   1. 用 shadcn CLI 创建一个全新的 Vite 项目；
- *   2. 把 registry.json 构建成 CLI 可读取的条目，安装 button；
+ *   2. 把 registry.json 构建成 CLI 可读取的条目，安装全部组件；
  *   3. 类型检查并构建该项目；
  *   4. 在真实浏览器里检查按钮的样式与行为。
  *
  * 项目建在系统临时目录，结束后删除。用法：pnpm test:registry
  */
 import { execSync, spawn } from "node:child_process";
-import { copyFileSync, mkdirSync, mkdtempSync, rmSync } from "node:fs";
+import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";
@@ -68,7 +68,10 @@ const startPreview = async () => {
 try {
   run(`pnpm exec shadcn init -t vite -b base -p nova --no-monorepo -y -n app -c "${WORK}"`, ROOT);
   run(`pnpm exec shadcn build ./registry.json -o "${ITEMS}"`, ROOT);
-  run(`pnpm exec shadcn add "${join(ITEMS, "button.json")}" --overwrite -y -c "${APP}"`, ROOT);
+  // 安装 Registry 中的每一个条目：类型检查与构建会覆盖全部组件，浏览器检查只针对 Button
+  const items = JSON.parse(readFileSync(join(ROOT, "registry.json"), "utf8")).items;
+  const files = items.map(({ name }) => `"${join(ITEMS, `${name}.json`)}"`).join(" ");
+  run(`pnpm exec shadcn add ${files} --overwrite -y -c "${APP}"`, ROOT);
 
   copyFileSync(join(ROOT, "scripts/registry/fixture-app.tsx.txt"), join(APP, "src/App.tsx"));
   run("pnpm exec tsc -b", APP);

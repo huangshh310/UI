@@ -4,8 +4,12 @@
  */
 import { AxeBuilder } from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
+import { waitForEntranceAnimations } from "./support/animations";
 
 const CLI_COMMAND = "pnpm dlx shadcn@latest add huangshh310/UI/button";
+
+/** 目录中的示例总数：Button 的 7 个，加上其余 6 个按钮组件各 1 个 */
+const SPECIMEN_COUNT = 13;
 
 /** 目录页中的示例卡片 */
 const specimens = (page: Page) => page.getByTestId("specimen-card");
@@ -32,12 +36,12 @@ test.describe("组件目录", () => {
   });
 
   test("列出全部示例，每张卡片里是实时渲染的组件", async ({ page }) => {
-    await expect(specimens(page)).toHaveCount(7);
+    await expect(specimens(page)).toHaveCount(SPECIMEN_COUNT);
     await expect(specimens(page).first().locator('[data-slot="button"]').first()).toBeVisible();
   });
 
   test("搜索只留下名称匹配的示例", async ({ page }) => {
-    await page.getByRole("searchbox", { name: "搜索组件" }).fill("加载");
+    await page.getByRole("searchbox", { name: "搜索组件" }).fill("加载状态");
 
     await expect(specimens(page)).toHaveCount(1);
     await expect(specimens(page).first()).toContainText("加载状态");
@@ -53,7 +57,7 @@ test.describe("组件目录", () => {
   test("「最近」页签只显示最近收录的组件，并带 NEW 标记", async ({ page }) => {
     await page.getByRole("tab", { name: "最近" }).click();
 
-    await expect(specimens(page)).toHaveCount(7);
+    await expect(specimens(page)).toHaveCount(SPECIMEN_COUNT);
     await expect(specimens(page).first()).toContainText("NEW");
   });
 
@@ -73,14 +77,16 @@ test.describe("组件目录", () => {
     await tab.click();
 
     await expect(tab).toHaveAttribute("aria-selected", "true");
-    await expect(specimens(page)).toHaveCount(7);
+    await expect(specimens(page)).toHaveCount(SPECIMEN_COUNT);
   });
 
   test("卡片上的名称链接到组件详情页的对应示例", async ({ page }) => {
     await specimens(page).first().getByRole("link").click();
 
     await expect(page).toHaveURL(/\/components\/button#/);
-    await expect(page.getByRole("heading", { level: 1, name: "Button" })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Button", exact: true }),
+    ).toBeVisible();
   });
 });
 
@@ -266,9 +272,7 @@ test.describe("可访问性", () => {
         await page.goto(path);
         await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
         // 等入场动效结束：淡入过程中的半透明文字会被误判为对比度不足
-        await page.waitForFunction(() =>
-          document.getAnimations().every((animation) => animation.playState === "finished"),
-        );
+        await waitForEntranceAnimations(page);
 
         const { violations } = await new AxeBuilder({ page }).analyze();
 

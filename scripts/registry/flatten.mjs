@@ -16,6 +16,9 @@ const IMPORT_PATTERN = /^import\s+(type\s+)?([\s\S]*?)\s+from\s+"([^"]+)";\n/gm;
 const HEADER_COMMENT = /^\/\*\*[\s\S]*?\*\/\n/;
 const USE_CLIENT = /^"use client";\n+/;
 
+/** 从兄弟组件目录的出口导入，例如 ../button/index.js */
+const SIBLING_COMPONENT = /^\.\.\/([a-z0-9-]+)\/index\.js$/;
+
 /** 文件在合并结果中的先后：样式定义、类型、内部部件、主文件 */
 const rank = (file, name) => {
   if (file === `${name}.variants.ts`) return 0;
@@ -39,11 +42,25 @@ const namedSpecifiers = (isType, clause) =>
     .filter(Boolean)
     .map((item) => (isType && !item.startsWith("type ") ? `type ${item}` : item));
 
+/**
+ * 一条导入在合并后的文件里应当指向哪里。
+ * 兄弟组件改为使用者项目中的组件路径；同目录内的相对导入返回 null，表示直接去掉。
+ */
+const resolveTarget = (specifier, siblings) => {
+  const sibling = specifier.match(SIBLING_COMPONENT)?.[1];
+  if (sibling) {
+    siblings.add(sibling);
+    return `@/components/ui/${sibling}`;
+  }
+  if (specifier.startsWith(".")) return null;
+  return IMPORT_REWRITES[specifier] ?? specifier;
+};
+
 /** 取出一个文件的导入，返回去掉导入后的正文 */
-const extractImports = (code, imports) =>
+const extractImports = (code, imports, siblings) =>
   code.replace(IMPORT_PATTERN, (statement, isType, clause, specifier) => {
-    if (specifier.startsWith(".")) return "";
-    const target = IMPORT_REWRITES[specifier] ?? specifier;
+    const target = resolveTarget(specifier, siblings);
+    if (target === null) return "";
     const names = imports.get(target) ?? new Set();
     namedSpecifiers(Boolean(isType), clause).forEach((item) => names.add(item));
     imports.set(target, names);
@@ -60,10 +77,11 @@ const renderImports = (imports) =>
 
 /**
  * @param name 组件名，也是它的目录名
- * @returns 合并后的源码，以及它用到的外部模块
+ * @returns 合并后的源码、它用到的外部模块，以及它依赖的兄弟组件
  */
 export const flattenComponent = (dir, name) => {
   const imports = new Map();
+  const siblings = new Set();
   let useClient = false;
   let header = "";
 
@@ -73,7 +91,7 @@ export const flattenComponent = (dir, name) => {
     code = code.replace(USE_CLIENT, "");
     const isMain = file === `${name}.tsx`;
     if (isMain) header = code.match(HEADER_COMMENT)?.[0] ?? "";
-    code = extractImports(code.replace(HEADER_COMMENT, ""), imports);
+    code = extractImports(code.replace(HEADER_COMMENT, ""), imports, siblings);
     // 内部部件只在本文件内使用，不对外导出
     return (rank(file, name) === 2 ? code.replace(/^export /gm, "") : code).trim();
   });
@@ -81,5 +99,5 @@ export const flattenComponent = (dir, name) => {
   const source = [useClient ? '"use client";\n' : "", header, renderImports(imports), "", ...bodies]
     .join("\n")
     .replace(/\n{3,}/g, "\n\n");
-  return { source: `${source.trim()}\n`, modules: [...imports.keys()] };
+  return { source: `${source.trim()}\n`, modules: [...imports.keys()], siblings: [...siblings] };
 };

@@ -6,14 +6,14 @@
 
 ## 当前进度
 
-| 阶段     | 内容                                                         | 状态        |
-| -------- | ------------------------------------------------------------ | ----------- |
-| Phase 0  | 仓库审计与技术选型                                           | 完成        |
-| Phase 1  | 工程底座：Monorepo、Token、工具链                            | 完成        |
-| POC      | 交互底座实测（Base UI 与 UI SDK）                            | 完成        |
-| Phase 2  | 第一个可发布组件 Button                                      | 完成        |
-| 展示站   | 组件目录、详情页、命令面板、文档页（原定 Phase 5，提前搭建） | 已有 Button |
-| Registry | 通过 shadcn CLI 分发组件源码（原定 Phase 5，提前搭建）       | 已有 Button |
+| 阶段     | 内容                                                         | 状态          |
+| -------- | ------------------------------------------------------------ | ------------- |
+| Phase 0  | 仓库审计与技术选型                                           | 完成          |
+| Phase 1  | 工程底座：Monorepo、Token、工具链                            | 完成          |
+| POC      | 交互底座实测（Base UI 与 UI SDK）                            | 完成          |
+| Phase 2  | 第一个可发布组件 Button                                      | 完成          |
+| 展示站   | 组件目录、详情页、命令面板、文档页（原定 Phase 5，提前搭建） | 已有 7 个组件 |
+| Registry | 通过 shadcn CLI 分发组件源码（原定 Phase 5，提前搭建）       | 已有 Button   |
 
 完整路线见 [`UI-Platform-Implementation-Blueprint.md`](./UI-Platform-Implementation-Blueprint.md)。
 

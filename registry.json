@@ -4,6 +4,48 @@
   "homepage": "https://github.com/huangshh310/UI",
   "items": [
     {
+      "name": "book-call-button",
+      "type": "registry:ui",
+      "title": "Book Call Button",
+      "description": "A pill whose accent capsule expands on hover to reveal a phone icon.",
+      "categories": ["buttons"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/book-call-button.tsx",
+          "type": "registry:ui",
+          "target": "@ui/book-call-button.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.985 0.004 286)"
+        },
+        "dark": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.178 0.004 286)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
@@ -16,6 +58,216 @@
           "path": "registry/ui/button.tsx",
           "type": "registry:ui",
           "target": "@ui/button.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.985 0.004 286)"
+        },
+        "dark": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.178 0.004 286)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "liquid-ripple-button",
+      "type": "registry:ui",
+      "title": "Liquid Ripple Button",
+      "description": "A button whose ripple starts from the pointer position.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/liquid-ripple-button.tsx",
+          "type": "registry:ui",
+          "target": "@ui/liquid-ripple-button.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.985 0.004 286)"
+        },
+        "dark": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.178 0.004 286)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "neon-edge-button",
+      "type": "registry:ui",
+      "title": "Neon Edge Button",
+      "description": "A button with a light travelling around its border.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/neon-edge-button.tsx",
+          "type": "registry:ui",
+          "target": "@ui/neon-edge-button.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.985 0.004 286)"
+        },
+        "dark": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.178 0.004 286)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "press-button",
+      "type": "registry:ui",
+      "title": "Press Button",
+      "description": "A button that compresses on press and settles with a small overshoot.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": ["utils", "huangshh310/UI/button"],
+      "files": [
+        {
+          "path": "registry/ui/press-button.tsx",
+          "type": "registry:ui",
+          "target": "@ui/press-button.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.985 0.004 286)"
+        },
+        "dark": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.178 0.004 286)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "split-button",
+      "type": "registry:ui",
+      "title": "Split Button",
+      "description": "A primary action fused with a trigger that opens a menu of related actions.",
+      "categories": ["buttons"],
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/split-button.tsx",
+          "type": "registry:ui",
+          "target": "@ui/split-button.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.985 0.004 286)"
+        },
+        "dark": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.178 0.004 286)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "typewriter-button",
+      "type": "registry:ui",
+      "title": "Typewriter Button",
+      "description": "A button that reveals its label character by character.",
+      "categories": ["buttons"],
+      "dependencies": [],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/typewriter-button.tsx",
+          "type": "registry:ui",
+          "target": "@ui/typewriter-button.tsx"
         }
       ],
       "cssVars": {

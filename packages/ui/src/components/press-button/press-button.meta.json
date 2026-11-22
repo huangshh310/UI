@@ -1,0 +1,6 @@
+{
+  "name": "press-button",
+  "title": "Press Button",
+  "description": "A button that compresses on press and settles with a small overshoot.",
+  "categories": ["buttons"]
+}

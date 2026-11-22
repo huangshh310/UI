@@ -1,0 +1,6 @@
+{
+  "name": "typewriter-button",
+  "title": "Typewriter Button",
+  "description": "A button that reveals its label character by character.",
+  "categories": ["buttons"]
+}

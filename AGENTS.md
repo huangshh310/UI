@@ -24,6 +24,8 @@ pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build
 - Stories 与消费方验证项目只从 `@matt-ui/ui` 的公开入口引入组件，改了组件源码要先重新构建才能看到变化。
 - 每个组件一个目录，放在 `packages/ui/src/components/` 下，类型在 `*.types.ts`，样式定义在 `*.variants.ts`。
 - 新组件用 `pnpm component:new <名称>` 起步，它会创建源码、测试、Registry 元数据、展示站示例与文档数据的起始文件。
+- Tailwind 靠扫描源码文本生成样式：类名必须写成完整的字面量，不能用模板字符串拼接变体前缀。
+- 组件之间复用时，从兄弟目录的出口引入（`../button/index.js`），Registry 生成器会把它登记为条目依赖。
 - `registry.json` 与 `registry/` 是生成物，只能通过 `pnpm registry:generate` 更新。组件目录里有 `<名称>.meta.json` 才会进入 Registry。
 - 通过 Registry 分发的组件运行在使用者自己的 shadcn 主题里：只使用标准 shadcn 主题已有的颜色名，新增的颜色要登记到 `scripts/registry/constants.mjs` 的 `EXTRA_COLOR_TOKENS`。
 - 展示站展示的源码直接读自示例文件与生成的 Registry 文件。站点的版式对齐 easyui.site，只参考它的版式与功能，不复制它的源码。

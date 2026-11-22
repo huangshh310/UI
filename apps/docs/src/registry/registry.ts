@@ -3,12 +3,26 @@
  * 新增组件时，在这里登记它的文档数据即可出现在目录与详情页。
  */
 import { REGISTRY_ADDRESS } from "@/site/constants";
+import { BOOK_CALL_BUTTON_DOC } from "./book-call-button.doc";
 import { BUTTON_DOC } from "./button.doc";
+import { LIQUID_RIPPLE_BUTTON_DOC } from "./liquid-ripple-button.doc";
+import { NEON_EDGE_BUTTON_DOC } from "./neon-edge-button.doc";
+import { PRESS_BUTTON_DOC } from "./press-button.doc";
+import { SPLIT_BUTTON_DOC } from "./split-button.doc";
+import { TYPEWRITER_BUTTON_DOC } from "./typewriter-button.doc";
 import type { Category, ComponentDoc, Specimen } from "./registry.types";
 
 export const CATEGORIES: Category[] = [{ id: "buttons", label: "按钮" }];
 
-export const COMPONENTS: ComponentDoc[] = [BUTTON_DOC];
+export const COMPONENTS: ComponentDoc[] = [
+  BUTTON_DOC,
+  PRESS_BUTTON_DOC,
+  LIQUID_RIPPLE_BUTTON_DOC,
+  NEON_EDGE_BUTTON_DOC,
+  BOOK_CALL_BUTTON_DOC,
+  TYPEWRITER_BUTTON_DOC,
+  SPLIT_BUTTON_DOC,
+];
 
 /** 收录后多少天内算「最近」 */
 const RECENT_DAYS = 30;

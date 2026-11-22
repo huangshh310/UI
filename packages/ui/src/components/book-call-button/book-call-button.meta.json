@@ -1,0 +1,6 @@
+{
+  "name": "book-call-button",
+  "title": "Book Call Button",
+  "description": "A pill whose accent capsule expands on hover to reveal a phone icon.",
+  "categories": ["buttons"]
+}

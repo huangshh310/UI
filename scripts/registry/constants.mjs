@@ -22,6 +22,9 @@ export const REGISTRY_NAME = "matt-ui";
 
 export const HOMEPAGE = "https://github.com/huangshh310/UI";
 
+/** 本仓库作为 shadcn GitHub Registry 的地址 */
+export const REGISTRY_ADDRESS = "huangshh310/UI";
+
 /** 工作区内的包名到使用者项目中别名路径的映射 */
 export const IMPORT_REWRITES = { "@matt-ui/utils": "@/lib/utils" };
 

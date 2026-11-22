@@ -1,0 +1,6 @@
+{
+  "name": "liquid-ripple-button",
+  "title": "Liquid Ripple Button",
+  "description": "A button whose ripple starts from the pointer position.",
+  "categories": ["buttons"]
+}

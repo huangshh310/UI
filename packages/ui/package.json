@@ -42,7 +42,9 @@
     "vitest": "catalog:"
   },
   "dependencies": {
+    "@base-ui/react": "catalog:",
     "@matt-ui/utils": "workspace:*",
-    "class-variance-authority": "catalog:"
+    "class-variance-authority": "catalog:",
+    "lucide-react": "catalog:"
   }
 }

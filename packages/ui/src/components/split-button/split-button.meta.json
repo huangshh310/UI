@@ -1,0 +1,6 @@
+{
+  "name": "split-button",
+  "title": "Split Button",
+  "description": "A primary action fused with a trigger that opens a menu of related actions.",
+  "categories": ["buttons"]
+}

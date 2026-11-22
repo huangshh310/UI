@@ -12,6 +12,7 @@ import {
   COMPONENTS_DIR,
   GENERATED_BANNER,
   HOMEPAGE,
+  REGISTRY_ADDRESS,
   REGISTRY_JSON,
   REGISTRY_NAME,
   REGISTRY_UI_DIR,
@@ -20,15 +21,28 @@ import {
 import { flattenComponent } from "./registry/flatten.mjs";
 import { motionCss, themeCssVars } from "./registry/theme.mjs";
 
+/** 模块说明符对应的 npm 包名：去掉子路径，例如 @base-ui/react/menu -> @base-ui/react */
+const packageName = (specifier) =>
+  specifier
+    .split("/")
+    .slice(0, specifier.startsWith("@") ? 2 : 1)
+    .join("/");
+
 /** 合并后的源码引用的模块中，哪些是需要使用者安装的 npm 包 */
-const npmDependencies = (modules) =>
-  modules.filter((name) => !name.startsWith("@/") && !["react", "react-dom"].includes(name));
+const npmDependencies = (modules) => [
+  ...new Set(
+    modules
+      .filter((name) => !name.startsWith("@/"))
+      .map(packageName)
+      .filter((name) => !["react", "react-dom"].includes(name)),
+  ),
+];
 
 /** 为一个组件生成源文件，并返回它的 Registry 条目 */
 const buildItem = (name) => {
   const dir = join(COMPONENTS_DIR, name);
   const meta = JSON.parse(readFileSync(join(dir, `${name}.meta.json`), "utf8"));
-  const { source, modules } = flattenComponent(dir, name);
+  const { source, modules, siblings } = flattenComponent(dir, name);
   writeFileSync(join(REGISTRY_UI_DIR, `${name}.tsx`), GENERATED_BANNER + source);
 
   return {
@@ -38,8 +52,9 @@ const buildItem = (name) => {
     description: meta.description,
     categories: meta.categories,
     dependencies: npmDependencies(modules),
-    // utils 是 shadcn 内置条目，提供 @/lib/utils 中的 cn()
-    registryDependencies: ["utils"],
+    // utils 是 shadcn 内置条目，提供 @/lib/utils 中的 cn()；
+    // 本仓库内的其他组件要用完整的 GitHub 地址声明
+    registryDependencies: ["utils", ...siblings.map((sibling) => `${REGISTRY_ADDRESS}/${sibling}`)],
     files: [{ path: `registry/ui/${name}.tsx`, type: "registry:ui", target: `@ui/${name}.tsx` }],
     cssVars: themeCssVars(),
     css: motionCss(),
