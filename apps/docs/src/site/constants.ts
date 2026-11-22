@@ -6,10 +6,17 @@ export const SITE_NAME = "matt-ui";
 
 export const REPOSITORY_URL = "https://github.com/huangshh310/UI";
 
+/** shadcn GitHub Registry 的地址：GitHub 用户名 / 仓库名 */
+export const REGISTRY_ADDRESS = "huangshh310/UI";
+
+/** 站点的公开地址，用于站点地图与 llms.txt。部署时通过环境变量 SITE_URL 指定 */
+export const SITE_URL = process.env.SITE_URL ?? "http://localhost:3000";
+
 /** 顶部导航 */
 export const NAV_LINKS = [
   { href: "/", label: "首页" },
   { href: "/components", label: "组件" },
+  { href: "/docs", label: "文档" },
 ] as const;
 
 /** 浏览器本地存储中记录主题的键 */

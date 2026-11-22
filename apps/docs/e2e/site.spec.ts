@@ -5,6 +5,8 @@
 import { AxeBuilder } from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
+const CLI_COMMAND = "pnpm dlx shadcn@latest add huangshh310/UI/button";
+
 /** 目录页中的示例卡片 */
 const specimens = (page: Page) => page.getByTestId("specimen-card");
 
@@ -48,6 +50,24 @@ test.describe("组件目录", () => {
     await expect(page.getByText("没有匹配的示例")).toBeVisible();
   });
 
+  test("「最近」页签只显示最近收录的组件，并带 NEW 标记", async ({ page }) => {
+    await page.getByRole("tab", { name: "最近" }).click();
+
+    await expect(specimens(page)).toHaveCount(7);
+    await expect(specimens(page).first()).toContainText("NEW");
+  });
+
+  test("卡片上的复制按钮复制该组件的 CLI 安装命令", async ({ page, context }) => {
+    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await specimens(page).first().hover();
+    await specimens(page)
+      .first()
+      .getByRole("button", { name: /复制 Button 的安装命令/ })
+      .click();
+
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(CLI_COMMAND);
+  });
+
   test("分类页签筛选示例，并标记当前选中的分类", async ({ page }) => {
     const tab = page.getByRole("tab", { name: "按钮" });
     await tab.click();
@@ -69,14 +89,25 @@ test.describe("组件详情页", () => {
     await page.goto("/components/button");
   });
 
-  test("默认显示预览，切到代码页签后显示该示例的源码", async ({ page }) => {
-    const first = page.getByTestId("specimen-block").first();
-    await expect(first.locator('[data-slot="button"]').first()).toBeVisible();
+  test("主面板默认显示预览，「用法」是最小示例，「代码」是组件的完整源码", async ({ page }) => {
+    const main = page.getByTestId("component-main");
+    await expect(main.locator('[data-slot="button"]').first()).toBeVisible();
 
-    await first.getByRole("tab", { name: "代码" }).click();
+    await main.getByRole("tab", { name: "用法" }).click();
+    await expect(main.getByRole("tabpanel")).toContainText('from "@/components/ui/button"');
 
-    await expect(first.getByRole("tabpanel")).toContainText('from "@matt-ui/ui"');
-    await expect(first.locator('[data-slot="button"]')).toHaveCount(0);
+    await main.getByRole("tab", { name: "代码" }).click();
+    await expect(main.getByRole("tabpanel")).toContainText("export const Button");
+  });
+
+  test("每个示例可以在预览与它自己的源码之间切换", async ({ page }) => {
+    const block = page.getByTestId("specimen-block").first();
+    await expect(block.locator('[data-slot="button"]').first()).toBeVisible();
+
+    await block.getByRole("tab", { name: "代码" }).click();
+
+    await expect(block.getByRole("tabpanel")).toContainText('from "@/components/ui/button"');
+    await expect(block.locator('[data-slot="button"]')).toHaveCount(0);
   });
 
   test("API 表格列出 Button 的属性", async ({ page }) => {
@@ -87,11 +118,24 @@ test.describe("组件详情页", () => {
     }
   });
 
-  test("复制按钮把安装命令写入剪贴板", async ({ page, context }) => {
+  test("安装：CLI 页签可复制命令，「手动」页签列出需要的依赖", async ({ page, context }) => {
     await context.grantPermissions(["clipboard-read", "clipboard-write"]);
-    await page.getByRole("button", { name: "复制安装命令" }).click();
+    const install = page.getByTestId("install-block");
 
-    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe("pnpm add @matt-ui/ui");
+    await install.getByRole("button", { name: "复制安装命令" }).click();
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(CLI_COMMAND);
+
+    await install.getByRole("tab", { name: "手动" }).click();
+    await expect(install.getByRole("tabpanel")).toContainText("class-variance-authority");
+  });
+
+  test("「复制提示词」把给 AI 助手的安装说明写入剪贴板", async ({ page, context }) => {
+    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await page.getByRole("button", { name: "复制提示词" }).click();
+
+    const prompt = await page.evaluate(() => navigator.clipboard.readText());
+    expect(prompt).toContain(CLI_COMMAND);
+    expect(prompt).toContain("Button");
   });
 
   test("加载状态示例：点击后进入加载中，期间再次点击不会重复触发", async ({ page }) => {
@@ -103,6 +147,56 @@ test.describe("组件详情页", () => {
     await button.click({ force: true });
 
     await expect(block.getByTestId("save-count")).toHaveText("1");
+  });
+});
+
+test.describe("命令面板", () => {
+  test("快捷键打开，输入后回车跳转到匹配的组件", async ({ page }) => {
+    await page.goto("/");
+    await page.keyboard.press("ControlOrMeta+k");
+    const dialog = page.getByRole("dialog", { name: "搜索" });
+    await expect(dialog).toBeVisible();
+
+    await page.keyboard.type("butt");
+    await expect(dialog.getByRole("option").first()).toContainText("Button");
+    await page.keyboard.press("Enter");
+
+    await expect(page).toHaveURL(/\/components\/button$/);
+    await expect(dialog).toBeHidden();
+  });
+
+  test("方向键在结果之间移动，Escape 关闭并把焦点还给触发按钮", async ({ page }) => {
+    await page.goto("/");
+    const trigger = page.getByRole("button", { name: "打开搜索" });
+    await trigger.click();
+    const input = page.getByRole("combobox", { name: "搜索" });
+    await expect(input).toBeFocused();
+
+    const first = await input.getAttribute("aria-activedescendant");
+    await page.keyboard.press("ArrowDown");
+    expect(await input.getAttribute("aria-activedescendant")).not.toBe(first);
+
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog", { name: "搜索" })).toBeHidden();
+    await expect(trigger).toBeFocused();
+  });
+});
+
+test.describe("文档与机器可读的入口", () => {
+  test("导航进入文档页，页面给出 CLI 安装方式", async ({ page }) => {
+    await page.goto("/");
+    await page
+      .getByRole("navigation", { name: "主导航" })
+      .getByRole("link", { name: "文档" })
+      .click();
+
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.getByRole("main")).toContainText("shadcn@latest add huangshh310/UI/");
+  });
+
+  test("llms.txt 与站点地图列出全部组件", async ({ request }) => {
+    expect(await (await request.get("/llms.txt")).text()).toContain("/components/button");
+    expect(await (await request.get("/sitemap.xml")).text()).toContain("/components/button");
   });
 });
 
@@ -134,7 +228,7 @@ test.describe("减少动态效果", () => {
 });
 
 test.describe("可访问性", () => {
-  for (const path of ["/", "/components", "/components/button"]) {
+  for (const path of ["/", "/components", "/components/button", "/docs"]) {
     for (const theme of ["dark", "light"] as const) {
       test(`${path} 在${theme === "dark" ? "深色" : "浅色"}主题下没有 axe 违规`, async ({
         page,

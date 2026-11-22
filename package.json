@@ -19,11 +19,17 @@
     "lint": "oxlint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test:consumer": "node scripts/consumer-fixture.mjs"
+    "test:consumer": "node scripts/consumer-fixture.mjs",
+    "registry:generate": "node scripts/generate-registry.mjs && prettier --write registry registry.json",
+    "registry:check": "pnpm registry:generate && git diff --exit-code -- registry registry.json",
+    "test:registry": "node scripts/registry-fixture.mjs",
+    "component:new": "node scripts/component-new.mjs"
   },
   "devDependencies": {
+    "@playwright/test": "catalog:",
     "oxlint": "catalog:",
     "prettier": "catalog:",
+    "shadcn": "catalog:",
     "turbo": "catalog:",
     "typescript": "catalog:"
   }

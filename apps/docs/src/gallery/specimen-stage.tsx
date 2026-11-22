@@ -1,5 +1,5 @@
 /**
- * 预览舞台：带点阵底纹的区域，把示例放在正中。
+ * 预览舞台：把示例放在正中的纯色区域。
  */
 import type { ReactNode } from "react";
 
@@ -10,5 +10,8 @@ interface SpecimenStageProps {
 }
 
 export const SpecimenStage = ({ children, className = "min-h-64" }: SpecimenStageProps) => (
-  <div className={`stage flex items-center justify-center p-8 ${className}`}>{children}</div>
+  <div className={`flex items-center justify-center p-8 ${className}`}>
+    {/* 示例自身浮在整卡链接之上，保持可交互 */}
+    <div className="relative z-10">{children}</div>
+  </div>
 );

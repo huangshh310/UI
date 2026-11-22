@@ -1,0 +1,6 @@
+{
+  "name": "button",
+  "title": "Button",
+  "description": "A native button with seven variants, four sizes and a loading state that blocks repeat activation while staying focusable.",
+  "categories": ["buttons"]
+}

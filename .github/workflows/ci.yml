@@ -36,6 +36,9 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build
+      # Registry 的产物必须与组件源码一致，并通过 shadcn 官方 CLI 的校验
+      - run: pnpm registry:check
+      - run: pnpm exec shadcn registry validate ./registry.json
 
   # 消费方验证：把包打成 tarball，装进一个独立项目，在真实浏览器里检查
   consumer:
@@ -53,6 +56,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec turbo run build --filter="./packages/*"
       - run: pnpm test:consumer
+      # 用 shadcn CLI 把组件装进一个全新的项目，在浏览器里检查
+      - run: pnpm test:registry
 
   # 展示站：在真实浏览器里检查目录、详情页、主题切换与可访问性
   docs:

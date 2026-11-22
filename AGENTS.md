@@ -10,7 +10,7 @@ React 组件平台的 pnpm + Turborepo 工作区。需求与分阶段计划见 `
 pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build
 ```
 
-改动了 `packages/` 下任何会被发布的内容时，再运行 `pnpm test:consumer`。
+改动了 `packages/ui` 的组件时，再运行 `pnpm registry:generate`、`pnpm test:consumer` 和 `pnpm test:registry`。
 
 ## 约定
 
@@ -23,7 +23,10 @@ pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build
 - 测试先于实现编写，只在包的公开入口上断言行为。组件自己做出的行为决定用 Vitest 验证；样式、主题、焦点环在 `tests/consumer-fixture` 的端到端测试里验证。
 - Stories 与消费方验证项目只从 `@matt-ui/ui` 的公开入口引入组件，改了组件源码要先重新构建才能看到变化。
 - 每个组件一个目录，放在 `packages/ui/src/components/` 下，类型在 `*.types.ts`，样式定义在 `*.variants.ts`。
-- 新组件要同时出现在展示站：在 `apps/docs/src/demos/` 写示例，在 `apps/docs/src/registry/` 登记文档数据。展示的源码直接读自示例文件。
+- 新组件用 `pnpm component:new <名称>` 起步，它会创建源码、测试、Registry 元数据、展示站示例与文档数据的起始文件。
+- `registry.json` 与 `registry/` 是生成物，只能通过 `pnpm registry:generate` 更新。组件目录里有 `<名称>.meta.json` 才会进入 Registry。
+- 通过 Registry 分发的组件运行在使用者自己的 shadcn 主题里：只使用标准 shadcn 主题已有的颜色名，新增的颜色要登记到 `scripts/registry/constants.mjs` 的 `EXTRA_COLOR_TOKENS`。
+- 展示站展示的源码直接读自示例文件与生成的 Registry 文件。站点的版式对齐 easyui.site，只参考它的版式与功能，不复制它的源码。
 - 改动展示站后运行 `pnpm --filter @matt-ui/docs e2e`。
 - 组件只使用 `--ui-*` Token 对应的工具类；颜色、时长、层级的字面量集中在 `packages/tokens`。
 - 修改 `packages/tokens/src/themes/` 的色值后，核对每组前景与表面的对比度不低于 4.5:1，input 与 ring 对背景不低于 3:1。

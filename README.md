@@ -6,13 +6,14 @@
 
 ## 当前进度
 
-| 阶段    | 内容                                                     | 状态        |
-| ------- | -------------------------------------------------------- | ----------- |
-| Phase 0 | 仓库审计与技术选型                                       | 完成        |
-| Phase 1 | 工程底座：Monorepo、Token、工具链                        | 完成        |
-| POC     | 交互底座实测（Base UI 与 UI SDK）                        | 完成        |
-| Phase 2 | 第一个可发布组件 Button                                  | 完成        |
-| 展示站  | 组件目录、实时预览、源码与 API（原定 Phase 5，提前搭建） | 已有 Button |
+| 阶段     | 内容                                                         | 状态        |
+| -------- | ------------------------------------------------------------ | ----------- |
+| Phase 0  | 仓库审计与技术选型                                           | 完成        |
+| Phase 1  | 工程底座：Monorepo、Token、工具链                            | 完成        |
+| POC      | 交互底座实测（Base UI 与 UI SDK）                            | 完成        |
+| Phase 2  | 第一个可发布组件 Button                                      | 完成        |
+| 展示站   | 组件目录、详情页、命令面板、文档页（原定 Phase 5，提前搭建） | 已有 Button |
+| Registry | 通过 shadcn CLI 分发组件源码（原定 Phase 5，提前搭建）       | 已有 Button |
 
 完整路线见 [`UI-Platform-Implementation-Blueprint.md`](./UI-Platform-Implementation-Blueprint.md)。
 
@@ -26,9 +27,21 @@
 
 依赖方向：`tokens`、`utils` → `ui`。`tokens` 不依赖 React，`ui` 不依赖任何图表、地图或 3D 引擎。
 
+## 安装组件
+
+组件以源码的形式通过 shadcn Registry 分发。在已初始化 shadcn 的项目里运行：
+
+```bash
+pnpm dlx shadcn@latest add huangshh310/UI/button
+```
+
+CLI 会把组件的源文件写入 `components/ui/`，安装依赖，并把组件用到的颜色与动效变量加进样式表。
+
+`registry.json` 与 `registry/` 下的文件由 `pnpm registry:generate` 从 `packages/ui` 的源码生成，不要手工修改。
+
 ## Design Token
 
-视觉方向是「墨色与信号」：近黑的墨色与近白的纸色构成高对比的中性底，全系统只有一个高饱和的信号色，配合小圆角与等宽字体标签。
+视觉方向是「墨色与信号」：近黑的墨色与近白的纸色构成高对比的中性底，全系统只有一个高饱和的信号色，配合柔和的大圆角与等宽字体标签。
 
 所有变量以 `--ui-` 为前缀。默认是浅色主题，在任意祖先元素上添加 `.dark` 类或 `data-theme="dark"` 属性即可切换为深色，可以作用于整页，也可以只作用于一块区域。
 
@@ -52,6 +65,9 @@ pnpm typecheck      # 类型检查
 pnpm lint           # Oxlint 静态检查
 pnpm format         # Prettier 格式化
 pnpm test:consumer  # 把包打成 tarball，装进独立项目做端到端验证（需先 pnpm build）
+pnpm test:registry  # 用 shadcn CLI 把组件装进一个全新的项目并在浏览器里检查
+pnpm registry:generate   # 从组件源码重新生成 Registry
+pnpm component:new <名称> # 为新组件创建起始文件
 pnpm --filter @matt-ui/docs dev        # 启动展示站（http://localhost:3000，需先 pnpm build）
 pnpm --filter @matt-ui/storybook dev   # 启动组件工作台
 ```

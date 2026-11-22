@@ -22,7 +22,13 @@ const toggleTheme = () => {
 };
 
 export const ThemeToggle = () => (
-  <Button variant="ghost" size="icon" aria-label="切换主题" onClick={toggleTheme}>
+  <Button
+    variant="ghost"
+    size="icon"
+    aria-label="切换主题"
+    className="rounded-full"
+    onClick={toggleTheme}
+  >
     <SunIcon weight="bold" className="hidden dark:block" aria-hidden="true" />
     <MoonIcon weight="bold" className="dark:hidden" aria-hidden="true" />
   </Button>

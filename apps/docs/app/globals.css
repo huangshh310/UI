@@ -19,6 +19,18 @@
   --ui-font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
+/*
+ * 展示卡片的底色。浅色主题下比页面略深，深色主题下比页面略浅，
+ * 让卡片在两个主题里都从页面上浮出来。
+ */
+:root {
+  --site-tile: var(--ui-secondary);
+}
+
+[data-theme="dark"] {
+  --site-tile: var(--ui-card);
+}
+
 html {
   /* 页内锚点跳转时，给吸顶的页头留出位置 */
   scroll-padding-top: 5rem;
@@ -28,20 +40,6 @@ html {
   html {
     scroll-behavior: smooth;
   }
-}
-
-/*
- * 预览舞台：点阵底纹，像一张标本纸。
- * 点的颜色取自前景色，因此两个主题下都可见且不抢眼。
- */
-.stage {
-  background-image: radial-gradient(
-    circle,
-    color-mix(in oklab, var(--ui-foreground) 16%, transparent) 1px,
-    transparent 1px
-  );
-  background-size: 18px 18px;
-  background-position: center;
 }
 
 /*

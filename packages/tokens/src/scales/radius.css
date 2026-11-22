@@ -1,15 +1,16 @@
 /*
  * 圆角刻度。
  *
- * 本设计方向使用小圆角以保持硬朗的边线。
+ * 观感对齐 easyui：控件用中等圆角，卡片与面板用大圆角。
  * 各级圆角都由 --ui-radius 推导；在 :root 上修改它即可整体调整。
  */
 :root {
-  --ui-radius: 0.25rem;
+  --ui-radius: 0.625rem;
 
-  --ui-radius-sm: calc(var(--ui-radius) * 0.5);
+  --ui-radius-sm: calc(var(--ui-radius) * 0.6);
   --ui-radius-md: var(--ui-radius);
-  --ui-radius-lg: calc(var(--ui-radius) * 1.5);
+  --ui-radius-lg: calc(var(--ui-radius) * 1.4);
   --ui-radius-xl: calc(var(--ui-radius) * 2);
+  --ui-radius-2xl: calc(var(--ui-radius) * 2.6);
   --ui-radius-full: 9999px;
 }

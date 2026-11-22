@@ -15,7 +15,18 @@ export const BUTTON_DOC: ComponentDoc = {
   name: "Button",
   description: "触发一个操作。基于原生 button 元素，接受它的全部属性。",
   category: "buttons",
-  install: "pnpm add @matt-ui/ui",
+  registryName: "button",
+  dependencies: ["class-variance-authority", "clsx", "tailwind-merge"],
+  usage: `import { Button } from "@/components/ui/button";
+
+export function Demo() {
+  return (
+    <Button variant="signal" onClick={() => console.log("clicked")}>
+      开始使用
+    </Button>
+  );
+}`,
+  createdAt: "2026-11-22",
   specimens: [
     {
       slug: "variants",

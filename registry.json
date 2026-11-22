@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "matt-ui",
+  "homepage": "https://github.com/huangshh310/UI",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "A native button with seven variants, four sizes and a loading state that blocks repeat activation while staying focusable.",
+      "categories": ["buttons"],
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/button.tsx",
+          "type": "registry:ui",
+          "target": "@ui/button.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.17 0.006 270)",
+          "destructive-foreground": "oklch(0.985 0.003 100)"
+        },
+        "dark": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.17 0.006 270)",
+          "destructive-foreground": "oklch(0.15 0.005 270)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    }
+  ]
+}

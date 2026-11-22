@@ -7,6 +7,9 @@ import type { ComponentType } from "react";
 /** 目录页的分类 */
 export type CategoryId = "buttons";
 
+/** 目录页签的取值：全部、最近收录，或某个分类 */
+export type DirectoryFilter = "all" | "recent" | CategoryId;
+
 export interface Category {
   id: CategoryId;
   label: string;
@@ -40,8 +43,14 @@ export interface ComponentDoc {
   name: string;
   description: string;
   category: CategoryId;
-  /** 安装命令 */
-  install: string;
+  /** 在 shadcn Registry 中的条目名，也是 CLI 安装命令的最后一段 */
+  registryName: string;
+  /** 手动安装时需要的 npm 依赖 */
+  dependencies: string[];
+  /** 最小用法示例的源码 */
+  usage: string;
+  /** 收录日期（YYYY-MM-DD），用于「最近」页签与 NEW 标记 */
+  createdAt: string;
   specimens: Specimen[];
   api: ApiProp[];
   accessibility: string[];

@@ -1,0 +1,24 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+
+export function App() {
+  const [count, setCount] = useState(0);
+  const increment = () => setCount((previous) => previous + 1);
+
+  return (
+    <main style={{ padding: 32, display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+      <Button variant="signal" onClick={increment}>
+        signal
+      </Button>
+      <Button onClick={increment}>primary</Button>
+      <Button variant="outline">outline</Button>
+      <Button variant="destructive">destructive</Button>
+      <Button loading onClick={increment}>
+        loading
+      </Button>
+      <output data-testid="count">{count}</output>
+    </main>
+  );
+}
+
+export default App;

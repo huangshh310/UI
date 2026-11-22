@@ -22,7 +22,7 @@ const labelColor = (token: string) =>
     : "var(--ui-foreground)";
 
 export const PaletteStrip = () => (
-  <ul className="grid grid-cols-2 overflow-hidden rounded-lg border border-border md:grid-cols-12">
+  <ul className="grid grid-cols-2 overflow-hidden rounded-2xl border border-border md:grid-cols-12">
     {SWATCHES.map(({ token, label, grow }) => (
       <li
         key={token}
