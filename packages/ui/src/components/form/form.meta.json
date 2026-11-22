@@ -1,0 +1,6 @@
+{
+  "name": "form",
+  "title": "Form",
+  "description": "A composable form system built on Base UI Form, Field, and RadioGroup with accessible validation messages.",
+  "categories": ["forms"]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "draw-checkbox",
+  "title": "Draw Checkbox",
+  "description": "A checkbox built on Base UI whose checkmark draws smoothly along its SVG path.",
+  "categories": ["forms"]
+}

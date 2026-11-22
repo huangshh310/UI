@@ -1,0 +1,6 @@
+{
+  "name": "stretch-switch",
+  "title": "Stretch Switch",
+  "description": "A tactile switch built on Base UI whose thumb stretches while pressed and snaps across with spring physics.",
+  "categories": ["forms"]
+}

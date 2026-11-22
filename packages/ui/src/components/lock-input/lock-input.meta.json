@@ -1,0 +1,6 @@
+{
+  "name": "lock-input",
+  "title": "Lock Input",
+  "description": "A text input whose focus ring scales in and locks cleanly onto the border.",
+  "categories": ["forms"]
+}

@@ -1,0 +1,16 @@
+/*
+ * @matt-ui/motion 的样式入口，构建后产出 dist/styles.css。
+ *
+ * 产物包含三部分：Design Token 变量、Tailwind 主题变量、本包组件源码中实际用到的工具类。
+ * 使用者单独安装 @matt-ui/motion 且项目未安装 Tailwind 时，直接引入本文件即可。
+ */
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@import "@matt-ui/tokens";
+@import "@matt-ui/tokens/tailwind.css";
+
+/* 只扫描本包的源码来决定生成哪些工具类 */
+@source "./";

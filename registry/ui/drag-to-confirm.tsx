@@ -32,6 +32,8 @@ export interface DragToConfirmProps {
   onReset?: () => void;
   /** 确认后多久自动复位，单位毫秒；0 表示不复位。默认 2500 */
   autoResetDelay?: number;
+  /** 跨过确认阈值与确认时是否触发设备震动反馈，默认是 */
+  haptics?: boolean;
   disabled?: boolean;
   className?: string;
 }
@@ -40,13 +42,69 @@ const CONFIRM_RATIO = 0.9;
 
 const SPRING = { type: "spring", stiffness: 420, damping: 34 } as const;
 
+/** 安全调用设备震动；桌面端或不支持的环境静默跳过 */
+const triggerVibrate = (pattern: VibratePattern) => {
+  if (typeof navigator === "undefined" || typeof navigator.vibrate !== "function") return;
+  try {
+    navigator.vibrate(pattern);
+  } catch {
+    // 忽略浏览器权限或策略拦截
+  }
+};
+
+/** 滑块可以移动的最大距离：轨道宽度减去滑块宽度与两侧内边距 */
+const measureMaxTravel = (
+  track: RefObject<HTMLDivElement | null>,
+  handle: RefObject<HTMLButtonElement | null>,
+) => (track.current?.clientWidth ?? 0) - (handle.current?.offsetWidth ?? 0) - 8;
+
+/** 拖动过程首次跨过确认阈值时给出轻微震动提示 */
+const useThresholdHaptic = (
+  x: MotionValue<number>,
+  track: RefObject<HTMLDivElement | null>,
+  handle: RefObject<HTMLButtonElement | null>,
+  enabled: boolean,
+  confirmed: boolean,
+) => {
+  const crossed = useRef(false);
+  const stateRef = useRef({ enabled, confirmed });
+
+  useEffect(() => {
+    stateRef.current = { enabled, confirmed };
+    if (!confirmed) crossed.current = false;
+  });
+
+  useEffect(
+    () =>
+      x.on("change", (latest) => {
+        if (stateRef.current.confirmed || !stateRef.current.enabled) return;
+        const limit = measureMaxTravel(track, handle);
+        if (limit <= 0) return;
+        const reached = latest >= limit * CONFIRM_RATIO;
+        if (reached && !crossed.current) {
+          crossed.current = true;
+          triggerVibrate(10);
+        } else if (!reached) {
+          crossed.current = false;
+        }
+      }),
+    [x, track, handle],
+  );
+};
+
 interface DragConfirmOptions {
   onConfirm?: (() => void) | undefined;
   onReset?: (() => void) | undefined;
-  autoResetDelay: number;
+  autoResetDelay?: number | undefined;
+  haptics?: boolean | undefined;
 }
 
-const useDragConfirm = ({ onConfirm, onReset, autoResetDelay }: DragConfirmOptions) => {
+const useDragConfirm = ({
+  onConfirm,
+  onReset,
+  autoResetDelay = 2500,
+  haptics = true,
+}: DragConfirmOptions) => {
   const reduceMotion = useReducedMotion();
   const x = useMotionValue(0);
   const [confirmed, setConfirmed] = useState(false);
@@ -54,13 +112,10 @@ const useDragConfirm = ({ onConfirm, onReset, autoResetDelay }: DragConfirmOptio
   const handle = useRef<HTMLButtonElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  // 卸载时取消尚未触发的复位
+  useThresholdHaptic(x, track, handle, haptics, confirmed);
   useEffect(() => () => clearTimeout(timer.current), []);
 
-  /** 滑块可以移动的最大距离：轨道宽度减去滑块宽度与两侧内边距 */
-  const maxTravel = () =>
-    (track.current?.clientWidth ?? 0) - (handle.current?.offsetWidth ?? 0) - 8;
-
+  const maxTravel = () => measureMaxTravel(track, handle);
   const moveTo = (target: number) => (reduceMotion ? x.set(target) : animate(x, target, SPRING));
 
   const reset = () => {
@@ -73,17 +128,17 @@ const useDragConfirm = ({ onConfirm, onReset, autoResetDelay }: DragConfirmOptio
     if (confirmed) return;
     setConfirmed(true);
     moveTo(maxTravel());
+    if (haptics) triggerVibrate([12, 24, 18]);
     onConfirm?.();
     if (autoResetDelay > 0) timer.current = setTimeout(reset, autoResetDelay);
   };
 
-  /** 松手：拖得足够远则确认，否则弹回起点 */
   const release = () => (x.get() >= maxTravel() * CONFIRM_RATIO ? confirm() : moveTo(0));
 
   return { x, confirmed, track, handle, confirm, release, maxTravel };
 };
 const TRACK_CLASSES =
-  "relative flex h-14 w-72 max-w-full items-center overflow-hidden rounded-full border border-solid border-border bg-background p-1 font-sans text-sm select-none";
+  "relative flex h-14 w-72 max-w-full items-center overflow-hidden rounded-full border border-solid border-border bg-background p-1 font-sans text-sm shadow-sm select-none dark:bg-card";
 
 const HANDLE_CLASSES =
   "relative z-10 flex size-12 shrink-0 cursor-grab touch-none items-center justify-center rounded-full border-0 bg-primary text-primary-foreground shadow-md outline-none active:cursor-grabbing focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid";
@@ -106,7 +161,7 @@ const TrackLayers = ({ x, maxTravel, label, confirmedLabel, confirmed }: TrackLa
       <motion.span
         aria-hidden="true"
         style={{ width: fillWidth }}
-        className="absolute inset-y-1 left-1 rounded-full bg-signal/35"
+        className="absolute inset-y-1 left-1 rounded-full bg-signal/16"
       />
       <motion.span
         aria-hidden="true"
@@ -175,18 +230,11 @@ const Handle = ({
 export const DragToConfirm = ({
   label = "Slide to confirm",
   confirmedLabel = "Confirmed",
-  onConfirm,
-  onReset,
-  autoResetDelay = 2500,
   disabled = false,
   className,
+  ...options
 }: DragToConfirmProps) => {
-  const { x, confirmed, track, handle, confirm, release, maxTravel } = useDragConfirm({
-    onConfirm,
-    onReset,
-    autoResetDelay,
-  });
-
+  const { x, confirmed, track, handle, confirm, release, maxTravel } = useDragConfirm(options);
   const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     if (disabled || (event.key !== "Enter" && event.key !== " ")) return;
     event.preventDefault();

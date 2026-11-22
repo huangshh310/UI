@@ -13,17 +13,32 @@ import type { MouseEvent } from "react";
 import type { TypewriterButtonProps } from "./typewriter-button.types.js";
 import { useTypewriter } from "./use-typewriter.js";
 
+const BUTTON_CLASSES = cn(
+  "m-0 box-border inline-flex h-10 cursor-pointer appearance-none items-center justify-center rounded-full border border-solid border-border bg-background px-5 shadow-sm dark:bg-card",
+  "font-mono text-sm whitespace-nowrap text-foreground select-none",
+  "transition-colors duration-(--ui-duration-fast) hover:border-foreground/22 hover:bg-accent",
+  "outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid",
+  "disabled:pointer-events-none disabled:opacity-50",
+);
+
 export const TypewriterButton = ({
   label,
   charDuration = 75,
   autoStart = false,
+  sound = true,
   onComplete,
   className,
   type = "button",
   onClick,
   ...props
 }: TypewriterButtonProps) => {
-  const { text, typing, start } = useTypewriter({ label, charDuration, autoStart, onComplete });
+  const { text, typing, start } = useTypewriter({
+    label,
+    charDuration,
+    autoStart,
+    sound,
+    onComplete,
+  });
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     start();
@@ -36,14 +51,7 @@ export const TypewriterButton = ({
       aria-label={label}
       data-slot="typewriter-button"
       data-typing={typing ? "" : undefined}
-      className={cn(
-        "m-0 box-border inline-flex h-10 cursor-pointer appearance-none items-center justify-center rounded-full border border-solid border-input bg-transparent px-5",
-        "font-mono text-sm whitespace-nowrap text-foreground select-none",
-        "transition-colors duration-(--ui-duration-fast) hover:bg-accent",
-        "outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid",
-        "disabled:pointer-events-none disabled:opacity-50",
-        className,
-      )}
+      className={cn(BUTTON_CLASSES, className)}
       onClick={handleClick}
       {...props}
     >

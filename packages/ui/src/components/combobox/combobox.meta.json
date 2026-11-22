@@ -1,0 +1,6 @@
+{
+  "name": "combobox",
+  "title": "Combobox",
+  "description": "A searchable combobox built on Base UI with highlighted match text, clear trigger, and async loading state.",
+  "categories": ["forms"]
+}

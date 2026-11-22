@@ -3,6 +3,7 @@
  */
 import {
   BookCallButton,
+  CodeSnippetDeck,
   LiquidRippleButton,
   NeonEdgeButton,
   PressButton,
@@ -49,5 +50,33 @@ export const Split: Story = {
     >
       Save
     </SplitButton>
+  ),
+};
+
+export const CodeDeck: Story = {
+  render: () => (
+    <CodeSnippetDeck
+      snippets={[
+        {
+          language: "curl",
+          label: "cURL",
+          code: 'curl "https://api.tidewater.dev/v1/projects?limit={{limit}}" -H "Authorization: Bearer {{token}}"',
+        },
+        {
+          language: "ts",
+          label: "TypeScript",
+          code: 'fetch("https://api.tidewater.dev/v1/projects?limit={{limit}}", { headers: { Authorization: "Bearer {{token}}" } })',
+        },
+        {
+          language: "python",
+          label: "Python",
+          code: 'requests.get("https://api.tidewater.dev/v1/projects", params={"limit": {{limit}}})',
+        },
+      ]}
+      parameters={[
+        { name: "limit", label: "Limit", defaultValue: "20" },
+        { name: "token", label: "API Token", defaultValue: "tk_live_98a1" },
+      ]}
+    />
   ),
 };

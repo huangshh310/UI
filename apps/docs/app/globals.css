@@ -2,7 +2,7 @@
  * 展示站的全局样式。
  *
  * 站点自己就是组件库的使用者：颜色、圆角、时长全部来自 @matt-ui/tokens，
- * 组件的样式由本站的 Tailwind 扫描 @matt-ui/ui 的产物后统一生成。
+ * 组件的样式由本站的 Tailwind 扫描 @matt-ui/ui 与 @matt-ui/motion 的产物后统一生成。
  */
 @import "tailwindcss";
 @import "@matt-ui/tokens";
@@ -18,29 +18,49 @@
     var(--font-geist-sans), "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui,
     sans-serif;
   --ui-font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-}
 
-/*
- * 展示卡片的底色。浅色主题下比页面略深，深色主题下比页面略浅，
- * 让卡片在两个主题里都从页面上浮出来。
- */
-:root {
-  --site-tile: var(--ui-secondary);
+  /* 站点双层卡片的衍生表面：外卡干净抬升，内舞台柔灰衬托组件，点阵提供精密参考 */
+  --site-surface: var(--ui-card);
+  --site-stage: color-mix(in oklch, var(--ui-secondary) 55%, var(--ui-background));
+  --site-tile: var(--site-stage);
+  --site-dot: color-mix(in oklch, var(--ui-foreground) 7.5%, transparent);
+  --site-aura: color-mix(in oklch, var(--ui-signal) 12%, transparent);
 }
 
 [data-theme="dark"] {
-  --site-tile: var(--ui-card);
+  --site-surface: var(--ui-card);
+  --site-stage: color-mix(in oklch, var(--ui-background) 78%, black);
+  --site-tile: var(--site-stage);
+  --site-dot: color-mix(in oklch, var(--ui-foreground) 8.5%, transparent);
+  --site-aura: color-mix(in oklch, var(--ui-signal) 18%, transparent);
 }
 
 html {
   /* 页内锚点跳转时，给吸顶的页头留出位置 */
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 5.5rem;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
   }
+}
+
+/* 预览舞台的微弱点阵背景，强化双层卡片的精密层次 */
+.stage-grid {
+  background-image: radial-gradient(var(--site-dot) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* 首屏顶部极克制的信号色径向光晕与淡出点阵 */
+.hero-aura {
+  background-image:
+    radial-gradient(ellipse 65% 50% at 50% 0%, var(--site-aura), transparent 72%),
+    radial-gradient(var(--site-dot) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    24px 24px;
+  mask-image: linear-gradient(to bottom, black 35%, transparent 100%);
 }
 
 /*
@@ -56,7 +76,7 @@ html {
 
 .rise {
   animation: rise var(--ui-duration-slow) var(--ui-ease-out) both;
-  animation-delay: calc(var(--i, 0) * 70ms);
+  animation-delay: calc(var(--i, 0) * 60ms);
 }
 
 /* 时长由 Token 压到接近零，但依次延迟还在；这里把入场动效整体关掉，内容立即可见 */

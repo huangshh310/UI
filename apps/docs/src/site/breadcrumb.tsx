@@ -11,17 +11,19 @@ interface BreadcrumbProps {
 }
 
 export const Breadcrumb = ({ trail = [], current }: BreadcrumbProps) => (
-  <nav aria-label="面包屑" className="text-sm text-muted-foreground">
+  <nav aria-label="面包屑" className="font-mono text-xs text-muted-foreground">
     <ol className="flex flex-wrap items-center gap-2">
       {[{ href: "/", label: SITE_NAME }, ...trail].map(({ href, label }) => (
         <li key={href} className="flex items-center gap-2">
           <Link href={href} className="transition-colors hover:text-foreground">
             {label}
           </Link>
-          <span aria-hidden="true">/</span>
+          <span aria-hidden="true" className="text-border">
+            /
+          </span>
         </li>
       ))}
-      <li aria-current="page" className="text-foreground">
+      <li aria-current="page" className="font-medium text-foreground">
         {current}
       </li>
     </ol>

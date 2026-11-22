@@ -17,10 +17,10 @@ const defaults = (parameters: SnippetParameter[]) =>
   Object.fromEntries(parameters.map(({ name, defaultValue }) => [name, defaultValue]));
 
 const TAB_CLASSES =
-  "cursor-pointer rounded-md border-0 bg-transparent px-2.5 py-1 font-mono text-xs text-muted-foreground outline-none hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-solid aria-selected:bg-accent aria-selected:text-foreground";
+  "shrink-0 cursor-pointer rounded-md border-0 bg-transparent px-2.5 py-1 font-mono text-xs text-muted-foreground outline-none hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-solid aria-selected:bg-accent aria-selected:text-foreground";
 
 const INPUT_CLASSES =
-  "h-9 rounded-md border border-solid border-input bg-background px-3 font-mono text-sm text-foreground outline-none focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ring focus-visible:outline-solid";
+  "h-9 w-full min-w-0 rounded-lg border border-solid border-border bg-background px-3 font-mono text-sm text-foreground shadow-sm transition-[border-color,box-shadow] duration-(--ui-duration-fast) outline-none hover:border-foreground/22 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/20 dark:bg-secondary/50";
 
 /** 页签栏：窗口栏装饰、语言页签与复制按钮 */
 const DeckHeader = ({
@@ -32,15 +32,15 @@ const DeckHeader = ({
   code: string;
   showWindowBar: boolean;
 }) => (
-  <div className="flex items-center gap-3 border-b border-solid border-border px-4 py-2">
+  <div className="flex min-w-0 items-center gap-3 border-b border-solid border-border px-4 py-2">
     {showWindowBar && (
-      <span aria-hidden="true" className="flex gap-1.5">
+      <span aria-hidden="true" className="flex shrink-0 gap-1.5">
         <span className="size-2.5 rounded-full bg-border" />
         <span className="size-2.5 rounded-full bg-border" />
         <span className="size-2.5 rounded-full bg-border" />
       </span>
     )}
-    <Tabs.List className="flex flex-1 gap-1 overflow-x-auto">
+    <Tabs.List className="flex min-w-0 flex-1 gap-1 overflow-x-auto">
       {snippets.map(({ language, label }) => (
         <Tabs.Tab key={language} value={language} className={TAB_CLASSES}>
           {label}
@@ -61,7 +61,7 @@ interface ParameterFieldsProps {
 const ParameterFields = ({ parameters, values, onChange }: ParameterFieldsProps) => (
   <div className="grid gap-3 border-t border-solid border-border px-5 py-4 sm:grid-cols-2">
     {parameters.map(({ name, label }) => (
-      <label key={name} className="flex flex-col gap-1.5 text-xs text-muted-foreground">
+      <label key={name} className="flex min-w-0 flex-col gap-1.5 text-xs text-muted-foreground">
         {label}
         <input
           value={values[name] ?? ""}
@@ -88,7 +88,7 @@ export const CodeSnippetDeck = ({
     <div
       data-slot="code-snippet-deck"
       className={cn(
-        "w-full max-w-xl overflow-hidden rounded-2xl border border-solid border-border bg-card font-sans text-card-foreground shadow-md",
+        "w-full min-w-0 max-w-xl overflow-hidden rounded-2xl border border-solid border-border bg-card font-sans text-card-foreground shadow-md",
         className,
       )}
     >

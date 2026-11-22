@@ -62,7 +62,7 @@ export const LiquidToggle = ({
       <motion.span
         aria-hidden="true"
         data-slot="liquid-toggle-thumb"
-        className="block size-6 rounded-full bg-background shadow-md"
+        className="block size-6 rounded-full bg-signal-foreground shadow-md"
         ref={thumb}
         initial={false}
         animate={{ x: on ? TRAVEL_PX : 0 }}

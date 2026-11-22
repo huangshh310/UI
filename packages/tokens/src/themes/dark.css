@@ -4,9 +4,8 @@
  * 启用方式：在任意祖先元素上添加 .dark 类或 data-theme="dark" 属性。
  * 不自动跟随系统偏好，由宿主应用决定何时切换。
  *
- * 与浅色主题的两点差异：
- * - 主要操作反转为纸色实底；
- * - 焦点环使用信号色，它在深色底上的对比度远高于在浅色底上。
+ * 采用 EasyUI / shadcn / BeUI / BoardUI 同源的深黑曜石三级表面阶梯
+ * （background → card → popover），搭配纤细发丝边框与清亮蓝焦点环。
  *
  * 可访问性约束与 light.css 相同。
  */
@@ -15,49 +14,49 @@
   color-scheme: dark;
 
   /* 页面底色与正文 */
-  --ui-background: oklch(0.178 0.004 286);
-  --ui-foreground: oklch(0.96 0.004 286);
+  --ui-background: oklch(0.165 0.004 264);
+  --ui-foreground: oklch(0.965 0.003 264);
 
   /* 抬升的表面：深色下越靠上的表面越亮 */
-  --ui-card: oklch(0.213 0.004 286);
-  --ui-card-foreground: oklch(0.96 0.004 286);
-  --ui-popover: oklch(0.235 0.004 286);
-  --ui-popover-foreground: oklch(0.96 0.004 286);
+  --ui-card: oklch(0.2 0.005 264);
+  --ui-card-foreground: oklch(0.965 0.003 264);
+  --ui-popover: oklch(0.225 0.006 264);
+  --ui-popover-foreground: oklch(0.965 0.003 264);
 
-  /* 主要操作：纸色实底 */
-  --ui-primary: oklch(0.96 0.004 286);
-  --ui-primary-foreground: oklch(0.178 0.004 286);
+  /* 主要操作：纸白实底 */
+  --ui-primary: oklch(0.965 0.003 264);
+  --ui-primary-foreground: oklch(0.165 0.004 264);
 
   /* 次要操作 */
-  --ui-secondary: oklch(0.26 0.004 286);
-  --ui-secondary-foreground: oklch(0.96 0.004 286);
+  --ui-secondary: oklch(0.24 0.006 264);
+  --ui-secondary-foreground: oklch(0.965 0.003 264);
 
   /* 弱化的表面与辅助文字 */
-  --ui-muted: oklch(0.24 0.004 286);
-  --ui-muted-foreground: oklch(0.71 0.004 286);
+  --ui-muted: oklch(0.225 0.005 264);
+  --ui-muted-foreground: oklch(0.695 0.008 264);
 
   /* 交互反馈表面 */
-  --ui-accent: oklch(0.29 0.004 286);
-  --ui-accent-foreground: oklch(0.96 0.004 286);
+  --ui-accent: oklch(0.27 0.007 264);
+  --ui-accent-foreground: oklch(0.965 0.003 264);
 
-  /* 信号色：两个主题下保持同一个色值，是品牌识别的锚点 */
-  --ui-signal: oklch(0.9 0.2 125);
-  --ui-signal-foreground: oklch(0.145 0.004 286);
+  /* 信号色：两个主题下保持同一个钴蓝色值，是品牌识别的锚点 */
+  --ui-signal: oklch(0.545 0.195 258);
+  --ui-signal-foreground: oklch(0.99 0 0);
 
-  /* 边线 */
-  --ui-border: oklch(0.31 0.004 286);
-  --ui-input: oklch(0.54 0.004 286);
-  --ui-ring: oklch(0.9 0.2 125);
+  /* 边线：发丝边框柔和融入深色表面，焦点环提高明度保持清晰对比 */
+  --ui-border: oklch(0.275 0.006 264);
+  --ui-input: oklch(0.505 0.008 264);
+  --ui-ring: oklch(0.63 0.185 258);
 
-  /* 状态色：提高明度以适应深色底，前景改用墨色 */
-  --ui-success: oklch(0.74 0.17 152);
-  --ui-success-foreground: oklch(0.178 0.004 286);
-  --ui-warning: oklch(0.82 0.16 80);
-  --ui-warning-foreground: oklch(0.178 0.004 286);
-  --ui-destructive: oklch(0.68 0.19 27);
-  --ui-destructive-foreground: oklch(0.178 0.004 286);
-  --ui-info: oklch(0.72 0.13 250);
-  --ui-info-foreground: oklch(0.178 0.004 286);
+  /* 状态色：提高明度以适应深色底，前景改用深墨色 */
+  --ui-success: oklch(0.74 0.15 155);
+  --ui-success-foreground: oklch(0.165 0.004 264);
+  --ui-warning: oklch(0.82 0.15 80);
+  --ui-warning-foreground: oklch(0.165 0.004 264);
+  --ui-destructive: oklch(0.68 0.185 25);
+  --ui-destructive-foreground: oklch(0.165 0.004 264);
+  --ui-info: oklch(0.72 0.145 252);
+  --ui-info-foreground: oklch(0.165 0.004 264);
 
   /* 阴影的基色：深色底上需要纯黑才能看见层次 */
   --ui-shadow-color: oklch(0 0 0);

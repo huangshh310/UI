@@ -46,6 +46,12 @@ export function Demo() {
       defaultValue: "2500",
       description: "确认后多久自动复位，0 表示不复位。",
     },
+    {
+      name: "haptics",
+      type: "boolean",
+      defaultValue: "true",
+      description: "跨过确认阈值与确认时触发设备震动反馈（支持 Vibration API 的设备生效）。",
+    },
   ],
   accessibility: [
     "键盘用户聚焦滑块后按 Enter 或空格即可确认，不必拖动。",

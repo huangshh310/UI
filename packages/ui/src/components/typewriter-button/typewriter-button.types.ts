@@ -10,6 +10,8 @@ export interface TypewriterButtonProps extends Omit<ComponentProps<"button">, "c
   charDuration?: number;
   /** 挂载后是否立即开始打字，默认否 */
   autoStart?: boolean;
+  /** 逐字显示时是否播放机械按键音效，默认是 */
+  sound?: boolean;
   /** 全部字符显示完后调用 */
   onComplete?: () => void;
 }

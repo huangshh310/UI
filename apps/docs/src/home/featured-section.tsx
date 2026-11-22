@@ -1,38 +1,52 @@
 /**
- * 首页的示例网格：与目录页相同的卡片，下方是进入完整目录的链接。
+ * 首页的精选组件网格：按组件去重展示 9 个形态各异的实时交互组件。
  */
 import { ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { SpecimenCard } from "@/gallery/specimen-card";
-import { DIRECTORY, recentComponentSlugs } from "@/registry/registry";
-
-/** 首页最多展示的示例数：三列网格的三行 */
-const FEATURED_COUNT = 9;
+import { COMPONENTS, FEATURED_DIRECTORY, recentComponentSlugs } from "@/registry/registry";
 
 export const FeaturedSection = () => {
   // 「最近」以构建时间为准
   const recentSlugs = recentComponentSlugs();
 
   return (
-    <section aria-label="示例" className="pb-20">
+    <section
+      aria-labelledby="featured-title"
+      className="mx-auto max-w-[1400px] px-5 py-16 md:px-9 lg:py-20"
+    >
+      <div className="mb-9 flex flex-col gap-4 border-b border-border/70 pb-6 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="font-mono text-xs tracking-[0.18em] text-muted-foreground uppercase">
+            Showcase
+          </p>
+          <h2
+            id="featured-title"
+            className="mt-2 text-2xl font-semibold tracking-[-0.03em] md:text-3xl"
+          >
+            精选组件
+            <span className="ml-2 font-normal text-muted-foreground">可直接点击体验</span>
+          </h2>
+        </div>
+        <Link
+          href="/components"
+          className="inline-flex items-center gap-2 self-start rounded-full border border-border bg-(--site-surface) px-4 py-2 text-xs font-medium text-foreground shadow-xs transition-colors duration-(--ui-duration-fast) hover:border-foreground/25 hover:bg-accent sm:self-auto"
+        >
+          查看全部 {COMPONENTS.length} 个组件
+          <ArrowRightIcon weight="bold" className="size-3.5" aria-hidden="true" />
+        </Link>
+      </div>
+
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {DIRECTORY.slice(0, FEATURED_COUNT).map((entry, index) => (
+        {FEATURED_DIRECTORY.map((entry, index) => (
           <SpecimenCard
             key={entry.specimen.slug}
             entry={entry}
-            index={index + 3}
+            index={index}
             isNew={recentSlugs.includes(entry.component.slug)}
+            titleMode="component"
           />
         ))}
-      </div>
-      <div className="mt-14 flex justify-center">
-        <Link
-          href="/components"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-        >
-          查看全部组件
-          <ArrowRightIcon className="size-4" aria-hidden="true" />
-        </Link>
       </div>
     </section>
   );

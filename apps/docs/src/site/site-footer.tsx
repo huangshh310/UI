@@ -1,5 +1,5 @@
 /**
- * 站点页脚：左侧是标识与一句说明，右侧是站内链接，最下方是版权行。
+ * 站点页脚：细边线分隔，左侧为品牌标识与定位，右侧为导航链接，底部为版权与协议。
  */
 import Link from "next/link";
 import { REPOSITORY_URL, SITE_NAME } from "./constants";
@@ -12,29 +12,39 @@ const LINKS = [
 ];
 
 export const SiteFooter = () => (
-  <footer className="border-t border-border">
+  <footer className="border-t border-border/75 bg-(--site-surface)/40">
     <div className="mx-auto max-w-[1400px] px-5 md:px-9">
-      <div className="flex flex-col gap-6 py-10 md:flex-row md:items-start md:justify-between">
+      <div className="flex flex-col gap-6 py-10 md:flex-row md:items-center md:justify-between">
         <div>
-          <p className="flex items-center gap-2.5 font-mono text-sm">
-            <span aria-hidden="true" className="size-3 rounded-full bg-signal" />
+          <p className="flex items-center gap-2.5 font-mono text-sm font-semibold tracking-tight">
+            <span
+              aria-hidden="true"
+              className="inline-flex size-6 items-center justify-center rounded-md bg-signal shadow-[inset_0_1px_0_rgba(255,255,255,0.28)]"
+            >
+              <span className="size-2 rounded-full bg-signal-foreground" />
+            </span>
             {SITE_NAME}
           </p>
-          <p className="mt-3 max-w-xs text-sm text-muted-foreground">
-            开源、讲究细节的 React 组件，为现代界面而作。
+          <p className="mt-2.5 max-w-sm text-sm text-muted-foreground">
+            开源、讲究细节的 React 组件平台，源码可控、无障碍优先。
           </p>
         </div>
         <nav aria-label="页脚导航" className="flex flex-wrap gap-x-7 gap-y-2 text-sm">
           {LINKS.map(({ href, label }) => (
-            <Link key={href} href={href} className="transition-colors hover:text-muted-foreground">
+            <Link
+              key={href}
+              href={href}
+              className="text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:text-foreground"
+            >
               {label}
             </Link>
           ))}
         </nav>
       </div>
-      <p className="border-t border-border py-5 text-xs text-muted-foreground">
-        © 2026 {SITE_NAME} · MIT License
-      </p>
+      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border/70 py-5 text-xs text-muted-foreground">
+        <p>© 2026 {SITE_NAME} · MIT License</p>
+        <p className="font-mono">React 19 · Tailwind CSS v4 · Base UI</p>
+      </div>
     </div>
   </footer>
 );

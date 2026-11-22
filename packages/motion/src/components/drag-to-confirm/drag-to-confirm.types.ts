@@ -12,6 +12,8 @@ export interface DragToConfirmProps {
   onReset?: () => void;
   /** 确认后多久自动复位，单位毫秒；0 表示不复位。默认 2500 */
   autoResetDelay?: number;
+  /** 跨过确认阈值与确认时是否触发设备震动反馈，默认是 */
+  haptics?: boolean;
   disabled?: boolean;
   className?: string;
 }

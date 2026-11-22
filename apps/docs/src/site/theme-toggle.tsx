@@ -26,7 +26,7 @@ export const ThemeToggle = () => (
     variant="ghost"
     size="icon"
     aria-label="切换主题"
-    className="rounded-full"
+    className="rounded-full border border-transparent text-muted-foreground hover:border-border hover:text-foreground"
     onClick={toggleTheme}
   >
     <SunIcon weight="bold" className="hidden dark:block" aria-hidden="true" />

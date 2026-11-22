@@ -1,5 +1,5 @@
 /**
- * 外观为胶囊按钮的链接，用于跳转到另一个页面的主操作。
+ * 外观为胶囊按钮的链接，用于跳转到另一个页面的主操作或次要操作。
  *
  * Button 渲染的是 <button>，语义上不适合做页面跳转；
  * 组件库目前还没有提供「以链接形式渲染」的能力，所以站点先自己实现。
@@ -15,14 +15,15 @@ interface LinkButtonProps {
 }
 
 const TONE_CLASSES: Record<LinkButtonProps["tone"], string> = {
-  solid: "bg-primary text-primary-foreground hover:bg-primary/88",
-  outline: "border-input text-foreground hover:bg-accent",
+  solid: "border-transparent bg-primary text-primary-foreground shadow-sm hover:bg-primary/88",
+  outline:
+    "border-border bg-(--site-surface) text-foreground shadow-xs hover:border-foreground/30 hover:bg-accent",
 };
 
 export const LinkButton = ({ href, tone, children }: LinkButtonProps) => (
   <Link
     href={href}
-    className={`inline-flex h-11 items-center justify-center gap-2 rounded-full border border-transparent px-6 text-sm font-medium whitespace-nowrap transition-colors duration-(--ui-duration-fast) ease-out active:scale-[0.97] [&_svg]:size-4 ${TONE_CLASSES[tone]}`}
+    className={`inline-flex h-11 items-center justify-center gap-2 rounded-full border px-6 text-sm font-medium whitespace-nowrap outline-none transition-all duration-(--ui-duration-fast) ease-out active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring [&_svg]:size-4 ${TONE_CLASSES[tone]}`}
   >
     {children}
   </Link>

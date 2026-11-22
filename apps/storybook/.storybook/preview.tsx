@@ -5,6 +5,7 @@
  * 因此修改组件源码后需要重新构建 @matt-ui/ui，这里才会看到变化。
  */
 import "@matt-ui/ui/styles.css";
+import "@matt-ui/motion/styles.css";
 import type { Decorator, Preview } from "@storybook/react-vite";
 
 /** 用工具栏选中的主题包裹每个 Story，并铺上该主题的底色 */

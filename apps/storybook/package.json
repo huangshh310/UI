@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
+    "@matt-ui/motion": "workspace:*",
     "@matt-ui/ui": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:"

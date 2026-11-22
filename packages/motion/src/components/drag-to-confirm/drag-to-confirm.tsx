@@ -15,7 +15,7 @@ import type { DragToConfirmProps } from "./drag-to-confirm.types.js";
 import { useDragConfirm } from "./use-drag-confirm.js";
 
 const TRACK_CLASSES =
-  "relative flex h-14 w-72 max-w-full items-center overflow-hidden rounded-full border border-solid border-border bg-background p-1 font-sans text-sm select-none";
+  "relative flex h-14 w-72 max-w-full items-center overflow-hidden rounded-full border border-solid border-border bg-background p-1 font-sans text-sm shadow-sm select-none dark:bg-card";
 
 const HANDLE_CLASSES =
   "relative z-10 flex size-12 shrink-0 cursor-grab touch-none items-center justify-center rounded-full border-0 bg-primary text-primary-foreground shadow-md outline-none active:cursor-grabbing focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid";
@@ -38,7 +38,7 @@ const TrackLayers = ({ x, maxTravel, label, confirmedLabel, confirmed }: TrackLa
       <motion.span
         aria-hidden="true"
         style={{ width: fillWidth }}
-        className="absolute inset-y-1 left-1 rounded-full bg-signal/35"
+        className="absolute inset-y-1 left-1 rounded-full bg-signal/16"
       />
       <motion.span
         aria-hidden="true"
@@ -107,18 +107,11 @@ const Handle = ({
 export const DragToConfirm = ({
   label = "Slide to confirm",
   confirmedLabel = "Confirmed",
-  onConfirm,
-  onReset,
-  autoResetDelay = 2500,
   disabled = false,
   className,
+  ...options
 }: DragToConfirmProps) => {
-  const { x, confirmed, track, handle, confirm, release, maxTravel } = useDragConfirm({
-    onConfirm,
-    onReset,
-    autoResetDelay,
-  });
-
+  const { x, confirmed, track, handle, confirm, release, maxTravel } = useDragConfirm(options);
   const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     if (disabled || (event.key !== "Enter" && event.key !== " ")) return;
     event.preventDefault();

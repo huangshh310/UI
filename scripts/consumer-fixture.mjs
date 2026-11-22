@@ -22,6 +22,7 @@ const TARBALLS = join(FIXTURE, ".tarballs");
 const PACKAGES = [
   { dir: "packages/utils", tarball: "utils.tgz" },
   { dir: "packages/ui", tarball: "ui.tgz" },
+  { dir: "packages/motion", tarball: "motion.tgz" },
 ];
 
 /** 执行命令并把输出直接打印出来；命令失败时抛错，中止整个流程 */

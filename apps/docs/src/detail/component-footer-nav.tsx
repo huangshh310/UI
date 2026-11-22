@@ -2,13 +2,13 @@
  * 详情页底部：同分类的相关组件，以及上一个 / 下一个组件的翻页。
  * 没有相关组件或前后组件时，对应的部分不显示。
  */
-import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeftIcon, ArrowRightIcon, ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { neighbours, relatedComponents } from "@/registry/registry";
 import type { ComponentDoc } from "@/registry/registry.types";
 
 const CARD_CLASSES =
-  "rounded-2xl border border-border bg-(--site-tile) p-5 transition-colors duration-(--ui-duration-fast) hover:border-foreground/40";
+  "rounded-2xl border border-border bg-(--site-surface) p-5 shadow-xs transition-[border-color,box-shadow] duration-(--ui-duration-fast) hover:border-foreground/25 hover:shadow-md";
 
 const RelatedList = ({ items }: { items: ComponentDoc[] }) => (
   <section aria-labelledby="related-title">
@@ -18,9 +18,16 @@ const RelatedList = ({ items }: { items: ComponentDoc[] }) => (
     <ul className="grid gap-4 md:grid-cols-3">
       {items.map(({ slug, name, description }) => (
         <li key={slug}>
-          <Link href={`/components/${slug}`} className={`block ${CARD_CLASSES}`}>
-            <span className="font-medium">{name}</span>
-            <span className="mt-1 line-clamp-2 block text-sm text-muted-foreground">
+          <Link href={`/components/${slug}`} className={`group block h-full ${CARD_CLASSES}`}>
+            <span className="flex items-center justify-between gap-2 font-medium text-foreground">
+              <span className="truncate">{name}</span>
+              <ArrowUpRightIcon
+                weight="bold"
+                aria-hidden="true"
+                className="size-4 shrink-0 text-muted-foreground transition-transform duration-(--ui-duration-fast) group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground"
+              />
+            </span>
+            <span className="mt-1.5 line-clamp-2 block text-xs leading-relaxed text-muted-foreground">
               {description}
             </span>
           </Link>
@@ -42,19 +49,33 @@ export const ComponentFooterNav = ({ component }: { component: ComponentDoc }) =
           {previous && (
             <Link
               href={`/components/${previous.slug}`}
-              className={`flex items-center gap-3 ${CARD_CLASSES}`}
+              className={`group flex items-center gap-3 ${CARD_CLASSES}`}
             >
-              <ArrowLeftIcon weight="bold" className="size-4" aria-hidden="true" />
-              {previous.name}
+              <ArrowLeftIcon
+                weight="bold"
+                className="size-4 text-muted-foreground transition-transform duration-(--ui-duration-fast) group-hover:-translate-x-0.5 group-hover:text-foreground"
+                aria-hidden="true"
+              />
+              <div>
+                <span className="block font-mono text-[11px] text-muted-foreground">上一个</span>
+                <span className="font-medium text-foreground">{previous.name}</span>
+              </div>
             </Link>
           )}
           {next && (
             <Link
               href={`/components/${next.slug}`}
-              className={`flex items-center justify-end gap-3 md:col-start-2 ${CARD_CLASSES}`}
+              className={`group flex items-center justify-end gap-3 text-right md:col-start-2 ${CARD_CLASSES}`}
             >
-              {next.name}
-              <ArrowRightIcon weight="bold" className="size-4" aria-hidden="true" />
+              <div>
+                <span className="block font-mono text-[11px] text-muted-foreground">下一个</span>
+                <span className="font-medium text-foreground">{next.name}</span>
+              </div>
+              <ArrowRightIcon
+                weight="bold"
+                className="size-4 text-muted-foreground transition-transform duration-(--ui-duration-fast) group-hover:translate-x-0.5 group-hover:text-foreground"
+                aria-hidden="true"
+              />
             </Link>
           )}
         </nav>

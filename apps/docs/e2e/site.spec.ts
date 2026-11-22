@@ -9,8 +9,10 @@ import { waitForEntranceAnimations } from "./support/animations";
 
 const CLI_COMMAND = "pnpm dlx shadcn@latest add huangshh310/UI/button";
 
-/** 目录中的示例总数：Button 的 7 个，加上其余 11 个组件各 1 个 */
-const SPECIMEN_COUNT = 18;
+/** 目录中的示例总数：按钮分类 18 个（Button 7 + 其余 11），表单分类 7 个 */
+const SPECIMEN_COUNT = 25;
+const BUTTON_SPECIMEN_COUNT = 18;
+const FORM_SPECIMEN_COUNT = 7;
 
 /** 目录页中的示例卡片 */
 const specimens = (page: Page) => page.getByTestId("specimen-card");
@@ -28,6 +30,24 @@ test.describe("首页", () => {
     await page.goto("/");
 
     await expect(page.locator('[data-slot="button"]').first()).toBeVisible();
+  });
+
+  test("首屏快捷安装命令支持切换包管理器，吸顶页头带有遮罩背景避免文字穿透", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByRole("tabpanel", { name: "pnpm" })).toContainText(
+      "pnpm dlx shadcn@latest add",
+    );
+
+    await page.getByRole("tab", { name: "npm", exact: true }).click();
+    await expect(page.getByRole("tabpanel", { name: "npm", exact: true })).toContainText(
+      "npx shadcn@latest add",
+    );
+
+    const headerBg = await page
+      .locator("header")
+      .first()
+      .evaluate((el) => getComputedStyle(el).backgroundColor);
+    expect(headerBg).not.toBe("rgba(0, 0, 0, 0)");
   });
 });
 
@@ -74,11 +94,15 @@ test.describe("组件目录", () => {
   });
 
   test("分类页签筛选示例，并标记当前选中的分类", async ({ page }) => {
-    const tab = page.getByRole("tab", { name: "按钮" });
-    await tab.click();
+    const buttonTab = page.getByRole("tab", { name: "按钮" });
+    await buttonTab.click();
+    await expect(buttonTab).toHaveAttribute("aria-selected", "true");
+    await expect(specimens(page)).toHaveCount(BUTTON_SPECIMEN_COUNT);
 
-    await expect(tab).toHaveAttribute("aria-selected", "true");
-    await expect(specimens(page)).toHaveCount(SPECIMEN_COUNT);
+    const formTab = page.getByRole("tab", { name: "表单" });
+    await formTab.click();
+    await expect(formTab).toHaveAttribute("aria-selected", "true");
+    await expect(specimens(page)).toHaveCount(FORM_SPECIMEN_COUNT);
   });
 
   test("卡片上的名称链接到组件详情页的对应示例", async ({ page }) => {

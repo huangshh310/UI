@@ -2,6 +2,7 @@
  * 阴影刻度。
  *
  * 阴影颜色取自主题的 --ui-shadow-color，这里只决定偏移、模糊与透明度。
+ * 采用轻盈的多层弥散阴影，配合发丝细边线营造层次，替代厚重边框。
  * 选择器包含各主题作用域：自定义属性在声明它的元素上求值，
  * 只有在主题作用域内重新声明，局部切换主题时阴影颜色才会跟着变化。
  */
@@ -9,16 +10,18 @@
 .light,
 .dark,
 [data-theme] {
-  /* 贴地的一像素底边，用于按钮、输入框 */
-  --ui-shadow-sm: 0 1px 0 0 color-mix(in oklab, var(--ui-shadow-color) 10%, transparent);
+  /* 控件微光浅影，用于输入框、描边按钮与微卡片 */
+  --ui-shadow-sm:
+    0 1px 2px 0 color-mix(in oklab, var(--ui-shadow-color) 5%, transparent),
+    0 1px 1px 0 color-mix(in oklab, var(--ui-shadow-color) 3%, transparent);
 
-  /* 轻微抬升，用于卡片、下拉菜单 */
+  /* 轻微抬升，用于卡片、开关滑块与悬浮面板 */
   --ui-shadow-md:
-    0 1px 2px 0 color-mix(in oklab, var(--ui-shadow-color) 8%, transparent),
-    0 4px 10px -2px color-mix(in oklab, var(--ui-shadow-color) 12%, transparent);
+    0 1px 2px 0 color-mix(in oklab, var(--ui-shadow-color) 6%, transparent),
+    0 6px 16px -4px color-mix(in oklab, var(--ui-shadow-color) 10%, transparent);
 
-  /* 明显抬升，用于对话框、浮层 */
+  /* 明显抬升，用于下拉菜单、对话框与浮层 */
   --ui-shadow-lg:
-    0 2px 4px -1px color-mix(in oklab, var(--ui-shadow-color) 8%, transparent),
-    0 16px 36px -10px color-mix(in oklab, var(--ui-shadow-color) 22%, transparent);
+    0 2px 6px -1px color-mix(in oklab, var(--ui-shadow-color) 8%, transparent),
+    0 16px 36px -8px color-mix(in oklab, var(--ui-shadow-color) 18%, transparent);
 }

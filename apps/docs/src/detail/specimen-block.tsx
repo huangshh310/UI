@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * 详情页中的一个示例：标题、说明，以及「预览 / 代码」两个页签。
+ * 详情页中的一个示例：双层卡片结构，顶栏承载标题、说明与「预览 / 代码」切换。
  * 未选中的面板不会渲染。
  */
 import { Tabs } from "@base-ui/react/tabs";
@@ -23,31 +23,33 @@ interface SpecimenBlockProps {
 export const SpecimenBlock = ({ id, name, description, preview, codeHtml }: SpecimenBlockProps) => (
   <section id={id} data-testid="specimen-block" aria-labelledby={`${id}-title`}>
     <Tabs.Root defaultValue="preview">
-      <div className="mb-4 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h3 id={`${id}-title`} className="text-lg font-semibold tracking-tight">
-            {name}
-          </h3>
-          <p className="mt-1.5 text-sm text-muted-foreground">{description}</p>
+      <div className="overflow-hidden rounded-2xl border border-border bg-(--site-surface) shadow-xs">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/75 px-5 py-4">
+          <div>
+            <h3 id={`${id}-title`} className="text-base font-semibold tracking-tight">
+              {name}
+            </h3>
+            <p className="mt-1 text-xs text-muted-foreground">{description}</p>
+          </div>
+          <Tabs.List className={TAB_LIST_CLASSES}>
+            <Tabs.Tab value="preview" className={TAB_CLASSES}>
+              预览
+            </Tabs.Tab>
+            <Tabs.Tab value="code" className={TAB_CLASSES}>
+              代码
+            </Tabs.Tab>
+          </Tabs.List>
         </div>
-        <Tabs.List className={TAB_LIST_CLASSES}>
-          <Tabs.Tab value="preview" className={TAB_CLASSES}>
-            预览
-          </Tabs.Tab>
-          <Tabs.Tab value="code" className={TAB_CLASSES}>
-            代码
-          </Tabs.Tab>
-        </Tabs.List>
-      </div>
-      <div className="overflow-hidden rounded-2xl border border-border bg-(--site-tile)">
-        <Tabs.Panel value="preview" className="outline-none">
-          <SpecimenStage className="min-h-72">{preview}</SpecimenStage>
+        <Tabs.Panel value="preview" className="p-2.5 outline-none">
+          <SpecimenStage className="min-h-68 rounded-xl border border-border/65">
+            {preview}
+          </SpecimenStage>
         </Tabs.Panel>
         {/* 源码由本站在构建时生成，不含用户输入 */}
         <Tabs.Panel
           value="code"
           tabIndex={0}
-          className={`min-h-72 ${CODE_PANEL_CLASSES}`}
+          className={`min-h-68 ${CODE_PANEL_CLASSES}`}
           dangerouslySetInnerHTML={{ __html: codeHtml }}
         />
       </div>

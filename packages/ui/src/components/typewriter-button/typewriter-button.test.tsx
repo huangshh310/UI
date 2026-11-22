@@ -60,4 +60,72 @@ describe("TypewriterButton", () => {
 
     expect(visibleText()).toBe("De");
   });
+
+  it("默认在每个非空白字符打出时通过 Web Audio 合成按键音，卸载时关闭音频上下文", async () => {
+    const startOsc = vi.fn<() => void>();
+    const close = vi.fn<() => Promise<void>>(() => Promise.resolve());
+    const resume = vi.fn<() => Promise<void>>(() => Promise.resolve());
+    class MockAudioContext {
+      state = "running";
+      currentTime = 0;
+      sampleRate = 44100;
+      destination = {};
+      resume = resume;
+      close = close;
+      createBuffer = () => ({ getChannelData: () => new Float32Array(512) });
+      createBufferSource = () => ({
+        buffer: null,
+        connect: vi.fn<() => void>(),
+        start: startOsc,
+        stop: vi.fn<() => void>(),
+      });
+      createBiquadFilter = () => ({
+        type: "bandpass",
+        frequency: { value: 0 },
+        Q: { value: 0 },
+        connect: vi.fn<() => void>(),
+      });
+      createGain = () => ({
+        gain: {
+          setValueAtTime: vi.fn<() => void>(),
+          exponentialRampToValueAtTime: vi.fn<() => void>(),
+        },
+        connect: vi.fn<() => void>(),
+      });
+    }
+    vi.stubGlobal("AudioContext", MockAudioContext);
+
+    try {
+      const { unmount } = render(<TypewriterButton label="A B" charDuration={50} />);
+
+      await userEvent.click(screen.getByRole("button"));
+      act(() => vi.advanceTimersByTime(250));
+
+      // "A B" 中有 2 个非空白字符，空格不发声
+      expect(startOsc).toHaveBeenCalledTimes(2);
+      unmount();
+      expect(close).toHaveBeenCalledTimes(1);
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
+  it("sound 为假时不会创建 AudioContext 也不播放音效", async () => {
+    const ctor = vi.fn<() => void>();
+    vi.stubGlobal("AudioContext", function MockAudioContext() {
+      ctor();
+    } as unknown as typeof AudioContext);
+
+    try {
+      render(<TypewriterButton label="Go" charDuration={50} sound={false} />);
+
+      await userEvent.click(screen.getByRole("button"));
+      act(() => vi.advanceTimersByTime(200));
+
+      expect(visibleText()).toBe("Go");
+      expect(ctor).not.toHaveBeenCalled();
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
 });

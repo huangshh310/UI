@@ -1,7 +1,14 @@
 /**
- * 一个主题下的全部按钮：所有变体、尺寸与状态。
+ * 一个主题下的全部基础与动效组件：所有变体、尺寸与状态。
  * 浅色与深色各渲染一份，测试与截图都以面板为单位。
  */
+import {
+  DragToConfirm,
+  LiquidToggle,
+  MagneticButton,
+  MorphingButton,
+  type MorphingButtonStatus,
+} from "@matt-ui/motion";
 import { Button } from "@matt-ui/ui";
 import { useState } from "react";
 import { TEXT_SIZES, VARIANTS, type Theme } from "./constants";
@@ -14,8 +21,31 @@ const SearchIcon = () => (
   </svg>
 );
 
+const MotionRow = ({ onAction, onConfirm }: { onAction: () => void; onConfirm: () => void }) => {
+  const [morphStatus, setMorphStatus] = useState<MorphingButtonStatus>("idle");
+  const cycleMorph = () => {
+    setMorphStatus("loading");
+    setTimeout(() => setMorphStatus("success"), 150);
+  };
+
+  return (
+    <div className="row">
+      <MagneticButton onClick={onAction}>magnetic</MagneticButton>
+      <MorphingButton status={morphStatus} onClick={cycleMorph} />
+      <DragToConfirm
+        label="slide to delete"
+        confirmedLabel="deleted"
+        autoResetDelay={0}
+        onConfirm={onConfirm}
+      />
+      <LiquidToggle aria-label="notifications" />
+    </div>
+  );
+};
+
 export const ThemePanel = ({ theme }: { theme: Theme }) => {
   const [count, setCount] = useState(0);
+  const [confirmedCount, setConfirmedCount] = useState(0);
   const increment = () => setCount((previous) => previous + 1);
 
   return (
@@ -49,7 +79,12 @@ export const ThemePanel = ({ theme }: { theme: Theme }) => {
           loading signal
         </Button>
       </div>
+      <MotionRow
+        onAction={increment}
+        onConfirm={() => setConfirmedCount((previous) => previous + 1)}
+      />
       <output data-testid="count">{count}</output>
+      <output data-testid="confirmed-count">{confirmedCount}</output>
     </section>
   );
 };

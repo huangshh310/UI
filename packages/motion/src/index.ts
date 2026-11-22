@@ -13,3 +13,7 @@ export type {
   MorphingButtonProps,
   MorphingButtonStatus,
 } from "./components/morphing-button/index.js";
+export { OtpInput } from "./components/otp-input/index.js";
+export type { OtpInputProps, OtpValidationType } from "./components/otp-input/index.js";
+export { StretchSwitch } from "./components/stretch-switch/index.js";
+export type { StretchSwitchProps } from "./components/stretch-switch/index.js";

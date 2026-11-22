@@ -12,19 +12,19 @@
 | Phase 1  | 工程底座：Monorepo、Token、工具链                            | 完成           |
 | POC      | 交互底座实测（Base UI 与 UI SDK）                            | 完成           |
 | Phase 2  | 第一个可发布组件 Button                                      | 完成           |
-| 展示站   | 组件目录、详情页、命令面板、文档页（原定 Phase 5，提前搭建） | 已有 12 个组件 |
-| Registry | 通过 shadcn CLI 分发组件源码（原定 Phase 5，提前搭建）       | 已有 Button    |
+| 展示站   | 组件目录、详情页、命令面板、文档页（原定 Phase 5，提前搭建） | 已有 19 个组件 |
+| Registry | 通过 shadcn CLI 分发组件源码（原定 Phase 5，提前搭建）       | 已有 19 个条目 |
 
 完整路线见 [`UI-Platform-Implementation-Blueprint.md`](./UI-Platform-Implementation-Blueprint.md)。
 
 ## 包
 
-| 包                | 职责                                                       | 状态          |
-| ----------------- | ---------------------------------------------------------- | ------------- |
-| `@matt-ui/tokens` | Design Token：纯 CSS 变量，不依赖 React 与 Tailwind        | 可用          |
-| `@matt-ui/utils`  | 通用工具函数，目前只有类名合并函数 `cn()`                  | 可用          |
-| `@matt-ui/motion` | 依赖动画库 motion 的组件（磁吸、变形、拖动确认、液滴开关） | 已有 4 个组件 |
-| `@matt-ui/ui`     | React 组件                                                 | 已有 Button   |
+| 包                | 职责                                                | 状态           |
+| ----------------- | --------------------------------------------------- | -------------- |
+| `@matt-ui/tokens` | Design Token：纯 CSS 变量，不依赖 React 与 Tailwind | 可用           |
+| `@matt-ui/utils`  | 通用工具函数，目前只有类名合并函数 `cn()`           | 可用           |
+| `@matt-ui/motion` | 依赖动画库 motion 的组件（动效按钮与弹簧表单组件）  | 已有 6 个组件  |
+| `@matt-ui/ui`     | React 组件（按钮、代码片段面板与核心表单组件）      | 已有 13 个组件 |
 
 依赖方向：`tokens`、`utils` → `ui`、`motion`。`ui` 不依赖动画库，只有 `motion` 包依赖 `motion`。`tokens` 不依赖 React，`ui` 不依赖任何图表、地图或 3D 引擎。
 

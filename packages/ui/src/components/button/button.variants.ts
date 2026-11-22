@@ -10,7 +10,7 @@ import { cva } from "class-variance-authority";
 const BASE_CLASSES = [
   // 布局与盒模型
   "m-0 box-border inline-flex shrink-0 items-center justify-center gap-2",
-  "appearance-none rounded-md border border-solid border-transparent",
+  "appearance-none rounded-lg border border-solid border-transparent",
   // 文字
   "font-sans font-medium whitespace-nowrap no-underline select-none",
   // 交互：按下时下沉一像素，给出触感反馈
@@ -33,8 +33,9 @@ export const buttonVariants = cva(BASE_CLASSES, {
       primary: "bg-primary text-primary-foreground hover:bg-primary/88",
       // 次要操作：浅底，带一像素底边
       secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-accent",
-      // 描边：边线使用 input 色，保证与背景的对比度
-      outline: "border-input bg-transparent text-foreground shadow-sm hover:bg-accent",
+      // 描边：发丝边线加轻盈微影，悬停提亮
+      outline:
+        "border-border bg-background text-foreground shadow-sm hover:border-foreground/20 hover:bg-accent dark:bg-card",
       // 幽灵：平时无底色，悬停才出现
       ghost: "bg-transparent text-foreground hover:bg-accent",
       // 破坏性操作
@@ -42,7 +43,8 @@ export const buttonVariants = cva(BASE_CLASSES, {
       // 链接外观：下划线在悬停时加粗
       link: "bg-transparent text-foreground underline decoration-1 underline-offset-4 hover:decoration-2",
       // 信号：全页面最需要被看到的那一个操作
-      signal: "bg-signal text-signal-foreground hover:bg-signal/82",
+      signal:
+        "bg-signal text-signal-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] hover:bg-signal/90",
     },
     size: {
       sm: "h-8 px-3 text-xs",

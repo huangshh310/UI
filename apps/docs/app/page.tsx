@@ -1,14 +1,14 @@
 /**
- * 首页：居中的首屏，以及示例卡片网格。
+ * 首页：全宽首屏与精选组件画廊。
  */
 import { FeaturedSection } from "@/home/featured-section";
 import { HeroSection } from "@/home/hero-section";
 
 const HomePage = () => (
-  <div className="mx-auto max-w-[1400px] px-5 md:px-9">
+  <>
     <HeroSection />
     <FeaturedSection />
-  </div>
+  </>
 );
 
 export default HomePage;

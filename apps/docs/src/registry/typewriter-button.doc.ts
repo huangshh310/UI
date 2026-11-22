@@ -52,6 +52,12 @@ export function Demo() {
       description: "挂载后立即开始打字。",
     },
     {
+      name: "sound",
+      type: "boolean",
+      defaultValue: "true",
+      description: "逐字显示时通过 Web Audio API 合成机械按键音效。",
+    },
+    {
       name: "onComplete",
       type: "() => void",
       defaultValue: "-",

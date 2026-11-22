@@ -5,19 +5,29 @@
 import { REGISTRY_ADDRESS } from "@/site/constants";
 import { BOOK_CALL_BUTTON_DOC } from "./book-call-button.doc";
 import { BUTTON_DOC } from "./button.doc";
+import { CODE_SNIPPET_DECK_DOC } from "./code-snippet-deck.doc";
+import { COMBOBOX_DOC } from "./combobox.doc";
+import { DRAG_TO_CONFIRM_DOC } from "./drag-to-confirm.doc";
+import { DRAW_CHECKBOX_DOC } from "./draw-checkbox.doc";
+import { FORM_DOC } from "./form.doc";
+import { LIQUID_RIPPLE_BUTTON_DOC } from "./liquid-ripple-button.doc";
+import { LIQUID_TOGGLE_DOC } from "./liquid-toggle.doc";
+import { LOCK_INPUT_DOC } from "./lock-input.doc";
 import { MAGNETIC_BUTTON_DOC } from "./magnetic-button.doc";
 import { MORPHING_BUTTON_DOC } from "./morphing-button.doc";
-import { DRAG_TO_CONFIRM_DOC } from "./drag-to-confirm.doc";
-import { LIQUID_TOGGLE_DOC } from "./liquid-toggle.doc";
-import { CODE_SNIPPET_DECK_DOC } from "./code-snippet-deck.doc";
-import { LIQUID_RIPPLE_BUTTON_DOC } from "./liquid-ripple-button.doc";
 import { NEON_EDGE_BUTTON_DOC } from "./neon-edge-button.doc";
+import { OTP_INPUT_DOC } from "./otp-input.doc";
 import { PRESS_BUTTON_DOC } from "./press-button.doc";
 import { SPLIT_BUTTON_DOC } from "./split-button.doc";
+import { SPRING_SELECT_DOC } from "./spring-select.doc";
+import { STRETCH_SWITCH_DOC } from "./stretch-switch.doc";
 import { TYPEWRITER_BUTTON_DOC } from "./typewriter-button.doc";
 import type { Category, ComponentDoc, Specimen } from "./registry.types";
 
-export const CATEGORIES: Category[] = [{ id: "buttons", label: "按钮" }];
+export const CATEGORIES: Category[] = [
+  { id: "buttons", label: "按钮" },
+  { id: "forms", label: "表单" },
+];
 
 export const COMPONENTS: ComponentDoc[] = [
   BUTTON_DOC,
@@ -32,6 +42,13 @@ export const COMPONENTS: ComponentDoc[] = [
   DRAG_TO_CONFIRM_DOC,
   LIQUID_TOGGLE_DOC,
   CODE_SNIPPET_DECK_DOC,
+  LOCK_INPUT_DOC,
+  DRAW_CHECKBOX_DOC,
+  STRETCH_SWITCH_DOC,
+  SPRING_SELECT_DOC,
+  COMBOBOX_DOC,
+  OTP_INPUT_DOC,
+  FORM_DOC,
 ];
 
 /** 收录后多少天内算「最近」 */
@@ -47,6 +64,29 @@ export interface DirectoryEntry {
 export const DIRECTORY: DirectoryEntry[] = COMPONENTS.flatMap((component) =>
   component.specimens.map((specimen) => ({ specimen, component })),
 );
+
+/**
+ * 首页精选顺序：按组件去重，优先展示形态各异的交互组件，
+ * 避免同一组件的多组基础变体占满首屏网格。
+ */
+const FEATURED_SLUGS = [
+  "button",
+  "drag-to-confirm",
+  "otp-input",
+  "code-snippet-deck",
+  "lock-input",
+  "combobox",
+  "spring-select",
+  "stretch-switch",
+  "draw-checkbox",
+];
+
+/** 首页展示的精选示例（每个组件取代表性主示例） */
+export const FEATURED_DIRECTORY: DirectoryEntry[] = FEATURED_SLUGS.flatMap((slug) => {
+  const component = COMPONENTS.find((item) => item.slug === slug);
+  const specimen = component?.specimens[0];
+  return component && specimen ? [{ component, specimen }] : [];
+});
 
 export const findComponent = (slug: string): ComponentDoc | undefined =>
   COMPONENTS.find((component) => component.slug === slug);

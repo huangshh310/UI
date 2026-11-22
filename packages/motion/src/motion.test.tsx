@@ -7,7 +7,14 @@
 import { act, cleanup, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { DragToConfirm, LiquidToggle, MagneticButton, MorphingButton } from "./index.js";
+import {
+  DragToConfirm,
+  LiquidToggle,
+  MagneticButton,
+  MorphingButton,
+  OtpInput,
+  StretchSwitch,
+} from "./index.js";
 
 afterEach(() => {
   cleanup();
@@ -93,6 +100,33 @@ describe("DragToConfirm", () => {
 
     expect(onConfirm).not.toHaveBeenCalled();
   });
+
+  it("默认在确认时触发震动反馈，haptics 为假时不震动", async () => {
+    const vibrate = vi.fn<(pattern: VibratePattern) => boolean>(() => true);
+    const original = Object.getOwnPropertyDescriptor(Navigator.prototype, "vibrate");
+    Object.defineProperty(navigator, "vibrate", { value: vibrate, configurable: true });
+
+    try {
+      render(<DragToConfirm label="滑动删除" autoResetDelay={0} />);
+      screen.getByRole("button", { name: /滑动删除/ }).focus();
+      await userEvent.keyboard("{Enter}");
+      expect(vibrate).toHaveBeenCalledTimes(1);
+
+      vibrate.mockClear();
+      cleanup();
+
+      render(<DragToConfirm label="静默删除" haptics={false} autoResetDelay={0} />);
+      screen.getByRole("button", { name: /静默删除/ }).focus();
+      await userEvent.keyboard("{Enter}");
+      expect(vibrate).not.toHaveBeenCalled();
+    } finally {
+      if (original) {
+        Object.defineProperty(Navigator.prototype, "vibrate", original);
+      } else {
+        Reflect.deleteProperty(navigator, "vibrate");
+      }
+    }
+  });
 });
 
 describe("MagneticButton", () => {
@@ -103,5 +137,75 @@ describe("MagneticButton", () => {
     await userEvent.click(screen.getByRole("button", { name: "Launch" }));
 
     expect(onClick).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("StretchSwitch", () => {
+  it("点击标签或开关可在开关状态间切换并通知 onCheckedChange", async () => {
+    const onCheckedChange = vi.fn<(checked: boolean) => void>();
+    render(<StretchSwitch label="自动保存" onCheckedChange={onCheckedChange} />);
+
+    const sw = screen.getByRole("switch", { name: "自动保存" });
+    expect(sw.getAttribute("aria-checked")).toBe("false");
+
+    await userEvent.click(screen.getByText("自动保存"));
+    expect(sw.getAttribute("aria-checked")).toBe("true");
+    expect(onCheckedChange).toHaveBeenLastCalledWith(true);
+
+    sw.focus();
+    await userEvent.keyboard(" ");
+    expect(sw.getAttribute("aria-checked")).toBe("false");
+    expect(onCheckedChange).toHaveBeenLastCalledWith(false);
+  });
+
+  it("受控模式下由外部 checked 决定，禁用时不可切换", async () => {
+    const onCheckedChange = vi.fn<(checked: boolean) => void>();
+    render(
+      <>
+        <StretchSwitch label="受控开关" checked={false} onCheckedChange={onCheckedChange} />
+        <StretchSwitch label="禁用开关" disabled onCheckedChange={onCheckedChange} />
+      </>,
+    );
+
+    await userEvent.click(screen.getByRole("switch", { name: "受控开关" }));
+    expect(screen.getByRole("switch", { name: "受控开关" }).getAttribute("aria-checked")).toBe(
+      "false",
+    );
+    expect(onCheckedChange).toHaveBeenCalledTimes(1);
+
+    await userEvent.click(screen.getByRole("switch", { name: "禁用开关" }));
+    expect(onCheckedChange).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("OtpInput", () => {
+  it("逐位输入数字自动推进，填满后触发 onComplete，非数字被拒绝", async () => {
+    const onComplete = vi.fn<(value: string) => void>();
+    const onValueChange = vi.fn<(value: string) => void>();
+    render(
+      <OtpInput label="验证码" length={4} onValueChange={onValueChange} onComplete={onComplete} />,
+    );
+
+    const inputs = screen.getAllByRole("textbox");
+    expect(inputs).toHaveLength(4);
+
+    await userEvent.click(inputs[0]!);
+    await userEvent.keyboard("1a234");
+
+    expect(onComplete).toHaveBeenCalledWith("1234");
+    expect(onValueChange).toHaveBeenLastCalledWith("1234");
+  });
+
+  it("粘贴完整验证码一次性填满所有位并触发 onComplete", async () => {
+    const onComplete = vi.fn<(value: string) => void>();
+    render(<OtpInput aria-label="安全码" length={6} separatorAt={3} onComplete={onComplete} />);
+
+    const inputs = screen.getAllByRole("textbox");
+    expect(inputs).toHaveLength(6);
+
+    await userEvent.click(inputs[0]!);
+    await userEvent.paste("842916");
+
+    expect(onComplete).toHaveBeenCalledWith("842916");
   });
 });

@@ -20,14 +20,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.985 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.178 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
         }
       },
       "css": {
@@ -62,14 +62,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.985 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.178 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
         }
       },
       "css": {
@@ -104,14 +104,56 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.985 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.178 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Combobox",
+      "description": "A searchable combobox built on Base UI with highlighted match text, clear trigger, and async loading state.",
+      "categories": ["forms"],
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/combobox.tsx",
+          "type": "registry:ui",
+          "target": "@ui/combobox.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
         }
       },
       "css": {
@@ -146,14 +188,98 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.985 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.178 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "draw-checkbox",
+      "type": "registry:ui",
+      "title": "Draw Checkbox",
+      "description": "A checkbox built on Base UI whose checkmark draws smoothly along its SVG path.",
+      "categories": ["forms"],
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/draw-checkbox.tsx",
+          "type": "registry:ui",
+          "target": "@ui/draw-checkbox.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "form",
+      "type": "registry:ui",
+      "title": "Form",
+      "description": "A composable form system built on Base UI Form, Field, and RadioGroup with accessible validation messages.",
+      "categories": ["forms"],
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/form.tsx",
+          "type": "registry:ui",
+          "target": "@ui/form.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
         }
       },
       "css": {
@@ -188,14 +314,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.985 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.178 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
         }
       },
       "css": {
@@ -230,14 +356,56 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.985 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.178 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "lock-input",
+      "type": "registry:ui",
+      "title": "Lock Input",
+      "description": "A text input whose focus ring scales in and locks cleanly onto the border.",
+      "categories": ["forms"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/lock-input.tsx",
+          "type": "registry:ui",
+          "target": "@ui/lock-input.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
         }
       },
       "css": {
@@ -272,14 +440,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.985 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.178 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
         }
       },
       "css": {
@@ -314,14 +482,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.985 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.178 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
         }
       },
       "css": {
@@ -356,14 +524,56 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.985 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.178 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "otp-input",
+      "type": "registry:ui",
+      "title": "OTP Input",
+      "description": "An accessible one-time-passcode input built on Base UI OTPField with spring pop feedback on entry.",
+      "categories": ["forms"],
+      "dependencies": ["@base-ui/react", "motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/otp-input.tsx",
+          "type": "registry:ui",
+          "target": "@ui/otp-input.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
         }
       },
       "css": {
@@ -398,14 +608,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.985 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.178 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
         }
       },
       "css": {
@@ -440,14 +650,98 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.985 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.178 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "spring-select",
+      "type": "registry:ui",
+      "title": "Spring Select",
+      "description": "A select dropdown built on Base UI with crisp spring-overshoot panel and chevron transitions.",
+      "categories": ["forms"],
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/spring-select.tsx",
+          "type": "registry:ui",
+          "target": "@ui/spring-select.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "stretch-switch",
+      "type": "registry:ui",
+      "title": "Stretch Switch",
+      "description": "A tactile switch built on Base UI whose thumb stretches while pressed and snaps across with spring physics.",
+      "categories": ["forms"],
+      "dependencies": ["@base-ui/react", "motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/stretch-switch.tsx",
+          "type": "registry:ui",
+          "target": "@ui/stretch-switch.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
         }
       },
       "css": {
@@ -482,14 +776,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.985 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.9 0.2 125)",
-          "signal-foreground": "oklch(0.145 0.004 286)",
-          "destructive-foreground": "oklch(0.178 0.004 286)"
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
         }
       },
       "css": {

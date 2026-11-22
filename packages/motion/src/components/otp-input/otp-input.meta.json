@@ -1,0 +1,6 @@
+{
+  "name": "otp-input",
+  "title": "OTP Input",
+  "description": "An accessible one-time-passcode input built on Base UI OTPField with spring pop feedback on entry.",
+  "categories": ["forms"]
+}

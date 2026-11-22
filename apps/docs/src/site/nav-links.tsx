@@ -1,7 +1,8 @@
 "use client";
 
 /**
- * 顶部导航链接：居中的胶囊。需要读取当前路径来标记选中项，因此是客户端组件。
+ * 顶部导航链接：居中分段胶囊，当前页以抬升卡片高亮。
+ * 需要读取当前路径来标记选中项，因此是客户端组件。
  */
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -17,14 +18,14 @@ export const NavLinks = () => {
   return (
     <nav
       aria-label="主导航"
-      className="flex items-center gap-1 rounded-full bg-background/80 p-1 backdrop-blur-md"
+      className="flex items-center gap-0.5 rounded-full border border-border/75 bg-secondary/65 p-1"
     >
       {NAV_LINKS.map(({ href, label }) => (
         <Link
           key={href}
           href={href}
           aria-current={isActive(pathname, href) ? "page" : undefined}
-          className="rounded-full px-2.5 py-1.5 text-sm whitespace-nowrap text-muted-foreground sm:px-3.5 transition-colors duration-(--ui-duration-fast) hover:text-foreground aria-[current=page]:bg-accent aria-[current=page]:text-foreground"
+          className="rounded-full px-3 py-1.5 text-sm font-medium whitespace-nowrap text-muted-foreground outline-none transition-all duration-(--ui-duration-fast) hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:px-4 aria-[current=page]:bg-card aria-[current=page]:text-foreground aria-[current=page]:shadow-xs"
         >
           {label}
         </Link>
