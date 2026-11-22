@@ -24,7 +24,7 @@ export const NavLinks = () => {
           key={href}
           href={href}
           aria-current={isActive(pathname, href) ? "page" : undefined}
-          className="rounded-full px-3.5 py-1.5 text-sm text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:text-foreground aria-[current=page]:bg-accent aria-[current=page]:text-foreground"
+          className="rounded-full px-2.5 py-1.5 text-sm whitespace-nowrap text-muted-foreground sm:px-3.5 transition-colors duration-(--ui-duration-fast) hover:text-foreground aria-[current=page]:bg-accent aria-[current=page]:text-foreground"
         >
           {label}
         </Link>

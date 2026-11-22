@@ -214,6 +214,23 @@ test.describe("主题", () => {
   });
 });
 
+test.describe("窄屏", () => {
+  test.use({ viewport: { width: 390, height: 800 } });
+
+  test("页头导航保持单行，页面没有横向溢出", async ({ page }) => {
+    await page.goto("/components");
+    const links = page.getByRole("navigation", { name: "主导航" }).getByRole("link");
+
+    for (const link of await links.all()) {
+      // 单行文字的链接高度不会超过 40px；换行后会明显更高
+      expect((await link.boundingBox())!.height).toBeLessThan(40);
+    }
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
+    ).toBe(true);
+  });
+});
+
 test.describe("减少动态效果", () => {
   test("入场动效被关闭，内容立即可见", async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });

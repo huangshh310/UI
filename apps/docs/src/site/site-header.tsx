@@ -10,14 +10,14 @@ import { ThemeToggle } from "./theme-toggle";
 
 export const SiteHeader = () => (
   <header className="sticky top-0 z-(--ui-z-sticky)">
-    <div className="mx-auto grid h-[72px] max-w-[1400px] grid-cols-[1fr_auto_1fr] items-center px-5 md:px-9">
+    <div className="mx-auto grid h-[72px] max-w-[1400px] grid-cols-[1fr_auto_1fr] items-center gap-2 px-4 md:px-9">
       <Link
         href="/"
         className="flex items-center gap-2.5 justify-self-start rounded-full bg-background/80 py-1.5 pr-3 font-mono text-sm backdrop-blur-md"
       >
         {/* 标识：一枚信号色圆点 */}
-        <span aria-hidden="true" className="size-3 rounded-full bg-signal" />
-        {SITE_NAME}
+        <span aria-hidden="true" className="size-3 shrink-0 rounded-full bg-signal" />
+        <span className="max-sm:sr-only">{SITE_NAME}</span>
       </Link>
       <NavLinks />
       <div className="flex items-center gap-0.5 justify-self-end rounded-full bg-background/80 backdrop-blur-md">
