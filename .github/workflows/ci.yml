@@ -53,3 +53,21 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec turbo run build --filter="./packages/*"
       - run: pnpm test:consumer
+
+  # 展示站：在真实浏览器里检查目录、详情页、主题切换与可访问性
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec turbo run build --filter="./packages/*"
+      - run: pnpm --filter @matt-ui/docs exec playwright install --with-deps chromium
+      - run: pnpm --filter @matt-ui/docs e2e

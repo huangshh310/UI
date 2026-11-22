@@ -1,0 +1,88 @@
+/*
+ * 展示站的全局样式。
+ *
+ * 站点自己就是组件库的使用者：颜色、圆角、时长全部来自 @matt-ui/tokens，
+ * 组件的样式由本站的 Tailwind 扫描 @matt-ui/ui 的产物后统一生成。
+ */
+@import "tailwindcss";
+@import "@matt-ui/tokens";
+@import "@matt-ui/tokens/tailwind.css";
+
+/* 让 Tailwind 为组件库用到的类名生成样式 */
+@source "../node_modules/@matt-ui/ui/dist";
+
+:root {
+  /* 把 Token 的字体栈接到本站加载的 Geist 字体上；中文回退到系统字体 */
+  --ui-font-sans:
+    var(--font-geist-sans), "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui,
+    sans-serif;
+  --ui-font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+html {
+  /* 页内锚点跳转时，给吸顶的页头留出位置 */
+  scroll-padding-top: 5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/*
+ * 预览舞台：点阵底纹，像一张标本纸。
+ * 点的颜色取自前景色，因此两个主题下都可见且不抢眼。
+ */
+.stage {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--ui-foreground) 16%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 18px 18px;
+  background-position: center;
+}
+
+/*
+ * 入场动效：自下而上淡入，按 --i 依次延迟。
+ * 时长取自 Token。
+ */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.rise {
+  animation: rise var(--ui-duration-slow) var(--ui-ease-out) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+/* 时长由 Token 压到接近零，但依次延迟还在；这里把入场动效整体关掉，内容立即可见 */
+@media (prefers-reduced-motion: reduce) {
+  .rise {
+    animation: none;
+  }
+}
+
+/* 源码高亮：Shiki 以 CSS 变量输出浅色与深色两套配色，这里按主题选用 */
+.shiki {
+  margin: 0;
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  background: transparent;
+  font-family: var(--ui-font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.75;
+  tab-size: 2;
+}
+
+.shiki span {
+  color: var(--shiki-light);
+}
+
+[data-theme="dark"] .shiki span {
+  color: var(--shiki-dark);
+}

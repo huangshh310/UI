@@ -6,12 +6,13 @@
 
 ## 当前进度
 
-| 阶段    | 内容                              | 状态 |
-| ------- | --------------------------------- | ---- |
-| Phase 0 | 仓库审计与技术选型                | 完成 |
-| Phase 1 | 工程底座：Monorepo、Token、工具链 | 完成 |
-| POC     | 交互底座实测（Base UI 与 UI SDK） | 完成 |
-| Phase 2 | 第一个可发布组件 Button           | 完成 |
+| 阶段    | 内容                                                     | 状态        |
+| ------- | -------------------------------------------------------- | ----------- |
+| Phase 0 | 仓库审计与技术选型                                       | 完成        |
+| Phase 1 | 工程底座：Monorepo、Token、工具链                        | 完成        |
+| POC     | 交互底座实测（Base UI 与 UI SDK）                        | 完成        |
+| Phase 2 | 第一个可发布组件 Button                                  | 完成        |
+| 展示站  | 组件目录、实时预览、源码与 API（原定 Phase 5，提前搭建） | 已有 Button |
 
 完整路线见 [`UI-Platform-Implementation-Blueprint.md`](./UI-Platform-Implementation-Blueprint.md)。
 
@@ -51,10 +52,13 @@ pnpm typecheck      # 类型检查
 pnpm lint           # Oxlint 静态检查
 pnpm format         # Prettier 格式化
 pnpm test:consumer  # 把包打成 tarball，装进独立项目做端到端验证（需先 pnpm build）
+pnpm --filter @matt-ui/docs dev        # 启动展示站（http://localhost:3000，需先 pnpm build）
 pnpm --filter @matt-ui/storybook dev   # 启动组件工作台
 ```
 
-依赖安装受发布年龄策略约束：只会安装发布满 7 天的版本，配置见 `pnpm-workspace.yaml`。
+依赖由 `pnpm-workspace.yaml` 统一管理：所有外部依赖的版本都写在其中的 `catalog`，各包的 `package.json` 只写 `catalog:`。同一个文件还规定了只安装发布满 7 天的版本。
+
+唯一的例外是 `tests/consumer-fixture`：它有意独立于工作区，用来模拟一个从外部安装本库的项目。
 
 ## 文档
 

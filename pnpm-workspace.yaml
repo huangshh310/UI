@@ -24,3 +24,41 @@ allowBuilds:
   # Storybook 的依赖。安装脚本只用于校验或补装平台二进制；二进制已通过可选依赖
   # 安装到位（storybook build 实测可用），因此不允许执行。
   esbuild: false
+
+# 依赖版本的唯一来源。各包的 package.json 只写 catalog:，版本在这里统一维护。
+# strict：pnpm add 会把新依赖写入这里，并拒绝与这里不一致的版本。
+catalogMode: strict
+
+catalog:
+  "@axe-core/playwright": "^4.14.0"
+  "@base-ui/react": "^1.9.0"
+  "@phosphor-icons/react": ^2.1.10
+  "@playwright/test": "^1.65.1"
+  "@storybook/addon-a11y": "^10.6.7"
+  "@storybook/react-vite": "^10.6.7"
+  "@tailwindcss/cli": "^4.3.5"
+  "@tailwindcss/postcss": ^4.3.5
+  "@testing-library/react": "^16.3.3"
+  "@testing-library/user-event": "^14.6.10"
+  "@types/node": "^26.6.6"
+  "@types/react": "^19.3.0"
+  "@types/react-dom": "^19.3.0"
+  "@ui-sdk/core": "0.1.0-beta.13"
+  "@ui-sdk/react": "0.1.0-beta.13"
+  class-variance-authority: "^0.7.1"
+  clsx: "^2.1.1"
+  geist: ^1.9.2
+  jsdom: "^31.0.1"
+  next: "^16.4.6"
+  oxlint: "^1.93.0"
+  prettier: "^3.10.1"
+  react: "^19.3.1"
+  react-dom: "^19.3.1"
+  shiki: ^4.6.0
+  storybook: "^10.6.7"
+  tailwind-merge: "^3.7.0"
+  tailwindcss: "^4.3.5"
+  turbo: "^2.11.11"
+  typescript: "^7.0.2"
+  vite: "^8.3.8"
+  vitest: "^5.1.0"

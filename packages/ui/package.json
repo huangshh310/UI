@@ -29,20 +29,20 @@
   },
   "devDependencies": {
     "@matt-ui/tokens": "workspace:*",
-    "@tailwindcss/cli": "^4.3.5",
-    "@testing-library/react": "^16.3.3",
-    "@testing-library/user-event": "^14.6.10",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "jsdom": "^31.0.1",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "tailwindcss": "^4.3.5",
-    "typescript": "^7.0.2",
-    "vitest": "^5.1.0"
+    "@tailwindcss/cli": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@testing-library/user-event": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "jsdom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "dependencies": {
     "@matt-ui/utils": "workspace:*",
-    "class-variance-authority": "^0.7.1"
+    "class-variance-authority": "catalog:"
   }
 }

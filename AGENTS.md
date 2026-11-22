@@ -17,11 +17,14 @@ pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build
 这些约定无法从配置文件中直接看出：
 
 - 相对导入写 `.js` 扩展名（`import { cn } from "./cn.js"`），目标是 `.ts` 或 `.tsx` 时也一样。
-- 新增依赖用 `pnpm add`，版本交给发布年龄策略选择；安装被策略拦截时停下来询问用户。
+- 依赖版本只写在 `pnpm-workspace.yaml` 的 `catalog` 中，`package.json` 里写 `catalog:`。新增依赖用 `pnpm add`，它会把版本写进 catalog；依赖已在 catalog 中时，直接在 `package.json` 里加一行 `catalog:` 再 `pnpm install`。
+- 版本交给发布年龄策略选择；安装被策略拦截时停下来询问用户。
 - 依赖带安装脚本时，在 `pnpm-workspace.yaml` 的 `allowBuilds` 中逐个表态并写明理由。
 - 测试先于实现编写，只在包的公开入口上断言行为。组件自己做出的行为决定用 Vitest 验证；样式、主题、焦点环在 `tests/consumer-fixture` 的端到端测试里验证。
 - Stories 与消费方验证项目只从 `@matt-ui/ui` 的公开入口引入组件，改了组件源码要先重新构建才能看到变化。
 - 每个组件一个目录，放在 `packages/ui/src/components/` 下，类型在 `*.types.ts`，样式定义在 `*.variants.ts`。
+- 新组件要同时出现在展示站：在 `apps/docs/src/demos/` 写示例，在 `apps/docs/src/registry/` 登记文档数据。展示的源码直接读自示例文件。
+- 改动展示站后运行 `pnpm --filter @matt-ui/docs e2e`。
 - 组件只使用 `--ui-*` Token 对应的工具类；颜色、时长、层级的字面量集中在 `packages/tokens`。
 - 修改 `packages/tokens/src/themes/` 的色值后，核对每组前景与表面的对比度不低于 4.5:1，input 与 ring 对背景不低于 3:1。
 - 一个组件的交互行为只来自一个交互底座，底座的类型留在组件实现文件内部。

@@ -1,0 +1,35 @@
+{
+  "name": "@matt-ui/docs",
+  "version": "0.0.0",
+  "private": true,
+  "description": "matt-ui 的展示站：组件目录、实时预览、源码与 API。",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "build": "next build",
+    "start": "next start --port 3300",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "e2e": "playwright test"
+  },
+  "dependencies": {
+    "@base-ui/react": "catalog:",
+    "@matt-ui/tokens": "workspace:*",
+    "@matt-ui/ui": "workspace:*",
+    "@phosphor-icons/react": "catalog:",
+    "geist": "catalog:",
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "shiki": "catalog:"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "catalog:",
+    "@playwright/test": "catalog:",
+    "@tailwindcss/postcss": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
+  }
+}
