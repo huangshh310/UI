@@ -68,8 +68,9 @@ pnpm test:consumer  # 把包打成 tarball，装进独立项目做端到端验�
 pnpm test:registry  # 用 shadcn CLI 把组件装进一个全新的项目并在浏览器里检查
 pnpm registry:generate   # 从组件源码重新生成 Registry
 pnpm component:new <名称> # 为新组件创建起始文件
-pnpm --filter @matt-ui/docs dev        # 启动展示站（http://localhost:3000，需先 pnpm build）
-pnpm --filter @matt-ui/storybook dev   # 启动组件工作台
+pnpm site           # 构建并以生产模式启动展示站（http://localhost:3000），看效果用这个
+pnpm --filter @matt-ui/docs dev        # 展示站的开发模式，改站点代码时用（需先 pnpm build）
+pnpm --filter @matt-ui/storybook dev   # 启动组件工作台（读取构建产物，运行期间不要重新构建组件库）
 ```
 
 依赖由 `pnpm-workspace.yaml` 统一管理：所有外部依赖的版本都写在其中的 `catalog`，各包的 `package.json` 只写 `catalog:`。同一个文件还规定了只安装发布满 7 天的版本。
