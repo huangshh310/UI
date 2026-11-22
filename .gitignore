@@ -1,0 +1,17 @@
+# 依赖
+node_modules/
+
+# 构建产物与缓存
+dist/
+.turbo/
+*.tsbuildinfo
+coverage/
+
+# 环境变量与本地配置
+.env
+.env.*
+!.env.example
+
+# 系统与编辑器
+.DS_Store
+*.log

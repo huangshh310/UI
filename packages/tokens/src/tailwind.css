@@ -1,0 +1,99 @@
+/*
+ * Tailwind CSS v4 主题映射。
+ *
+ * 把 --ui-* Token 接入 Tailwind 的主题命名空间，于是可以直接写
+ * bg-primary、text-muted-foreground、rounded-md、shadow-lg 等工具类。
+ * 使用前需先引入 index.css（提供 --ui-* 变量本身）。
+ *
+ * 使用 inline：工具类直接引用 var(--ui-*)，而不是经由 Tailwind 的中间变量，
+ * 这样在局部切换主题时工具类才会取到当前作用域内的值。
+ *
+ * 颜色命名与 shadcn 的约定保持一致，便于与 shadcn Registry 生态的组件混用；
+ * signal 是本项目独有的信号色。
+ *
+ * 时长与层级在 Tailwind 中没有对应的主题命名空间，
+ * 组件中用任意值语法引用，例如 duration-(--ui-duration-fast)、z-(--ui-z-modal)。
+ */
+
+/* 让 dark: 变体跟随本项目的主题开关，而不是系统偏好 */
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  /* 语义色 */
+  --color-background: var(--ui-background);
+  --color-foreground: var(--ui-foreground);
+  --color-card: var(--ui-card);
+  --color-card-foreground: var(--ui-card-foreground);
+  --color-popover: var(--ui-popover);
+  --color-popover-foreground: var(--ui-popover-foreground);
+  --color-primary: var(--ui-primary);
+  --color-primary-foreground: var(--ui-primary-foreground);
+  --color-secondary: var(--ui-secondary);
+  --color-secondary-foreground: var(--ui-secondary-foreground);
+  --color-muted: var(--ui-muted);
+  --color-muted-foreground: var(--ui-muted-foreground);
+  --color-accent: var(--ui-accent);
+  --color-accent-foreground: var(--ui-accent-foreground);
+  --color-signal: var(--ui-signal);
+  --color-signal-foreground: var(--ui-signal-foreground);
+  --color-border: var(--ui-border);
+  --color-input: var(--ui-input);
+  --color-ring: var(--ui-ring);
+  --color-success: var(--ui-success);
+  --color-success-foreground: var(--ui-success-foreground);
+  --color-warning: var(--ui-warning);
+  --color-warning-foreground: var(--ui-warning-foreground);
+  --color-destructive: var(--ui-destructive);
+  --color-destructive-foreground: var(--ui-destructive-foreground);
+  --color-info: var(--ui-info);
+  --color-info-foreground: var(--ui-info-foreground);
+
+  /* 字体族 */
+  --font-sans: var(--ui-font-sans);
+  --font-mono: var(--ui-font-mono);
+
+  /* 字号 */
+  --text-xs: var(--ui-text-xs);
+  --text-sm: var(--ui-text-sm);
+  --text-base: var(--ui-text-base);
+  --text-lg: var(--ui-text-lg);
+  --text-xl: var(--ui-text-xl);
+  --text-2xl: var(--ui-text-2xl);
+  --text-3xl: var(--ui-text-3xl);
+  --text-4xl: var(--ui-text-4xl);
+
+  /* 字重 */
+  --font-weight-normal: var(--ui-font-weight-regular);
+  --font-weight-medium: var(--ui-font-weight-medium);
+  --font-weight-semibold: var(--ui-font-weight-semibold);
+  --font-weight-bold: var(--ui-font-weight-bold);
+
+  /* 行高 */
+  --leading-tight: var(--ui-leading-tight);
+  --leading-snug: var(--ui-leading-snug);
+  --leading-normal: var(--ui-leading-normal);
+
+  /* 字距 */
+  --tracking-tight: var(--ui-tracking-tight);
+  --tracking-normal: var(--ui-tracking-normal);
+  --tracking-wide: var(--ui-tracking-wide);
+
+  /* 间距基础单位 */
+  --spacing: var(--ui-spacing);
+
+  /* 圆角 */
+  --radius-sm: var(--ui-radius-sm);
+  --radius-md: var(--ui-radius-md);
+  --radius-lg: var(--ui-radius-lg);
+  --radius-xl: var(--ui-radius-xl);
+
+  /* 阴影 */
+  --shadow-sm: var(--ui-shadow-sm);
+  --shadow-md: var(--ui-shadow-md);
+  --shadow-lg: var(--ui-shadow-lg);
+
+  /* 缓动 */
+  --ease-in: var(--ui-ease-in);
+  --ease-out: var(--ui-ease-out);
+  --ease-in-out: var(--ui-ease-in-out);
+}

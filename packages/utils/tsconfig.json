@@ -1,0 +1,5 @@
+{
+  // 类型检查配置：覆盖源码与测试，不产出文件。
+  "extends": "../../tsconfig.base.json",
+  "include": ["src"]
+}

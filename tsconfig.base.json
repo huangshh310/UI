@@ -1,0 +1,27 @@
+{
+  // 全仓库共享的 TypeScript 基础配置，各包通过 extends 继承。
+  // 采用 nodenext：源码中的相对导入必须写 .js 扩展名，
+  // 这样产出的 JS 与 .d.ts 在 Node 原生 ESM 和各类打包器下都能直接解析。
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "nodenext",
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "types": [],
+    "jsx": "react-jsx",
+
+    // 严格类型检查
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // 模块语义：保证每个文件可被独立转译
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+
+    "skipLibCheck": true,
+    // 默认只做类型检查；需要产出文件的包在 tsconfig.build.json 中覆盖
+    "noEmit": true
+  }
+}

@@ -1,0 +1,12 @@
+{
+  // 构建配置：逐文件产出 ESM 与类型声明到 dist，排除测试文件。
+  // 不做打包：每个源文件对应一个产物文件，使用者的打包器可以按需摇树。
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "rootDir": "src",
+    "outDir": "dist",
+    "declaration": true
+  },
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx"]
+}

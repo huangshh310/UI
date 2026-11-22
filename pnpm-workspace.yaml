@@ -1,0 +1,12 @@
+packages:
+  - "packages/*"
+
+# 供应链防护：只安装发布满 7 天（10080 分钟）的版本。
+# 需要豁免某个包时，必须先经用户批准，再写入 minimumReleaseAgeExclude。
+minimumReleaseAge: 10080
+
+# 依赖的安装脚本默认不执行，这里逐个表态。
+allowBuilds:
+  # @tailwindcss/cli 的依赖，仅 --watch 模式使用；其安装脚本只在缺少预编译二进制时
+  # 才从源码编译。本仓库不使用 watch 模式，因此不允许执行。
+  "@parcel/watcher": false

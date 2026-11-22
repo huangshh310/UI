@@ -1,0 +1,37 @@
+{
+  // Oxlint 配置。选用 Oxlint 的原因见 docs/architecture/ADR-002-typescript-7-and-oxlint.md
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "import", "react", "jsx-a11y", "vitest"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error"
+  },
+  "env": {
+    "builtin": true,
+    "browser": true
+  },
+  "rules": {
+    // 使用 React 17+ 的自动 JSX 运行时，无需在作用域内引入 React
+    "react/react-in-jsx-scope": "off",
+
+    // 工程红线：禁止 var、单文件 300 行、函数 50 行、嵌套 3 层、圈复杂度 10
+    "no-var": "error",
+    "max-lines": ["error", { "max": 300, "skipBlankLines": true, "skipComments": true }],
+    "max-lines-per-function": [
+      "error",
+      { "max": 50, "skipBlankLines": true, "skipComments": true }
+    ],
+    "max-depth": ["error", 3],
+    "complexity": ["error", 10]
+  },
+  "overrides": [
+    {
+      // 测试文件的 describe 回调天然较长，不计入函数行数限制
+      "files": ["**/*.test.ts", "**/*.test.tsx"],
+      "rules": {
+        "max-lines-per-function": "off"
+      }
+    }
+  ],
+  "ignorePatterns": ["**/dist/**", "**/node_modules/**"]
+}

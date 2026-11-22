@@ -1,0 +1,20 @@
+{
+  "name": "@matt-ui/tokens",
+  "version": "0.0.0",
+  "description": "matt-ui 的 Design Tokens：纯 CSS 变量，不依赖 React，也不依赖 Tailwind。",
+  "license": "MIT",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "style": "./src/index.css",
+      "default": "./src/index.css"
+    },
+    "./tailwind.css": "./src/tailwind.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src"
+  ]
+}

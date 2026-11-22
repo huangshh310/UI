@@ -1,0 +1,33 @@
+/*
+ * 动效刻度：时长与缓动曲线。
+ *
+ * 组件的过渡与动画只允许使用这里的时长变量。
+ * 这样 prefers-reduced-motion 的处理集中在本文件，组件无需各自判断。
+ */
+:root {
+  /* 时长 */
+  --ui-duration-instant: 80ms;
+  --ui-duration-fast: 140ms;
+  --ui-duration-normal: 220ms;
+  --ui-duration-slow: 360ms;
+
+  /* 缓动：out 用于进入，in 用于退出，in-out 用于位置移动 */
+  --ui-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ui-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ui-ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ui-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/*
+ * 用户要求减少动态效果时，把所有时长压到接近零。
+ * 不直接设为 0：保留极短的时长，transitionend / animationend 事件仍会触发，
+ * 依赖这些事件的组件逻辑不会卡住。
+ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ui-duration-instant: 0.01ms;
+    --ui-duration-fast: 0.01ms;
+    --ui-duration-normal: 0.01ms;
+    --ui-duration-slow: 0.01ms;
+  }
+}

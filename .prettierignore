@@ -1,0 +1,10 @@
+# 构建产物与缓存
+dist/
+.turbo/
+coverage/
+
+# 由工具生成，不手工维护
+pnpm-lock.yaml
+
+# 用户提供的原始需求文档，保持原样
+UI-Platform-Implementation-Blueprint.md

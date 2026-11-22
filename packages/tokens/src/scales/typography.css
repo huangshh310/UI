@@ -1,0 +1,41 @@
+/*
+ * 字体排印刻度：字体族、字号、字重、行高、字距。
+ *
+ * 字体族只声明回退栈，不打包任何字体文件。
+ * 栈首的 Geist / Geist Mono 需要宿主应用自行加载；未加载时回退到系统字体。
+ * 等宽字体除了代码，也用于标签与数据，是本设计方向的排版特征。
+ */
+:root {
+  /* 字体族 */
+  --ui-font-sans:
+    "Geist", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --ui-font-mono:
+    "Geist Mono", "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* 字号 */
+  --ui-text-xs: 0.75rem;
+  --ui-text-sm: 0.875rem;
+  --ui-text-base: 1rem;
+  --ui-text-lg: 1.125rem;
+  --ui-text-xl: 1.25rem;
+  --ui-text-2xl: 1.5rem;
+  --ui-text-3xl: 1.875rem;
+  --ui-text-4xl: 2.5rem;
+
+  /* 字重 */
+  --ui-font-weight-regular: 400;
+  --ui-font-weight-medium: 500;
+  --ui-font-weight-semibold: 600;
+  --ui-font-weight-bold: 700;
+
+  /* 行高：tight 用于标题，normal 用于正文 */
+  --ui-leading-tight: 1.2;
+  --ui-leading-snug: 1.35;
+  --ui-leading-normal: 1.5;
+
+  /* 字距：tight 用于大标题，wide 用于全大写的等宽标签 */
+  --ui-tracking-tight: -0.02em;
+  --ui-tracking-normal: 0em;
+  --ui-tracking-wide: 0.08em;
+}

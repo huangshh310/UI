@@ -1,0 +1,16 @@
+/*
+ * 层级刻度。
+ *
+ * 数值按「后出现的浮层盖住先出现的」排序。
+ * 组件不得使用刻度之外的 z-index 数值。
+ */
+:root {
+  --ui-z-base: 0;
+  --ui-z-sticky: 100;
+  --ui-z-dropdown: 200;
+  --ui-z-overlay: 300;
+  --ui-z-modal: 400;
+  --ui-z-popover: 500;
+  --ui-z-toast: 600;
+  --ui-z-tooltip: 700;
+}

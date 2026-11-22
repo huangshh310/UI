@@ -1,0 +1,17 @@
+/*
+ * @matt-ui/tokens 的聚合入口。
+ *
+ * 引入后即可获得全部 --ui-* 变量：
+ * - themes/  随主题变化的语义色（浅色为默认，深色通过 .dark 或 data-theme="dark" 启用）
+ * - scales/  不随主题变化的刻度：字体、间距、圆角、阴影、动效、层级
+ *
+ * 本文件不依赖 Tailwind。使用 Tailwind v4 的项目另外引入 tailwind.css 完成主题映射。
+ */
+@import "./themes/light.css";
+@import "./themes/dark.css";
+@import "./scales/typography.css";
+@import "./scales/spacing.css";
+@import "./scales/radius.css";
+@import "./scales/shadows.css";
+@import "./scales/motion.css";
+@import "./scales/z-index.css";

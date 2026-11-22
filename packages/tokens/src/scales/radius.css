@@ -1,0 +1,15 @@
+/*
+ * 圆角刻度。
+ *
+ * 本设计方向使用小圆角以保持硬朗的边线。
+ * 各级圆角都由 --ui-radius 推导；在 :root 上修改它即可整体调整。
+ */
+:root {
+  --ui-radius: 0.25rem;
+
+  --ui-radius-sm: calc(var(--ui-radius) * 0.5);
+  --ui-radius-md: var(--ui-radius);
+  --ui-radius-lg: calc(var(--ui-radius) * 1.5);
+  --ui-radius-xl: calc(var(--ui-radius) * 2);
+  --ui-radius-full: 9999px;
+}
