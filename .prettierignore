@@ -21,3 +21,6 @@ storybook-static/
 # 消费方验证项目的生成物
 tests/consumer-fixture/.tarballs/
 tests/consumer-fixture/pnpm-lock.yaml
+
+# 由 next dev 自动生成并维护的 Agent 说明，保持原样
+apps/docs/AGENTS.md
