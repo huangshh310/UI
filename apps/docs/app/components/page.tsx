@@ -3,7 +3,7 @@
  */
 import type { Metadata } from "next";
 import { SpecimenDirectory } from "@/gallery/specimen-directory";
-import { COMPONENTS, DIRECTORY, recentComponentSlugs } from "@/registry/registry";
+import { COMPONENTS, recentComponentSlugs, TOTAL_SPECIMEN_COUNT } from "@/registry/registry";
 import { Breadcrumb } from "@/site/breadcrumb";
 
 export const metadata: Metadata = {
@@ -27,9 +27,9 @@ const ComponentsPage = () => {
         </h1>
         <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
           收录 <span className="font-mono font-medium text-foreground">{COMPONENTS.length}</span>{" "}
-          个组件、
-          <span className="font-mono font-medium text-foreground">{DIRECTORY.length}</span>{" "}
-          个实时示例。 在线交互预览，通过 shadcn Registry 只安装你需要的那一个。
+          个组件与区块、
+          <span className="font-mono font-medium text-foreground">{TOTAL_SPECIMEN_COUNT}</span>{" "}
+          个场景示例。支持在线交互预览，通过 shadcn Registry 只安装你需要的那一个。
         </p>
       </header>
       <SpecimenDirectory recentSlugs={recentSlugs} />

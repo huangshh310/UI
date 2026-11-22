@@ -12,6 +12,7 @@ import {
   COMPONENT_DIRS,
   GENERATED_BANNER,
   HOMEPAGE,
+  PINNED_NPM_DEPENDENCIES,
   REGISTRY_ADDRESS,
   REGISTRY_JSON,
   REGISTRY_NAME,
@@ -34,7 +35,10 @@ const npmDependencies = (modules) => [
     modules
       .filter((name) => !name.startsWith("@/"))
       .map(packageName)
-      .filter((name) => !["react", "react-dom"].includes(name)),
+      .filter((name) => !["react", "react-dom"].includes(name))
+      .map((name) =>
+        PINNED_NPM_DEPENDENCIES[name] ? `${name}@${PINNED_NPM_DEPENDENCIES[name]}` : name,
+      ),
   ),
 ];
 
@@ -47,7 +51,7 @@ const buildItem = ({ base, name }) => {
 
   return {
     name: meta.name,
-    type: "registry:ui",
+    type: meta.type ?? "registry:ui",
     title: meta.title,
     description: meta.description,
     categories: meta.categories,
@@ -55,7 +59,13 @@ const buildItem = ({ base, name }) => {
     // utils 是 shadcn 内置条目，提供 @/lib/utils 中的 cn()；
     // 本仓库内的其他组件要用完整的 GitHub 地址声明
     registryDependencies: ["utils", ...siblings.map((sibling) => `${REGISTRY_ADDRESS}/${sibling}`)],
-    files: [{ path: `registry/ui/${name}.tsx`, type: "registry:ui", target: `@ui/${name}.tsx` }],
+    files: [
+      {
+        path: `registry/ui/${name}.tsx`,
+        type: meta.type ?? "registry:ui",
+        target: `@ui/${name}.tsx`,
+      },
+    ],
     cssVars: themeCssVars(),
     css: motionCss(),
   };

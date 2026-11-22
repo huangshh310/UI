@@ -1,0 +1,6 @@
+{
+  "name": "folder-tab-card",
+  "title": "Folder Tab Card",
+  "description": "立体文件夹标签切换卡片，带共享 layoutId 激活标签与底部统计凹槽。",
+  "categories": ["motion"]
+}

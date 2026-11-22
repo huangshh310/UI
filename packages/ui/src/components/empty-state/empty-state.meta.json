@@ -1,0 +1,6 @@
+{
+  "name": "empty-state",
+  "title": "Empty State",
+  "description": "克制统一的空列表与无结果占位卡片，带圆角图标徽章、说明与主次操作槽。",
+  "categories": ["display"]
+}

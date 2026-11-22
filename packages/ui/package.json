@@ -44,6 +44,9 @@
   "dependencies": {
     "@base-ui/react": "catalog:",
     "@matt-ui/utils": "workspace:*",
+    "@tanstack/react-table": "catalog:",
+    "@ui-sdk/core": "catalog:",
+    "@ui-sdk/react": "catalog:",
     "class-variance-authority": "catalog:",
     "lucide-react": "catalog:"
   }

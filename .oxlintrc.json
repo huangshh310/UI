@@ -34,6 +34,13 @@
       "rules": {
         "max-lines-per-function": "off"
       }
+    },
+    {
+      // Registry 单文件由多个源模块自动合并而成，放宽单文件总行数限制，其余规则照常检查
+      "files": ["registry/ui/**/*.tsx"],
+      "rules": {
+        "max-lines": "off"
+      }
     }
   ],
   "ignorePatterns": [

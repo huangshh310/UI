@@ -2,6 +2,7 @@
  * OTP Input 的文档数据。
  */
 import { OtpInputBasic } from "@/demos/otp-input/basic";
+import OtpInputPinDemo from "@/demos/otp-input/pin";
 import type { ComponentDoc } from "./registry.types";
 
 export const OTP_INPUT_DOC: ComponentDoc = {
@@ -25,6 +26,14 @@ export function Demo() {
       description: "自动过滤非数字字符、自动推进焦点并支持一次性粘贴完整安全码。",
       file: "otp-input/basic.tsx",
       Demo: OtpInputBasic,
+    },
+    {
+      slug: "pin",
+      name: "4 位掩码 PIN 安全输入",
+      description: "通过 length={4} 与 mask 属性隐藏明文字符，适合支付与敏感操作校验。",
+      file: "otp-input/pin.tsx",
+      Demo: OtpInputPinDemo,
+      directory: false,
     },
   ],
   api: [

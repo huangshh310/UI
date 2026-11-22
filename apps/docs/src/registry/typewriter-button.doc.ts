@@ -2,6 +2,7 @@
  * TypewriterButton 的文档数据。
  */
 import { TypewriterButtonBasic } from "@/demos/typewriter-button/basic";
+import TypewriterButtonSilentDemo from "@/demos/typewriter-button/silent";
 import type { ComponentDoc } from "./registry.types";
 
 export const TYPEWRITER_BUTTON_DOC: ComponentDoc = {
@@ -30,6 +31,14 @@ export function Demo() {
       description: "点击后从头打字，按钮宽度保持不变。",
       file: "typewriter-button/basic.tsx",
       Demo: TypewriterButtonBasic,
+    },
+    {
+      slug: "silent",
+      name: "信号色与静音打字机模式",
+      description: "支持切换视觉变体，并通过 sound={false} 关闭机械键盘音效。",
+      file: "typewriter-button/silent.tsx",
+      Demo: TypewriterButtonSilentDemo,
+      directory: false,
     },
   ],
   api: [

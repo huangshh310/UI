@@ -1,0 +1,6 @@
+{
+  "name": "spinner",
+  "title": "Spinner",
+  "description": "精致轻量的 SVG 环形加载器，继承当前文字色并遵守减弱动效偏好。",
+  "categories": ["display"]
+}

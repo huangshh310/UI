@@ -2,6 +2,7 @@
  * Form 的文档数据。
  */
 import { FormBasic } from "@/demos/form/basic";
+import FormWebhookDemo from "@/demos/form/webhook";
 import type { ComponentDoc } from "./registry.types";
 
 export const FORM_DOC: ComponentDoc = {
@@ -33,6 +34,14 @@ export function Demo() {
       description: "包含文本输入、多行输入、卡片式单选组、辅助说明与自定义校验错误提示。",
       file: "form/basic.tsx",
       Demo: FormBasic,
+    },
+    {
+      slug: "webhook",
+      name: "URL 格式校验配置表单",
+      description: "演示原生 URL 校验与提交回调，自动联动错误提示与无障碍描述。",
+      file: "form/webhook.tsx",
+      Demo: FormWebhookDemo,
+      directory: false,
     },
   ],
   api: [

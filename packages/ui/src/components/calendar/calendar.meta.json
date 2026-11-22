@@ -1,0 +1,6 @@
+{
+  "name": "calendar",
+  "title": "Calendar",
+  "description": "零外部日期库依赖的月历组件，支持单日/区间选择、双月并排、禁用约束与完整方向键导航。",
+  "categories": ["forms"]
+}

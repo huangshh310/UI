@@ -1,0 +1,6 @@
+{
+  "name": "spotlight-search",
+  "title": "Spotlight Search",
+  "description": "轻量聚焦搜索弹层，支持分类快速筛选、最近搜索记录、结果预览分栏与弹性进出场。",
+  "categories": ["overlays"]
+}

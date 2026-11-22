@@ -1,0 +1,6 @@
+{
+  "name": "animated-file-upload",
+  "title": "Animated File Upload",
+  "description": "支持拖拽高光、类型与体积校验、图片缩略图、适配器上传进度与弹簧列表动效的文件上传组件。",
+  "categories": ["forms"]
+}

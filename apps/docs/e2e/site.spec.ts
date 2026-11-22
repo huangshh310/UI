@@ -9,10 +9,10 @@ import { waitForEntranceAnimations } from "./support/animations";
 
 const CLI_COMMAND = "pnpm dlx shadcn@latest add huangshh310/UI/button";
 
-/** 目录中的示例总数：按钮分类 18 个（Button 7 + 其余 11），表单分类 7 个 */
-const SPECIMEN_COUNT = 25;
+/** 目录中的代表性卡片总数：按钮 18，表单 13，浮层 11，展示 9，导航与布局 9，动效 5，区块 12 */
+const SPECIMEN_COUNT = 77;
 const BUTTON_SPECIMEN_COUNT = 18;
-const FORM_SPECIMEN_COUNT = 7;
+const FORM_SPECIMEN_COUNT = 13;
 
 /** 目录页中的示例卡片 */
 const specimens = (page: Page) => page.getByTestId("specimen-card");

@@ -1,0 +1,6 @@
+{
+  "name": "breadcrumb",
+  "title": "Breadcrumb",
+  "description": "语义化面包屑导航，支持深层级自动折叠省略号展开与末级当前页标记。",
+  "categories": ["navigation"]
+}

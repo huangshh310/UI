@@ -1,0 +1,6 @@
+{
+  "name": "card",
+  "title": "Card",
+  "description": "克制的圆角发丝边线卡片容器，提供页头、标题、说明、主体与托盘页脚组合插槽。",
+  "categories": ["display"]
+}

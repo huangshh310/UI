@@ -1,0 +1,6 @@
+{
+  "name": "accordion",
+  "title": "Accordion",
+  "description": "基于 Base UI Accordion 的折叠面板，支持单开/多开、发丝分隔与盒装变体及平滑展开。",
+  "categories": ["navigation"]
+}

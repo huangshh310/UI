@@ -2,6 +2,7 @@
  * Magnetic Button 的文档数据。
  */
 import { MagneticButtonBasic } from "@/demos/magnetic-button/basic";
+import MagneticButtonVariantsDemo from "@/demos/magnetic-button/variants";
 import type { ComponentDoc } from "./registry.types";
 
 export const MAGNETIC_BUTTON_DOC: ComponentDoc = {
@@ -24,6 +25,14 @@ export function Demo() {
       description: "把指针移到按钮上，它会跟随指针轻微移动。",
       file: "magnetic-button/basic.tsx",
       Demo: MagneticButtonBasic,
+    },
+    {
+      slug: "variants",
+      name: "信号色与描边磁吸按钮",
+      description: "指针靠近时呈现柔和弹性吸附，松开后自然回弹归位。",
+      file: "magnetic-button/variants.tsx",
+      Demo: MagneticButtonVariantsDemo,
+      directory: false,
     },
   ],
   api: [

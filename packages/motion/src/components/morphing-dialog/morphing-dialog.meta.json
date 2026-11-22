@@ -1,0 +1,6 @@
+{
+  "name": "morphing-dialog",
+  "title": "Morphing Dialog",
+  "description": "共享元素形变对话框：点击卡片无缝展开为详情模态框，遵守减弱动效偏好。",
+  "categories": ["overlays"]
+}

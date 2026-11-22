@@ -1,0 +1,7 @@
+{
+  "name": "file-manager-block",
+  "type": "registry:block",
+  "title": "File Manager Block",
+  "description": "由 AnimatedFileUpload 与 SelectionBasket 组合的文件资产管理区块，含目录卡与批量操作。",
+  "categories": ["blocks"]
+}

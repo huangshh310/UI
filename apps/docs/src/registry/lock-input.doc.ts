@@ -2,6 +2,7 @@
  * Lock Input 的文档数据。
  */
 import { LockInputBasic } from "@/demos/lock-input/basic";
+import LockInputErrorDemo from "@/demos/lock-input/error";
 import type { ComponentDoc } from "./registry.types";
 
 export const LOCK_INPUT_DOC: ComponentDoc = {
@@ -24,6 +25,14 @@ export function Demo() {
       description: "聚焦时柔和焦点环向边框收拢；locked 模式自动转为只读并展示锁图标。",
       file: "lock-input/basic.tsx",
       Demo: LockInputBasic,
+    },
+    {
+      slug: "error",
+      name: "只读锁定态与错误校验态",
+      description: "展示带图标前缀的只读密钥锁定框，以及触发 aria-invalid 的错误提示。",
+      file: "lock-input/error.tsx",
+      Demo: LockInputErrorDemo,
+      directory: false,
     },
   ],
   api: [

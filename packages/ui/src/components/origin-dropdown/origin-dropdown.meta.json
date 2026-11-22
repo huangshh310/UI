@@ -1,0 +1,6 @@
+{
+  "name": "origin-dropdown",
+  "title": "Origin Dropdown",
+  "description": "从触发锚点缩放展开的下拉菜单，支持副标题说明、快捷键提示、勾选项与危险操作。",
+  "categories": ["overlays"]
+}

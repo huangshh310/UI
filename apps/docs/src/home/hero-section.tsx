@@ -4,7 +4,7 @@
 import { ArrowRightIcon } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import { COMPONENTS, DIRECTORY } from "@/registry/registry";
+import { COMPONENTS, TOTAL_SPECIMEN_COUNT } from "@/registry/registry";
 import { LinkButton } from "@/site/link-button";
 import { HeroCli } from "./hero-cli";
 
@@ -12,8 +12,8 @@ import { HeroCli } from "./hero-cli";
 const order = (index: number) => ({ "--i": index }) as CSSProperties;
 
 const STATS = [
-  { value: String(COMPONENTS.length), label: "精雕组件" },
-  { value: String(DIRECTORY.length), label: "实时交互示例" },
+  { value: String(COMPONENTS.length), label: "精雕组件与区块" },
+  { value: String(TOTAL_SPECIMEN_COUNT), label: "场景交互示例" },
   { value: "Base UI", label: "无障碍交互底座" },
   { value: "MIT", label: "源码可控开源" },
 ];

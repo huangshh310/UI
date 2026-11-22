@@ -2,6 +2,7 @@
  * Code Snippet Deck 的文档数据。
  */
 import { CodeSnippetDeckBasic } from "@/demos/code-snippet-deck/basic";
+import CodeSnippetDeckCliDemo from "@/demos/code-snippet-deck/cli";
 import type { ComponentDoc } from "./registry.types";
 
 export const CODE_SNIPPET_DECK_DOC: ComponentDoc = {
@@ -24,6 +25,14 @@ export function Demo() {
       description: "切换语言页签，修改参数，代码随之更新。",
       file: "code-snippet-deck/basic.tsx",
       Demo: CodeSnippetDeckBasic,
+    },
+    {
+      slug: "cli",
+      name: "动态参数 CLI 安装卡",
+      description: "修改组件名参数时同步更新 pnpm / npm / bun 三套安装命令。",
+      file: "code-snippet-deck/cli.tsx",
+      Demo: CodeSnippetDeckCliDemo,
+      directory: false,
     },
   ],
   api: [

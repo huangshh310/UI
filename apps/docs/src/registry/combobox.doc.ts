@@ -2,6 +2,7 @@
  * Combobox 的文档数据。
  */
 import { ComboboxBasic } from "@/demos/combobox/basic";
+import ComboboxAssigneeDemo from "@/demos/combobox/assignee";
 import type { ComponentDoc } from "./registry.types";
 
 export const COMBOBOX_DOC: ComponentDoc = {
@@ -33,6 +34,14 @@ export function Demo() {
       description: "输入关键字实时过滤并下划线标注命中子串，支持空状态与一键清空。",
       file: "combobox/basic.tsx",
       Demo: ComboboxBasic,
+    },
+    {
+      slug: "assignee",
+      name: "成员指派可搜索下拉",
+      description: "支持输入中文姓名或角色关键词实时过滤并快速指派负责人。",
+      file: "combobox/assignee.tsx",
+      Demo: ComboboxAssigneeDemo,
+      directory: false,
     },
   ],
   api: [

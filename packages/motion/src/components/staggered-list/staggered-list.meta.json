@@ -1,0 +1,6 @@
+{
+  "name": "staggered-list",
+  "title": "Staggered List",
+  "description": "克制紧凑的列表错峰入场与视口滚入显现容器，自动清理 Observer 并遵守减弱动效。",
+  "categories": ["motion"]
+}

@@ -5,7 +5,8 @@
 import type { ComponentType } from "react";
 
 /** 目录页的分类 */
-export type CategoryId = "buttons" | "forms";
+export type CategoryId =
+  "buttons" | "forms" | "overlays" | "display" | "navigation" | "motion" | "blocks";
 
 /** 目录页签的取值：全部、最近收录，或某个分类 */
 export type DirectoryFilter = "all" | "recent" | CategoryId;
@@ -25,6 +26,8 @@ export interface Specimen {
   file: string;
   /** 实时渲染的示例组件 */
   Demo: ComponentType;
+  /** 是否在组件目录页独立渲染卡片（默认 true；详情页补充场景可设为 false 避免目录拥挤） */
+  directory?: boolean;
 }
 
 /** API 表格中的一行 */

@@ -15,6 +15,12 @@ const SLUGS = [
   "combobox",
   "otp-input",
   "form",
+  "calendar",
+  "date-picker",
+  "animated-file-upload",
+  "prompt-input",
+  "data-table",
+  "advanced-data-table",
 ];
 
 const WCAG_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
@@ -170,6 +176,76 @@ test("Form：提交不合法字段展示校验错误，修正后提交成功", a
   await main.getByRole("button", { name: "创建项目" }).click();
 
   await expect(main.getByTestId("form-result")).toHaveText("已提交：matt-ui · team");
+});
+
+test("Calendar：区间选择、键盘移动与翻月工作正常", async ({ page }) => {
+  const main = await openMain(page, "calendar");
+  await main.getByRole("button", { name: "2026年11月5日" }).click();
+  await main.getByRole("button", { name: "2026年11月9日" }).click();
+  await expect(main.getByTestId("calendar-range")).toHaveText("11/5 – 11/9");
+
+  await main.getByRole("button", { name: "下个月" }).click();
+  await expect(main.getByText(/2026.*12/)).toBeVisible();
+});
+
+test("Date Picker：弹层选择快捷预设并支持一键清除", async ({ page }) => {
+  const main = await openMain(page, "date-picker");
+  await main.getByRole("button", { name: /发布日期/ }).click();
+  await page.getByRole("button", { name: "本月末" }).click();
+  await expect(main.getByTestId("date-picker-value")).toHaveText("已选日期：2026-11-30");
+
+  await main.getByRole("button", { name: "清除日期" }).click();
+  await expect(main.getByTestId("date-picker-value")).toHaveText("已选日期：未选择");
+});
+
+test("Animated File Upload：选择文件后通过适配器完成上传并可移除", async ({ page }) => {
+  const main = await openMain(page, "animated-file-upload");
+  const fileInput = main.locator('input[type="file"]');
+  await fileInput.setInputFiles({
+    name: "roadmap.md",
+    mimeType: "text/markdown",
+    buffer: Buffer.from("# matt-ui"),
+  });
+
+  await expect(main.getByText("roadmap.md")).toBeVisible();
+  await expect(main.getByText("已上传")).toBeVisible();
+  await main.getByRole("button", { name: "移除 roadmap.md" }).click();
+  await expect(main.getByText("roadmap.md")).toBeHidden();
+});
+
+test("Prompt Input：支持建议词回填、附件移除、Enter 提交与停止生成", async ({ page }) => {
+  const main = await openMain(page, "prompt-input");
+  await main.getByRole("button", { name: "移除附件 tokens.css" }).click();
+  await expect(main.getByText("tokens.css")).toBeHidden();
+
+  await main.getByRole("button", { name: "检查无障碍对比度" }).click();
+  await page.keyboard.press("Enter");
+  await expect(main.getByTestId("prompt-submitted")).toContainText("检查无障碍对比度");
+
+  const stopBtn = main.getByRole("button", { name: "停止生成" });
+  await expect(stopBtn).toBeVisible();
+  await stopBtn.click();
+  await expect(main.getByRole("button", { name: "发送" })).toBeVisible();
+});
+
+test("Data Table：排序、搜索、分页与行选择联动正常", async ({ page }) => {
+  const main = await openMain(page, "data-table");
+  await main.getByRole("button", { name: /延迟/ }).click();
+  await main.getByRole("checkbox", { name: "选择第 1 行" }).click();
+  await expect(main.getByTestId("table-selected")).toHaveText("已勾选：1 项");
+
+  await main.getByRole("searchbox", { name: "搜索表格" }).fill("tokens");
+  await expect(main.getByText("tokens-cdn")).toBeVisible();
+});
+
+test("Advanced Data Table：分面筛选、列显隐与导出提示均正常", async ({ page }) => {
+  const main = await openMain(page, "advanced-data-table");
+  await main.getByRole("button", { name: "motion", exact: true }).click();
+  await expect(main.getByText("AnimatedFileUpload")).toBeVisible();
+  await expect(main.getByText("Button")).toBeHidden();
+
+  await main.getByRole("button", { name: "导出 CSV" }).click();
+  await expect(main.getByTestId("adv-table-notice")).toContainText("2 行 CSV");
 });
 
 for (const slug of SLUGS) {

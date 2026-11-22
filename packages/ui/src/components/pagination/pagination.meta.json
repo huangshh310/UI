@@ -1,0 +1,6 @@
+{
+  "name": "pagination",
+  "title": "Pagination",
+  "description": "语义化分页导航，自动生成省略号区间、当前页高亮与上下页边界禁用。",
+  "categories": ["navigation"]
+}

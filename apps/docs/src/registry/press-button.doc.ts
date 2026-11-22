@@ -2,6 +2,7 @@
  * PressButton 的文档数据。
  */
 import { PressButtonBasic } from "@/demos/press-button/basic";
+import PressButtonVariantsDemo from "@/demos/press-button/variants";
 import type { ComponentDoc } from "./registry.types";
 
 export const PRESS_BUTTON_DOC: ComponentDoc = {
@@ -24,6 +25,14 @@ export function Demo() {
       description: "按住时缩小，松开后略微冲过原始大小再回落。",
       file: "press-button/basic.tsx",
       Demo: PressButtonBasic,
+    },
+    {
+      slug: "variants",
+      name: "多语义变体与按压深度",
+      description: "对比 signal、secondary 与 destructive 搭配不同 pressStrength 的触感反馈。",
+      file: "press-button/variants.tsx",
+      Demo: PressButtonVariantsDemo,
+      directory: false,
     },
   ],
   api: [

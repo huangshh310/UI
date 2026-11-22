@@ -1,0 +1,72 @@
+"use client";
+
+import { Tabs as BaseTabs } from "@base-ui/react/tabs";
+import { cn } from "@matt-ui/utils";
+import type { TabsProps, TabsVariant } from "./tabs.types.js";
+
+const LIST_CLASS: Record<TabsVariant, string> = {
+  pill: "relative inline-flex items-center gap-0.5 rounded-lg border border-solid border-border/75 bg-secondary/70 p-1",
+  underline: "relative flex items-center gap-5 border-b border-solid border-border",
+  card: "relative inline-flex items-center gap-1 rounded-xl border border-solid border-border bg-card p-1 shadow-sm",
+};
+
+const TAB_CLASS: Record<TabsVariant, string> = {
+  pill: "relative z-10 inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-md px-3 font-sans text-xs font-medium text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:text-foreground data-active:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-45",
+  underline:
+    "relative z-10 inline-flex cursor-pointer items-center gap-1.5 pb-2.5 font-sans text-sm font-medium text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:text-foreground data-active:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-45",
+  card: "relative z-10 inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg px-3.5 font-sans text-xs font-medium text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:text-foreground data-active:text-signal-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-45",
+};
+
+const INDICATOR_CLASS: Record<TabsVariant, string> = {
+  pill: "absolute top-1 left-0 z-0 h-[calc(100%-0.5rem)] w-(--active-tab-width) translate-x-(--active-tab-left) rounded-md bg-background shadow-sm transition-[transform,width] duration-(--ui-duration-fast) ease-(--ui-ease-out) motion-reduce:transition-none dark:bg-card dark:ring-1 dark:ring-border",
+  underline:
+    "absolute bottom-0 left-0 z-0 h-0.5 w-(--active-tab-width) translate-x-(--active-tab-left) rounded-full bg-signal transition-[transform,width] duration-(--ui-duration-fast) ease-(--ui-ease-out) motion-reduce:transition-none",
+  card: "absolute top-1 left-0 z-0 h-[calc(100%-0.5rem)] w-(--active-tab-width) translate-x-(--active-tab-left) rounded-lg bg-signal shadow-sm transition-[transform,width] duration-(--ui-duration-fast) ease-(--ui-ease-out) motion-reduce:transition-none",
+};
+
+export const Tabs = ({
+  items,
+  value,
+  defaultValue,
+  onValueChange,
+  variant = "pill",
+  className,
+}: TabsProps) => (
+  <BaseTabs.Root
+    value={value}
+    defaultValue={defaultValue ?? items[0]?.value}
+    onValueChange={(next) => onValueChange?.(String(next))}
+    data-slot="tabs"
+    data-variant={variant}
+    className={cn("flex w-full flex-col gap-3", className)}
+  >
+    <BaseTabs.List className={LIST_CLASS[variant]}>
+      {items.map((item) => (
+        <BaseTabs.Tab
+          key={item.value}
+          value={item.value}
+          disabled={item.disabled}
+          className={TAB_CLASS[variant]}
+        >
+          {item.icon && <span aria-hidden="true">{item.icon}</span>}
+          <span>{item.label}</span>
+          {item.badge && (
+            <span className="rounded-full bg-secondary px-1.5 py-0.5 font-mono text-[10px] leading-none text-muted-foreground tabular-nums">
+              {item.badge}
+            </span>
+          )}
+        </BaseTabs.Tab>
+      ))}
+      <BaseTabs.Indicator className={INDICATOR_CLASS[variant]} />
+    </BaseTabs.List>
+    {items.map((item) => (
+      <BaseTabs.Panel
+        key={item.value}
+        value={item.value}
+        className="text-sm text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        {item.content}
+      </BaseTabs.Panel>
+    ))}
+  </BaseTabs.Root>
+);

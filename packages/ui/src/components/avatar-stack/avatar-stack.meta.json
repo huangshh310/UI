@@ -1,0 +1,6 @@
+{
+  "name": "avatar-stack",
+  "title": "Avatar Stack",
+  "description": "叠放头像组，支持图片回退首字母、在线状态点、悬停抬起与方向提示以及 +N 溢出计数。",
+  "categories": ["overlays"]
+}

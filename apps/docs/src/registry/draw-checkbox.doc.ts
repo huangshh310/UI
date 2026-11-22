@@ -2,6 +2,7 @@
  * Draw Checkbox 的文档数据。
  */
 import { DrawCheckboxBasic } from "@/demos/draw-checkbox/basic";
+import DrawCheckboxGroupDemo from "@/demos/draw-checkbox/group";
 import type { ComponentDoc } from "./registry.types";
 
 export const DRAW_CHECKBOX_DOC: ComponentDoc = {
@@ -24,6 +25,14 @@ export function Demo() {
       description: "支持默认墨色、信号色与半选（indeterminate）三种状态。",
       file: "draw-checkbox/basic.tsx",
       Demo: DrawCheckboxBasic,
+    },
+    {
+      slug: "group",
+      name: "半选态全选分组清单",
+      description: "父级复选框随子项勾选自动在全选、半选与未选间切换，配钴蓝信号色。",
+      file: "draw-checkbox/group.tsx",
+      Demo: DrawCheckboxGroupDemo,
+      directory: false,
     },
   ],
   api: [

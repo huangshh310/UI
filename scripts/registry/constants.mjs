@@ -37,6 +37,12 @@ export const IMPORT_REWRITES = { "@matt-ui/utils": "@/lib/utils" };
  */
 export const EXTRA_COLOR_TOKENS = ["signal", "signal-foreground", "destructive-foreground"];
 
+/** 需精确锁版本分发的 npm 依赖（见 ADR-001，与 pnpm-workspace.yaml 的 catalog 保持一致） */
+export const PINNED_NPM_DEPENDENCIES = {
+  "@ui-sdk/core": "0.1.0-beta.13",
+  "@ui-sdk/react": "0.1.0-beta.13",
+};
+
 /** 生成文件顶部的提示 */
 export const GENERATED_BANNER =
   "// 本文件由 scripts/generate-registry.mjs 从 packages/ui 的源码生成，请勿手工修改。\n";

@@ -1,0 +1,6 @@
+{
+  "name": "settle-modal",
+  "title": "Settle Modal",
+  "description": "居中模态对话框，带柔焦遮罩、阻尼落位动效与完整焦点陷阱。",
+  "categories": ["overlays"]
+}

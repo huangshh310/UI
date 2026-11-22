@@ -55,7 +55,13 @@ const ComponentHeader = ({ component }: { component: ComponentDoc }) => {
 };
 
 /** 「更多示例」一节：每个示例一个可切换预览与源码的区块 */
-const Specimens = async ({ component }: { component: ComponentDoc }) => {
+const Specimens = async ({
+  component,
+  responsive,
+}: {
+  component: ComponentDoc;
+  responsive: boolean;
+}) => {
   const codes = await Promise.all(
     component.specimens.map(({ file }) => highlightSpecimen(file, component.registryName)),
   );
@@ -78,6 +84,7 @@ const Specimens = async ({ component }: { component: ComponentDoc }) => {
           description={description}
           preview={<Demo />}
           codeHtml={codes[index] ?? ""}
+          responsive={responsive}
         />
       ))}
     </section>
@@ -93,6 +100,10 @@ const ComponentPage = async ({ params }: PageProps) => {
     highlightComponentSource(component.registryName),
   ]);
   const Hero = component.specimens[0]?.Demo;
+  const responsive =
+    component.category === "blocks" ||
+    component.slug === "data-table" ||
+    component.slug === "advanced-data-table";
 
   return (
     <div className="mx-auto max-w-[1400px] px-5 pt-8 pb-24 md:px-9">
@@ -112,6 +123,7 @@ const ComponentPage = async ({ params }: PageProps) => {
             usageHtml={usageHtml}
             sourceHtml={sourceHtml}
             prompt={installPrompt(component)}
+            responsive={responsive}
           />
           <InstallBlock
             command={cliCommand(component)}
@@ -119,7 +131,7 @@ const ComponentPage = async ({ params }: PageProps) => {
             targetPath={`components/ui/${component.registryName}.tsx`}
           />
           <ApiTable props={component.api} />
-          <Specimens component={component} />
+          <Specimens component={component} responsive={responsive} />
           <AccessibilityNotes notes={component.accessibility} />
           <ComponentFooterNav component={component} />
         </article>

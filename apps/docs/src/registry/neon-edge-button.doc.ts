@@ -2,6 +2,7 @@
  * NeonEdgeButton 的文档数据。
  */
 import { NeonEdgeButtonBasic } from "@/demos/neon-edge-button/basic";
+import NeonEdgeButtonSizesDemo from "@/demos/neon-edge-button/sizes";
 import type { ComponentDoc } from "./registry.types";
 
 export const NEON_EDGE_BUTTON_DOC: ComponentDoc = {
@@ -24,6 +25,14 @@ export function Demo() {
       description: "光沿边框匀速绕行，约三秒一圈。",
       file: "neon-edge-button/basic.tsx",
       Demo: NeonEdgeButtonBasic,
+    },
+    {
+      slug: "sizes",
+      name: "三档尺寸流光描边按钮",
+      description: "并排展示 sm / md / lg 三种尺寸的边框微光流动效果。",
+      file: "neon-edge-button/sizes.tsx",
+      Demo: NeonEdgeButtonSizesDemo,
+      directory: false,
     },
   ],
   api: [

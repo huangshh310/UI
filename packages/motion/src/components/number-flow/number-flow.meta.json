@@ -1,0 +1,6 @@
+{
+  "name": "number-flow",
+  "title": "Number Flow",
+  "description": "等宽金融与仪表盘滚动数字过渡，按字符位独立弹簧滚轮进出，支持货币与百分比格式。",
+  "categories": ["motion"]
+}

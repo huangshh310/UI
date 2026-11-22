@@ -75,8 +75,8 @@ html {
 }
 
 .rise {
-  animation: rise var(--ui-duration-slow) var(--ui-ease-out) both;
-  animation-delay: calc(var(--i, 0) * 60ms);
+  animation: rise var(--ui-duration-normal) var(--ui-ease-out) both;
+  animation-delay: calc(min(var(--i, 0), 5) * 35ms);
 }
 
 /* 时长由 Token 压到接近零，但依次延迟还在；这里把入场动效整体关掉，内容立即可见 */

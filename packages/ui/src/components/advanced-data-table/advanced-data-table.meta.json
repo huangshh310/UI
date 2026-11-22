@@ -1,0 +1,6 @@
+{
+  "name": "advanced-data-table",
+  "title": "Advanced Data Table",
+  "description": "在 TanStack Table 之上扩展分面筛选、列显隐、行密度切换、批量操作栏与 CSV 导出的高级数据表格。",
+  "categories": ["forms"]
+}

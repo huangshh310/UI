@@ -2,6 +2,7 @@
  * BookCallButton 的文档数据。
  */
 import { BookCallButtonBasic } from "@/demos/book-call-button/basic";
+import BookCallButtonCustomDemo from "@/demos/book-call-button/custom";
 import type { ComponentDoc } from "./registry.types";
 
 export const BOOK_CALL_BUTTON_DOC: ComponentDoc = {
@@ -24,6 +25,14 @@ export function Demo() {
       description: "悬停或用键盘聚焦时展开。",
       file: "book-call-button/basic.tsx",
       Demo: BookCallButtonBasic,
+    },
+    {
+      slug: "custom",
+      name: "自定义中文预约动作文案",
+      description: "通过 label 属性定制团队评审与架构咨询预约按钮。",
+      file: "book-call-button/custom.tsx",
+      Demo: BookCallButtonCustomDemo,
+      directory: false,
     },
   ],
   api: [

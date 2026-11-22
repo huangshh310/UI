@@ -5,12 +5,23 @@ import { useMemo, useState } from "react";
 import { DIRECTORY, type DirectoryEntry } from "@/registry/registry";
 import type { DirectoryFilter } from "@/registry/registry.types";
 
-/** 示例是否匹配关键字：名称、说明、所属组件名任一包含即可，忽略大小写 */
-const matchesQuery = ({ specimen, component }: DirectoryEntry, query: string) =>
-  [specimen.name, specimen.description, component.name]
+/** 示例是否匹配关键字：名称、说明、所属组件名或所属组件的任意场景示例匹配即可，忽略大小写 */
+const matchesQuery = ({ specimen, component }: DirectoryEntry, query: string) => {
+  const needle = query.trim().toLowerCase();
+  if (!needle) return true;
+  const direct = [specimen.name, specimen.description, component.name, component.description]
     .join(" ")
-    .toLowerCase()
-    .includes(query.trim().toLowerCase());
+    .toLowerCase();
+  if (direct.includes(needle)) return true;
+  // 只有组件主示例参与隐藏次级场景的关键字检索，避免已独立展示的示例重复命中
+  const isPrimary = component.specimens[0]?.slug === specimen.slug;
+  if (!isPrimary) return false;
+  return component.specimens.some(
+    (s) =>
+      s.directory === false &&
+      (s.name.toLowerCase().includes(needle) || s.description.toLowerCase().includes(needle)),
+  );
+};
 
 /**
  * @param recentSlugs 最近收录的组件。由服务端在构建时算好传入，

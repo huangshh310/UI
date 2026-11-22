@@ -1,0 +1,7 @@
+{
+  "name": "stats-overview-block",
+  "type": "registry:block",
+  "title": "Stats Overview Block",
+  "description": "由 NumberFlow 滚动数字与周期分段切换组合的多维度业务 KPI 指标概览区块。",
+  "categories": ["blocks"]
+}

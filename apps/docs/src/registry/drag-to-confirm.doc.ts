@@ -2,6 +2,7 @@
  * Drag to Confirm 的文档数据。
  */
 import { DragToConfirmBasic } from "@/demos/drag-to-confirm/basic";
+import DragToConfirmReleaseDemo from "@/demos/drag-to-confirm/release";
 import type { ComponentDoc } from "./registry.types";
 
 export const DRAG_TO_CONFIRM_DOC: ComponentDoc = {
@@ -24,6 +25,14 @@ export function Demo() {
       description: "拖过九成后松手即确认，否则弹回起点。",
       file: "drag-to-confirm/basic.tsx",
       Demo: DragToConfirmBasic,
+    },
+    {
+      slug: "release",
+      name: "生产回滚滑动确认与回调",
+      description: "演示高危回滚场景的拖拽确认、完成回调与纯键盘 Enter 等效操作。",
+      file: "drag-to-confirm/release.tsx",
+      Demo: DragToConfirmReleaseDemo,
+      directory: false,
     },
   ],
   api: [

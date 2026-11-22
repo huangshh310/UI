@@ -1,0 +1,6 @@
+{
+  "name": "peek-card",
+  "title": "Peek Card",
+  "description": "悬停或聚焦链接时浮现的富内容预览卡片，内置身份信息块与等宽键值指标。",
+  "categories": ["overlays"]
+}

@@ -2,6 +2,7 @@
  * SplitButton 的文档数据。
  */
 import { SplitButtonBasic } from "@/demos/split-button/basic";
+import SplitButtonReleaseDemo from "@/demos/split-button/release";
 import type { ComponentDoc } from "./registry.types";
 
 export const SPLIT_BUTTON_DOC: ComponentDoc = {
@@ -34,6 +35,14 @@ export function Demo() {
       description: "主操作直接执行，箭头按钮打开相关操作。",
       file: "split-button/basic.tsx",
       Demo: SplitButtonBasic,
+    },
+    {
+      slug: "release",
+      name: "信号色发布分体按钮",
+      description: "主按钮直接发布生产环境，右侧下拉提供预发、灰度与定时发布策略。",
+      file: "split-button/release.tsx",
+      Demo: SplitButtonReleaseDemo,
+      directory: false,
     },
   ],
   api: [

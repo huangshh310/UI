@@ -1,0 +1,6 @@
+{
+  "name": "skeleton",
+  "title": "Skeleton",
+  "description": "低对比中性骨架占位块，支持脉冲与流光形态，并在减弱动效模式下自动静止。",
+  "categories": ["display"]
+}

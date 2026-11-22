@@ -1,0 +1,6 @@
+{
+  "name": "selection-basket",
+  "title": "Selection Basket",
+  "description": "底部悬浮多选动作栏，带钴蓝计数跳动徽章、全选清空控制与无障碍实时播报。",
+  "categories": ["overlays"]
+}

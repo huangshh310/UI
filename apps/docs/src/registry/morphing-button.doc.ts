@@ -2,6 +2,7 @@
  * Morphing Button 的文档数据。
  */
 import { MorphingButtonBasic } from "@/demos/morphing-button/basic";
+import MorphingButtonErrorDemo from "@/demos/morphing-button/error";
 import type { ComponentDoc } from "./registry.types";
 
 export const MORPHING_BUTTON_DOC: ComponentDoc = {
@@ -24,6 +25,14 @@ export function Demo() {
       description: "点击后依次经过处理中与成功，宽度平滑过渡。",
       file: "morphing-button/basic.tsx",
       Demo: MorphingButtonBasic,
+    },
+    {
+      slug: "error",
+      name: "加载失败态与重试流程",
+      description: "演示 idle → loading → error 形态转换及一键重置闭环。",
+      file: "morphing-button/error.tsx",
+      Demo: MorphingButtonErrorDemo,
+      directory: false,
     },
   ],
   api: [

@@ -2,6 +2,7 @@
  * Stretch Switch 的文档数据。
  */
 import { StretchSwitchBasic } from "@/demos/stretch-switch/basic";
+import StretchSwitchSettingsDemo from "@/demos/stretch-switch/settings";
 import type { ComponentDoc } from "./registry.types";
 
 export const STRETCH_SWITCH_DOC: ComponentDoc = {
@@ -24,6 +25,14 @@ export function Demo() {
       description: "基于 Base UI Switch 与 motion 弹簧，兼顾原生表单参与与触感回弹。",
       file: "stretch-switch/basic.tsx",
       Demo: StretchSwitchBasic,
+    },
+    {
+      slug: "settings",
+      name: "工作区偏好开关列表与禁用态",
+      description: "在卡片行内组合受控开关与组织策略锁定的禁用态开关。",
+      file: "stretch-switch/settings.tsx",
+      Demo: StretchSwitchSettingsDemo,
+      directory: false,
     },
   ],
   api: [

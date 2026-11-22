@@ -1,0 +1,6 @@
+{
+  "name": "number-input",
+  "title": "Number Input",
+  "description": "基于 Base UI NumberField 的数值步进输入框，支持加减步进、标签拖拽微调与货币/百分比格式化。",
+  "categories": ["navigation"]
+}

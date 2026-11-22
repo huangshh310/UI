@@ -1,0 +1,7 @@
+{
+  "name": "team-members-block",
+  "type": "registry:block",
+  "title": "Team Members Block",
+  "description": "由 Card、AvatarStack、SpringSelect、SettleModal 与 EmptyState 组合的团队成员与角色权限管理区块。",
+  "categories": ["blocks"]
+}

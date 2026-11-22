@@ -1,0 +1,7 @@
+{
+  "name": "auth-block",
+  "type": "registry:block",
+  "title": "Auth Block",
+  "description": "由 Card、LockInput、Separator 与 Button 组合而成的登录/注册认证区块。",
+  "categories": ["blocks"]
+}

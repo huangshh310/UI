@@ -1,0 +1,6 @@
+{
+  "name": "sheet",
+  "title": "Sheet",
+  "description": "四方向边缘滑入抽屉，支持尺寸预设、吸顶页头与独立滚动主体。",
+  "categories": ["overlays"]
+}

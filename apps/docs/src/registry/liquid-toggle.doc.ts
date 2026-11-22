@@ -2,6 +2,7 @@
  * Liquid Toggle 的文档数据。
  */
 import { LiquidToggleBasic } from "@/demos/liquid-toggle/basic";
+import LiquidToggleControlledDemo from "@/demos/liquid-toggle/controlled";
 import type { ComponentDoc } from "./registry.types";
 
 export const LIQUID_TOGGLE_DOC: ComponentDoc = {
@@ -24,6 +25,14 @@ export function Demo() {
       description: "切换时滑块沿移动方向拉伸。",
       file: "liquid-toggle/basic.tsx",
       Demo: LiquidToggleBasic,
+    },
+    {
+      slug: "controlled",
+      name: "受控状态卡片开关",
+      description: "以受控方式绑定开关状态，实时同步右侧文本与可访问标签。",
+      file: "liquid-toggle/controlled.tsx",
+      Demo: LiquidToggleControlledDemo,
+      directory: false,
     },
   ],
   api: [

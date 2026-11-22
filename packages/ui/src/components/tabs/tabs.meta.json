@@ -1,0 +1,6 @@
+{
+  "name": "tabs",
+  "title": "Tabs",
+  "description": "基于 Base UI Tabs 的平滑滑动指示器页签，支持胶囊分段、下划线与卡片三种风格。",
+  "categories": ["navigation"]
+}

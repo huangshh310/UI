@@ -1,0 +1,6 @@
+{
+  "name": "directional-tooltip",
+  "title": "Directional Tooltip",
+  "description": "方向感知气泡提示，按放置轴线轻微滑入，支持箭头指示与共享延迟组。",
+  "categories": ["overlays"]
+}

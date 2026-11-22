@@ -1,0 +1,7 @@
+{
+  "name": "dashboard-shell-block",
+  "type": "registry:block",
+  "title": "Dashboard Shell Block",
+  "description": "由 Breadcrumb、CommandMenu、Card、Badge 与 DataTable 拼装而成的可折叠控制台骨架。",
+  "categories": ["blocks"]
+}

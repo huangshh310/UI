@@ -4,6 +4,499 @@
   "homepage": "https://github.com/huangshh310/UI",
   "items": [
     {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "基于 Base UI Accordion 的折叠面板，支持单开/多开、发丝分隔与盒装变体及平滑展开。",
+      "categories": ["navigation"],
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/accordion.tsx",
+          "type": "registry:ui",
+          "target": "@ui/accordion.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "activity-feed-block",
+      "type": "registry:block",
+      "title": "Activity Feed Block",
+      "description": "由 Card、Tabs、Badge、EmptyState 与 Button 组合的分类通知中心与系统审计动态流区块。",
+      "categories": ["blocks"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "utils",
+        "huangshh310/UI/badge",
+        "huangshh310/UI/button",
+        "huangshh310/UI/card",
+        "huangshh310/UI/empty-state",
+        "huangshh310/UI/tabs"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/activity-feed-block.tsx",
+          "type": "registry:block",
+          "target": "@ui/activity-feed-block.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "advanced-data-table",
+      "type": "registry:ui",
+      "title": "Advanced Data Table",
+      "description": "在 TanStack Table 之上扩展分面筛选、列显隐、行密度切换、批量操作栏与 CSV 导出的高级数据表格。",
+      "categories": ["forms"],
+      "dependencies": ["@tanstack/react-table", "lucide-react", "@base-ui/react"],
+      "registryDependencies": [
+        "utils",
+        "huangshh310/UI/data-table",
+        "huangshh310/UI/draw-checkbox"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/advanced-data-table.tsx",
+          "type": "registry:ui",
+          "target": "@ui/advanced-data-table.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-workspace-block",
+      "type": "registry:block",
+      "title": "AI Workspace Block",
+      "description": "由 PromptInput、Badge、Button 与多会话侧栏组合的 AI 对话与提示词工作台区块。",
+      "categories": ["blocks"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "utils",
+        "huangshh310/UI/badge",
+        "huangshh310/UI/button",
+        "huangshh310/UI/prompt-input"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-workspace-block.tsx",
+          "type": "registry:block",
+          "target": "@ui/ai-workspace-block.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "柔和浅底与清晰语义图标的横幅通知组件，支持操作槽与可关闭交互。",
+      "categories": ["display"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/alert.tsx",
+          "type": "registry:ui",
+          "target": "@ui/alert.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "animated-file-upload",
+      "type": "registry:ui",
+      "title": "Animated File Upload",
+      "description": "支持拖拽高光、类型与体积校验、图片缩略图、适配器上传进度与弹簧列表动效的文件上传组件。",
+      "categories": ["forms"],
+      "dependencies": ["lucide-react", "motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/animated-file-upload.tsx",
+          "type": "registry:ui",
+          "target": "@ui/animated-file-upload.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "animated-text",
+      "type": "registry:ui",
+      "title": "Animated Text",
+      "description": "克制的排版微动效组件，支持逐词柔和显现、短语轮播切换与 AI 思考流光扫掠。",
+      "categories": ["motion"],
+      "dependencies": ["motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/animated-text.tsx",
+          "type": "registry:ui",
+          "target": "@ui/animated-text.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "auth-block",
+      "type": "registry:block",
+      "title": "Auth Block",
+      "description": "由 Card、LockInput、Separator 与 Button 组合而成的登录/注册认证区块。",
+      "categories": ["blocks"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "utils",
+        "huangshh310/UI/button",
+        "huangshh310/UI/card",
+        "huangshh310/UI/lock-input",
+        "huangshh310/UI/separator"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/auth-block.tsx",
+          "type": "registry:block",
+          "target": "@ui/auth-block.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "avatar-stack",
+      "type": "registry:ui",
+      "title": "Avatar Stack",
+      "description": "叠放头像组，支持图片回退首字母、在线状态点、悬停抬起与方向提示以及 +N 溢出计数。",
+      "categories": ["overlays"],
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils", "huangshh310/UI/directional-tooltip"],
+      "files": [
+        {
+          "path": "registry/ui/avatar-stack.tsx",
+          "type": "registry:ui",
+          "target": "@ui/avatar-stack.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "克制的柔和语义徽章与状态标签，支持 7 种变体、状态圆点与胶囊/标签两种形态。",
+      "categories": ["display"],
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/badge.tsx",
+          "type": "registry:ui",
+          "target": "@ui/badge.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "billing-usage-block",
+      "type": "registry:block",
+      "title": "Billing Usage Block",
+      "description": "由 Card、Badge、Alert、Progress 与 DataTable 组合的订阅套餐、资源配额与账单历史区块。",
+      "categories": ["blocks"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "utils",
+        "huangshh310/UI/alert",
+        "huangshh310/UI/badge",
+        "huangshh310/UI/button",
+        "huangshh310/UI/card",
+        "huangshh310/UI/data-table",
+        "huangshh310/UI/progress",
+        "huangshh310/UI/separator"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/billing-usage-block.tsx",
+          "type": "registry:block",
+          "target": "@ui/billing-usage-block.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "book-call-button",
       "type": "registry:ui",
       "title": "Book Call Button",
@@ -46,6 +539,48 @@
       }
     },
     {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "语义化面包屑导航，支持深层级自动折叠省略号展开与末级当前页标记。",
+      "categories": ["navigation"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/breadcrumb.tsx",
+          "type": "registry:ui",
+          "target": "@ui/breadcrumb.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
@@ -58,6 +593,90 @@
           "path": "registry/ui/button.tsx",
           "type": "registry:ui",
           "target": "@ui/button.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "零外部日期库依赖的月历组件，支持单日/区间选择、双月并排、禁用约束与完整方向键导航。",
+      "categories": ["forms"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/calendar.tsx",
+          "type": "registry:ui",
+          "target": "@ui/calendar.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "克制的圆角发丝边线卡片容器，提供页头、标题、说明、主体与托盘页脚组合插槽。",
+      "categories": ["display"],
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/card.tsx",
+          "type": "registry:ui",
+          "target": "@ui/card.tsx"
         }
       ],
       "cssVars": {
@@ -172,6 +791,224 @@
       }
     },
     {
+      "name": "command-menu",
+      "type": "registry:ui",
+      "title": "Command Menu",
+      "description": "基于 UI SDK 的全局命令面板，支持模糊匹配高亮、分组命令、键盘循环与子页面栈。",
+      "categories": ["overlays"],
+      "dependencies": ["@ui-sdk/react@0.1.0-beta.13", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/command-menu.tsx",
+          "type": "registry:ui",
+          "target": "@ui/command-menu.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "dashboard-shell-block",
+      "type": "registry:block",
+      "title": "Dashboard Shell Block",
+      "description": "由 Breadcrumb、CommandMenu、Card、Badge 与 DataTable 拼装而成的可折叠控制台骨架。",
+      "categories": ["blocks"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "utils",
+        "huangshh310/UI/badge",
+        "huangshh310/UI/breadcrumb",
+        "huangshh310/UI/button",
+        "huangshh310/UI/card",
+        "huangshh310/UI/command-menu",
+        "huangshh310/UI/data-table"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/dashboard-shell-block.tsx",
+          "type": "registry:block",
+          "target": "@ui/dashboard-shell-block.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "description": "基于 TanStack Table 的声明式数据表格，支持排序、全局搜索、分页、行选择、骨架加载与空状态。",
+      "categories": ["forms"],
+      "dependencies": ["@tanstack/react-table", "lucide-react"],
+      "registryDependencies": ["utils", "huangshh310/UI/draw-checkbox"],
+      "files": [
+        {
+          "path": "registry/ui/data-table.tsx",
+          "type": "registry:ui",
+          "target": "@ui/data-table.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "Date Picker",
+      "description": "基于 Base UI Popover 与 Calendar 组合的日期与区间选择器，支持快捷预设与一键清空。",
+      "categories": ["forms"],
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["utils", "huangshh310/UI/calendar"],
+      "files": [
+        {
+          "path": "registry/ui/date-picker.tsx",
+          "type": "registry:ui",
+          "target": "@ui/date-picker.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "directional-tooltip",
+      "type": "registry:ui",
+      "title": "Directional Tooltip",
+      "description": "方向感知气泡提示，按放置轴线轻微滑入，支持箭头指示与共享延迟组。",
+      "categories": ["overlays"],
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/directional-tooltip.tsx",
+          "type": "registry:ui",
+          "target": "@ui/directional-tooltip.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "drag-to-confirm",
       "type": "registry:ui",
       "title": "Drag to Confirm",
@@ -256,6 +1093,136 @@
       }
     },
     {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "Empty State",
+      "description": "克制统一的空列表与无结果占位卡片，带圆角图标徽章、说明与主次操作槽。",
+      "categories": ["display"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/empty-state.tsx",
+          "type": "registry:ui",
+          "target": "@ui/empty-state.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "file-manager-block",
+      "type": "registry:block",
+      "title": "File Manager Block",
+      "description": "由 AnimatedFileUpload 与 SelectionBasket 组合的文件资产管理区块，含目录卡与批量操作。",
+      "categories": ["blocks"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "utils",
+        "huangshh310/UI/animated-file-upload",
+        "huangshh310/UI/selection-basket"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/file-manager-block.tsx",
+          "type": "registry:block",
+          "target": "@ui/file-manager-block.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "folder-tab-card",
+      "type": "registry:ui",
+      "title": "Folder Tab Card",
+      "description": "立体文件夹标签切换卡片，带共享 layoutId 激活标签与底部统计凹槽。",
+      "categories": ["motion"],
+      "dependencies": ["motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/folder-tab-card.tsx",
+          "type": "registry:ui",
+          "target": "@ui/folder-tab-card.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "form",
       "type": "registry:ui",
       "title": "Form",
@@ -268,6 +1235,97 @@
           "path": "registry/ui/form.tsx",
           "type": "registry:ui",
           "target": "@ui/form.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "hero-bento-block",
+      "type": "registry:block",
+      "title": "Hero Bento Block",
+      "description": "由 Badge、Button、AvatarStack、SpotlightCard 与 Progress 组合的落地页首屏与 Bento 特性网格区块。",
+      "categories": ["blocks"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "utils",
+        "huangshh310/UI/avatar-stack",
+        "huangshh310/UI/badge",
+        "huangshh310/UI/button",
+        "huangshh310/UI/progress",
+        "huangshh310/UI/spotlight-card"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/hero-bento-block.tsx",
+          "type": "registry:block",
+          "target": "@ui/hero-bento-block.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "intro-loader",
+      "type": "registry:ui",
+      "title": "Intro Loader",
+      "description": "极简品牌首屏入场遮罩，带柔焦字标轮播、钴蓝细进度条与减弱动效立即跳过。",
+      "categories": ["overlays"],
+      "dependencies": ["motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/intro-loader.tsx",
+          "type": "registry:ui",
+          "target": "@ui/intro-loader.tsx"
         }
       ],
       "cssVars": {
@@ -508,6 +1566,48 @@
       }
     },
     {
+      "name": "morphing-dialog",
+      "type": "registry:ui",
+      "title": "Morphing Dialog",
+      "description": "共享元素形变对话框：点击卡片无缝展开为详情模态框，遵守减弱动效偏好。",
+      "categories": ["overlays"],
+      "dependencies": ["@base-ui/react", "lucide-react", "motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/morphing-dialog.tsx",
+          "type": "registry:ui",
+          "target": "@ui/morphing-dialog.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "neon-edge-button",
       "type": "registry:ui",
       "title": "Neon Edge Button",
@@ -520,6 +1620,179 @@
           "path": "registry/ui/neon-edge-button.tsx",
           "type": "registry:ui",
           "target": "@ui/neon-edge-button.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "number-flow",
+      "type": "registry:ui",
+      "title": "Number Flow",
+      "description": "等宽金融与仪表盘滚动数字过渡，按字符位独立弹簧滚轮进出，支持货币与百分比格式。",
+      "categories": ["motion"],
+      "dependencies": ["motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/number-flow.tsx",
+          "type": "registry:ui",
+          "target": "@ui/number-flow.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "number-input",
+      "type": "registry:ui",
+      "title": "Number Input",
+      "description": "基于 Base UI NumberField 的数值步进输入框，支持加减步进、标签拖拽微调与货币/百分比格式化。",
+      "categories": ["navigation"],
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/number-input.tsx",
+          "type": "registry:ui",
+          "target": "@ui/number-input.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "onboarding-wizard-block",
+      "type": "registry:block",
+      "title": "Onboarding Wizard Block",
+      "description": "由 StretchSwitch、OtpInput 与 NumberFlow 组合的三步工作区初始化引导向导区块。",
+      "categories": ["blocks"],
+      "dependencies": ["lucide-react", "motion"],
+      "registryDependencies": [
+        "utils",
+        "huangshh310/UI/number-flow",
+        "huangshh310/UI/otp-input",
+        "huangshh310/UI/stretch-switch"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/onboarding-wizard-block.tsx",
+          "type": "registry:block",
+          "target": "@ui/onboarding-wizard-block.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "origin-dropdown",
+      "type": "registry:ui",
+      "title": "Origin Dropdown",
+      "description": "从触发锚点缩放展开的下拉菜单，支持副标题说明、快捷键提示、勾选项与危险操作。",
+      "categories": ["overlays"],
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/origin-dropdown.tsx",
+          "type": "registry:ui",
+          "target": "@ui/origin-dropdown.tsx"
         }
       ],
       "cssVars": {
@@ -592,6 +1865,90 @@
       }
     },
     {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "语义化分页导航，自动生成省略号区间、当前页高亮与上下页边界禁用。",
+      "categories": ["navigation"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/pagination.tsx",
+          "type": "registry:ui",
+          "target": "@ui/pagination.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "peek-card",
+      "type": "registry:ui",
+      "title": "Peek Card",
+      "description": "悬停或聚焦链接时浮现的富内容预览卡片，内置身份信息块与等宽键值指标。",
+      "categories": ["overlays"],
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/peek-card.tsx",
+          "type": "registry:ui",
+          "target": "@ui/peek-card.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "press-button",
       "type": "registry:ui",
       "title": "Press Button",
@@ -604,6 +1961,569 @@
           "path": "registry/ui/press-button.tsx",
           "type": "registry:ui",
           "target": "@ui/press-button.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "pricing-block",
+      "type": "registry:block",
+      "title": "Pricing Block",
+      "description": "由 StretchSwitch 与 NumberFlow 组合而成的三档订阅定价区块，带钴蓝推荐档高亮。",
+      "categories": ["blocks"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "utils",
+        "huangshh310/UI/number-flow",
+        "huangshh310/UI/stretch-switch"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/pricing-block.tsx",
+          "type": "registry:block",
+          "target": "@ui/pricing-block.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "基于 Base UI Progress 的极细线性进度条，支持确定进度、不确定态与等宽读数。",
+      "categories": ["display"],
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/progress.tsx",
+          "type": "registry:ui",
+          "target": "@ui/progress.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "prompt-input",
+      "type": "registry:ui",
+      "title": "Prompt Input",
+      "description": "面向 AI 对话的自适应多行指令输入器，支持附件标签、模型切换、中文输入法防误触与生成中停止。",
+      "categories": ["forms"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/prompt-input.tsx",
+          "type": "registry:ui",
+          "target": "@ui/prompt-input.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "reorder-list",
+      "type": "registry:ui",
+      "title": "Reorder List",
+      "description": "基于精确锁版本 UI SDK 与 motion 的拖拽与键盘双通道可重排列表，支持 Space 拿起/方向键换位/Esc 取消。",
+      "categories": ["navigation"],
+      "dependencies": [
+        "@ui-sdk/core@0.1.0-beta.13",
+        "@ui-sdk/react@0.1.0-beta.13",
+        "lucide-react",
+        "motion"
+      ],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/reorder-list.tsx",
+          "type": "registry:ui",
+          "target": "@ui/reorder-list.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "resizable-panels",
+      "type": "registry:ui",
+      "title": "Resizable Panels",
+      "description": "基于精确锁版本 UI SDK 的可拖拽分栏面板，支持最小/最大约束与键盘方向键无障碍调整。",
+      "categories": ["navigation"],
+      "dependencies": ["@ui-sdk/react@0.1.0-beta.13", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/resizable-panels.tsx",
+          "type": "registry:ui",
+          "target": "@ui/resizable-panels.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "selection-basket",
+      "type": "registry:ui",
+      "title": "Selection Basket",
+      "description": "底部悬浮多选动作栏，带钴蓝计数跳动徽章、全选清空控制与无障碍实时播报。",
+      "categories": ["overlays"],
+      "dependencies": ["lucide-react", "motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/selection-basket.tsx",
+          "type": "registry:ui",
+          "target": "@ui/selection-basket.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "基于 Base UI Separator 的 1px 发丝分隔线，支持水平/垂直方向与居中标签文字。",
+      "categories": ["display"],
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/separator.tsx",
+          "type": "registry:ui",
+          "target": "@ui/separator.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "settings-block",
+      "type": "registry:block",
+      "title": "Settings Block",
+      "description": "由 Card、SpringSelect、DrawCheckbox、AvatarStack、Separator 与 Button 组合的工作区设置区块。",
+      "categories": ["blocks"],
+      "dependencies": [],
+      "registryDependencies": [
+        "utils",
+        "huangshh310/UI/avatar-stack",
+        "huangshh310/UI/button",
+        "huangshh310/UI/card",
+        "huangshh310/UI/draw-checkbox",
+        "huangshh310/UI/separator",
+        "huangshh310/UI/spring-select"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/settings-block.tsx",
+          "type": "registry:block",
+          "target": "@ui/settings-block.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "settle-modal",
+      "type": "registry:ui",
+      "title": "Settle Modal",
+      "description": "居中模态对话框，带柔焦遮罩、阻尼落位动效与完整焦点陷阱。",
+      "categories": ["overlays"],
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/settle-modal.tsx",
+          "type": "registry:ui",
+          "target": "@ui/settle-modal.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "description": "四方向边缘滑入抽屉，支持尺寸预设、吸顶页头与独立滚动主体。",
+      "categories": ["overlays"],
+      "dependencies": ["class-variance-authority", "@base-ui/react", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/sheet.tsx",
+          "type": "registry:ui",
+          "target": "@ui/sheet.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "低对比中性骨架占位块，支持脉冲与流光形态，并在减弱动效模式下自动静止。",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/skeleton.tsx",
+          "type": "registry:ui",
+          "target": "@ui/skeleton.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "基于 Base UI Slider 的单滑块与区间双滑块，带钴蓝激活轨道、刻度标记与键盘微调。",
+      "categories": ["navigation"],
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/slider.tsx",
+          "type": "registry:ui",
+          "target": "@ui/slider.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "精致轻量的 SVG 环形加载器，继承当前文字色并遵守减弱动效偏好。",
+      "categories": ["display"],
+      "dependencies": [],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/spinner.tsx",
+          "type": "registry:ui",
+          "target": "@ui/spinner.tsx"
         }
       ],
       "cssVars": {
@@ -676,6 +2596,90 @@
       }
     },
     {
+      "name": "spotlight-card",
+      "type": "registry:ui",
+      "title": "Spotlight Card",
+      "description": "零额外运行时依赖的纯 CSS 指针跟随径向高光与微光边框卡片。",
+      "categories": ["motion"],
+      "dependencies": [],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/spotlight-card.tsx",
+          "type": "registry:ui",
+          "target": "@ui/spotlight-card.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "spotlight-search",
+      "type": "registry:ui",
+      "title": "Spotlight Search",
+      "description": "轻量聚焦搜索弹层，支持分类快速筛选、最近搜索记录、结果预览分栏与弹性进出场。",
+      "categories": ["overlays"],
+      "dependencies": ["@base-ui/react", "lucide-react", "motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/spotlight-search.tsx",
+          "type": "registry:ui",
+          "target": "@ui/spotlight-search.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "spring-select",
       "type": "registry:ui",
       "title": "Spring Select",
@@ -718,6 +2722,90 @@
       }
     },
     {
+      "name": "staggered-list",
+      "type": "registry:ui",
+      "title": "Staggered List",
+      "description": "克制紧凑的列表错峰入场与视口滚入显现容器，自动清理 Observer 并遵守减弱动效。",
+      "categories": ["motion"],
+      "dependencies": ["motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/staggered-list.tsx",
+          "type": "registry:ui",
+          "target": "@ui/staggered-list.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "stats-overview-block",
+      "type": "registry:block",
+      "title": "Stats Overview Block",
+      "description": "由 NumberFlow 滚动数字与周期分段切换组合的多维度业务 KPI 指标概览区块。",
+      "categories": ["blocks"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils", "huangshh310/UI/number-flow"],
+      "files": [
+        {
+          "path": "registry/ui/stats-overview-block.tsx",
+          "type": "registry:block",
+          "target": "@ui/stats-overview-block.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "stretch-switch",
       "type": "registry:ui",
       "title": "Stretch Switch",
@@ -730,6 +2818,183 @@
           "path": "registry/ui/stretch-switch.tsx",
           "type": "registry:ui",
           "target": "@ui/stretch-switch.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "基于 Base UI Tabs 的平滑滑动指示器页签，支持胶囊分段、下划线与卡片三种风格。",
+      "categories": ["navigation"],
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/tabs.tsx",
+          "type": "registry:ui",
+          "target": "@ui/tabs.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "team-members-block",
+      "type": "registry:block",
+      "title": "Team Members Block",
+      "description": "由 Card、AvatarStack、SpringSelect、SettleModal 与 EmptyState 组合的团队成员与角色权限管理区块。",
+      "categories": ["blocks"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "utils",
+        "huangshh310/UI/badge",
+        "huangshh310/UI/button",
+        "huangshh310/UI/empty-state",
+        "huangshh310/UI/settle-modal",
+        "huangshh310/UI/spring-select",
+        "huangshh310/UI/avatar-stack",
+        "huangshh310/UI/card"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/team-members-block.tsx",
+          "type": "registry:block",
+          "target": "@ui/team-members-block.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "基于 Base UI Toast 的堆叠通知系统，支持多方位停靠、语义色调、撤销动作与悬停暂停。",
+      "categories": ["display"],
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/toast.tsx",
+          "type": "registry:ui",
+          "target": "@ui/toast.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.545 0.195 258)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.165 0.004 264)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "tree",
+      "type": "registry:ui",
+      "title": "Tree",
+      "description": "基于精确锁版本 UI SDK 的层级树形视图，带缩进参考线、分支展开与完整 WAI-ARIA 键盘导航。",
+      "categories": ["navigation"],
+      "dependencies": ["@ui-sdk/react@0.1.0-beta.13", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/tree.tsx",
+          "type": "registry:ui",
+          "target": "@ui/tree.tsx"
         }
       ],
       "cssVars": {

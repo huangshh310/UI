@@ -1,0 +1,6 @@
+{
+  "name": "prompt-input",
+  "title": "Prompt Input",
+  "description": "面向 AI 对话的自适应多行指令输入器，支持附件标签、模型切换、中文输入法防误触与生成中停止。",
+  "categories": ["forms"]
+}

@@ -2,6 +2,7 @@
  * LiquidRippleButton 的文档数据。
  */
 import { LiquidRippleButtonBasic } from "@/demos/liquid-ripple-button/basic";
+import LiquidRippleButtonVariantsDemo from "@/demos/liquid-ripple-button/variants";
 import type { ComponentDoc } from "./registry.types";
 
 export const LIQUID_RIPPLE_BUTTON_DOC: ComponentDoc = {
@@ -24,6 +25,14 @@ export function Demo() {
       description: "波纹从点击的位置出发，盖满整个按钮后淡出。",
       file: "liquid-ripple-button/basic.tsx",
       Demo: LiquidRippleButtonBasic,
+    },
+    {
+      slug: "variants",
+      name: "信号色与描边水波纹按钮",
+      description: "展示不同视觉变体下从点击坐标扩散的流体波纹效果。",
+      file: "liquid-ripple-button/variants.tsx",
+      Demo: LiquidRippleButtonVariantsDemo,
+      directory: false,
     },
   ],
   api: [

@@ -25,6 +25,8 @@ interface SpecimenCardProps {
    * - component（用于首页精选）：主标题为组件名，副标题展示组件说明。
    */
   titleMode?: "specimen" | "component";
+  /** 是否占满整行展示（用于页面级 Blocks，避免在三列网格中被挤压） */
+  wide?: boolean;
 }
 
 interface CardFooterProps {
@@ -33,16 +35,25 @@ interface CardFooterProps {
   subtitle: string;
   isNew: boolean;
   isMotion: boolean;
+  specimenCount: number;
   heading: "h2" | "h3";
 }
 
-const CardFooter = ({ href, title, subtitle, isNew, isMotion, heading }: CardFooterProps) => {
+const CardFooter = ({
+  href,
+  title,
+  subtitle,
+  isNew,
+  isMotion,
+  specimenCount,
+  heading,
+}: CardFooterProps) => {
   const Heading = heading;
 
   return (
     <footer className="flex items-center justify-between gap-3 px-2.5 pt-3 pb-1.5">
       <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-1.5">
           <Heading className="truncate text-[15px] font-semibold tracking-tight text-foreground">
             <Link
               href={href}
@@ -52,6 +63,11 @@ const CardFooter = ({ href, title, subtitle, isNew, isMotion, heading }: CardFoo
             </Link>
           </Heading>
           {isNew && <NewBadge />}
+          {specimenCount > 1 && (
+            <span className="rounded-full border border-border bg-secondary/70 px-1.5 py-0.5 font-mono text-[10px] leading-none text-muted-foreground tabular-nums">
+              {specimenCount} 场景
+            </span>
+          )}
           {isMotion && (
             <span className="rounded-full border border-border bg-secondary px-1.5 py-0.5 font-mono text-[10px] leading-none text-muted-foreground">
               motion
@@ -78,6 +94,7 @@ export const SpecimenCard = ({
   index,
   isNew,
   titleMode = "specimen",
+  wide = false,
 }: SpecimenCardProps) => {
   const { specimen, component } = entry;
   const { Demo } = specimen;
@@ -86,15 +103,19 @@ export const SpecimenCard = ({
   return (
     <article
       data-testid="specimen-card"
-      style={{ "--i": index } as CSSProperties}
-      className="rise group relative flex min-w-0 flex-col rounded-2xl border border-border bg-(--site-surface) p-2 shadow-xs transition-[border-color,box-shadow] duration-(--ui-duration-normal) hover:border-foreground/25 hover:shadow-md"
+      style={{ "--i": Math.min(index, 5) } as CSSProperties}
+      className={`rise group relative flex min-w-0 flex-col rounded-2xl border border-border bg-(--site-surface) p-2 shadow-xs transition-[border-color,box-shadow] duration-(--ui-duration-normal) hover:border-foreground/25 hover:shadow-md ${
+        wide ? "md:col-span-2 xl:col-span-3" : ""
+      }`}
     >
       {/* 右上角快捷复制安装命令：悬停/聚焦更清晰，触摸设备上保持可见 */}
       <div className="absolute top-4 right-4 z-20 rounded-full border border-border/80 bg-(--site-surface)/90 opacity-0 shadow-xs backdrop-blur-sm transition-opacity duration-(--ui-duration-fast) group-focus-within:opacity-100 group-hover:opacity-100 pointer-coarse:opacity-100">
         <CopyButton text={cliCommand(component)} label={`复制 ${component.name} 的安装命令`} />
       </div>
 
-      <SpecimenStage className="min-h-[260px] flex-1 rounded-xl border border-border/65">
+      <SpecimenStage
+        className={`${wide ? "min-h-[360px] p-4 sm:p-8" : "min-h-[260px]"} flex-1 rounded-xl border border-border/65`}
+      >
         <Demo />
       </SpecimenStage>
 
@@ -106,6 +127,7 @@ export const SpecimenCard = ({
         }
         isNew={isNew}
         isMotion={component.dependencies.includes("motion")}
+        specimenCount={component.specimens.length}
         heading={isComponentTitle ? "h3" : "h2"}
       />
     </article>

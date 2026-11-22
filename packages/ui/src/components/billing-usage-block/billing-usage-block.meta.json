@@ -1,0 +1,7 @@
+{
+  "name": "billing-usage-block",
+  "type": "registry:block",
+  "title": "Billing Usage Block",
+  "description": "由 Card、Badge、Alert、Progress 与 DataTable 组合的订阅套餐、资源配额与账单历史区块。",
+  "categories": ["blocks"]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "activity-feed-block",
+  "type": "registry:block",
+  "title": "Activity Feed Block",
+  "description": "由 Card、Tabs、Badge、EmptyState 与 Button 组合的分类通知中心与系统审计动态流区块。",
+  "categories": ["blocks"]
+}

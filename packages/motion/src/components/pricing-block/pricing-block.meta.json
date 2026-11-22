@@ -1,0 +1,7 @@
+{
+  "name": "pricing-block",
+  "type": "registry:block",
+  "title": "Pricing Block",
+  "description": "由 StretchSwitch 与 NumberFlow 组合而成的三档订阅定价区块，带钴蓝推荐档高亮。",
+  "categories": ["blocks"]
+}

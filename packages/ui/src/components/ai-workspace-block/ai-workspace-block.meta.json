@@ -1,0 +1,7 @@
+{
+  "name": "ai-workspace-block",
+  "type": "registry:block",
+  "title": "AI Workspace Block",
+  "description": "由 PromptInput、Badge、Button 与多会话侧栏组合的 AI 对话与提示词工作台区块。",
+  "categories": ["blocks"]
+}

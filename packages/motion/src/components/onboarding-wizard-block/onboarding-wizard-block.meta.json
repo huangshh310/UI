@@ -1,0 +1,7 @@
+{
+  "name": "onboarding-wizard-block",
+  "type": "registry:block",
+  "title": "Onboarding Wizard Block",
+  "description": "由 StretchSwitch、OtpInput 与 NumberFlow 组合的三步工作区初始化引导向导区块。",
+  "categories": ["blocks"]
+}

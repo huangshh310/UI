@@ -1,0 +1,7 @@
+{
+  "name": "settings-block",
+  "type": "registry:block",
+  "title": "Settings Block",
+  "description": "由 Card、SpringSelect、DrawCheckbox、AvatarStack、Separator 与 Button 组合的工作区设置区块。",
+  "categories": ["blocks"]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "spotlight-card",
+  "title": "Spotlight Card",
+  "description": "零额外运行时依赖的纯 CSS 指针跟随径向高光与微光边框卡片。",
+  "categories": ["motion"]
+}

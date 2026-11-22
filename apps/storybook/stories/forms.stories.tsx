@@ -1,10 +1,14 @@
 /**
  * Forms 分类组件的 Stories：覆盖基础表单与动效表单的交互与主题检查。
  */
-import { OtpInput, StretchSwitch } from "@matt-ui/motion";
+import { AnimatedFileUpload, OtpInput, StretchSwitch } from "@matt-ui/motion";
 import {
+  AdvancedDataTable,
   Button,
+  Calendar,
   Combobox,
+  DataTable,
+  DatePicker,
   DrawCheckbox,
   Form,
   FormDescription,
@@ -16,6 +20,7 @@ import {
   FormRadioItem,
   FormTextarea,
   LockInput,
+  PromptInput,
   SpringSelect,
 } from "@matt-ui/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
@@ -114,5 +119,96 @@ export const ComposableForm: Story = {
         <Button type="submit">保存设置</Button>
       </div>
     </Form>
+  ),
+};
+
+export const DateCalendar: Story = {
+  render: () => (
+    <Calendar
+      mode="range"
+      defaultMonth={new Date(2026, 10, 1)}
+      defaultRange={{ start: new Date(2026, 10, 10), end: new Date(2026, 10, 16) }}
+    />
+  ),
+};
+
+export const PopoverDatePicker: Story = {
+  render: () => (
+    <DatePicker
+      label="发布日期"
+      defaultValue={new Date(2026, 10, 22)}
+      presets={[
+        { label: "今天", value: new Date(2026, 10, 22) },
+        { label: "本月末", value: new Date(2026, 10, 30) },
+      ]}
+    />
+  ),
+};
+
+export const FileUpload: Story = {
+  render: () => <AnimatedFileUpload accept="image/*,.pdf,.md" maxFiles={4} />,
+};
+
+export const AiPromptInput: Story = {
+  render: () => (
+    <PromptInput
+      models={[
+        { id: "flash", label: "Flash" },
+        { id: "pro", label: "Pro" },
+      ]}
+      selectedModel="pro"
+      attachments={[{ id: "1", name: "tokens.css", size: "4 KB" }]}
+      suggestions={["优化暗色对比度", "生成表单校验规则"]}
+      hint="Enter 发送 · Shift+Enter 换行"
+    />
+  ),
+};
+
+export const BasicDataTable: Story = {
+  render: () => (
+    <DataTable
+      title="部署节点"
+      searchable
+      selectable
+      data={[
+        { id: "1", name: "matt-ui-docs", region: "tokyo", ms: 18 },
+        { id: "2", name: "registry-edge", region: "singapore", ms: 32 },
+        { id: "3", name: "storybook", region: "frankfurt", ms: 94 },
+      ]}
+      columns={[
+        { id: "name", header: "项目", accessor: (r) => r.name, sortable: true },
+        { id: "region", header: "区域", accessor: (r) => r.region },
+        { id: "ms", header: "延迟 (ms)", accessor: (r) => r.ms, sortable: true, align: "right" },
+      ]}
+    />
+  ),
+};
+
+export const AdvancedTable: Story = {
+  render: () => (
+    <AdvancedDataTable
+      title="组件清单"
+      data={[
+        { id: "1", name: "Button", pkg: "ui", status: "stable" },
+        { id: "2", name: "Calendar", pkg: "ui", status: "new" },
+        { id: "3", name: "AnimatedFileUpload", pkg: "motion", status: "new" },
+      ]}
+      columns={[
+        { id: "name", header: "组件", accessor: (r) => r.name, sortable: true, hideable: false },
+        { id: "pkg", header: "包", accessor: (r) => r.pkg },
+        { id: "status", header: "状态", accessor: (r) => r.status },
+      ]}
+      facets={[
+        {
+          id: "status",
+          label: "状态",
+          getValue: (r) => r.status,
+          options: [
+            { value: "new", label: "新增" },
+            { value: "stable", label: "稳定" },
+          ],
+        },
+      ]}
+    />
   ),
 };

@@ -11,6 +11,8 @@ import type { DirectoryFilter } from "@/registry/registry.types";
 import { SpecimenCard } from "./specimen-card";
 import { useDirectoryFilter } from "./use-directory-filter";
 
+const WIDE_SLUGS = new Set(["data-table", "advanced-data-table"]);
+
 const TABS: { id: DirectoryFilter; label: string }[] = [
   { id: "all", label: "全部" },
   { id: "recent", label: "最近" },
@@ -79,13 +81,24 @@ export const SpecimenDirectory = ({ recentSlugs }: { recentSlugs: string[] }) =>
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div
+            className={
+              filter === "blocks"
+                ? "grid grid-cols-1 gap-7"
+                : "grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"
+            }
+          >
             {entries.map((entry, index) => (
               <SpecimenCard
-                key={entry.specimen.slug}
+                key={`${entry.component.slug}/${entry.specimen.slug}`}
                 entry={entry}
                 index={index}
                 isNew={recentSlugs.includes(entry.component.slug)}
+                wide={
+                  filter === "blocks" ||
+                  entry.component.category === "blocks" ||
+                  WIDE_SLUGS.has(entry.component.slug)
+                }
               />
             ))}
           </div>

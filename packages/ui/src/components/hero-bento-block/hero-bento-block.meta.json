@@ -1,0 +1,7 @@
+{
+  "name": "hero-bento-block",
+  "type": "registry:block",
+  "title": "Hero Bento Block",
+  "description": "由 Badge、Button、AvatarStack、SpotlightCard 与 Progress 组合的落地页首屏与 Bento 特性网格区块。",
+  "categories": ["blocks"]
+}

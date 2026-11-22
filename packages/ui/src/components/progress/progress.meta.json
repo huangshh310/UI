@@ -1,0 +1,6 @@
+{
+  "name": "progress",
+  "title": "Progress",
+  "description": "基于 Base UI Progress 的极细线性进度条，支持确定进度、不确定态与等宽读数。",
+  "categories": ["display"]
+}

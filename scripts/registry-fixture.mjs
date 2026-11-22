@@ -10,11 +10,19 @@
  * 项目建在系统临时目录，结束后删除。用法：pnpm test:registry
  */
 import { execSync, spawn } from "node:child_process";
-import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import {
+  copyFileSync,
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";
-import { ROOT } from "./registry/constants.mjs";
+import { REGISTRY_ADDRESS, ROOT } from "./registry/constants.mjs";
 import { checkInstalledButton } from "./registry/browser-check.mjs";
 
 const PORT = 3400;
@@ -65,9 +73,24 @@ const startPreview = async () => {
   throw new Error(`预览服务没有启动，请确认端口 ${PORT} 没有被占用`);
 };
 
+/** 本地验证时尚未推送到远端，把本仓库的兄弟组件依赖改写为临时目录中的本地 JSON 路径 */
+const localizeSiblingDeps = (itemsDir) => {
+  const prefix = `${REGISTRY_ADDRESS}/`;
+  for (const file of readdirSync(itemsDir).filter((name) => name.endsWith(".json"))) {
+    const filePath = join(itemsDir, file);
+    const data = JSON.parse(readFileSync(filePath, "utf8"));
+    if (!Array.isArray(data.registryDependencies)) continue;
+    data.registryDependencies = data.registryDependencies.map((dep) =>
+      dep.startsWith(prefix) ? join(itemsDir, `${dep.slice(prefix.length)}.json`) : dep,
+    );
+    writeFileSync(filePath, `${JSON.stringify(data, null, 2)}\n`);
+  }
+};
+
 try {
   run(`pnpm exec shadcn init -t vite -b base -p nova --no-monorepo -y -n app -c "${WORK}"`, ROOT);
   run(`pnpm exec shadcn build ./registry.json -o "${ITEMS}"`, ROOT);
+  localizeSiblingDeps(ITEMS);
   // 安装 Registry 中的每一个条目：类型检查与构建会覆盖全部组件，浏览器检查只针对 Button
   const items = JSON.parse(readFileSync(join(ROOT, "registry.json"), "utf8")).items;
   const files = items.map(({ name }) => `"${join(ITEMS, `${name}.json`)}"`).join(" ");

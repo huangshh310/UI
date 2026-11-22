@@ -2,6 +2,7 @@
  * Spring Select 的文档数据。
  */
 import { SpringSelectBasic } from "@/demos/spring-select/basic";
+import SpringSelectEnvDemo from "@/demos/spring-select/env";
 import type { ComponentDoc } from "./registry.types";
 
 export const SPRING_SELECT_DOC: ComponentDoc = {
@@ -32,6 +33,14 @@ export function Demo() {
       description: "支持方向键导航、Home/End、首字母 typeahead、Escape 取消与外部重置。",
       file: "spring-select/basic.tsx",
       Demo: SpringSelectBasic,
+    },
+    {
+      slug: "env",
+      name: "受控环境选择器",
+      description: "以受控方式绑定发布环境状态，实时同步当前选中值。",
+      file: "spring-select/env.tsx",
+      Demo: SpringSelectEnvDemo,
+      directory: false,
     },
   ],
   api: [
