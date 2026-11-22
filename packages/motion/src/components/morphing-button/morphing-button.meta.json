@@ -1,0 +1,6 @@
+{
+  "name": "morphing-button",
+  "title": "Morphing Button",
+  "description": "A button that morphs between idle, loading, success and error states without layout jumps.",
+  "categories": ["buttons"]
+}

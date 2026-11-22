@@ -6,6 +6,12 @@ export { BookCallButton } from "./components/book-call-button/index.js";
 export type { BookCallButtonProps } from "./components/book-call-button/index.js";
 export { Button } from "./components/button/index.js";
 export type { ButtonProps, ButtonSize, ButtonVariant } from "./components/button/index.js";
+export { CodeSnippetDeck } from "./components/code-snippet-deck/index.js";
+export type {
+  CodeSnippetDeckProps,
+  Snippet,
+  SnippetParameter,
+} from "./components/code-snippet-deck/index.js";
 export { LiquidRippleButton } from "./components/liquid-ripple-button/index.js";
 export type { LiquidRippleButtonProps } from "./components/liquid-ripple-button/index.js";
 export { NeonEdgeButton } from "./components/neon-edge-button/index.js";

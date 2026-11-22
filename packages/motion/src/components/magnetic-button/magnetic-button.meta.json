@@ -1,0 +1,6 @@
+{
+  "name": "magnetic-button",
+  "title": "Magnetic Button",
+  "description": "A button pulled toward the cursor by a spring and released when the pointer leaves.",
+  "categories": ["buttons"]
+}

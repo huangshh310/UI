@@ -11,7 +11,7 @@ interface SpecimenStageProps {
 
 export const SpecimenStage = ({ children, className = "min-h-64" }: SpecimenStageProps) => (
   <div className={`flex items-center justify-center p-8 ${className}`}>
-    {/* 示例自身浮在整卡链接之上，保持可交互 */}
-    <div className="relative z-10">{children}</div>
+    {/* 示例自身浮在整卡链接之上，保持可交互；宽度不超过舞台，内容过宽时由示例自己滚动 */}
+    <div className="relative z-10 flex max-w-full min-w-0 justify-center">{children}</div>
   </div>
 );

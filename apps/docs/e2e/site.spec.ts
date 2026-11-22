@@ -9,8 +9,8 @@ import { waitForEntranceAnimations } from "./support/animations";
 
 const CLI_COMMAND = "pnpm dlx shadcn@latest add huangshh310/UI/button";
 
-/** 目录中的示例总数：Button 的 7 个，加上其余 6 个按钮组件各 1 个 */
-const SPECIMEN_COUNT = 13;
+/** 目录中的示例总数：Button 的 7 个，加上其余 11 个组件各 1 个 */
+const SPECIMEN_COUNT = 18;
 
 /** 目录页中的示例卡片 */
 const specimens = (page: Page) => page.getByTestId("specimen-card");
@@ -133,7 +133,10 @@ test.describe("组件详情页", () => {
     expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(CLI_COMMAND);
 
     await install.getByRole("tab", { name: "手动" }).click();
-    await expect(install.getByRole("tabpanel")).toContainText("class-variance-authority");
+    // 切换时旧面板会在退场动画期间短暂保留，按名称定位新面板
+    await expect(install.getByRole("tabpanel", { name: "手动" })).toContainText(
+      "class-variance-authority",
+    );
   });
 
   test("「复制提示词」把给 AI 助手的安装说明写入剪贴板", async ({ page, context }) => {

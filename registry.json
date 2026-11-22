@@ -88,6 +88,90 @@
       }
     },
     {
+      "name": "code-snippet-deck",
+      "type": "registry:ui",
+      "title": "Code Snippet Deck",
+      "description": "A multi-language code snippet deck with editable parameters substituted into every snippet.",
+      "categories": ["buttons"],
+      "dependencies": ["lucide-react", "@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/code-snippet-deck.tsx",
+          "type": "registry:ui",
+          "target": "@ui/code-snippet-deck.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.985 0.004 286)"
+        },
+        "dark": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.178 0.004 286)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "drag-to-confirm",
+      "type": "registry:ui",
+      "title": "Drag to Confirm",
+      "description": "A slider that must be dragged to the end to confirm a critical action, with a keyboard alternative.",
+      "categories": ["buttons"],
+      "dependencies": ["motion", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/drag-to-confirm.tsx",
+          "type": "registry:ui",
+          "target": "@ui/drag-to-confirm.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.985 0.004 286)"
+        },
+        "dark": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.178 0.004 286)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "liquid-ripple-button",
       "type": "registry:ui",
       "title": "Liquid Ripple Button",
@@ -100,6 +184,132 @@
           "path": "registry/ui/liquid-ripple-button.tsx",
           "type": "registry:ui",
           "target": "@ui/liquid-ripple-button.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.985 0.004 286)"
+        },
+        "dark": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.178 0.004 286)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "liquid-toggle",
+      "type": "registry:ui",
+      "title": "Liquid Toggle",
+      "description": "A switch whose thumb stretches like a liquid drop as it travels.",
+      "categories": ["buttons"],
+      "dependencies": ["motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/liquid-toggle.tsx",
+          "type": "registry:ui",
+          "target": "@ui/liquid-toggle.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.985 0.004 286)"
+        },
+        "dark": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.178 0.004 286)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "magnetic-button",
+      "type": "registry:ui",
+      "title": "Magnetic Button",
+      "description": "A button pulled toward the cursor by a spring and released when the pointer leaves.",
+      "categories": ["buttons"],
+      "dependencies": ["motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/magnetic-button.tsx",
+          "type": "registry:ui",
+          "target": "@ui/magnetic-button.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.985 0.004 286)"
+        },
+        "dark": {
+          "signal": "oklch(0.9 0.2 125)",
+          "signal-foreground": "oklch(0.145 0.004 286)",
+          "destructive-foreground": "oklch(0.178 0.004 286)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "morphing-button",
+      "type": "registry:ui",
+      "title": "Morphing Button",
+      "description": "A button that morphs between idle, loading, success and error states without layout jumps.",
+      "categories": ["buttons"],
+      "dependencies": ["lucide-react", "motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/morphing-button.tsx",
+          "type": "registry:ui",
+          "target": "@ui/morphing-button.tsx"
         }
       ],
       "cssVars": {

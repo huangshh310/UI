@@ -6,8 +6,11 @@ import { fileURLToPath } from "node:url";
 
 export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 
-/** 组件源码所在目录：每个子目录是一个组件 */
+/** 组件源码所在目录：每个子目录是一个组件。新组件默认放在这里 */
 export const COMPONENTS_DIR = join(ROOT, "packages/ui/src/components");
+
+/** 参与生成 Registry 的全部组件目录：基础组件，以及依赖 motion 的动画组件 */
+export const COMPONENT_DIRS = [COMPONENTS_DIR, join(ROOT, "packages/motion/src/components")];
 
 /** 生成的、可被 shadcn CLI 直接安装的单文件源码 */
 export const REGISTRY_UI_DIR = join(ROOT, "registry/ui");

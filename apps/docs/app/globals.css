@@ -10,6 +10,7 @@
 
 /* 让 Tailwind 为组件库用到的类名生成样式 */
 @source "../node_modules/@matt-ui/ui/dist";
+@source "../node_modules/@matt-ui/motion/dist";
 
 :root {
   /* 把 Token 的字体栈接到本站加载的 Geist 字体上；中文回退到系统字体 */

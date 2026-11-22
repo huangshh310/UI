@@ -1,0 +1,6 @@
+{
+  "name": "drag-to-confirm",
+  "title": "Drag to Confirm",
+  "description": "A slider that must be dragged to the end to confirm a critical action, with a keyboard alternative.",
+  "categories": ["buttons"]
+}

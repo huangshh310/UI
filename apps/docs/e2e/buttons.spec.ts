@@ -14,6 +14,11 @@ const SLUGS = [
   "book-call-button",
   "typewriter-button",
   "split-button",
+  "magnetic-button",
+  "morphing-button",
+  "drag-to-confirm",
+  "liquid-toggle",
+  "code-snippet-deck",
 ];
 
 /** 打开组件详情页，返回主面板 */
@@ -124,6 +129,84 @@ test("Split Button：主操作直接执行，不打开菜单", async ({ page }) 
 
   await expect(main.getByTestId("split-result")).toHaveText("保存");
   await expect(page.getByRole("menu")).toBeHidden();
+});
+
+test("Magnetic Button：指针在按钮上移动时被吸过去，离开后回到原位", async ({ page }) => {
+  const main = await openMain(page, "magnetic-button");
+  const wrapper = main.locator('[data-slot="magnetic-button"]');
+  const box = (await wrapper.boundingBox())!;
+
+  await page.mouse.move(box.x + box.width - 4, box.y + box.height - 4, { steps: 6 });
+  await expect
+    .poll(() => computed(wrapper, "transform"))
+    .not.toMatch(/^(none|matrix\(1, 0, 0, 1, 0, 0\))$/);
+
+  await page.mouse.move(box.x + box.width + 300, box.y + 300, { steps: 4 });
+  await expect
+    .poll(() => computed(wrapper, "transform"))
+    .toMatch(/^(none|matrix\(1, 0, 0, 1, 0, 0\))$/);
+});
+
+test("Morphing Button：点击后依次变为处理中与已保存", async ({ page }) => {
+  const main = await openMain(page, "morphing-button");
+
+  await main.getByRole("button", { name: "保存更改" }).click();
+
+  await expect(main.getByRole("button", { name: "保存中…" })).toHaveAttribute("aria-busy", "true");
+  await expect(main.getByRole("button", { name: "已保存" })).toBeVisible();
+});
+
+test("Drag to Confirm：拖到尽头确认，半途松手弹回", async ({ page }) => {
+  const main = await openMain(page, "drag-to-confirm");
+  const track = main.locator('[data-slot="drag-to-confirm"]');
+  const handle = main.locator('[data-slot="drag-to-confirm-handle"]');
+  const trackBox = (await track.boundingBox())!;
+  const start = (await handle.boundingBox())!;
+  const grab = { x: start.x + start.width / 2, y: start.y + start.height / 2 };
+
+  await page.mouse.move(grab.x, grab.y);
+  await page.mouse.down();
+  await page.mouse.move(grab.x + 60, grab.y, { steps: 8 });
+  await page.mouse.up();
+  await expect.poll(async () => (await handle.boundingBox())!.x).toBeLessThan(start.x + 4);
+  await expect(track).not.toHaveAttribute("data-confirmed");
+
+  await page.mouse.move(grab.x, grab.y);
+  await page.mouse.down();
+  await page.mouse.move(trackBox.x + trackBox.width, grab.y, { steps: 12 });
+  await page.mouse.up();
+  await expect(track).toHaveAttribute("data-confirmed", "");
+});
+
+test("Drag to Confirm：键盘聚焦滑块后按 Enter 确认", async ({ page }) => {
+  const main = await openMain(page, "drag-to-confirm");
+
+  await main.getByRole("button", { name: /滑动以删除项目/ }).focus();
+  await page.keyboard.press("Enter");
+
+  await expect(main.locator('[data-slot="drag-to-confirm"]')).toHaveAttribute("data-confirmed", "");
+});
+
+test("Liquid Toggle：点击切换，空格键也能切换", async ({ page }) => {
+  const main = await openMain(page, "liquid-toggle");
+  const toggle = main.getByRole("switch", { name: "推送通知" });
+  await expect(toggle).toHaveAttribute("aria-checked", "true");
+
+  await toggle.click();
+  await expect(toggle).toHaveAttribute("aria-checked", "false");
+  await page.keyboard.press("Space");
+  await expect(toggle).toHaveAttribute("aria-checked", "true");
+});
+
+test("Code Snippet Deck：切换语言并修改参数，代码随之更新", async ({ page }) => {
+  const main = await openMain(page, "code-snippet-deck");
+
+  await main.getByRole("tab", { name: "Python" }).click();
+  await main.getByRole("textbox", { name: "Limit" }).fill("7");
+
+  await expect(main.getByTestId("snippet-code")).toHaveText(
+    'requests.get("https://api.tidewater.dev/v1/projects", params={"limit": 7})',
+  );
 });
 
 for (const slug of SLUGS) {

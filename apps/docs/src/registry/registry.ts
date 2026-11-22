@@ -5,6 +5,11 @@
 import { REGISTRY_ADDRESS } from "@/site/constants";
 import { BOOK_CALL_BUTTON_DOC } from "./book-call-button.doc";
 import { BUTTON_DOC } from "./button.doc";
+import { MAGNETIC_BUTTON_DOC } from "./magnetic-button.doc";
+import { MORPHING_BUTTON_DOC } from "./morphing-button.doc";
+import { DRAG_TO_CONFIRM_DOC } from "./drag-to-confirm.doc";
+import { LIQUID_TOGGLE_DOC } from "./liquid-toggle.doc";
+import { CODE_SNIPPET_DECK_DOC } from "./code-snippet-deck.doc";
 import { LIQUID_RIPPLE_BUTTON_DOC } from "./liquid-ripple-button.doc";
 import { NEON_EDGE_BUTTON_DOC } from "./neon-edge-button.doc";
 import { PRESS_BUTTON_DOC } from "./press-button.doc";
@@ -22,6 +27,11 @@ export const COMPONENTS: ComponentDoc[] = [
   BOOK_CALL_BUTTON_DOC,
   TYPEWRITER_BUTTON_DOC,
   SPLIT_BUTTON_DOC,
+  MAGNETIC_BUTTON_DOC,
+  MORPHING_BUTTON_DOC,
+  DRAG_TO_CONFIRM_DOC,
+  LIQUID_TOGGLE_DOC,
+  CODE_SNIPPET_DECK_DOC,
 ];
 
 /** 收录后多少天内算「最近」 */
