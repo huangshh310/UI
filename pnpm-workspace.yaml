@@ -1,9 +1,17 @@
 packages:
   - "packages/*"
+  # 一次性验证用的私有应用，不属于对外发布的包
+  - "poc/*"
 
 # 供应链防护：只安装发布满 7 天（10080 分钟）的版本。
 # 需要豁免某个包时，必须先经用户批准，再写入 minimumReleaseAgeExclude。
 minimumReleaseAge: 10080
+
+# 发布年龄豁免。每一项都需要用户批准，并写明范围与理由。
+minimumReleaseAgeExclude:
+  # 用户于 2026-11-22 批准：UI SDK 首发仅十天，所有可用版本都不满 7 天。
+  # 只允许 poc/ 下的应用依赖它，packages/ 下的包不得引入。
+  - "@ui-sdk/*"
 
 # 依赖的安装脚本默认不执行，这里逐个表态。
 allowBuilds:

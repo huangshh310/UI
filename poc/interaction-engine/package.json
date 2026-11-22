@@ -1,0 +1,30 @@
+{
+  "name": "@matt-ui/poc-interaction-engine",
+  "version": "0.0.0",
+  "private": true,
+  "description": "交互底座 POC：用同一组断言对比 Base UI 与 Vercel UI SDK。结论写入 ADR-001 后可整体删除。",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "poc:build": "next build",
+    "poc:start": "next start --port 3100",
+    "poc:test": "playwright test",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.9.0",
+    "@ui-sdk/core": "0.1.0-beta.13",
+    "@ui-sdk/react": "0.1.0-beta.13",
+    "next": "^16.4.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}

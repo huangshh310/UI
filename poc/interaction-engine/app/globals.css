@@ -1,0 +1,101 @@
+/*
+ * POC 的最小样式。
+ * 只为了让浮层与高亮状态肉眼可辨，不代表最终的视觉设计。
+ * 两套实现共用这一份样式，选择器只依赖 ARIA 角色与 data-* 状态属性。
+ */
+body {
+  margin: 0;
+  /* iOS 26+ Safari 下 Base UI 的遮罩需要 body 是定位元素 */
+  position: relative;
+  font-family: system-ui, sans-serif;
+  color: #111;
+  background: #fff;
+}
+
+.root {
+  isolation: isolate;
+  padding: 24px;
+}
+
+main {
+  display: grid;
+  gap: 16px;
+  max-width: 480px;
+}
+
+/* 用于验证滚动锁定的占位高度 */
+.tall {
+  height: 2000px;
+}
+
+[role="listbox"],
+[role="dialog"],
+[role="tree"] {
+  border: 1px solid #111;
+  background: #fff;
+  padding: 4px;
+}
+
+[role="dialog"] {
+  padding: 16px;
+}
+
+[role="option"],
+[role="treeitem"] {
+  padding: 4px 8px;
+  cursor: default;
+}
+
+[role="option"][data-highlighted],
+[role="option"]:focus,
+[role="treeitem"]:focus {
+  background: #111;
+  color: #fff;
+  outline: none;
+}
+
+[role="option"][aria-selected="true"] {
+  font-weight: 700;
+}
+
+/*
+ * 排序列表。data-slot 由 UI SDK 按「原语名-slot 名」自动生成。
+ * touch-action: none 是触摸拖动的前提，否则浏览器会把手指移动当作页面滚动。
+ */
+[data-slot="sortable-list-item"] {
+  touch-action: none;
+  user-select: none;
+}
+
+[data-slot="sortable-list-item"][data-grabbed] {
+  transform: translate(var(--drag-x, 0), var(--drag-y, 0));
+  position: relative;
+  z-index: 1;
+  background: #c8f03c;
+  color: #111;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Base UI 不带任何样式，对话框的居中与遮罩需要自己写 */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 0.4);
+}
+
+.dialog-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  gap: 8px;
+}

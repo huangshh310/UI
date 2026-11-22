@@ -10,7 +10,7 @@
 | ------- | --------------------------------- | ------ |
 | Phase 0 | 仓库审计与技术选型                | 完成   |
 | Phase 1 | 工程底座：Monorepo、Token、工具链 | 完成   |
-| POC     | 交互底座实测（Base UI 与 UI SDK） | 未开始 |
+| POC     | 交互底座实测（Base UI 与 UI SDK） | 完成   |
 | Phase 2 | 第一个可发布组件 Button           | 未开始 |
 
 完整路线见 [`UI-Platform-Implementation-Blueprint.md`](./UI-Platform-Implementation-Blueprint.md)。

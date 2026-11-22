@@ -15,3 +15,9 @@ coverage/
 # 系统与编辑器
 .DS_Store
 *.log
+
+# Next.js 与 Playwright 的产物（POC 应用）
+.next/
+next-env.d.ts
+test-results/
+playwright-report/

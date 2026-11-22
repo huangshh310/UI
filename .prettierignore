@@ -8,3 +8,9 @@ pnpm-lock.yaml
 
 # 用户提供的原始需求文档，保持原样
 UI-Platform-Implementation-Blueprint.md
+
+# Next.js 与 Playwright 的产物
+.next/
+next-env.d.ts
+test-results/
+playwright-report/

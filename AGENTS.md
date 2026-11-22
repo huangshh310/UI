@@ -21,6 +21,8 @@ pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build
 - 组件只使用 `--ui-*` Token 对应的工具类；颜色、时长、层级的字面量集中在 `packages/tokens`。
 - 修改 `packages/tokens/src/themes/` 的色值后，核对每组前景与表面的对比度不低于 4.5:1，input 与 ring 对背景不低于 3:1。
 - 一个组件的交互行为只来自一个交互底座，底座的类型留在组件实现文件内部。
+- `@ui-sdk/*` 只允许出现在 `poc/` 下；`packages/` 引入它之前需要用户批准（见 ADR-001）。
+- 交互底座的对比用例在 `poc/interaction-engine/`，运行方式见该目录的 README。
 - 按蓝图分阶段推进，每个阶段结束后向用户汇报并等待确认。
 - npm 发布与部署需要用户逐次批准。
 - 注释与文档使用简体中文。
