@@ -1,0 +1,5 @@
+{
+  "name": "ai-model-selector",
+  "title": "AI Model Selector",
+  "description": "C 端 AI 模型切换、推理深度分段与联网/沙箱能力开关面板。"
+}

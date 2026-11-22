@@ -73,8 +73,8 @@ export interface FormRadioItemProps {
   className?: string;
 }
 const CONTROL_BASE = cn(
-  "w-full min-w-0 appearance-none rounded-lg border border-solid border-border bg-background px-3 font-sans text-sm text-foreground shadow-sm dark:bg-card",
-  "placeholder:text-muted-foreground/80 transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) hover:border-foreground/22",
+  "w-full min-w-0 appearance-none rounded-xl border border-solid border-border bg-card px-3.5 font-sans text-sm text-foreground shadow-sm",
+  "placeholder:text-muted-foreground/75 transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) hover:border-foreground/22",
   "outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/20",
   "data-invalid:border-destructive data-invalid:focus-visible:ring-destructive/20 data-disabled:pointer-events-none data-disabled:opacity-50",
 );
@@ -144,7 +144,7 @@ export const FormTextarea = ({ className, rows = 3, ...props }: FormTextareaProp
   <Field.Control
     data-slot="form-textarea"
     render={<textarea rows={rows} {...props} />}
-    className={cn(CONTROL_BASE, "min-h-24 resize-y py-2.5 leading-relaxed", className)}
+    className={cn(CONTROL_BASE, "min-h-18 resize-y py-2 leading-relaxed", className)}
   />
 );
 

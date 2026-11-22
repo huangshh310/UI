@@ -1,0 +1,5 @@
+{
+  "name": "ai-agent-plan",
+  "title": "AI Agent Plan",
+  "description": "自主智能体多步任务规划与执行进度追踪器，支持工具标签、进度动画与步进推进。"
+}

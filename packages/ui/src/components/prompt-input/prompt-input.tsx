@@ -10,9 +10,9 @@ import type { PromptInputProps } from "./prompt-input.types.js";
 import { AttachmentChips, PromptToolbar, SuggestionRow } from "./prompt-parts.js";
 
 const CARD_CLASSES = cn(
-  "flex flex-col rounded-2xl border border-solid border-border bg-background p-2 shadow-sm dark:bg-card",
+  "flex flex-col rounded-[24px] border border-solid border-border/90 bg-card p-3 shadow-lg",
   "transition-[border-color,box-shadow] duration-(--ui-duration-fast)",
-  "hover:border-foreground/22 focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/20",
+  "hover:border-foreground/22 focus-within:border-signal/60 focus-within:ring-4 focus-within:ring-signal/14",
 );
 
 const TEXTAREA_CLASSES =

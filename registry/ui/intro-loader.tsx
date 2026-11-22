@@ -96,6 +96,23 @@ interface LoaderCurtainProps {
   className?: string;
 }
 
+const AnimatedGreeting = ({ text }: { text: string }) => (
+  <div className="relative z-10 flex min-h-14 items-center justify-center">
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.span
+        key={text}
+        initial={{ opacity: 0, scale: 0.94, filter: "blur(6px)" }}
+        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+        exit={{ opacity: 0, scale: 1.04, filter: "blur(6px)" }}
+        transition={{ duration: 0.24 }}
+        className="font-sans text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
+      >
+        {text}
+      </motion.span>
+    </AnimatePresence>
+  </div>
+);
+
 const LoaderCurtain = ({
   current,
   progress,
@@ -112,33 +129,24 @@ const LoaderCurtain = ({
     exit={{ opacity: 0 }}
     transition={{ duration: 0.28 }}
     className={cn(
-      "flex flex-col items-center justify-center bg-background/95 backdrop-blur-xl",
+      "relative flex flex-col items-center justify-center overflow-hidden bg-card/95 backdrop-blur-xl",
       fullscreen
         ? "fixed inset-0 z-50"
-        : "relative min-h-56 w-full rounded-2xl border border-solid border-border p-8",
+        : "min-h-52 w-full rounded-[22px] border border-solid border-border/85 p-7 shadow-md",
       className,
     )}
   >
-    <div className="flex min-h-14 items-center justify-center">
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.span
-          key={current.text}
-          initial={{ opacity: 0, scale: 0.94, filter: "blur(6px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          exit={{ opacity: 0, scale: 1.04, filter: "blur(6px)" }}
-          transition={{ duration: 0.24 }}
-          className="font-sans text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
-        >
-          {current.text}
-        </motion.span>
-      </AnimatePresence>
-    </div>
+    <span
+      aria-hidden="true"
+      className="pointer-events-none absolute -top-16 size-56 rounded-full bg-gradient-to-br from-signal/22 via-indigo-500/18 to-cyan-400/15 blur-3xl"
+    />
+    <AnimatedGreeting text={current.text} />
     <LoaderProgressBar lang={current.lang} progress={progress} />
     {skippable && (
       <button
         type="button"
         onClick={onSkip}
-        className="absolute right-4 bottom-4 cursor-pointer rounded-lg border border-solid border-border bg-background px-2.5 py-1 font-mono text-[11px] text-muted-foreground transition-colors hover:border-foreground/22 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:bg-card"
+        className="absolute right-4 bottom-4 cursor-pointer rounded-lg border border-solid border-border bg-card px-2.5 py-1 font-mono text-[11px] text-muted-foreground transition-colors hover:border-foreground/22 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         跳过 · ESC
       </button>

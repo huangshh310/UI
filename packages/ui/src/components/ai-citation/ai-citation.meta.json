@@ -1,0 +1,6 @@
+{
+  "name": "ai-citation",
+  "title": "AI Citation",
+  "description": "行内角标引用胶囊与 RAG 检索上下文卡片，支持点击切换知识片段与匹配度评分。",
+  "categories": ["ai"]
+}

@@ -1,0 +1,5 @@
+{
+  "name": "ai-chat-thread",
+  "title": "AI Chat Thread",
+  "description": "C 端 AI 对话消息流，支持用户/助手气泡、多版本回复分支切换、复制反馈与快捷追问。"
+}

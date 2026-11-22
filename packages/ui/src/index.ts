@@ -22,6 +22,44 @@ export type {
   AdvancedTableFacet,
   TableDensity,
 } from "./components/advanced-data-table/index.js";
+export { AiApprovalCard } from "./components/ai-approval-card/index.js";
+export type {
+  AiApprovalCardProps,
+  AiApprovalOption,
+  AiApprovalRisk,
+} from "./components/ai-approval-card/index.js";
+export { AiArtifact } from "./components/ai-artifact/index.js";
+export type { AiArtifactProps, AiArtifactTab } from "./components/ai-artifact/index.js";
+export { AiChatThread } from "./components/ai-chat-thread/index.js";
+export type { AiChatMessage, AiChatThreadProps } from "./components/ai-chat-thread/index.js";
+export { AiCitation } from "./components/ai-citation/index.js";
+export type { AiCitationProps, AiCitationSource } from "./components/ai-citation/index.js";
+export { AiDiffReview } from "./components/ai-diff-review/index.js";
+export type {
+  AiDiffLine,
+  AiDiffLineType,
+  AiDiffReviewProps,
+} from "./components/ai-diff-review/index.js";
+export { AiModelSelector } from "./components/ai-model-selector/index.js";
+export type {
+  AiModelConfig,
+  AiModelOption,
+  AiModelSelectorProps,
+  AiReasoningEffort,
+} from "./components/ai-model-selector/index.js";
+export { AiPromptGallery } from "./components/ai-prompt-gallery/index.js";
+export type {
+  AiPromptGalleryProps,
+  AiPromptTemplate,
+} from "./components/ai-prompt-gallery/index.js";
+export { AiTokenMeter } from "./components/ai-token-meter/index.js";
+export type {
+  AiTokenMeterProps,
+  AiTokenSegment,
+  AiTokenSegmentTone,
+} from "./components/ai-token-meter/index.js";
+export { AiToolCall } from "./components/ai-tool-call/index.js";
+export type { AiToolCallProps, AiToolCallStatus } from "./components/ai-tool-call/index.js";
 export { AiWorkspaceBlock } from "./components/ai-workspace-block/index.js";
 export type {
   AiMessage,

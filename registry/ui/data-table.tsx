@@ -288,7 +288,7 @@ const TableToolbar = ({
               value={query}
               onChange={(event) => onQueryChange(event.target.value)}
               placeholder={searchPlaceholder}
-              className="h-8 w-full rounded-lg border border-solid border-border bg-secondary/45 pr-3 pl-8 font-sans text-xs text-foreground outline-none transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) placeholder:text-muted-foreground/80 hover:border-foreground/22 focus:border-ring focus:bg-background focus:ring-3 focus:ring-ring/20 dark:focus:bg-card"
+              className="h-8 w-full rounded-full border border-solid border-border bg-secondary/50 pr-3.5 pl-8 font-sans text-xs text-foreground outline-none transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) placeholder:text-muted-foreground/80 hover:border-foreground/22 focus:border-ring focus:bg-card focus:ring-3 focus:ring-ring/20"
             />
           </div>
           <span className="shrink-0 font-mono text-xs text-muted-foreground tabular-nums">
@@ -479,7 +479,7 @@ export const DataTable = <TData extends object>(props: DataTableProps<TData>) =>
     <div
       data-slot="data-table"
       className={cn(
-        "w-full overflow-hidden rounded-2xl border border-solid border-border bg-card font-sans text-card-foreground shadow-sm",
+        "w-full overflow-hidden rounded-[22px] border border-solid border-border/85 bg-card font-sans text-card-foreground shadow-md",
         props.className,
       )}
     >

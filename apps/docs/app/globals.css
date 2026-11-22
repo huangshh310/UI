@@ -19,20 +19,22 @@
     sans-serif;
   --ui-font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  /* 站点双层卡片的衍生表面：外卡干净抬升，内舞台柔灰衬托组件，点阵提供精密参考 */
+  /* 站点双层卡片的衍生表面：陶瓷外卡自然浮出，微润舞台凹槽配多色环境光晕 */
   --site-surface: var(--ui-card);
-  --site-stage: color-mix(in oklch, var(--ui-secondary) 55%, var(--ui-background));
+  --site-stage: color-mix(in oklch, var(--ui-secondary) 68%, var(--ui-background));
   --site-tile: var(--site-stage);
-  --site-dot: color-mix(in oklch, var(--ui-foreground) 7.5%, transparent);
-  --site-aura: color-mix(in oklch, var(--ui-signal) 12%, transparent);
+  --site-dot: color-mix(in oklch, var(--ui-foreground) 6.5%, transparent);
+  --site-aura: color-mix(in oklch, var(--ui-signal) 14%, transparent);
+  --site-aura-alt: oklch(0.62 0.16 295 / 0.11);
 }
 
 [data-theme="dark"] {
   --site-surface: var(--ui-card);
-  --site-stage: color-mix(in oklch, var(--ui-background) 78%, black);
+  --site-stage: color-mix(in oklch, var(--ui-background) 82%, black);
   --site-tile: var(--site-stage);
-  --site-dot: color-mix(in oklch, var(--ui-foreground) 8.5%, transparent);
-  --site-aura: color-mix(in oklch, var(--ui-signal) 18%, transparent);
+  --site-dot: color-mix(in oklch, var(--ui-foreground) 8%, transparent);
+  --site-aura: color-mix(in oklch, var(--ui-signal) 22%, transparent);
+  --site-aura-alt: oklch(0.58 0.19 295 / 0.16);
 }
 
 html {
@@ -46,21 +48,42 @@ html {
   }
 }
 
-/* 预览舞台的微弱点阵背景，强化双层卡片的精密层次 */
+/* 预览舞台的柔雾凹槽光影与极细微点阵，呈现高端 C 端陈列台质感 */
 .stage-grid {
-  background-image: radial-gradient(var(--site-dot) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-
-/* 首屏顶部极克制的信号色径向光晕与淡出点阵 */
-.hero-aura {
   background-image:
-    radial-gradient(ellipse 65% 50% at 50% 0%, var(--site-aura), transparent 72%),
+    radial-gradient(
+      ellipse 85% 58% at 50% 0%,
+      color-mix(in oklch, var(--ui-signal) 6%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(ellipse 60% 45% at 88% 100%, var(--site-aura-alt), transparent 74%),
     radial-gradient(var(--site-dot) 1px, transparent 1px);
   background-size:
     100% 100%,
-    24px 24px;
-  mask-image: linear-gradient(to bottom, black 35%, transparent 100%);
+    100% 100%,
+    18px 18px;
+  box-shadow:
+    inset 0 1px 2px 0 color-mix(in oklab, var(--ui-shadow-color) 5%, transparent),
+    inset 0 0 0 1px color-mix(in oklab, var(--ui-specular) 45%, transparent);
+}
+
+/* 首屏顶部高端多频环境光晕（宝石蓝 + 柔紫 + 极淡点阵） */
+.hero-aura {
+  background-image:
+    radial-gradient(ellipse 56% 52% at 50% -6%, var(--site-aura), transparent 72%),
+    radial-gradient(ellipse 42% 40% at 76% 12%, var(--site-aura-alt), transparent 70%),
+    radial-gradient(
+      ellipse 36% 36% at 24% 18%,
+      color-mix(in oklch, var(--ui-info) 9%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(var(--site-dot) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    22px 22px;
+  mask-image: linear-gradient(to bottom, black 38%, transparent 100%);
 }
 
 /*

@@ -22,7 +22,7 @@ export const FormBasic = () => {
 
   return (
     <Form
-      className="max-w-sm"
+      className="max-w-sm gap-3 rounded-[20px] border border-solid border-border/85 bg-card p-4 shadow-md"
       onFormSubmit={(values) => setSubmitted(`${String(values.name)} · ${String(values.plan)}`)}
     >
       <FormField
@@ -30,26 +30,38 @@ export const FormBasic = () => {
         validate={(value) => (String(value ?? "").trim().length < 2 ? "项目名至少 2 个字符" : null)}
       >
         <FormLabel required>项目名称</FormLabel>
-        <FormInput placeholder="例如：matt-ui" />
+        <FormInput placeholder="例如：matt-ui" className="h-9" />
         <FormDescription>将作为仓库与部署地址前缀。</FormDescription>
         <FormError />
       </FormField>
 
       <FormField name="plan">
         <FormLabel>发布计划</FormLabel>
-        <FormRadioGroup name="plan" defaultValue="oss" aria-label="发布计划">
-          <FormRadioItem value="oss" label="开源发布" description="通过 shadcn Registry 公开分发" />
-          <FormRadioItem value="team" label="团队私有" description="仅限内部工作区使用" />
+        <FormRadioGroup name="plan" defaultValue="oss" aria-label="发布计划" className="gap-2">
+          <FormRadioItem
+            value="oss"
+            label="开源发布"
+            description="通过 shadcn Registry 公开分发"
+            className="p-2.5"
+          />
+          <FormRadioItem
+            value="team"
+            label="团队私有"
+            description="仅限内部工作区使用"
+            className="p-2.5"
+          />
         </FormRadioGroup>
       </FormField>
 
       <FormField name="note">
         <FormLabel>备注</FormLabel>
-        <FormTextarea placeholder="可选说明…" rows={2} />
+        <FormTextarea placeholder="可选说明…" rows={2} className="min-h-14" />
       </FormField>
 
-      <div className="flex items-center justify-between gap-3">
-        <Button type="submit">创建项目</Button>
+      <div className="flex items-center justify-between gap-3 pt-0.5">
+        <Button type="submit" variant="signal" size="sm">
+          创建项目
+        </Button>
         {submitted && (
           <span data-testid="form-result" className="font-mono text-xs text-muted-foreground">
             已提交：{submitted}

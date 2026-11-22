@@ -1,0 +1,6 @@
+{
+  "name": "segmented-control",
+  "title": "Segmented Control",
+  "description": "内凹轨道配物理抬升弹簧滑块的分段控制器，支持键盘左右方向键切换与徽章提示。",
+  "categories": ["navigation", "motion"]
+}

@@ -104,17 +104,17 @@ export const SpecimenCard = ({
     <article
       data-testid="specimen-card"
       style={{ "--i": Math.min(index, 5) } as CSSProperties}
-      className={`rise group relative flex min-w-0 flex-col rounded-2xl border border-border bg-(--site-surface) p-2 shadow-xs transition-[border-color,box-shadow] duration-(--ui-duration-normal) hover:border-foreground/25 hover:shadow-md ${
+      className={`rise group relative flex min-w-0 flex-col rounded-[24px] border border-border/80 bg-(--site-surface) p-2.5 shadow-md transition-[border-color,box-shadow,transform] duration-(--ui-duration-normal) hover:-translate-y-1 hover:border-foreground/20 hover:shadow-lg motion-reduce:transform-none ${
         wide ? "md:col-span-2 xl:col-span-3" : ""
       }`}
     >
       {/* 右上角快捷复制安装命令：悬停/聚焦更清晰，触摸设备上保持可见 */}
-      <div className="absolute top-4 right-4 z-20 rounded-full border border-border/80 bg-(--site-surface)/90 opacity-0 shadow-xs backdrop-blur-sm transition-opacity duration-(--ui-duration-fast) group-focus-within:opacity-100 group-hover:opacity-100 pointer-coarse:opacity-100">
+      <div className="absolute top-4 right-4 z-20 rounded-full border border-border/80 bg-(--site-surface)/92 opacity-0 shadow-sm backdrop-blur-md transition-opacity duration-(--ui-duration-fast) group-focus-within:opacity-100 group-hover:opacity-100 pointer-coarse:opacity-100">
         <CopyButton text={cliCommand(component)} label={`复制 ${component.name} 的安装命令`} />
       </div>
 
       <SpecimenStage
-        className={`${wide ? "min-h-[360px] p-4 sm:p-8" : "min-h-[260px]"} flex-1 rounded-xl border border-border/65`}
+        className={`${wide ? "min-h-[380px] p-5 sm:p-9" : "min-h-[312px] px-5 py-7"} flex-1 rounded-[18px] border border-border/65`}
       >
         <Demo />
       </SpecimenStage>

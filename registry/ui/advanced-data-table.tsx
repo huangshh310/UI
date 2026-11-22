@@ -747,7 +747,7 @@ export const AdvancedDataTable = <TData extends object>(props: AdvancedDataTable
     <div
       data-slot="advanced-data-table"
       className={cn(
-        "w-full overflow-hidden rounded-2xl border border-solid border-border bg-card font-sans text-card-foreground shadow-sm",
+        "w-full overflow-hidden rounded-[22px] border border-solid border-border/85 bg-card font-sans text-card-foreground shadow-md",
         props.className,
       )}
     >

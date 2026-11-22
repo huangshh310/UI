@@ -4,18 +4,30 @@
  * 复制当前代码的按钮。仅供 CodeSnippetDeck 内部使用。
  */
 import { Check, Copy } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /** 「已复制」反馈的持续时间 */
 const FEEDBACK_MS = 1600;
 
 export const SnippetCopyButton = ({ text }: { text: string }) => {
   const [copied, setCopied] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    },
+    [],
+  );
 
   const copy = async () => {
     await navigator.clipboard.writeText(text);
     setCopied(true);
-    setTimeout(() => setCopied(false), FEEDBACK_MS);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      timerRef.current = null;
+      setCopied(false);
+    }, FEEDBACK_MS);
   };
 
   return (

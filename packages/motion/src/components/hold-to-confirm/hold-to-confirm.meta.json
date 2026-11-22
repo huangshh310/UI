@@ -1,0 +1,6 @@
+{
+  "name": "hold-to-confirm",
+  "title": "Hold to Confirm",
+  "description": "C 端触感长按蓄力确认按钮，按住期间平滑填充进度，中途松手自动回弹防误触。",
+  "categories": ["buttons", "motion"]
+}

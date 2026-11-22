@@ -1,0 +1,7 @@
+{
+  "name": "ai-agent-cockpit-block",
+  "type": "registry:block",
+  "title": "AI Agent Cockpit Block",
+  "description": "由 AiOrb、AudioWaves、AiReasoning、SegmentedControl 与 NumberFlow 组合的 C 端多模态智能体驾驶舱区块。",
+  "categories": ["ai", "blocks"]
+}

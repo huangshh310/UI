@@ -10,6 +10,23 @@ const MOTION_AND_BLOCK_SLUGS = [
   "spotlight-card",
   "folder-tab-card",
   "staggered-list",
+  "hold-to-confirm",
+  "segmented-control",
+  "ai-orb",
+  "ai-voice-stage",
+  "audio-waves",
+  "ai-chat-thread",
+  "ai-model-selector",
+  "ai-prompt-gallery",
+  "ai-agent-plan",
+  "ai-reasoning",
+  "ai-tool-call",
+  "ai-approval-card",
+  "ai-citation",
+  "ai-artifact",
+  "ai-canvas-card",
+  "ai-token-meter",
+  "ai-diff-review",
   "auth-block",
   "pricing-block",
   "dashboard-shell-block",
@@ -21,8 +38,31 @@ const MOTION_AND_BLOCK_SLUGS = [
   "billing-usage-block",
   "activity-feed-block",
   "ai-workspace-block",
+  "ai-agent-cockpit-block",
   "onboarding-wizard-block",
 ] as const;
+
+test("AI 组件交互：AiTokenMeter 压缩上下文与 AiApprovalCard 批准执行", async ({ page }) => {
+  await page.goto("/components/ai-token-meter");
+  const meterBlock = page.getByTestId("specimen-block").first();
+  await meterBlock.getByRole("button", { name: "压缩上下文" }).click();
+  await expect(meterBlock.getByText(/已压缩 -36%/)).toBeVisible();
+
+  await page.goto("/components/ai-approval-card");
+  const approvalBlock = page.getByTestId("specimen-block").first();
+  await approvalBlock.getByRole("button", { name: "批准执行" }).click();
+  await expect(approvalBlock.getByText("已批准执行")).toBeVisible();
+
+  await page.goto("/components/ai-chat-thread");
+  const chatBlock = page.getByTestId("specimen-block").first();
+  await chatBlock.getByRole("button", { name: "下一版本回复" }).click();
+  await expect(chatBlock.getByText("2 / 2")).toBeVisible();
+
+  await page.goto("/components/ai-agent-plan");
+  const planBlock = page.getByTestId("specimen-block").first();
+  await planBlock.getByRole("button", { name: "推进下一步" }).click();
+  await expect(planBlock.getByText(/2 \/ 4 步/)).toBeVisible();
+});
 
 test("区块详情页支持桌面/平板/移动预览宽度实时切换", async ({ page }) => {
   await page.goto("/components/team-members-block");

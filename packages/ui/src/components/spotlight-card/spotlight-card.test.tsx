@@ -21,4 +21,17 @@ describe("SpotlightCard", () => {
     expect(card.style.getPropertyValue("--spot-x")).toBe("80px");
     expect(card.style.getPropertyValue("--spot-y")).toBe("40px");
   });
+
+  it("将 children 直接挂载在卡片根节点下以保留调用方的 flex/grid 布局", () => {
+    render(
+      <SpotlightCard className="flex flex-row items-center gap-4">
+        <span>左侧标题</span>
+        <span>右侧指标</span>
+      </SpotlightCard>,
+    );
+
+    const card = screen.getByText("左侧标题").closest('[data-slot="spotlight-card"]');
+    expect(screen.getByText("左侧标题").parentElement).toBe(card);
+    expect(screen.getByText("右侧指标").parentElement).toBe(card);
+  });
 });

@@ -44,20 +44,21 @@ export const SpotlightCard = ({
       onPointerMove={handlePointerMove}
       style={{ "--spot-x": "50%", "--spot-y": "0%", ...style } as CSSProperties}
       className={cn(
-        "group relative overflow-hidden rounded-2xl border border-solid border-border bg-card p-6 text-card-foreground shadow-sm",
+        "group relative overflow-hidden rounded-2xl border border-solid border-border bg-card p-6 text-card-foreground shadow-sm [&>*:not([data-slot=spotlight-glow])]:relative [&>*:not([data-slot=spotlight-glow])]:z-10",
         glowBorder && "transition-colors duration-(--ui-duration-normal) hover:border-signal/35",
         className,
       )}
       {...props}
     >
       <div
+        data-slot="spotlight-glow"
         aria-hidden="true"
         style={{
           background: `radial-gradient(240px circle at var(--spot-x) var(--spot-y), ${spotColor}, transparent 72%)`,
         }}
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-(--ui-duration-normal) group-hover:opacity-100 motion-reduce:hidden"
+        className="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-(--ui-duration-normal) group-hover:opacity-100 motion-reduce:hidden"
       />
-      <div className="relative z-10">{children}</div>
+      {children}
     </div>
   );
 };

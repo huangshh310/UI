@@ -1,27 +1,40 @@
 /*
- * 阴影刻度。
+ * 阴影刻度（C 端高质感触感层叠体系）。
  *
- * 阴影颜色取自主题的 --ui-shadow-color，这里只决定偏移、模糊与透明度。
- * 采用轻盈的多层弥散阴影，配合发丝细边线营造层次，替代厚重边框。
- * 选择器包含各主题作用域：自定义属性在声明它的元素上求值，
- * 只有在主题作用域内重新声明，局部切换主题时阴影颜色才会跟着变化。
+ * 参考 interior.dev、aicss.dev、beautifului.dev 与 bencho.dev 的物理光影配方：
+ * 通过顶部 1px 内高光（--ui-specular）、底部微斜切边缘（--ui-bevel）与多层柔和接地/环境阴影组合，
+ * 让按钮、胶囊、输入框与卡片呈现精致的立体触感，告别扁平生硬的 B 端框线感。
  */
 :root,
 .light,
 .dark,
 [data-theme] {
-  /* 控件微光浅影，用于输入框、描边按钮与微卡片 */
+  /* 极轻微高光与接地浅影，用于徽章胶囊、标签与轻量容器 */
+  --ui-shadow-xs:
+    inset 0 1px 0 0 var(--ui-specular, transparent),
+    0 1px 2px 0 color-mix(in oklab, var(--ui-shadow-color) 6%, transparent);
+
+  /* 控件触感浅影：顶部高光 + 底部微唇边 + 双层接地阴影，用于按钮、输入框与分段滑块 */
   --ui-shadow-sm:
-    0 1px 2px 0 color-mix(in oklab, var(--ui-shadow-color) 5%, transparent),
-    0 1px 1px 0 color-mix(in oklab, var(--ui-shadow-color) 3%, transparent);
+    inset 0 1px 0 0 var(--ui-specular, transparent), inset 0 -1px 0 0 var(--ui-bevel, transparent),
+    0 1px 2px 0 color-mix(in oklab, var(--ui-shadow-color) 7%, transparent),
+    0 3px 8px -2px color-mix(in oklab, var(--ui-shadow-color) 6%, transparent);
 
-  /* 轻微抬升，用于卡片、开关滑块与悬浮面板 */
+  /* 卡片抬升阴影：顶部内高光 + 柔和扩散环境影，呈现 C 端悬浮实物感 */
   --ui-shadow-md:
+    inset 0 1px 0 0 var(--ui-specular, transparent),
     0 1px 2px 0 color-mix(in oklab, var(--ui-shadow-color) 6%, transparent),
-    0 6px 16px -4px color-mix(in oklab, var(--ui-shadow-color) 10%, transparent);
+    0 10px 26px -8px color-mix(in oklab, var(--ui-shadow-color) 11%, transparent);
 
-  /* 明显抬升，用于下拉菜单、对话框与浮层 */
+  /* 明显抬升：用于下拉菜单、气泡卡片与聚焦弹层 */
   --ui-shadow-lg:
-    0 2px 6px -1px color-mix(in oklab, var(--ui-shadow-color) 8%, transparent),
-    0 16px 36px -8px color-mix(in oklab, var(--ui-shadow-color) 18%, transparent);
+    inset 0 1px 0 0 var(--ui-specular, transparent),
+    0 4px 12px -2px color-mix(in oklab, var(--ui-shadow-color) 8%, transparent),
+    0 22px 44px -12px color-mix(in oklab, var(--ui-shadow-color) 18%, transparent);
+
+  /* 高阶悬浮：用于四周圆角悬浮 Sheet、模态框与命令面板 */
+  --ui-shadow-xl:
+    inset 0 1px 0 0 var(--ui-specular, transparent),
+    0 10px 24px -6px color-mix(in oklab, var(--ui-shadow-color) 11%, transparent),
+    0 32px 68px -16px color-mix(in oklab, var(--ui-shadow-color) 26%, transparent);
 }

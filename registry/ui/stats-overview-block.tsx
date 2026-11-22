@@ -159,32 +159,53 @@ const METRICS_BY_PERIOD: Record<StatsPeriod, MetricItem[]> = {
   ],
 };
 
+const SPARK_PATHS: Record<string, string> = {
+  mrr: "M2 24 C16 22, 24 14, 38 15 C52 16, 62 7, 78 4",
+  users: "M2 23 C14 21, 28 19, 40 13 C52 7, 64 9, 78 3",
+  installs: "M2 25 C18 22, 30 18, 44 12 C58 6, 68 5, 78 2",
+  latency: "M2 8 C18 11, 30 13, 44 16 C58 19, 68 20, 78 22",
+};
+
+const Sparkline = ({ path }: { path: string }) => (
+  <svg
+    aria-hidden="true"
+    viewBox="0 0 80 28"
+    className="h-7 w-20 shrink-0 overflow-visible text-signal"
+  >
+    <path d={path} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+  </svg>
+);
+
 const MetricCard = ({ item }: { item: MetricItem }) => {
   const { Icon } = item;
+  const spark = SPARK_PATHS[item.id] ?? SPARK_PATHS.mrr ?? "";
   return (
-    <div className="flex flex-col justify-between gap-4 rounded-2xl border border-solid border-border bg-card p-5 shadow-xs">
+    <div className="flex flex-col justify-between gap-3.5 rounded-[20px] border border-solid border-border/85 bg-card p-5 shadow-sm transition-shadow hover:shadow-md">
       <div className="flex items-center justify-between gap-2">
         <span className="text-xs font-medium text-muted-foreground">{item.label}</span>
-        <span className="inline-flex size-7 items-center justify-center rounded-lg border border-solid border-border bg-secondary/50 text-foreground">
+        <span className="inline-flex size-8 items-center justify-center rounded-xl border border-solid border-signal/20 bg-signal/10 text-signal">
           <Icon className="size-3.5" />
         </span>
       </div>
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <NumberFlow
-          value={item.value}
-          prefix={item.prefix}
-          suffix={item.suffix}
-          format={{ maximumFractionDigits: 0 }}
-          className="text-2xl font-semibold tracking-tight text-foreground"
-        />
-        <span className="rounded-full bg-signal px-2 py-0.5 font-mono text-[11px] font-medium text-signal-foreground">
-          {item.delta}
-        </span>
+      <div className="flex items-end justify-between gap-2">
+        <div className="flex flex-col gap-1">
+          <NumberFlow
+            value={item.value}
+            prefix={item.prefix}
+            suffix={item.suffix}
+            format={{ maximumFractionDigits: 0 }}
+            className="text-2xl font-semibold tracking-tight text-foreground"
+          />
+          <span className="w-fit rounded-full border border-solid border-emerald-600/20 bg-emerald-500/10 px-2 py-0.5 font-mono text-[11px] font-semibold text-emerald-800 dark:text-emerald-300">
+            {item.delta}
+          </span>
+        </div>
+        <Sparkline path={spark} />
       </div>
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-1.5 border-t border-solid border-border/60 pt-2.5">
         <div className="h-1.5 w-full overflow-hidden rounded-full bg-secondary">
           <div
-            className="h-full rounded-full bg-signal transition-[width] duration-(--ui-duration-normal)"
+            className="h-full rounded-full bg-gradient-to-r from-signal to-indigo-500 transition-[width] duration-(--ui-duration-normal)"
             style={{ width: `${item.goalPct}%` }}
           />
         </div>

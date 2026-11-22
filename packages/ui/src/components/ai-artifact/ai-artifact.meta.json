@@ -1,0 +1,6 @@
+{
+  "name": "ai-artifact",
+  "title": "AI Artifact",
+  "description": "AI 生成代码与交互预览分栏产物卡片，支持版本标记、预览/源码切换与一键复制。",
+  "categories": ["ai"]
+}

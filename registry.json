@@ -20,14 +20,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -69,14 +69,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -115,14 +115,645 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-agent-cockpit-block",
+      "type": "registry:block",
+      "title": "AI Agent Cockpit Block",
+      "description": "由 AiOrb、AudioWaves、AiReasoning、SegmentedControl 与 NumberFlow 组合的 C 端多模态智能体驾驶舱区块。",
+      "categories": ["ai", "blocks"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [
+        "utils",
+        "huangshh310/UI/ai-orb",
+        "huangshh310/UI/ai-reasoning",
+        "huangshh310/UI/audio-waves",
+        "huangshh310/UI/number-flow",
+        "huangshh310/UI/segmented-control"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-agent-cockpit-block.tsx",
+          "type": "registry:block",
+          "target": "@ui/ai-agent-cockpit-block.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-agent-plan",
+      "type": "registry:ui",
+      "title": "AI Agent Plan",
+      "description": "自主智能体多步任务规划与执行进度追踪器，支持工具标签、进度动画与步进推进。",
+      "dependencies": ["lucide-react", "motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/ai-agent-plan.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-agent-plan.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-approval-card",
+      "type": "registry:ui",
+      "title": "AI Approval Card",
+      "description": "人机协同（Human-in-the-Loop）敏感动作审批与问卷确认卡片。",
+      "categories": ["ai"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils", "huangshh310/UI/badge", "huangshh310/UI/button"],
+      "files": [
+        {
+          "path": "registry/ui/ai-approval-card.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-approval-card.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-artifact",
+      "type": "registry:ui",
+      "title": "AI Artifact",
+      "description": "AI 生成代码与交互预览分栏产物卡片，支持版本标记、预览/源码切换与一键复制。",
+      "categories": ["ai"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils", "huangshh310/UI/badge"],
+      "files": [
+        {
+          "path": "registry/ui/ai-artifact.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-artifact.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-canvas-card",
+      "type": "registry:ui",
+      "title": "AI Canvas Card",
+      "description": "AI 多模态视觉生成结果画布卡片，支持一键生成视觉变体、4K 高清放大与收藏反馈。",
+      "dependencies": ["lucide-react", "motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/ai-canvas-card.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-canvas-card.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-chat-thread",
+      "type": "registry:ui",
+      "title": "AI Chat Thread",
+      "description": "C 端 AI 对话消息流，支持用户/助手气泡、多版本回复分支切换、复制反馈与快捷追问。",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils", "huangshh310/UI/badge"],
+      "files": [
+        {
+          "path": "registry/ui/ai-chat-thread.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-chat-thread.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-citation",
+      "type": "registry:ui",
+      "title": "AI Citation",
+      "description": "行内角标引用胶囊与 RAG 检索上下文卡片，支持点击切换知识片段与匹配度评分。",
+      "categories": ["ai"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils", "huangshh310/UI/badge"],
+      "files": [
+        {
+          "path": "registry/ui/ai-citation.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-citation.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-diff-review",
+      "type": "registry:ui",
+      "title": "AI Diff Review",
+      "description": "AI 代码与配置变更行级审阅卡片，支持单行勾选采纳与一键应用。",
+      "categories": ["ai"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils", "huangshh310/UI/badge", "huangshh310/UI/button"],
+      "files": [
+        {
+          "path": "registry/ui/ai-diff-review.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-diff-review.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-model-selector",
+      "type": "registry:ui",
+      "title": "AI Model Selector",
+      "description": "C 端 AI 模型切换、推理深度分段与联网/沙箱能力开关面板。",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/ai-model-selector.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-model-selector.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-orb",
+      "type": "registry:ui",
+      "title": "AI Orb",
+      "description": "AI 语音与智能体状态球，支持流光球体（aurora）与 3x3 像素点阵（lattice）两种形态及胶囊模式。",
+      "categories": ["ai", "motion"],
+      "dependencies": ["motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/ai-orb.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-orb.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-prompt-gallery",
+      "type": "registry:ui",
+      "title": "AI Prompt Gallery",
+      "description": "C 端 AI 灵感冒泡与场景提示词卡网格，支持分类筛选与一键注入指令。",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/ai-prompt-gallery.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-prompt-gallery.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-reasoning",
+      "type": "registry:ui",
+      "title": "AI Reasoning",
+      "description": "AI 深度思考与思维链（Chain-of-Thought）可折叠推理轨迹卡片。",
+      "categories": ["ai", "motion"],
+      "dependencies": ["lucide-react", "motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/ai-reasoning.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-reasoning.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-token-meter",
+      "type": "registry:ui",
+      "title": "AI Token Meter",
+      "description": "AI 上下文窗口与分段 Token 预算指示器，支持分类图例与一键压缩上下文。",
+      "categories": ["ai"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils", "huangshh310/UI/badge", "huangshh310/UI/button"],
+      "files": [
+        {
+          "path": "registry/ui/ai-token-meter.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-token-meter.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-tool-call",
+      "type": "registry:ui",
+      "title": "AI Tool Call",
+      "description": "智能体工具调用与流水线步骤检查器卡片，支持展开查看入参与返回 JSON 载荷。",
+      "categories": ["ai"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils", "huangshh310/UI/badge"],
+      "files": [
+        {
+          "path": "registry/ui/ai-tool-call.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-tool-call.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-voice-stage",
+      "type": "registry:ui",
+      "title": "AI Voice Stage",
+      "description": "C 端全模态实时语音交互舞台，集成流体极光状态球、实时字幕与圆形通话控制栏。",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils", "huangshh310/UI/ai-orb"],
+      "files": [
+        {
+          "path": "registry/ui/ai-voice-stage.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-voice-stage.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -162,14 +793,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -204,14 +835,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -246,14 +877,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -288,14 +919,56 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "audio-waves",
+      "type": "registry:ui",
+      "title": "Audio Waves",
+      "description": "AI 语音声波律动条与听写胶囊，支持实时声波动画、聆听/暂停切换与计时读数。",
+      "categories": ["ai", "motion"],
+      "dependencies": ["lucide-react", "motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/audio-waves.tsx",
+          "type": "registry:ui",
+          "target": "@ui/audio-waves.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -336,14 +1009,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -378,14 +1051,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -420,14 +1093,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -471,14 +1144,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -513,14 +1186,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -555,14 +1228,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -597,14 +1270,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -639,14 +1312,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -681,14 +1354,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -723,14 +1396,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -765,14 +1438,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -807,14 +1480,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -857,14 +1530,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -899,14 +1572,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -941,14 +1614,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -983,14 +1656,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1025,14 +1698,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1067,14 +1740,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1109,14 +1782,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1155,14 +1828,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1197,14 +1870,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1239,14 +1912,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1288,14 +1961,56 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "hold-to-confirm",
+      "type": "registry:ui",
+      "title": "Hold to Confirm",
+      "description": "C 端触感长按蓄力确认按钮，按住期间平滑填充进度，中途松手自动回弹防误触。",
+      "categories": ["buttons", "motion"],
+      "dependencies": ["lucide-react", "motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/hold-to-confirm.tsx",
+          "type": "registry:ui",
+          "target": "@ui/hold-to-confirm.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1330,14 +2045,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1372,14 +2087,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1414,14 +2129,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1456,14 +2171,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1498,14 +2213,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1540,14 +2255,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1582,14 +2297,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1624,14 +2339,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1666,14 +2381,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1708,14 +2423,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1755,14 +2470,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1797,14 +2512,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1839,14 +2554,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1881,14 +2596,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1923,14 +2638,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -1965,14 +2680,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2011,14 +2726,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2053,14 +2768,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2095,14 +2810,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2142,14 +2857,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2184,14 +2899,56 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "segmented-control",
+      "type": "registry:ui",
+      "title": "Segmented Control",
+      "description": "内凹轨道配物理抬升弹簧滑块的分段控制器，支持键盘左右方向键切换与徽章提示。",
+      "categories": ["navigation", "motion"],
+      "dependencies": ["motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/segmented-control.tsx",
+          "type": "registry:ui",
+          "target": "@ui/segmented-control.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2226,14 +2983,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2268,14 +3025,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2318,14 +3075,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2360,14 +3117,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2402,14 +3159,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2444,14 +3201,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2486,14 +3243,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2528,14 +3285,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2570,14 +3327,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2612,14 +3369,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2654,14 +3411,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2696,14 +3453,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2738,14 +3495,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2780,14 +3537,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2822,14 +3579,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2864,14 +3621,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2915,14 +3672,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2957,14 +3714,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -2999,14 +3756,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {
@@ -3041,14 +3798,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
           "destructive-foreground": "oklch(0.99 0 0)"
         },
         "dark": {
-          "signal": "oklch(0.545 0.195 258)",
+          "signal": "oklch(0.535 0.21 262)",
           "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.165 0.004 264)"
+          "destructive-foreground": "oklch(0.14 0.008 265)"
         }
       },
       "css": {

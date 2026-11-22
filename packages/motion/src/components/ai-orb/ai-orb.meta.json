@@ -1,0 +1,6 @@
+{
+  "name": "ai-orb",
+  "title": "AI Orb",
+  "description": "AI 语音与智能体状态球，支持流光球体（aurora）与 3x3 像素点阵（lattice）两种形态及胶囊模式。",
+  "categories": ["ai", "motion"]
+}

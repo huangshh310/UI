@@ -77,9 +77,9 @@ const AttachmentChips = ({
     {attachments.map((item) => (
       <span
         key={item.id}
-        className="inline-flex h-7 items-center gap-1.5 rounded-lg border border-solid border-border bg-secondary/70 px-2 text-xs text-foreground"
+        className="inline-flex h-7 items-center gap-1.5 rounded-xl border border-solid border-signal/22 bg-signal/8 px-2.5 text-xs text-foreground shadow-xs"
       >
-        <Paperclip aria-hidden="true" className="size-3 shrink-0 text-muted-foreground" />
+        <Paperclip aria-hidden="true" className="size-3 shrink-0 text-signal" />
         <span className="max-w-[140px] truncate font-medium">{item.name}</span>
         {item.size && <span className="text-muted-foreground tabular-nums">{item.size}</span>}
         {onRemove && (
@@ -87,7 +87,7 @@ const AttachmentChips = ({
             type="button"
             aria-label={`移除附件 ${item.name}`}
             onClick={() => onRemove(item.id)}
-            className="inline-flex size-4 cursor-pointer items-center justify-center rounded border-0 bg-transparent text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            className="inline-flex size-4 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent text-muted-foreground hover:bg-signal/12 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             <X aria-hidden="true" className="size-3" />
           </button>
@@ -106,7 +106,7 @@ const ModelPills = ({
   selectedModel?: string;
   onSelect?: (id: string) => void;
 }) => (
-  <div className="inline-flex items-center gap-0.5 rounded-lg border border-solid border-border/80 bg-secondary/60 p-0.5">
+  <div className="inline-flex items-center gap-0.5 rounded-full border border-solid border-border/80 bg-secondary/70 p-0.5">
     {models.map(({ id, label }) => {
       const active = id === selectedModel;
       return (
@@ -116,9 +116,9 @@ const ModelPills = ({
           aria-pressed={active}
           onClick={() => onSelect?.(id)}
           className={cn(
-            "h-7 cursor-pointer rounded-md border-0 px-2.5 font-sans text-xs font-medium transition-colors duration-(--ui-duration-fast) outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            "h-7 cursor-pointer rounded-full border-0 px-3 font-sans text-xs font-medium transition-all duration-(--ui-duration-fast) outline-none focus-visible:ring-2 focus-visible:ring-ring",
             active
-              ? "bg-background text-foreground shadow-sm dark:bg-card"
+              ? "bg-card text-foreground shadow-sm"
               : "bg-transparent text-muted-foreground hover:text-foreground",
           )}
         >
@@ -160,9 +160,9 @@ const SubmitControl = ({
       disabled={!canSubmit || status === "disabled"}
       onClick={onSubmit}
       className={cn(
-        "inline-flex size-9 cursor-pointer items-center justify-center rounded-full border-0 transition-[background-color,transform,color] duration-(--ui-duration-fast) outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        "inline-flex size-9 cursor-pointer items-center justify-center rounded-full border-0 transition-all duration-(--ui-duration-fast) outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         canSubmit && status !== "disabled"
-          ? "bg-signal text-signal-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] hover:bg-signal/90 active:scale-95"
+          ? "bg-signal text-signal-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_4px_14px_-2px_rgba(37,99,235,0.45)] hover:brightness-105 active:scale-95"
           : "cursor-not-allowed bg-secondary text-muted-foreground/55",
       )}
     >
@@ -184,7 +184,7 @@ const SuggestionRow = ({
         key={text}
         type="button"
         onClick={() => onPick(text)}
-        className="cursor-pointer rounded-full border border-solid border-border bg-background px-3 py-1 font-sans text-xs text-muted-foreground shadow-sm transition-colors duration-(--ui-duration-fast) hover:border-foreground/22 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none dark:bg-card"
+        className="cursor-pointer rounded-full border border-solid border-border/90 bg-card px-3 py-1.5 font-sans text-xs font-medium text-muted-foreground shadow-xs transition-all duration-(--ui-duration-fast) hover:-translate-y-0.5 hover:border-signal/40 hover:text-foreground hover:shadow-sm focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
       >
         {text}
       </button>
@@ -245,9 +245,9 @@ const PromptToolbar = (props: PromptToolbarProps) => (
   </div>
 );
 const CARD_CLASSES = cn(
-  "flex flex-col rounded-2xl border border-solid border-border bg-background p-2 shadow-sm dark:bg-card",
+  "flex flex-col rounded-[24px] border border-solid border-border/90 bg-card p-3 shadow-lg",
   "transition-[border-color,box-shadow] duration-(--ui-duration-fast)",
-  "hover:border-foreground/22 focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/20",
+  "hover:border-foreground/22 focus-within:border-signal/60 focus-within:ring-4 focus-within:ring-signal/14",
 );
 
 const TEXTAREA_CLASSES =

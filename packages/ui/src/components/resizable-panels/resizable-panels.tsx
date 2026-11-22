@@ -19,8 +19,8 @@ const PanelDivider = ({ isHorizontal }: { isHorizontal: boolean }) => (
     <span
       aria-hidden="true"
       className={cn(
-        "inline-flex items-center justify-center rounded-sm border border-solid border-border bg-background text-muted-foreground shadow-sm transition-colors group-hover:border-signal/40 group-hover:text-signal dark:bg-card",
-        isHorizontal ? "h-6 w-3" : "h-3 w-6",
+        "inline-flex items-center justify-center rounded-full border border-solid border-border bg-card text-muted-foreground shadow-sm transition-all group-hover:scale-110 group-hover:border-signal/60 group-hover:bg-signal group-hover:text-signal-foreground",
+        isHorizontal ? "h-8 w-3.5" : "h-3.5 w-8",
       )}
     >
       {isHorizontal ? (

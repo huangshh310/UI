@@ -61,6 +61,35 @@ const TabBar = ({
   </div>
 );
 
+const TabBody = ({ active }: { active: FolderTabItem }) => (
+  <AnimatePresence mode="wait" initial={false}>
+    <motion.div
+      key={active.id}
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -4 }}
+      transition={{ duration: 0.2 }}
+      className="relative z-10 flex flex-col gap-4"
+    >
+      <div className="text-[13px] leading-relaxed text-foreground">{active.content}</div>
+      <div className="flex items-end justify-between border-t border-solid border-border/75 pt-3.5">
+        <div>
+          <p className="m-0 font-mono text-2xl font-semibold tracking-tight text-foreground tabular-nums">
+            {active.metric}
+          </p>
+          {active.caption && (
+            <p className="m-0 mt-0.5 text-xs text-muted-foreground">{active.caption}</p>
+          )}
+        </div>
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-solid border-blue-600/20 bg-blue-500/10 px-2.5 py-0.5 font-mono text-[11px] font-semibold text-blue-800 dark:border-blue-400/25 dark:bg-blue-400/15 dark:text-blue-200">
+          <span aria-hidden="true" className="size-1.5 rounded-full bg-signal" />
+          {active.label}
+        </span>
+      </div>
+    </motion.div>
+  </AnimatePresence>
+);
+
 export const FolderTabCard = ({ tabs, defaultTabId, className }: FolderTabCardProps) => {
   const uid = useId();
   const [activeId, setActiveId] = useState(defaultTabId ?? tabs[0]?.id ?? "");
@@ -72,40 +101,20 @@ export const FolderTabCard = ({ tabs, defaultTabId, className }: FolderTabCardPr
       <div
         data-slot="folder-tab-card"
         className={cn(
-          "w-full max-w-md overflow-hidden rounded-2xl border border-solid border-border bg-secondary/45 p-2 shadow-sm",
+          "w-full max-w-md overflow-hidden rounded-[22px] border border-solid border-border/90 bg-gradient-to-b from-secondary/75 to-secondary/45 p-2 shadow-md",
           className,
         )}
       >
         <TabBar tabs={tabs} activeId={active.id} uid={uid} onSelect={setActiveId} />
         <div
           role="tabpanel"
-          className="relative rounded-xl border border-solid border-border bg-card p-5 shadow-xs"
+          className="relative overflow-hidden rounded-2xl border border-solid border-border/85 bg-card p-5 shadow-sm"
         >
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={active.id}
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.2 }}
-              className="flex flex-col gap-4"
-            >
-              <div className="text-sm leading-relaxed text-foreground">{active.content}</div>
-              <div className="flex items-end justify-between border-t border-solid border-border/75 pt-3">
-                <div>
-                  <p className="m-0 font-mono text-2xl font-semibold tracking-tight text-foreground tabular-nums">
-                    {active.metric}
-                  </p>
-                  {active.caption && (
-                    <p className="m-0 mt-0.5 text-xs text-muted-foreground">{active.caption}</p>
-                  )}
-                </div>
-                <span className="rounded-full bg-signal px-2.5 py-0.5 font-mono text-[11px] font-medium text-signal-foreground">
-                  {active.label}
-                </span>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-12 -right-12 size-36 rounded-full bg-signal/10 blur-2xl"
+          />
+          <TabBody active={active} />
         </div>
       </div>
     </MotionConfig>

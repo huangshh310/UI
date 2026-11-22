@@ -12,10 +12,10 @@ import { Fragment, useEffect, useId, useRef, useState } from "react";
 import type { OtpInputProps } from "./otp-input.types.js";
 
 const SLOT_CLASSES = cn(
-  "box-border h-12 w-10 appearance-none rounded-lg border border-solid border-border bg-background text-center font-mono text-base font-semibold text-foreground tabular-nums shadow-sm dark:bg-card",
+  "box-border h-12 w-10 appearance-none rounded-xl border border-solid border-foreground/15 bg-card text-center font-mono text-base font-semibold text-foreground tabular-nums shadow-sm",
   "transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) outline-none",
-  "hover:border-foreground/22 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/20",
-  "data-filled:border-foreground/25 data-filled:bg-secondary/45 data-disabled:pointer-events-none data-disabled:opacity-50",
+  "hover:border-foreground/30 focus-visible:border-ring focus-visible:ring-4 focus-visible:ring-ring/18",
+  "data-filled:border-signal/65 data-filled:bg-signal/6 data-disabled:pointer-events-none data-disabled:opacity-50",
 );
 
 const OtpSlot = ({

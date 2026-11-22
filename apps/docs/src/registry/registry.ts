@@ -6,10 +6,26 @@ import { REGISTRY_ADDRESS } from "@/site/constants";
 import { ACCORDION_DOC } from "./accordion.doc";
 import { ACTIVITY_FEED_BLOCK_DOC } from "./activity-feed-block.doc";
 import { ADVANCED_DATA_TABLE_DOC } from "./advanced-data-table.doc";
+import { AI_AGENT_COCKPIT_BLOCK_DOC } from "./ai-agent-cockpit-block.doc";
+import { AI_AGENT_PLAN_DOC } from "./ai-agent-plan.doc";
+import { AI_APPROVAL_CARD_DOC } from "./ai-approval-card.doc";
+import { AI_ARTIFACT_DOC } from "./ai-artifact.doc";
+import { AI_CANVAS_CARD_DOC } from "./ai-canvas-card.doc";
+import { AI_CHAT_THREAD_DOC } from "./ai-chat-thread.doc";
+import { AI_CITATION_DOC } from "./ai-citation.doc";
+import { AI_DIFF_REVIEW_DOC } from "./ai-diff-review.doc";
+import { AI_MODEL_SELECTOR_DOC } from "./ai-model-selector.doc";
+import { AI_ORB_DOC } from "./ai-orb.doc";
+import { AI_PROMPT_GALLERY_DOC } from "./ai-prompt-gallery.doc";
+import { AI_REASONING_DOC } from "./ai-reasoning.doc";
+import { AI_TOKEN_METER_DOC } from "./ai-token-meter.doc";
+import { AI_TOOL_CALL_DOC } from "./ai-tool-call.doc";
+import { AI_VOICE_STAGE_DOC } from "./ai-voice-stage.doc";
 import { AI_WORKSPACE_BLOCK_DOC } from "./ai-workspace-block.doc";
 import { ALERT_DOC } from "./alert.doc";
 import { ANIMATED_FILE_UPLOAD_DOC } from "./animated-file-upload.doc";
 import { ANIMATED_TEXT_DOC } from "./animated-text.doc";
+import { AUDIO_WAVES_DOC } from "./audio-waves.doc";
 import { AUTH_BLOCK_DOC } from "./auth-block.doc";
 import { AVATAR_STACK_DOC } from "./avatar-stack.doc";
 import { BADGE_DOC } from "./badge.doc";
@@ -33,6 +49,7 @@ import { FILE_MANAGER_BLOCK_DOC } from "./file-manager-block.doc";
 import { FOLDER_TAB_CARD_DOC } from "./folder-tab-card.doc";
 import { FORM_DOC } from "./form.doc";
 import { HERO_BENTO_BLOCK_DOC } from "./hero-bento-block.doc";
+import { HOLD_TO_CONFIRM_DOC } from "./hold-to-confirm.doc";
 import { INTRO_LOADER_DOC } from "./intro-loader.doc";
 import { LIQUID_RIPPLE_BUTTON_DOC } from "./liquid-ripple-button.doc";
 import { LIQUID_TOGGLE_DOC } from "./liquid-toggle.doc";
@@ -54,6 +71,7 @@ import { PROGRESS_DOC } from "./progress.doc";
 import { PROMPT_INPUT_DOC } from "./prompt-input.doc";
 import { REORDER_LIST_DOC } from "./reorder-list.doc";
 import { RESIZABLE_PANELS_DOC } from "./resizable-panels.doc";
+import { SEGMENTED_CONTROL_DOC } from "./segmented-control.doc";
 import { SELECTION_BASKET_DOC } from "./selection-basket.doc";
 import { SEPARATOR_DOC } from "./separator.doc";
 import { SETTINGS_BLOCK_DOC } from "./settings-block.doc";
@@ -83,6 +101,7 @@ export const CATEGORIES: Category[] = [
   { id: "display", label: "展示" },
   { id: "navigation", label: "导航与布局" },
   { id: "motion", label: "动效" },
+  { id: "ai", label: "AI 与智能体" },
   { id: "blocks", label: "区块" },
 ];
 
@@ -97,6 +116,7 @@ export const COMPONENTS: ComponentDoc[] = [
   MAGNETIC_BUTTON_DOC,
   MORPHING_BUTTON_DOC,
   DRAG_TO_CONFIRM_DOC,
+  HOLD_TO_CONFIRM_DOC,
   LIQUID_TOGGLE_DOC,
   CODE_SNIPPET_DECK_DOC,
   LOCK_INPUT_DOC,
@@ -133,6 +153,7 @@ export const COMPONENTS: ComponentDoc[] = [
   SPINNER_DOC,
   EMPTY_STATE_DOC,
   TABS_DOC,
+  SEGMENTED_CONTROL_DOC,
   ACCORDION_DOC,
   SLIDER_DOC,
   NUMBER_INPUT_DOC,
@@ -146,6 +167,21 @@ export const COMPONENTS: ComponentDoc[] = [
   SPOTLIGHT_CARD_DOC,
   FOLDER_TAB_CARD_DOC,
   STAGGERED_LIST_DOC,
+  AI_ORB_DOC,
+  AI_VOICE_STAGE_DOC,
+  AUDIO_WAVES_DOC,
+  AI_CHAT_THREAD_DOC,
+  AI_MODEL_SELECTOR_DOC,
+  AI_PROMPT_GALLERY_DOC,
+  AI_AGENT_PLAN_DOC,
+  AI_REASONING_DOC,
+  AI_TOOL_CALL_DOC,
+  AI_APPROVAL_CARD_DOC,
+  AI_CITATION_DOC,
+  AI_ARTIFACT_DOC,
+  AI_CANVAS_CARD_DOC,
+  AI_TOKEN_METER_DOC,
+  AI_DIFF_REVIEW_DOC,
   AUTH_BLOCK_DOC,
   PRICING_BLOCK_DOC,
   DASHBOARD_SHELL_BLOCK_DOC,
@@ -157,6 +193,7 @@ export const COMPONENTS: ComponentDoc[] = [
   BILLING_USAGE_BLOCK_DOC,
   ACTIVITY_FEED_BLOCK_DOC,
   AI_WORKSPACE_BLOCK_DOC,
+  AI_AGENT_COCKPIT_BLOCK_DOC,
   ONBOARDING_WIZARD_BLOCK_DOC,
 ];
 
@@ -188,14 +225,14 @@ export const DIRECTORY: DirectoryEntry[] = COMPONENTS.flatMap((component) =>
  */
 const FEATURED_SLUGS = [
   "button",
-  "drag-to-confirm",
-  "otp-input",
-  "prompt-input",
-  "calendar",
-  "command-menu",
-  "number-flow",
-  "folder-tab-card",
-  "tree",
+  "ai-orb",
+  "ai-voice-stage",
+  "ai-chat-thread",
+  "ai-canvas-card",
+  "ai-agent-plan",
+  "ai-model-selector",
+  "ai-token-meter",
+  "hold-to-confirm",
 ];
 
 /** 首页展示的精选示例（每个组件取代表性主示例） */

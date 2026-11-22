@@ -6,7 +6,7 @@ import type { ComponentType } from "react";
 
 /** 目录页的分类 */
 export type CategoryId =
-  "buttons" | "forms" | "overlays" | "display" | "navigation" | "motion" | "blocks";
+  "buttons" | "forms" | "overlays" | "display" | "navigation" | "motion" | "ai" | "blocks";
 
 /** 目录页签的取值：全部、最近收录，或某个分类 */
 export type DirectoryFilter = "all" | "recent" | CategoryId;

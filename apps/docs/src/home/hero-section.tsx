@@ -59,26 +59,23 @@ export const HeroSection = () => (
 
       <h1
         style={order(1)}
-        className="rise mt-7 max-w-3xl text-4xl leading-[1.08] font-semibold tracking-[-0.04em] sm:text-5xl md:text-[64px]"
+        className="rise mt-7 max-w-4xl text-4xl leading-[1.08] font-semibold tracking-[-0.04em] sm:text-5xl md:text-[64px]"
       >
-        墨色打底，
-        <br />
-        <span className="text-muted-foreground">只留一个</span>
-        <span className="relative inline-block">
-          信号色
-          <span
-            aria-hidden="true"
-            className="absolute inset-x-0 -bottom-1 h-1 rounded-full bg-signal md:h-1.5"
-          />
+        为高端 C 端与
+        <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-cyan-700 bg-clip-text text-transparent dark:from-blue-300 dark:via-indigo-300 dark:to-cyan-300">
+          {" "}
+          AI 产品
         </span>
+        <br />
+        <span className="text-muted-foreground">雕琢每一像素触感</span>
       </h1>
 
       <p
         style={order(2)}
-        className="rise mt-6 max-w-xl text-[15px] leading-relaxed text-muted-foreground md:text-base"
+        className="rise mt-6 max-w-2xl text-[15px] leading-relaxed text-muted-foreground md:text-base"
       >
-        面向现代界面的开源 React 组件平台。基于 Design Token、Base UI 与弹簧物理动效，
-        一条命令把完整 TypeScript 源码装进你的项目。
+        开源 React 19 组件平台，融合陶瓷光影层次、物理弹簧微交互与全栈智能体组件。 基于 Base UI
+        无障碍底座与 Design Token，一条命令将完整 TypeScript 源码装进你的项目。
       </p>
 
       <div style={order(3)} className="rise mt-8 flex flex-wrap items-center justify-center gap-3">

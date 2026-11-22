@@ -1,0 +1,6 @@
+{
+  "name": "ai-approval-card",
+  "title": "AI Approval Card",
+  "description": "人机协同（Human-in-the-Loop）敏感动作审批与问卷确认卡片。",
+  "categories": ["ai"]
+}

@@ -9,9 +9,9 @@ import { waitForEntranceAnimations } from "./support/animations";
 
 const CLI_COMMAND = "pnpm dlx shadcn@latest add huangshh310/UI/button";
 
-/** 目录中的代表性卡片总数：按钮 18，表单 13，浮层 11，展示 9，导航与布局 9，动效 5，区块 12 */
-const SPECIMEN_COUNT = 77;
-const BUTTON_SPECIMEN_COUNT = 18;
+/** 目录中的代表性卡片总数：按钮 19，表单 13，浮层 11，展示 9，导航与布局 10，动效 5，AI 与智能体 15，区块 13 */
+const SPECIMEN_COUNT = 95;
+const BUTTON_SPECIMEN_COUNT = 19;
 const FORM_SPECIMEN_COUNT = 13;
 
 /** 目录页中的示例卡片 */

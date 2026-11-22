@@ -79,7 +79,7 @@ const BentoGrid = () => (
 );
 
 export const HeroBentoBlock = ({
-  announcement = "v2.0 · 71 个组件与区块全量就绪",
+  announcement = "v2.5 · C 端触感与全栈 AI 组件体系",
   headline = "统一设计 Token、无障碍组件与高颜值页面区块",
   subheadline = "基于 React 19、Tailwind CSS v4 与 Base UI 构建，兼顾源码可控、键盘无障碍与双主题精致层次。",
   onPrimaryClick,
@@ -89,7 +89,7 @@ export const HeroBentoBlock = ({
   <div
     data-slot="hero-bento-block"
     className={cn(
-      "flex w-full flex-col gap-7 rounded-2xl border border-solid border-border bg-card p-6 shadow-sm sm:p-8",
+      "relative flex w-full flex-col gap-7 overflow-hidden rounded-[24px] border border-solid border-border/85 bg-card p-6 shadow-md sm:p-8",
       className,
     )}
   >

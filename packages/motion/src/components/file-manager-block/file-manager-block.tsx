@@ -32,24 +32,44 @@ const DEFAULT_FILES: ManagedFileEntry[] = [
 ];
 
 const FOLDERS = [
-  { name: "Token 主题", count: "6 项" },
-  { name: "Registry 清单", count: "64 项" },
-  { name: "架构文档", count: "9 项" },
+  {
+    name: "Token 主题",
+    count: "6 项",
+    iconClass:
+      "border-blue-500/20 bg-blue-500/12 text-blue-700 dark:border-blue-400/25 dark:text-blue-300",
+  },
+  {
+    name: "Registry 清单",
+    count: "89 项",
+    iconClass:
+      "border-violet-500/20 bg-violet-500/12 text-violet-700 dark:border-violet-400/25 dark:text-violet-300",
+  },
+  {
+    name: "架构文档",
+    count: "12 项",
+    iconClass:
+      "border-emerald-500/20 bg-emerald-500/12 text-emerald-700 dark:border-emerald-400/25 dark:text-emerald-300",
+  },
 ];
 
 const FolderCards = () => (
-  <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+  <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
     {FOLDERS.map((folder) => (
       <div
         key={folder.name}
-        className="flex items-center gap-3 rounded-xl border border-solid border-border bg-secondary/35 p-3"
+        className="flex items-center gap-3 rounded-2xl border border-solid border-border/80 bg-secondary/35 p-3.5 shadow-xs transition-colors hover:bg-secondary/55"
       >
-        <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg border border-solid border-border bg-background text-signal dark:bg-card">
-          <Folder aria-hidden="true" className="size-4" />
+        <span
+          className={cn(
+            "inline-flex size-10 shrink-0 items-center justify-center rounded-xl border border-solid shadow-xs",
+            folder.iconClass,
+          )}
+        >
+          <Folder aria-hidden="true" className="size-4.5" />
         </span>
         <div className="min-w-0">
-          <p className="m-0 truncate text-xs font-medium text-foreground">{folder.name}</p>
-          <p className="m-0 font-mono text-[11px] text-muted-foreground">{folder.count}</p>
+          <p className="m-0 truncate text-xs font-semibold text-foreground">{folder.name}</p>
+          <p className="m-0 mt-0.5 font-mono text-[11px] text-muted-foreground">{folder.count}</p>
         </div>
       </div>
     ))}

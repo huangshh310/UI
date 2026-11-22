@@ -40,22 +40,24 @@ const BASE_CLASSES = [
 export const buttonVariants = cva(BASE_CLASSES, {
   variants: {
     variant: {
-      // 主要操作：墨色实底
-      primary: "bg-primary text-primary-foreground hover:bg-primary/88",
-      // 次要操作：浅底，带一像素底边
+      // 主要操作：墨色实底配顶部微高光
+      primary:
+        "bg-primary text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_1px_2px_rgba(0,0,0,0.12)] hover:bg-primary/90",
+      // 次要操作：浅底配触感阴影
       secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-accent",
-      // 描边：发丝边线加轻盈微影，悬停提亮
+      // 描边：发丝边线加顶部内高光与微唇边，悬停提亮
       outline:
         "border-border bg-background text-foreground shadow-sm hover:border-foreground/20 hover:bg-accent dark:bg-card",
       // 幽灵：平时无底色，悬停才出现
       ghost: "bg-transparent text-foreground hover:bg-accent",
       // 破坏性操作
-      destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/88",
+      destructive:
+        "bg-destructive text-destructive-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_1px_2px_rgba(0,0,0,0.12)] hover:bg-destructive/90",
       // 链接外观：下划线在悬停时加粗
       link: "bg-transparent text-foreground underline decoration-1 underline-offset-4 hover:decoration-2",
-      // 信号：全页面最需要被看到的那一个操作
+      // 信号：全页面最需要被看到的那一个操作，带顶部高光与克制钴蓝柔晕
       signal:
-        "bg-signal text-signal-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] hover:bg-signal/90",
+        "bg-signal text-signal-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_1px_2px_rgba(0,0,0,0.12),0_6px_16px_-6px_color-mix(in_oklab,var(--ui-signal)_45%,transparent)] hover:bg-signal/92",
     },
     size: {
       sm: "h-8 px-3 text-xs",

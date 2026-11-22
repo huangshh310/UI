@@ -1,0 +1,6 @@
+{
+  "name": "ai-tool-call",
+  "title": "AI Tool Call",
+  "description": "智能体工具调用与流水线步骤检查器卡片，支持展开查看入参与返回 JSON 载荷。",
+  "categories": ["ai"]
+}

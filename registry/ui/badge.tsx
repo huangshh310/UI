@@ -12,9 +12,9 @@ export const badgeVariants = cva(
         secondary: "border-border/60 bg-secondary text-secondary-foreground",
         outline: "border-border bg-background text-muted-foreground dark:bg-card",
         signal: "border-signal bg-signal text-signal-foreground",
-        success: "border-emerald-600/25 bg-emerald-600/10 text-emerald-700 dark:text-emerald-400",
+        success: "border-emerald-600/25 bg-emerald-600/10 text-emerald-800 dark:text-emerald-300",
         warning: "border-amber-600/25 bg-amber-500/12 text-amber-800 dark:text-amber-300",
-        destructive: "border-destructive/25 bg-destructive/10 text-destructive",
+        destructive: "border-rose-600/25 bg-rose-600/10 text-rose-800 dark:text-rose-300",
       },
       shape: {
         pill: "rounded-full",

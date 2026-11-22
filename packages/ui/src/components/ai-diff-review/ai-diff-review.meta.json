@@ -1,0 +1,6 @@
+{
+  "name": "ai-diff-review",
+  "title": "AI Diff Review",
+  "description": "AI 代码与配置变更行级审阅卡片，支持单行勾选采纳与一键应用。",
+  "categories": ["ai"]
+}
