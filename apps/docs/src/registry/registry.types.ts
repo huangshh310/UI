@@ -25,8 +25,6 @@ export interface Specimen {
   file: string;
   /** 实时渲染的示例组件 */
   Demo: ComponentType;
-  /** 在目录网格中占两列，留给内容较宽的示例 */
-  wide?: boolean;
 }
 
 /** API 表格中的一行 */

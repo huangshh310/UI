@@ -21,7 +21,7 @@ const ComponentsPage = () => {
         <p className="mb-4 font-mono text-xs tracking-[0.2em] text-muted-foreground uppercase">
           Directory
         </p>
-        <h1 className="text-4xl leading-[1.05] font-medium tracking-[-0.035em] md:text-[56px]">
+        <h1 className="text-4xl leading-[1.08] font-semibold tracking-[-0.025em] md:text-[52px]">
           组件目录
         </h1>
         <p className="mt-5 text-[15px] leading-relaxed text-muted-foreground">

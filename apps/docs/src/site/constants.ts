@@ -23,7 +23,7 @@ export const NAV_LINKS = [
 export const THEME_STORAGE_KEY = "matt-ui-theme";
 
 /**
- * 在页面绘制之前恢复用户上次选择的主题，避免先闪一下默认主题。
+ * 在页面绘制之前确定主题：优先用户上次的选择，没有选择过则跟随系统。
  * 作为内联脚本放在 <head> 中，内容是固定的常量。
  */
-export const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem("${THEME_STORAGE_KEY}");if(t==="light"||t==="dark"){document.documentElement.dataset.theme=t}}catch(e){}})()`;
+export const THEME_INIT_SCRIPT = `(function(){var t;try{t=localStorage.getItem("${THEME_STORAGE_KEY}")}catch(e){}if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t})()`;

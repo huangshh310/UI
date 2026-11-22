@@ -17,7 +17,7 @@ export const NavLinks = () => {
   return (
     <nav
       aria-label="主导航"
-      className="flex items-center gap-0.5 rounded-full border border-border bg-background/80 p-1 backdrop-blur-md"
+      className="flex items-center gap-1 rounded-full bg-background/80 p-1 backdrop-blur-md"
     >
       {NAV_LINKS.map(({ href, label }) => (
         <Link

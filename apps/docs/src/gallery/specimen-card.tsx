@@ -33,7 +33,7 @@ export const SpecimenCard = ({ entry, index, isNew }: SpecimenCardProps) => {
     <article
       data-testid="specimen-card"
       style={{ "--i": index } as CSSProperties}
-      className={`rise group relative flex flex-col rounded-2xl bg-(--site-tile) p-2.5 md:max-xl:last:col-span-2 ${specimen.wide ? "md:col-span-2" : ""}`}
+      className={`rise group relative flex flex-col rounded-2xl bg-(--site-tile) p-2.5`}
     >
       <div className={`absolute top-4 right-4 z-10 ${REVEAL_CLASSES}`}>
         <CopyButton text={cliCommand(component)} label={`复制 ${component.name} 的安装命令`} />

@@ -1,7 +1,7 @@
 /*
  * 浅色主题的语义色（默认主题）。视觉方向：墨色与信号。
  *
- * 近黑的墨色与近白的纸色构成高对比的中性底，只有一个高饱和的信号色。
+ * 纯白的页面、中性灰的表面与近黑的墨色构成高对比的中性底，只有一个高饱和的信号色。
  * 每个表面色都有配对的 -foreground，表示放在该表面上的文字与图标颜色。
  *
  * 可访问性：所有 前景/表面 配对的对比度不低于 4.5:1；
@@ -16,50 +16,50 @@
   color-scheme: light;
 
   /* 页面底色与正文 */
-  --ui-background: oklch(0.985 0.003 100);
-  --ui-foreground: oklch(0.17 0.006 270);
+  --ui-background: oklch(1 0 0);
+  --ui-foreground: oklch(0.145 0.004 286);
 
   /* 抬升的表面：卡片、弹出层 */
   --ui-card: oklch(1 0 0);
-  --ui-card-foreground: oklch(0.17 0.006 270);
+  --ui-card-foreground: oklch(0.145 0.004 286);
   --ui-popover: oklch(1 0 0);
-  --ui-popover-foreground: oklch(0.17 0.006 270);
+  --ui-popover-foreground: oklch(0.145 0.004 286);
 
   /* 主要操作：墨色实底 */
-  --ui-primary: oklch(0.17 0.006 270);
-  --ui-primary-foreground: oklch(0.985 0.003 100);
+  --ui-primary: oklch(0.145 0.004 286);
+  --ui-primary-foreground: oklch(0.985 0.004 286);
 
   /* 次要操作 */
-  --ui-secondary: oklch(0.945 0.004 100);
-  --ui-secondary-foreground: oklch(0.17 0.006 270);
+  --ui-secondary: oklch(0.958 0.004 286);
+  --ui-secondary-foreground: oklch(0.145 0.004 286);
 
   /* 弱化的表面与辅助文字 */
-  --ui-muted: oklch(0.955 0.004 100);
-  --ui-muted-foreground: oklch(0.46 0.008 270);
+  --ui-muted: oklch(0.958 0.004 286);
+  --ui-muted-foreground: oklch(0.46 0.004 286);
 
   /* 交互反馈表面：悬停、选中项的底色（与 shadcn 的 accent 语义一致） */
-  --ui-accent: oklch(0.925 0.005 100);
-  --ui-accent-foreground: oklch(0.17 0.006 270);
+  --ui-accent: oklch(0.94 0.004 286);
+  --ui-accent-foreground: oklch(0.145 0.004 286);
 
   /* 信号色：全系统唯一的高饱和色，用于需要被第一眼看到的元素 */
   --ui-signal: oklch(0.9 0.2 125);
-  --ui-signal-foreground: oklch(0.17 0.006 270);
+  --ui-signal-foreground: oklch(0.145 0.004 286);
 
   /* 边线：border 用于分隔，input 用于可交互控件的边界，ring 用于焦点环 */
-  --ui-border: oklch(0.87 0.004 100);
-  --ui-input: oklch(0.6 0.006 270);
-  --ui-ring: oklch(0.17 0.006 270);
+  --ui-border: oklch(0.915 0.004 286);
+  --ui-input: oklch(0.6 0.004 286);
+  --ui-ring: oklch(0.145 0.004 286);
 
   /* 状态色 */
   --ui-success: oklch(0.52 0.125 155);
-  --ui-success-foreground: oklch(0.985 0.003 100);
+  --ui-success-foreground: oklch(0.985 0.004 286);
   --ui-warning: oklch(0.8 0.16 80);
-  --ui-warning-foreground: oklch(0.17 0.006 270);
+  --ui-warning-foreground: oklch(0.145 0.004 286);
   --ui-destructive: oklch(0.55 0.21 27);
-  --ui-destructive-foreground: oklch(0.985 0.003 100);
+  --ui-destructive-foreground: oklch(0.985 0.004 286);
   --ui-info: oklch(0.52 0.17 255);
-  --ui-info-foreground: oklch(0.985 0.003 100);
+  --ui-info-foreground: oklch(0.985 0.004 286);
 
   /* 阴影的基色，透明度由 scales/shadows.css 决定 */
-  --ui-shadow-color: oklch(0.17 0.006 270);
+  --ui-shadow-color: oklch(0.145 0.004 286);
 }

@@ -34,7 +34,6 @@ export function Demo() {
       description: "六种强调程度，从墨色实底到纯文字链接。",
       file: "button/variants.tsx",
       Demo: ButtonVariants,
-      wide: true,
     },
     {
       slug: "signal",
@@ -70,7 +69,6 @@ export function Demo() {
       description: "加载中不可重复触发，但仍可聚焦，键盘用户不会丢失焦点。",
       file: "button/loading.tsx",
       Demo: ButtonLoading,
-      wide: true,
     },
     {
       slug: "disabled",

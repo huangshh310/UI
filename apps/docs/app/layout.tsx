@@ -1,7 +1,7 @@
 /**
  * 根布局：字体、主题、页头与页脚。
  *
- * 默认主题是深色。<head> 中的内联脚本在首次绘制前恢复用户上次的选择，
+ * 主题跟随系统。<head> 中的内联脚本在首次绘制前确定主题（用户选择过则以选择为准），
  * 它会改写 <html> 的 data-theme，所以这里需要 suppressHydrationWarning。
  */
 import { GeistMono } from "geist/font/mono";
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: ReactNode }) => (
   <html
     lang="zh-CN"
-    data-theme="dark"
+    data-theme="light"
     className={`${GeistSans.variable} ${GeistMono.variable}`}
     suppressHydrationWarning
   >

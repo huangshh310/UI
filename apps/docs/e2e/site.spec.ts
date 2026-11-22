@@ -201,16 +201,28 @@ test.describe("文档与机器可读的入口", () => {
 });
 
 test.describe("主题", () => {
-  test("默认深色；切换后变为浅色，刷新页面仍保持", async ({ page }) => {
+  test("没有选择过主题时跟随系统的深浅色偏好", async ({ browser }) => {
+    for (const scheme of ["dark", "light"] as const) {
+      const context = await browser.newContext({ colorScheme: scheme });
+      const page = await context.newPage();
+      await page.goto("/");
+
+      await expect(page.locator("html")).toHaveAttribute("data-theme", scheme);
+      await context.close();
+    }
+  });
+
+  test("手动切换后以用户的选择为准，刷新页面仍保持", async ({ page }) => {
+    await page.emulateMedia({ colorScheme: "light" });
     await page.goto("/");
     const html = page.locator("html");
-    await expect(html).toHaveAttribute("data-theme", "dark");
+    await expect(html).toHaveAttribute("data-theme", "light");
 
     await page.getByRole("button", { name: "切换主题" }).click();
-    await expect(html).toHaveAttribute("data-theme", "light");
+    await expect(html).toHaveAttribute("data-theme", "dark");
 
     await page.reload();
-    await expect(html).toHaveAttribute("data-theme", "light");
+    await expect(html).toHaveAttribute("data-theme", "dark");
   });
 });
 
