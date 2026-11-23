@@ -24,6 +24,7 @@
     "registry:check": "pnpm registry:generate && git diff --exit-code -- registry registry.json",
     "test:registry": "node scripts/registry-fixture.mjs",
     "component:new": "node scripts/component-new.mjs",
+    "dev": "pnpm --filter @matt-ui/docs dev",
     "site": "turbo run build --filter=@matt-ui/docs... && pnpm --filter @matt-ui/docs exec next start --port 3000"
   },
   "devDependencies": {
