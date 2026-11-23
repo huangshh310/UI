@@ -1774,7 +1774,7 @@
       "title": "Draw Checkbox",
       "description": "A checkbox built on Base UI whose checkmark draws smoothly along its SVG path.",
       "categories": ["forms"],
-      "dependencies": ["@base-ui/react"],
+      "dependencies": ["class-variance-authority", "lucide-react", "@base-ui/react"],
       "registryDependencies": ["utils"],
       "files": [
         {
