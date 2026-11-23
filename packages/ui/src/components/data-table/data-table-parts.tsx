@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * DataTable 内部子部件：工具栏、表头排序单元格、加载骨架与分页底栏。
+ * DataTable 内部子部件：分层工具栏、表头排序单元格、多列加载骨架与分页底栏。
  */
 import { cn } from "@matt-ui/utils";
 import {
@@ -14,16 +14,19 @@ import {
   X,
 } from "lucide-react";
 import type { ReactNode } from "react";
+import type { DataTableColumn } from "./data-table.types.js";
 
 const FOCUS_RING =
   "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
 
 const PAGE_BTN_CLASSES = cn(
-  "inline-flex size-7 cursor-pointer items-center justify-center rounded-lg border border-solid border-input/55 bg-background text-muted-foreground shadow-[0_1px_2px_rgba(0,0,0,0.03)] dark:border-white/12 dark:bg-card",
-  "transition-colors duration-(--ui-duration-fast) hover:border-foreground/25 hover:text-foreground",
+  "inline-flex size-7 cursor-pointer items-center justify-center rounded-lg border border-solid border-border bg-card text-muted-foreground shadow-xs dark:border-white/12",
+  "transition-colors duration-(--ui-duration-fast) hover:border-foreground/20 hover:bg-accent/60 hover:text-foreground",
   FOCUS_RING,
   "disabled:pointer-events-none disabled:opacity-40",
 );
+
+const SKELETON_WIDTHS = ["w-28", "w-24", "w-16", "w-20", "w-32"] as const;
 
 export const ALIGN_CLASS = {
   left: "text-left",
@@ -40,7 +43,7 @@ const TableSearchInput = ({
   placeholder: string;
   onChange: (next: string) => void;
 }) => (
-  <div className="relative w-full sm:w-56">
+  <div className="relative w-full min-w-0 sm:w-56">
     <Search
       aria-hidden="true"
       className="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted-foreground"
@@ -52,7 +55,7 @@ const TableSearchInput = ({
       onChange={(event) => onChange(event.target.value)}
       placeholder={placeholder}
       className={cn(
-        "h-8 w-full rounded-lg border border-solid border-input/50 bg-background pr-7 pl-8 font-sans text-xs text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) placeholder:text-muted-foreground/75 hover:border-foreground/25 dark:border-white/12 dark:bg-card/85 dark:hover:border-white/22",
+        "h-8 w-full rounded-lg border border-solid border-border bg-background pr-7 pl-8 font-sans text-xs text-foreground shadow-xs transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) placeholder:text-muted-foreground/80 hover:border-foreground/20 dark:border-white/12 dark:bg-card/85 dark:hover:border-white/22",
         "outline-none focus:border-ring focus:bg-card focus:ring-1 focus:ring-ring focus:ring-inset",
       )}
     />
@@ -77,21 +80,14 @@ const ToolbarTitle = ({ title, description }: { title?: string; description?: st
   return (
     <div className="min-w-0">
       {title && <p className="m-0 text-sm font-semibold tracking-tight text-foreground">{title}</p>}
-      {description && <p className="m-0 mt-0.5 text-xs text-muted-foreground">{description}</p>}
+      {description && (
+        <p className="m-0 mt-1 text-xs leading-relaxed text-muted-foreground">{description}</p>
+      )}
     </div>
   );
 };
 
-export const TableToolbar = ({
-  title,
-  description,
-  searchable,
-  searchPlaceholder,
-  query,
-  onQueryChange,
-  totalCount,
-  toolbarActions,
-}: {
+interface TableToolbarProps {
   title?: string;
   description?: string;
   searchable: boolean;
@@ -100,28 +96,51 @@ export const TableToolbar = ({
   onQueryChange: (next: string) => void;
   totalCount: number;
   toolbarActions?: ReactNode;
-}) => {
-  const hasHeading = Boolean(title || description);
-  const hasControls = Boolean(searchable || toolbarActions);
+}
+
+const SplitTableToolbar = (p: TableToolbarProps) => (
+  <>
+    <div className="flex flex-wrap items-start justify-between gap-3 border-b border-solid border-border/75 px-5 py-4 dark:border-white/10">
+      <ToolbarTitle title={p.title} description={p.description} />
+      <div className="flex shrink-0 flex-wrap items-center gap-2">{p.toolbarActions}</div>
+    </div>
+    <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-solid border-border/75 px-5 py-3 dark:border-white/10">
+      <TableSearchInput
+        query={p.query}
+        placeholder={p.searchPlaceholder}
+        onChange={p.onQueryChange}
+      />
+      <span className="shrink-0 font-mono text-xs text-muted-foreground tabular-nums">
+        共 {p.totalCount} 条
+      </span>
+    </div>
+  </>
+);
+
+export const TableToolbar = (p: TableToolbarProps) => {
+  const hasHeading = Boolean(p.title || p.description);
+  const hasControls = Boolean(p.searchable || p.toolbarActions);
   if (!hasHeading && !hasControls) return null;
+  if (hasHeading && p.searchable && p.toolbarActions) return <SplitTableToolbar {...p} />;
+
   return (
-    <div className="flex flex-col gap-3 border-b border-solid border-border/75 px-5 py-3.5 sm:flex-row sm:items-center sm:justify-between dark:border-white/10">
-      <ToolbarTitle title={title} description={description} />
+    <div className="flex flex-col gap-3 border-b border-solid border-border/75 px-5 py-4 sm:flex-row sm:items-center sm:justify-between dark:border-white/10">
+      <ToolbarTitle title={p.title} description={p.description} />
       {hasControls && (
-        <div className="flex flex-wrap items-center gap-2.5">
-          {searchable && (
+        <div className="flex shrink-0 flex-wrap items-center gap-2.5">
+          {p.searchable && (
             <>
               <TableSearchInput
-                query={query}
-                placeholder={searchPlaceholder}
-                onChange={onQueryChange}
+                query={p.query}
+                placeholder={p.searchPlaceholder}
+                onChange={p.onQueryChange}
               />
-              <span className="shrink-0 font-mono text-xs text-muted-foreground tabular-nums">
-                {totalCount} 条
+              <span className="shrink-0 rounded-md bg-muted px-2 py-1 font-mono text-[11px] font-medium text-muted-foreground tabular-nums">
+                {p.totalCount} 条
               </span>
             </>
           )}
-          {toolbarActions}
+          {p.toolbarActions}
         </div>
       )}
     </div>
@@ -143,7 +162,7 @@ export const SortHeaderButton = ({
     type="button"
     onClick={onToggle}
     className={cn(
-      "inline-flex cursor-pointer items-center gap-1 rounded border border-solid border-transparent bg-transparent px-1 py-0.5 -mx-1 font-sans text-xs font-medium text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:text-foreground",
+      "group -mx-1.5 inline-flex cursor-pointer items-center gap-1 rounded-md border border-solid border-transparent bg-transparent px-1.5 py-1 font-sans text-xs font-medium text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:bg-accent/70 hover:text-foreground",
       FOCUS_RING,
       align === "right" && "ml-auto flex-row-reverse",
       sorted && "text-foreground",
@@ -155,19 +174,44 @@ export const SortHeaderButton = ({
     ) : sorted === "desc" ? (
       <ArrowDown aria-hidden="true" className="size-3.5 text-signal" />
     ) : (
-      <ChevronsUpDown aria-hidden="true" className="size-3.5 opacity-50" />
+      <ChevronsUpDown
+        aria-hidden="true"
+        className="size-3.5 opacity-40 transition-opacity group-hover:opacity-80"
+      />
     )}
   </button>
 );
 
-export const TableLoadingRows = ({ colSpan }: { colSpan: number }) => (
+export const TableLoadingRows = <TData extends object>({
+  columns,
+  selectable,
+  cellClass,
+}: {
+  columns: DataTableColumn<TData>[];
+  selectable: boolean;
+  cellClass: string;
+}) => (
   <>
-    {[0, 1, 2].map((row) => (
-      <tr key={row} className="border-t border-solid border-border/55 dark:border-white/7">
-        <td colSpan={colSpan} className="px-4 py-3.5">
-          <div className="h-3.5 w-full animate-pulse rounded-md bg-secondary/80 motion-reduce:animate-none" />
-          <span className="sr-only">加载中</span>
-        </td>
+    {[0, 1, 2, 3].map((rowIdx) => (
+      <tr key={rowIdx}>
+        {selectable && (
+          <td aria-label="加载中" className="w-11 py-3 pr-2 pl-5">
+            <div className="size-4 animate-pulse rounded bg-secondary/80 motion-reduce:animate-none" />
+          </td>
+        )}
+        {columns.map((col, colIdx) => (
+          <td key={col.id} className={cellClass}>
+            <div
+              className={cn(
+                "h-3.5 animate-pulse rounded-md bg-secondary/80 motion-reduce:animate-none",
+                SKELETON_WIDTHS[(rowIdx + colIdx) % SKELETON_WIDTHS.length],
+                col.align === "right" && "ml-auto",
+                col.align === "center" && "mx-auto",
+              )}
+            />
+            {rowIdx === 0 && colIdx === 0 && <span className="sr-only">加载中</span>}
+          </td>
+        ))}
       </tr>
     ))}
   </>
@@ -178,6 +222,7 @@ interface TablePaginationProps {
   pageCount: number;
   pageSize: number;
   totalCount: number;
+  selectedCount: number;
   canPrev: boolean;
   canNext: boolean;
   onPrev: () => void;
@@ -190,15 +235,25 @@ export const TablePagination = (props: TablePaginationProps) => {
   const end = Math.min(props.totalCount, (props.pageIndex + 1) * props.pageSize);
 
   return (
-    <div className="flex items-center justify-between gap-3 border-t border-solid border-border/75 px-5 py-3 text-xs text-muted-foreground dark:border-white/10">
-      <span className="tabular-nums">
-        第{" "}
-        <strong className="font-medium text-foreground">
-          {start}–{end}
-        </strong>{" "}
-        条，共 <strong className="font-medium text-foreground">{props.totalCount}</strong> 条
-      </span>
+    <div className="flex flex-wrap items-center justify-between gap-3 border-t border-solid border-border/75 bg-muted/25 px-5 py-3 text-xs text-muted-foreground dark:border-white/10 dark:bg-white/[0.015]">
+      <div className="flex items-center gap-2 tabular-nums">
+        <span>
+          显示{" "}
+          <strong className="font-medium text-foreground">
+            {start}–{end}
+          </strong>{" "}
+          条，共 <strong className="font-medium text-foreground">{props.totalCount}</strong> 条
+        </span>
+        {props.selectedCount > 0 && (
+          <span className="rounded bg-signal/12 px-1.5 py-0.5 text-[11px] font-medium text-foreground">
+            已选 {props.selectedCount} 项
+          </span>
+        )}
+      </div>
       <div className="flex items-center gap-1.5">
+        <span className="pr-1.5 font-mono text-xs tabular-nums">
+          第 {props.pageIndex + 1} / {Math.max(1, props.pageCount)} 页
+        </span>
         <button
           type="button"
           aria-label="上一页"
@@ -208,9 +263,6 @@ export const TablePagination = (props: TablePaginationProps) => {
         >
           <ChevronLeft aria-hidden="true" className="size-3.5" />
         </button>
-        <span className="px-2 font-mono text-xs tabular-nums">
-          {props.pageIndex + 1} / {Math.max(1, props.pageCount)}
-        </span>
         <button
           type="button"
           aria-label="下一页"

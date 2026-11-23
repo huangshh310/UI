@@ -1,9 +1,14 @@
 "use client";
 
 /**
- * 示例：AdvancedDataTable 的分面筛选、列显隐、密度切换、批量动作与 CSV 导出。
+ * 示例：AdvancedDataTable 的分面弹层筛选、列显隐、密度切换、批量动作与 CSV 导出。
  */
-import { AdvancedDataTable, type AdvancedTableColumn, type AdvancedTableFacet } from "@matt-ui/ui";
+import {
+  AdvancedDataTable,
+  Badge,
+  type AdvancedTableColumn,
+  type AdvancedTableFacet,
+} from "@matt-ui/ui";
 import { useState } from "react";
 
 interface ComponentItem {
@@ -23,31 +28,38 @@ const ITEMS: ComponentItem[] = [
 ];
 
 const COLUMNS: AdvancedTableColumn<ComponentItem>[] = [
-  { id: "name", header: "组件", accessor: (r) => r.name, sortable: true, hideable: false },
-  { id: "pkg", header: "所属包", accessor: (r) => r.pkg, sortable: true },
+  {
+    id: "name",
+    header: "组件",
+    accessor: (r) => r.name,
+    cell: (r) => <span className="font-medium text-foreground">{r.name}</span>,
+    sortable: true,
+    hideable: false,
+  },
+  {
+    id: "pkg",
+    header: "所属包",
+    accessor: (r) => r.pkg,
+    cell: (r) => <span className="font-mono text-xs text-muted-foreground">{r.pkg}</span>,
+    sortable: true,
+  },
   {
     id: "status",
     header: "状态",
     accessor: (r) => r.status,
     cell: (r) => (
-      <span className="inline-flex items-center gap-1.5 rounded-full border border-solid border-border bg-secondary/60 px-2 py-0.5 font-mono text-[11px] font-medium text-foreground">
-        <span
-          aria-hidden="true"
-          className={
-            r.status === "new"
-              ? "size-1.5 rounded-full bg-signal"
-              : "size-1.5 rounded-full bg-emerald-500"
-          }
-        />
+      <Badge variant={r.status === "new" ? "soft" : "success"} dot>
         {r.status}
-      </span>
+      </Badge>
     ),
   },
   {
     id: "gzipKb",
     header: "体积 (KB)",
     accessor: (r) => r.gzipKb,
-    cell: (r) => <span className="font-mono text-xs">{r.gzipKb.toFixed(1)} KB</span>,
+    cell: (r) => (
+      <span className="font-mono text-xs text-muted-foreground">{r.gzipKb.toFixed(1)} KB</span>
+    ),
     sortable: true,
     align: "right",
   },
@@ -78,10 +90,10 @@ export const AdvancedDataTableBasic = () => {
   const [notice, setNotice] = useState<string | null>(null);
 
   return (
-    <div className="flex w-full max-w-3xl flex-col gap-2">
+    <div className="flex w-full flex-col gap-2">
       <AdvancedDataTable
         title="组件清单"
-        description="支持分面筛选、列显隐开关、行密度切换、批量动作与 CSV 导出"
+        description="支持多选分面筛选、列显隐开关、行密度切换、批量动作与 CSV 导出"
         data={ITEMS}
         columns={COLUMNS}
         getRowId={(r) => r.id}

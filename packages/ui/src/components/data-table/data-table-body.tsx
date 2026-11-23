@@ -21,6 +21,7 @@ import {
   type Header,
   type Row,
 } from "@tanstack/react-table";
+import { Inbox } from "lucide-react";
 import type { MouseEvent } from "react";
 import { DrawCheckbox } from "../draw-checkbox/index.js";
 import { ALIGN_CLASS, SortHeaderButton, TableLoadingRows } from "./data-table-parts.js";
@@ -99,9 +100,12 @@ export const DataTableHead = <TData extends object>({
   onToggleAll: (checked: boolean) => void;
 }) => (
   <thead className={cn(stickyHeader && "sticky top-0 z-10 backdrop-blur-md")}>
-    <tr className="border-b border-solid border-border/75 bg-secondary/35 dark:border-white/10 dark:bg-white/[0.03]">
+    <tr className="border-b border-solid border-border/80 bg-muted/50 dark:border-white/10 dark:bg-white/[0.03]">
       {selectable && (
-        <th scope="col" className={cn("w-10 text-left", dataTableHeadCellVariants({ density }))}>
+        <th
+          scope="col"
+          className={cn("w-11 pr-2 pl-5 text-left", dataTableHeadCellVariants({ density }))}
+        >
           <DrawCheckbox
             tone="signal"
             aria-label="选择当前页全部行"
@@ -171,13 +175,13 @@ const DataTableRow = <TData extends object>({
       data-selected={row.getIsSelected() ? "" : undefined}
       onClick={onRowClick ? handleClick : undefined}
       className={cn(
-        "border-t border-solid border-border/55 transition-colors duration-(--ui-duration-instant) hover:bg-accent/45 data-selected:bg-signal/6 dark:border-white/7",
-        striped && "even:bg-secondary/25 dark:even:bg-white/[0.025]",
+        "transition-colors duration-(--ui-duration-instant) hover:bg-muted/50 data-selected:bg-signal/[0.06] dark:hover:bg-white/[0.03] dark:data-selected:bg-signal/12",
+        striped && "even:bg-muted/35 dark:even:bg-white/[0.02]",
         onRowClick && "cursor-pointer",
       )}
     >
       {selectable && (
-        <td className={cn("w-10", dataTableCellVariants({ density }))}>
+        <td className={cn("w-11 pr-2 pl-5", dataTableCellVariants({ density }))}>
           <DrawCheckbox
             tone="signal"
             aria-label={`选择第 ${row.index + 1} 行`}
@@ -190,6 +194,25 @@ const DataTableRow = <TData extends object>({
     </tr>
   );
 };
+
+const DataTableEmptyRow = ({
+  colSpan,
+  emptyMessage,
+}: {
+  colSpan: number;
+  emptyMessage: string;
+}) => (
+  <tr>
+    <td colSpan={colSpan} aria-label={emptyMessage} className="px-5 py-12 text-center">
+      <div className="mx-auto flex max-w-xs flex-col items-center gap-2">
+        <span className="inline-flex size-9 items-center justify-center rounded-full border border-solid border-border bg-muted/60 text-muted-foreground">
+          <Inbox aria-hidden="true" className="size-4" />
+        </span>
+        <p className="m-0 text-sm font-medium text-foreground">{emptyMessage}</p>
+      </div>
+    </td>
+  </tr>
+);
 
 export const DataTableBody = <TData extends object>({
   rows,
@@ -211,15 +234,17 @@ export const DataTableBody = <TData extends object>({
   onRowClick?: (row: TData) => void;
 }) => {
   const colSpan = columns.length + (selectable ? 1 : 0);
-  if (loading) return <TableLoadingRows colSpan={colSpan} />;
-  if (rows.length === 0) {
+  if (loading) {
     return (
-      <tr>
-        <td colSpan={colSpan} className="px-5 py-10 text-center text-sm text-muted-foreground">
-          {emptyMessage}
-        </td>
-      </tr>
+      <TableLoadingRows
+        columns={columns}
+        selectable={selectable}
+        cellClass={dataTableCellVariants({ density })}
+      />
     );
+  }
+  if (rows.length === 0) {
+    return <DataTableEmptyRow colSpan={colSpan} emptyMessage={emptyMessage} />;
   }
   return (
     <>

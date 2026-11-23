@@ -240,7 +240,9 @@ test("Data Table：排序、搜索、分页与行选择联动正常", async ({ p
 
 test("Advanced Data Table：分面筛选、列显隐与导出提示均正常", async ({ page }) => {
   const main = await openMain(page, "advanced-data-table");
-  await main.getByRole("button", { name: "motion", exact: true }).click();
+  await main.getByRole("button", { name: "包", exact: true }).click();
+  await page.getByRole("button", { name: /motion/ }).click();
+  await page.keyboard.press("Escape");
   await expect(main.getByText("AnimatedFileUpload")).toBeVisible();
   await expect(main.getByText("Button")).toBeHidden();
 

@@ -31,7 +31,7 @@ export function Demo() {
     {
       slug: "advanced-data-table-basic",
       name: "分面筛选与列控制表格",
-      description: "支持多维胶囊筛选、毛玻璃列显隐弹窗、紧凑/标准/宽松密度切换与批量动作。",
+      description: "支持多选分面弹层筛选、毛玻璃列显隐弹窗、紧凑/标准/宽松密度切换与批量动作。",
       file: "advanced-data-table/basic.tsx",
       Demo: AdvancedDataTableBasic,
     },

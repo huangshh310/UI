@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * AdvancedDataTable 顶部控制部件：列显隐毛玻璃弹层、行密度切换、分面筛选胶囊、批量操作栏与 CSV 导出。
+ * AdvancedDataTable 顶部控制部件：卡片标题头、单行筛选/视图工具栏、列显隐毛玻璃弹层、行密度切换与批量操作栏。
  */
 import { Popover } from "@base-ui/react/popover";
 import { cn } from "@matt-ui/utils";
@@ -11,7 +11,6 @@ import { DrawCheckbox } from "../draw-checkbox/index.js";
 import type {
   AdvancedTableBatchAction,
   AdvancedTableColumn,
-  AdvancedTableFacet,
   TableDensity,
 } from "./advanced-data-table.types.js";
 import {
@@ -33,7 +32,7 @@ export const DensityToggle = ({
   value: TableDensity;
   onChange: (next: TableDensity) => void;
 }) => (
-  <div className="inline-flex items-center gap-0.5 rounded-lg border border-solid border-border/75 bg-secondary/60 p-0.5 dark:border-white/10 dark:bg-white/6">
+  <div className="inline-flex h-8 shrink-0 items-center gap-0.5 rounded-lg border border-solid border-border bg-muted/70 p-0.5 dark:border-white/10 dark:bg-white/[0.05]">
     {DENSITIES.map((item) => (
       <button
         key={item.id}
@@ -41,10 +40,10 @@ export const DensityToggle = ({
         aria-pressed={value === item.id}
         onClick={() => onChange(item.id)}
         className={cn(
-          "h-7 cursor-pointer rounded-md border border-solid border-transparent px-2 font-sans text-xs font-medium transition-colors duration-(--ui-duration-fast)",
+          "inline-flex h-full cursor-pointer items-center rounded-md border border-solid border-transparent px-2 font-sans text-xs font-medium whitespace-nowrap transition-[background-color,color,box-shadow] duration-(--ui-duration-fast)",
           ADV_FOCUS_RING,
           value === item.id
-            ? "bg-background text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.05)] dark:bg-card dark:border-white/10"
+            ? "bg-card text-foreground shadow-xs dark:border-white/10 dark:bg-card"
             : "bg-transparent text-muted-foreground hover:text-foreground",
         )}
       >
@@ -65,19 +64,23 @@ export const ColumnVisibilityPopover = <TData extends object>({
 }) => {
   const toggleable = columns.filter((col) => col.hideable !== false);
   if (toggleable.length === 0) return null;
+  const hiddenCount = toggleable.filter((col) => hiddenIds[col.id]).length;
 
   return (
     <Popover.Root>
       <Popover.Trigger className={ADV_CTRL_BTN}>
         <Columns3 aria-hidden="true" className="size-3.5 text-muted-foreground" />
-        列显隐
+        <span>列显隐</span>
+        {hiddenCount > 0 && (
+          <span className="inline-flex h-4 min-w-4 items-center justify-center rounded bg-secondary px-1 font-mono text-[10px] font-semibold text-secondary-foreground tabular-nums">
+            -{hiddenCount}
+          </span>
+        )}
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Positioner sideOffset={6} align="end" className="z-(--ui-z-popover) outline-none">
-          <Popover.Popup className={ADV_POPOVER_CLASSES}>
-            <p className="m-0 mb-2 px-0.5 font-mono text-[10px] font-medium tracking-wider text-muted-foreground uppercase">
-              显示列
-            </p>
+          <Popover.Popup className={cn(ADV_POPOVER_CLASSES, "p-2.5")}>
+            <p className="m-0 mb-2 px-0.5 text-[11px] font-medium text-muted-foreground">显示列</p>
             <div className="flex flex-col gap-2">
               {toggleable.map((col) => (
                 <DrawCheckbox
@@ -96,68 +99,6 @@ export const ColumnVisibilityPopover = <TData extends object>({
   );
 };
 
-const FacetGroup = <TData extends object>(p: {
-  facet: AdvancedTableFacet<TData>;
-  selected: string | null | undefined;
-  onToggle: (value: string) => void;
-}) => (
-  <div className="flex flex-wrap items-center gap-1.5">
-    <span className="text-xs font-medium text-muted-foreground">{p.facet.label}</span>
-    {p.facet.options.map((opt) => (
-      <button
-        key={opt.value}
-        type="button"
-        aria-pressed={p.selected === opt.value}
-        onClick={() => p.onToggle(opt.value)}
-        className={cn(
-          "h-6.5 cursor-pointer rounded-full border border-solid px-2.5 font-sans text-xs font-medium transition-colors duration-(--ui-duration-fast)",
-          ADV_FOCUS_RING,
-          p.selected === opt.value
-            ? "border-signal/45 bg-signal/12 text-foreground dark:bg-signal/18"
-            : "border-input/55 bg-background text-muted-foreground hover:border-foreground/25 hover:text-foreground dark:border-white/12 dark:bg-card",
-        )}
-      >
-        {opt.label}
-      </button>
-    ))}
-  </div>
-);
-
-export const FacetFilterBar = <TData extends object>(p: {
-  facets: AdvancedTableFacet<TData>[];
-  activeFacets: Record<string, string | null>;
-  onToggle: (facetId: string, optionValue: string) => void;
-  onReset: () => void;
-}) => {
-  if (p.facets.length === 0) return null;
-  const hasActive = Object.values(p.activeFacets).some(Boolean);
-  return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-solid border-border/65 bg-secondary/20 px-5 py-2.5 dark:border-white/8 dark:bg-white/[0.02]">
-      {p.facets.map((facet) => (
-        <FacetGroup
-          key={facet.id}
-          facet={facet}
-          selected={p.activeFacets[facet.id]}
-          onToggle={(val) => p.onToggle(facet.id, val)}
-        />
-      ))}
-      {hasActive && (
-        <button
-          type="button"
-          onClick={p.onReset}
-          className={cn(
-            "inline-flex cursor-pointer items-center gap-1 rounded-md border border-solid border-transparent bg-transparent px-1.5 py-0.5 text-xs text-muted-foreground hover:text-foreground",
-            ADV_FOCUS_RING,
-          )}
-        >
-          <X aria-hidden="true" className="size-3" />
-          重置筛选
-        </button>
-      )}
-    </div>
-  );
-};
-
 export const BatchActionBar = <TData extends object>(p: {
   selectedRows: TData[];
   actions: AdvancedTableBatchAction<TData>[];
@@ -165,7 +106,7 @@ export const BatchActionBar = <TData extends object>(p: {
 }) => {
   if (p.selectedRows.length === 0 || p.actions.length === 0) return null;
   return (
-    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-solid border-signal/25 bg-signal/8 px-5 py-2.5 dark:bg-signal/12">
+    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-solid border-signal/20 bg-signal/[0.06] px-5 py-2.5 dark:border-signal/30 dark:bg-signal/12">
       <div className="flex items-center gap-2 text-xs text-foreground">
         <span className="inline-flex size-5 items-center justify-center rounded-full bg-signal font-mono text-[11px] font-semibold text-signal-foreground tabular-nums">
           {p.selectedRows.length}
@@ -175,7 +116,7 @@ export const BatchActionBar = <TData extends object>(p: {
           type="button"
           onClick={p.onClear}
           className={cn(
-            "cursor-pointer rounded border border-solid border-transparent bg-transparent px-1 text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground",
+            "cursor-pointer rounded border border-solid border-transparent bg-transparent px-1 text-xs text-muted-foreground underline decoration-border underline-offset-4 hover:text-foreground",
             ADV_FOCUS_RING,
           )}
         >
@@ -189,11 +130,11 @@ export const BatchActionBar = <TData extends object>(p: {
             type="button"
             onClick={() => action.onAction(p.selectedRows)}
             className={cn(
-              "h-7 cursor-pointer rounded-lg border border-solid px-2.5 font-sans text-xs font-medium transition-colors duration-(--ui-duration-fast)",
+              "inline-flex h-7 cursor-pointer items-center rounded-lg border border-solid px-2.5 font-sans text-xs font-medium transition-colors duration-(--ui-duration-fast)",
               ADV_FOCUS_RING,
               action.tone === "destructive"
-                ? "border-destructive/50 bg-destructive/10 text-destructive hover:bg-destructive/18 dark:border-destructive"
-                : "border-input/55 bg-background text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.03)] hover:bg-accent dark:border-white/12 dark:bg-card",
+                ? "border-destructive/40 bg-destructive/10 text-destructive hover:bg-destructive/18 dark:border-destructive/60"
+                : "border-border bg-card text-foreground shadow-xs hover:border-foreground/20 hover:bg-accent/60 dark:border-white/12",
             )}
           >
             {action.label}
@@ -213,7 +154,7 @@ const AdvSearchInput = ({
   placeholder: string;
   onChange: (next: string) => void;
 }) => (
-  <div className="relative w-full sm:w-52">
+  <div className="relative w-full min-w-0 sm:w-44 xl:w-52">
     <Search
       aria-hidden="true"
       className="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted-foreground"
@@ -224,7 +165,7 @@ const AdvSearchInput = ({
       value={query}
       onChange={(event) => onChange(event.target.value)}
       placeholder={placeholder}
-      className="h-8 w-full rounded-lg border border-solid border-input/50 bg-background pr-7 pl-8 font-sans text-xs text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.03)] outline-none transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) placeholder:text-muted-foreground/75 hover:border-foreground/25 focus:border-ring focus:bg-card focus:ring-1 focus:ring-ring focus:ring-inset dark:border-white/12 dark:bg-card/85 dark:hover:border-white/22"
+      className="h-8 w-full rounded-lg border border-solid border-border bg-background pr-7 pl-8 font-sans text-xs text-foreground shadow-xs outline-none transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) placeholder:text-muted-foreground/80 hover:border-foreground/20 focus:border-ring focus:bg-card focus:ring-1 focus:ring-ring focus:ring-inset dark:border-white/12 dark:bg-card/85 dark:hover:border-white/22"
     />
     {query.length > 0 && (
       <button
@@ -242,13 +183,55 @@ const AdvSearchInput = ({
   </div>
 );
 
-interface AdvancedToolbarProps<TData> {
+const ExportButton = ({ onExport }: { onExport?: () => void }) =>
+  onExport ? (
+    <button type="button" onClick={onExport} className={ADV_CTRL_BTN}>
+      <Download aria-hidden="true" className="size-3.5 text-muted-foreground" />
+      导出 CSV
+    </button>
+  ) : null;
+
+/** 卡片标题层：仅在存在 title 或 description 时呈现，承载主操作以防工具栏拥挤 */
+export const AdvancedHeaderBar = ({
+  title,
+  description,
+  toolbarActions,
+  onExport,
+}: {
   title?: string;
   description?: string;
+  toolbarActions?: ReactNode;
+  onExport?: () => void;
+}) => {
+  if (!title && !description) return null;
+  const hasActions = Boolean(toolbarActions || onExport);
+  return (
+    <div className="flex flex-wrap items-start justify-between gap-3 border-b border-solid border-border/75 px-5 py-4 dark:border-white/10">
+      <div className="min-w-0">
+        {title && (
+          <p className="m-0 text-sm font-semibold tracking-tight text-foreground">{title}</p>
+        )}
+        {description && (
+          <p className="m-0 mt-1 text-xs leading-relaxed text-muted-foreground">{description}</p>
+        )}
+      </div>
+      {hasActions && (
+        <div className="flex shrink-0 flex-wrap items-center gap-2">
+          <ExportButton onExport={onExport} />
+          {toolbarActions}
+        </div>
+      )}
+    </div>
+  );
+};
+
+interface AdvancedControlBarProps<TData> {
+  hasHeader: boolean;
   searchable: boolean;
   searchPlaceholder: string;
   showDensityToggle: boolean;
   toolbarActions?: ReactNode;
+  facetControls?: ReactNode;
   query: string;
   onQueryChange: (next: string) => void;
   density: TableDensity;
@@ -259,41 +242,50 @@ interface AdvancedToolbarProps<TData> {
   onExport?: () => void;
 }
 
-export const AdvancedTopToolbar = <TData extends object>(props: AdvancedToolbarProps<TData>) => (
-  <div className="flex flex-col gap-3 border-b border-solid border-border/75 px-5 py-3.5 lg:flex-row lg:items-center lg:justify-between dark:border-white/10">
-    {(props.title || props.description) && (
-      <div className="min-w-0">
-        {props.title && (
-          <p className="m-0 text-sm font-semibold tracking-tight text-foreground">{props.title}</p>
-        )}
-        {props.description && (
-          <p className="m-0 mt-0.5 text-xs text-muted-foreground">{props.description}</p>
-        )}
-      </div>
+const ControlBarRight = <TData extends object>(
+  p: AdvancedControlBarProps<TData> & { showFallbackActions: boolean },
+) => (
+  <div className="flex shrink-0 flex-wrap items-center gap-2">
+    {p.showDensityToggle && <DensityToggle value={p.density} onChange={p.onDensityChange} />}
+    <ColumnVisibilityPopover
+      columns={p.columns}
+      hiddenIds={p.hiddenIds}
+      onToggle={p.onToggleColumn}
+    />
+    {p.showFallbackActions && (
+      <>
+        <ExportButton onExport={p.onExport} />
+        {p.toolbarActions}
+      </>
     )}
-    <div className="flex flex-wrap items-center gap-2">
-      {props.searchable && (
-        <AdvSearchInput
-          query={props.query}
-          placeholder={props.searchPlaceholder}
-          onChange={props.onQueryChange}
-        />
-      )}
-      {props.showDensityToggle && (
-        <DensityToggle value={props.density} onChange={props.onDensityChange} />
-      )}
-      <ColumnVisibilityPopover
-        columns={props.columns}
-        hiddenIds={props.hiddenIds}
-        onToggle={props.onToggleColumn}
-      />
-      {props.onExport && (
-        <button type="button" onClick={props.onExport} className={ADV_CTRL_BTN}>
-          <Download aria-hidden="true" className="size-3.5 text-muted-foreground" />
-          导出 CSV
-        </button>
-      )}
-      {props.toolbarActions}
-    </div>
   </div>
 );
+
+const ControlBarLeft = <TData extends object>(p: AdvancedControlBarProps<TData>) => (
+  <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
+    {p.searchable && (
+      <AdvSearchInput
+        query={p.query}
+        placeholder={p.searchPlaceholder}
+        onChange={p.onQueryChange}
+      />
+    )}
+    {p.facetControls}
+  </div>
+);
+
+/** 操作工具栏层：左侧搜索与分面筛选，右侧视图控制（密度、列显隐） */
+export const AdvancedControlBar = <TData extends object>(p: AdvancedControlBarProps<TData>) => {
+  const showFallbackActions = !p.hasHeader && Boolean(p.onExport || p.toolbarActions);
+  const hasLeft = Boolean(p.searchable || p.facetControls);
+  const hasRight =
+    p.showDensityToggle || showFallbackActions || p.columns.some((c) => c.hideable !== false);
+  if (!hasLeft && !hasRight) return null;
+
+  return (
+    <div className="flex flex-wrap items-start justify-between gap-2.5 border-b border-solid border-border/75 px-5 py-3 dark:border-white/10">
+      {hasLeft && <ControlBarLeft {...p} />}
+      {hasRight && <ControlBarRight {...p} showFallbackActions={showFallbackActions} />}
+    </div>
+  );
+};

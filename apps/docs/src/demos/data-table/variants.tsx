@@ -45,7 +45,7 @@ export default function DataTableVariantsDemo() {
   const [active, setActive] = useState<string | null>(null);
 
   return (
-    <div className="flex w-full max-w-2xl flex-col gap-2">
+    <div className="flex w-full flex-col gap-2">
       <DataTable
         title="账单明细（Minimal + Striped）"
         variant="minimal"
@@ -57,7 +57,7 @@ export default function DataTableVariantsDemo() {
         getRowId={(r) => r.id}
         onRowClick={(row) => setActive(`已查看 ${row.number}（${row.amount}）`)}
         toolbarActions={
-          <Button variant="secondary" size="sm" onClick={() => setLoading((v) => !v)}>
+          <Button variant="outline" size="sm" onClick={() => setLoading((v) => !v)}>
             {loading ? "恢复数据" : "预览骨架态"}
           </Button>
         }

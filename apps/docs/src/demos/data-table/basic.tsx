@@ -3,7 +3,7 @@
 /**
  * 示例：DataTable 的排序、搜索、分页与行选择。
  */
-import { DataTable, type DataTableColumn } from "@matt-ui/ui";
+import { Badge, DataTable, type DataTableColumn } from "@matt-ui/ui";
 import { useState } from "react";
 
 interface Deployment {
@@ -23,33 +23,38 @@ const DATA: Deployment[] = [
 ];
 
 const COLUMNS: DataTableColumn<Deployment>[] = [
-  { id: "project", header: "项目", accessor: (r) => r.project, sortable: true },
-  { id: "region", header: "节点", accessor: (r) => r.region, sortable: true },
+  {
+    id: "project",
+    header: "项目",
+    accessor: (r) => r.project,
+    cell: (r) => <span className="font-medium text-foreground">{r.project}</span>,
+    sortable: true,
+  },
+  {
+    id: "region",
+    header: "节点",
+    accessor: (r) => r.region,
+    cell: (r) => <span className="font-mono text-xs text-muted-foreground">{r.region}</span>,
+    sortable: true,
+  },
   {
     id: "status",
     header: "状态",
     accessor: (r) => r.status,
     cell: (r) => (
-      <span className="inline-flex items-center gap-1.5 rounded-full border border-solid border-border bg-secondary/60 px-2 py-0.5 text-xs font-medium text-foreground">
-        <span
-          aria-hidden="true"
-          className={
-            r.status === "运行中"
-              ? "size-1.5 rounded-full bg-emerald-500"
-              : r.status === "构建中"
-                ? "size-1.5 rounded-full bg-signal"
-                : "size-1.5 rounded-full bg-muted-foreground"
-          }
-        />
+      <Badge
+        variant={r.status === "运行中" ? "success" : r.status === "构建中" ? "soft" : "secondary"}
+        dot
+      >
         {r.status}
-      </span>
+      </Badge>
     ),
   },
   {
     id: "latency",
     header: "延迟",
     accessor: (r) => r.latency,
-    cell: (r) => <span className="font-mono text-xs">{r.latency} ms</span>,
+    cell: (r) => <span className="font-mono text-xs text-muted-foreground">{r.latency} ms</span>,
     sortable: true,
     align: "right",
   },
@@ -59,7 +64,7 @@ export const DataTableBasic = () => {
   const [selectedCount, setSelectedCount] = useState(0);
 
   return (
-    <div className="flex w-full max-w-2xl flex-col gap-2">
+    <div className="flex w-full flex-col gap-2">
       <DataTable
         title="部署节点"
         description="支持按列排序、关键字搜索、分页与批量勾选"

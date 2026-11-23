@@ -47,7 +47,7 @@ const AUDIT_COLS: AdvancedTableColumn<AuditRow>[] = [
 
 export default function AdvancedDataTableAuditDemo() {
   return (
-    <div className="w-full max-w-3xl">
+    <div className="w-full">
       <AdvancedDataTable
         title="无障碍巡检报告"
         description="默认紧凑密度展示最近一次 Playwright axe 巡检记录"

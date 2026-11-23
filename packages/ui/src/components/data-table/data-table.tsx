@@ -89,7 +89,7 @@ const ScrollableTable = <TData extends object>({
           someSelected={table.getIsSomePageRowsSelected()}
           onToggleAll={(checked) => table.toggleAllPageRowsSelected(checked)}
         />
-        <tbody>
+        <tbody className="divide-y divide-border/70 dark:divide-white/7">
           <DataTableBody
             rows={table.getRowModel().rows}
             columns={props.columns}
@@ -109,6 +109,7 @@ const ScrollableTable = <TData extends object>({
 export const DataTable = <TData extends object>(props: DataTableProps<TData>) => {
   const { table, globalFilter, setGlobalFilter } = useTableState(props);
   const totalCount = table.getFilteredRowModel().rows.length;
+  const selectedCount = table.getSelectedRowModel().rows.length;
   const variant = props.variant ?? "default";
   const density = props.density ?? "normal";
 
@@ -135,6 +136,7 @@ export const DataTable = <TData extends object>(props: DataTableProps<TData>) =>
         pageCount={table.getPageCount()}
         pageSize={table.state.pagination.pageSize}
         totalCount={totalCount}
+        selectedCount={selectedCount}
         canPrev={table.getCanPreviousPage()}
         canNext={table.getCanNextPage()}
         onPrev={() => table.previousPage()}

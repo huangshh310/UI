@@ -5,6 +5,7 @@
  */
 import {
   AdvancedDataTable,
+  Badge,
   Button,
   type AdvancedTableColumn,
   type AdvancedTableFacet,
@@ -56,19 +57,46 @@ const KEYS: ApiKeyRow[] = [
 ];
 
 const COLS: AdvancedTableColumn<ApiKeyRow>[] = [
-  { id: "name", header: "密钥名称", accessor: (r) => r.name, sortable: true, hideable: false },
+  {
+    id: "name",
+    header: "密钥名称",
+    accessor: (r) => r.name,
+    cell: (r) => <span className="font-medium text-foreground">{r.name}</span>,
+    sortable: true,
+    hideable: false,
+  },
   {
     id: "prefix",
     header: "前缀",
     accessor: (r) => r.prefix,
-    cell: (r) => <code className="font-mono text-xs">{r.prefix}…</code>,
+    cell: (r) => (
+      <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-muted-foreground">
+        {r.prefix}…
+      </code>
+    ),
   },
-  { id: "env", header: "环境", accessor: (r) => r.env },
-  { id: "lastUsed", header: "最近使用", accessor: (r) => r.lastUsed, defaultHidden: true },
+  {
+    id: "env",
+    header: "环境",
+    accessor: (r) => r.env,
+    cell: (r) => (
+      <Badge variant={r.env === "production" ? "success" : "secondary"} dot>
+        {r.env === "production" ? "生产" : "预发"}
+      </Badge>
+    ),
+  },
+  {
+    id: "lastUsed",
+    header: "最近使用",
+    accessor: (r) => r.lastUsed,
+    cell: (r) => <span className="text-muted-foreground">{r.lastUsed}</span>,
+    defaultHidden: true,
+  },
   {
     id: "requests",
     header: "24h 调用",
     accessor: (r) => r.requests,
+    cell: (r) => <span className="font-mono text-xs">{r.requests.toLocaleString()}</span>,
     sortable: true,
     align: "right",
   },
@@ -91,10 +119,10 @@ export default function AdvancedDataTableVariantsDemo() {
   const [log, setLog] = useState<string | null>(null);
 
   return (
-    <div className="flex w-full max-w-3xl flex-col gap-2">
+    <div className="flex w-full flex-col gap-2">
       <AdvancedDataTable
-        title="API 密钥管理（Minimal + Striped）"
-        description="默认隐藏“最近使用”列，可通过列显隐毛玻璃弹层按需开启"
+        title="API 密钥管理"
+        description="Minimal + Striped 变体：默认隐藏“最近使用”列，可通过列显隐毛玻璃弹层按需开启"
         variant="minimal"
         striped
         loading={loading}
@@ -112,7 +140,7 @@ export default function AdvancedDataTableVariantsDemo() {
           },
         ]}
         toolbarActions={
-          <Button variant="secondary" size="sm" onClick={() => setLoading((v) => !v)}>
+          <Button variant="outline" size="sm" onClick={() => setLoading((v) => !v)}>
             {loading ? "结束加载" : "骨架预览"}
           </Button>
         }

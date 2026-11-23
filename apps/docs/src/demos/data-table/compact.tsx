@@ -30,7 +30,7 @@ const COLS: DataTableColumn<PackageRow>[] = [
 
 export default function DataTableCompactDemo() {
   return (
-    <div className="w-full max-w-2xl">
+    <div className="w-full">
       <DataTable
         title="工作区包体积清单"
         columns={COLS}

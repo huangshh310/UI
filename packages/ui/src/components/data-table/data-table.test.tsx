@@ -86,5 +86,8 @@ describe("DataTable", () => {
 
     rerender(<DataTable data={[]} columns={COLUMNS} emptyMessage="暂无成员记录" />);
     expect(screen.getByText("暂无成员记录")).toBeTruthy();
+
+    rerender(<DataTable data={ROWS} columns={COLUMNS} loading />);
+    expect(screen.getAllByText("加载中").length).toBeGreaterThan(0);
   });
 });

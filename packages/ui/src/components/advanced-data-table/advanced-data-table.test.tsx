@@ -58,7 +58,9 @@ describe("AdvancedDataTable", () => {
       />,
     );
 
-    await user.click(screen.getByRole("button", { name: "测试" }));
+    await user.click(screen.getByRole("button", { name: /状态/ }));
+    const betaOption = await screen.findByRole("button", { name: /测试/ });
+    await user.click(betaOption);
     expect(screen.getByText("@matt-ui/motion")).toBeTruthy();
     expect(screen.queryByText("@matt-ui/tokens")).toBeNull();
 
@@ -66,7 +68,10 @@ describe("AdvancedDataTable", () => {
     expect(onExportCsv).toHaveBeenCalledTimes(1);
     expect(onExportCsv.mock.calls[0]?.[0]).toContain("@matt-ui/motion");
 
-    await user.click(screen.getByRole("button", { name: "列显隐" }));
+    await user.click(screen.getByRole("button", { name: /重置/ }));
+    expect(screen.getByText("@matt-ui/tokens")).toBeTruthy();
+
+    await user.click(screen.getByRole("button", { name: /列显隐/ }));
     const sizeToggle = await screen.findByRole("checkbox", { name: "体积" });
     await user.click(sizeToggle);
     expect(screen.queryByRole("columnheader", { name: "体积" })).toBeNull();
