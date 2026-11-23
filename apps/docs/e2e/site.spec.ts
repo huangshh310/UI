@@ -174,6 +174,32 @@ test.describe("组件详情页", () => {
 
     await expect(block.getByTestId("save-count")).toHaveText("1");
   });
+
+  test("侧边栏独立滚动，切换组件时保持侧边栏滚动位置不回顶", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/components/draw-checkbox");
+
+    const sidebar = page.getByRole("navigation", { name: "组件导航" });
+    await expect(sidebar).toBeVisible();
+    expect(await sidebar.evaluate((el) => el.scrollHeight > el.clientHeight)).toBe(true);
+
+    // 将侧边栏滚动到表单分组并点击相邻组件，验证切换后侧边栏不跳回顶部
+    await sidebar.evaluate((el) => {
+      el.scrollTop = 420;
+    });
+    const beforeScrollTop = await sidebar.evaluate((el) => el.scrollTop);
+    expect(beforeScrollTop).toBeGreaterThan(200);
+
+    await sidebar.getByRole("link", { name: "Stretch Switch" }).click();
+    await expect(page).toHaveURL(/\/components\/stretch-switch$/);
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Stretch Switch", exact: true }),
+    ).toBeVisible();
+
+    const afterScrollTop = await sidebar.evaluate((el) => el.scrollTop);
+    expect(afterScrollTop).toBe(beforeScrollTop);
+    expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  });
 });
 
 test.describe("命令面板", () => {

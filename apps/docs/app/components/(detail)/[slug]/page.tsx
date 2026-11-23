@@ -8,7 +8,6 @@ import { AccessibilityNotes } from "@/detail/accessibility-notes";
 import { ApiTable } from "@/detail/api-table";
 import { ComponentFooterNav } from "@/detail/component-footer-nav";
 import { ComponentMain } from "@/detail/component-main";
-import { ComponentSidebar } from "@/detail/component-sidebar";
 import { InstallBlock } from "@/detail/install-block";
 import { SpecimenBlock } from "@/detail/specimen-block";
 import { installPrompt } from "@/registry/install-prompt";
@@ -106,37 +105,26 @@ const ComponentPage = async ({ params }: PageProps) => {
     component.slug === "advanced-data-table";
 
   return (
-    <div className="mx-auto max-w-[1400px] px-5 pt-8 pb-24 md:px-9">
-      <div className="border-b border-border/70 pb-5">
-        <Breadcrumb trail={[{ href: "/components", label: "组件" }]} current={component.name} />
-      </div>
-      <div className="grid gap-10 pt-8 lg:grid-cols-[14.5rem_minmax(0,1fr)] lg:gap-12">
-        <aside className="hidden lg:block lg:border-r lg:border-border/70 lg:pr-6">
-          <div className="sticky top-24">
-            <ComponentSidebar activeSlug={component.slug} />
-          </div>
-        </aside>
-        <article className="flex min-w-0 flex-col gap-8">
-          <ComponentHeader component={component} />
-          <ComponentMain
-            preview={Hero ? <Hero /> : null}
-            usageHtml={usageHtml}
-            sourceHtml={sourceHtml}
-            prompt={installPrompt(component)}
-            responsive={responsive}
-          />
-          <InstallBlock
-            command={cliCommand(component)}
-            dependencies={component.dependencies}
-            targetPath={`components/ui/${component.registryName}.tsx`}
-          />
-          <ApiTable props={component.api} />
-          <Specimens component={component} responsive={responsive} />
-          <AccessibilityNotes notes={component.accessibility} />
-          <ComponentFooterNav component={component} />
-        </article>
-      </div>
-    </div>
+    <article className="flex min-w-0 flex-col gap-8">
+      <Breadcrumb trail={[{ href: "/components", label: "组件" }]} current={component.name} />
+      <ComponentHeader component={component} />
+      <ComponentMain
+        preview={Hero ? <Hero /> : null}
+        usageHtml={usageHtml}
+        sourceHtml={sourceHtml}
+        prompt={installPrompt(component)}
+        responsive={responsive}
+      />
+      <InstallBlock
+        command={cliCommand(component)}
+        dependencies={component.dependencies}
+        targetPath={`components/ui/${component.registryName}.tsx`}
+      />
+      <ApiTable props={component.api} />
+      <Specimens component={component} responsive={responsive} />
+      <AccessibilityNotes notes={component.accessibility} />
+      <ComponentFooterNav component={component} />
+    </article>
   );
 };
 

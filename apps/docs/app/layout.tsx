@@ -43,6 +43,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
   <html
     lang="zh-CN"
     data-theme="light"
+    data-scroll-behavior="smooth"
     className={`${GeistSans.variable} ${GeistMono.variable}`}
     suppressHydrationWarning
   >
