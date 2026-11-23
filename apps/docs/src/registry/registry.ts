@@ -10,18 +10,21 @@ import { AI_AGENT_COCKPIT_BLOCK_DOC } from "./ai-agent-cockpit-block.doc";
 import { AI_AGENT_PLAN_DOC } from "./ai-agent-plan.doc";
 import { AI_APPROVAL_CARD_DOC } from "./ai-approval-card.doc";
 import { AI_ARTIFACT_DOC } from "./ai-artifact.doc";
-import { AI_CANVAS_CARD_DOC } from "./ai-canvas-card.doc";
 import { AI_CHAT_THREAD_DOC } from "./ai-chat-thread.doc";
 import { AI_CITATION_DOC } from "./ai-citation.doc";
 import { AI_DIFF_REVIEW_DOC } from "./ai-diff-review.doc";
-import { AI_MODEL_SELECTOR_DOC } from "./ai-model-selector.doc";
 import { AI_ORB_DOC } from "./ai-orb.doc";
-import { AI_PROMPT_GALLERY_DOC } from "./ai-prompt-gallery.doc";
 import { AI_REASONING_DOC } from "./ai-reasoning.doc";
-import { AI_TOKEN_METER_DOC } from "./ai-token-meter.doc";
 import { AI_TOOL_CALL_DOC } from "./ai-tool-call.doc";
 import { AI_VOICE_STAGE_DOC } from "./ai-voice-stage.doc";
 import { AI_WORKSPACE_BLOCK_DOC } from "./ai-workspace-block.doc";
+import { CONTEXT_DOC } from "./context.doc";
+import { CONVERSATION_DOC } from "./conversation.doc";
+import { MESSAGE_DOC } from "./message.doc";
+import { MODEL_SELECTOR_DOC } from "./model-selector.doc";
+import { PROMPT_QUEUE_DOC } from "./prompt-queue.doc";
+import { SHIMMER_DOC } from "./shimmer.doc";
+import { SUGGESTION_DOC } from "./suggestion.doc";
 import { ALERT_DOC } from "./alert.doc";
 import { ANIMATED_FILE_UPLOAD_DOC } from "./animated-file-upload.doc";
 import { ANIMATED_TEXT_DOC } from "./animated-text.doc";
@@ -167,20 +170,23 @@ export const COMPONENTS: ComponentDoc[] = [
   SPOTLIGHT_CARD_DOC,
   FOLDER_TAB_CARD_DOC,
   STAGGERED_LIST_DOC,
+  CONVERSATION_DOC,
+  MESSAGE_DOC,
+  SHIMMER_DOC,
+  MODEL_SELECTOR_DOC,
+  CONTEXT_DOC,
+  SUGGESTION_DOC,
+  PROMPT_QUEUE_DOC,
   AI_ORB_DOC,
   AI_VOICE_STAGE_DOC,
   AUDIO_WAVES_DOC,
   AI_CHAT_THREAD_DOC,
-  AI_MODEL_SELECTOR_DOC,
-  AI_PROMPT_GALLERY_DOC,
   AI_AGENT_PLAN_DOC,
   AI_REASONING_DOC,
   AI_TOOL_CALL_DOC,
   AI_APPROVAL_CARD_DOC,
   AI_CITATION_DOC,
   AI_ARTIFACT_DOC,
-  AI_CANVAS_CARD_DOC,
-  AI_TOKEN_METER_DOC,
   AI_DIFF_REVIEW_DOC,
   AUTH_BLOCK_DOC,
   PRICING_BLOCK_DOC,
@@ -225,13 +231,13 @@ export const DIRECTORY: DirectoryEntry[] = COMPONENTS.flatMap((component) =>
  */
 const FEATURED_SLUGS = [
   "button",
+  "conversation",
+  "message",
+  "model-selector",
+  "context",
+  "prompt-queue",
   "ai-orb",
   "ai-voice-stage",
-  "ai-chat-thread",
-  "ai-canvas-card",
-  "ai-agent-plan",
-  "ai-model-selector",
-  "ai-token-meter",
   "hold-to-confirm",
 ];
 

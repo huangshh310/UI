@@ -36,9 +36,9 @@ const CycleText = ({
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={current}
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -6 }}
+          initial={{ y: "100%" }}
+          animate={{ y: "0%" }}
+          exit={{ y: "-100%" }}
           transition={{ duration: 0.24 }}
           className="inline-block"
         >
@@ -94,11 +94,15 @@ export const AnimatedText = ({
         data-slot="animated-text"
         data-mode="shimmer"
         className={cn(
-          "inline-block font-medium text-foreground animate-pulse motion-reduce:animate-none",
+          "relative inline-block overflow-hidden font-medium text-muted-foreground",
           className,
         )}
       >
-        {text}
+        <span>{text}</span>
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 animate-pulse bg-gradient-to-r from-transparent via-foreground/12 to-transparent motion-reduce:hidden"
+        />
       </span>
     );
   }

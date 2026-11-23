@@ -1,0 +1,6 @@
+{
+  "name": "prompt-queue",
+  "title": "Prompt Queue",
+  "description": "流式生成期间吸附于输入框上方的弹簧待发消息队列，支持立即插队发送、取回编辑与移除。",
+  "categories": ["ai"]
+}

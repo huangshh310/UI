@@ -315,47 +315,6 @@
       }
     },
     {
-      "name": "ai-canvas-card",
-      "type": "registry:ui",
-      "title": "AI Canvas Card",
-      "description": "AI 多模态视觉生成结果画布卡片，支持一键生成视觉变体、4K 高清放大与收藏反馈。",
-      "dependencies": ["lucide-react", "motion"],
-      "registryDependencies": ["utils"],
-      "files": [
-        {
-          "path": "registry/ui/ai-canvas-card.tsx",
-          "type": "registry:ui",
-          "target": "@ui/ai-canvas-card.tsx"
-        }
-      ],
-      "cssVars": {
-        "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
-        },
-        "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
-        }
-      },
-      "css": {
-        "@layer base": {
-          ":root": {
-            "--ui-duration-instant": "80ms",
-            "--ui-duration-fast": "140ms",
-            "--ui-duration-normal": "220ms",
-            "--ui-duration-slow": "360ms",
-            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
-            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
-            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
-            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
-          }
-        }
-      }
-    },
-    {
       "name": "ai-chat-thread",
       "type": "registry:ui",
       "title": "AI Chat Thread",
@@ -481,47 +440,6 @@
       }
     },
     {
-      "name": "ai-model-selector",
-      "type": "registry:ui",
-      "title": "AI Model Selector",
-      "description": "C 端 AI 模型切换、推理深度分段与联网/沙箱能力开关面板。",
-      "dependencies": ["lucide-react"],
-      "registryDependencies": ["utils"],
-      "files": [
-        {
-          "path": "registry/ui/ai-model-selector.tsx",
-          "type": "registry:ui",
-          "target": "@ui/ai-model-selector.tsx"
-        }
-      ],
-      "cssVars": {
-        "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
-        },
-        "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
-        }
-      },
-      "css": {
-        "@layer base": {
-          ":root": {
-            "--ui-duration-instant": "80ms",
-            "--ui-duration-fast": "140ms",
-            "--ui-duration-normal": "220ms",
-            "--ui-duration-slow": "360ms",
-            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
-            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
-            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
-            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
-          }
-        }
-      }
-    },
-    {
       "name": "ai-orb",
       "type": "registry:ui",
       "title": "AI Orb",
@@ -564,47 +482,6 @@
       }
     },
     {
-      "name": "ai-prompt-gallery",
-      "type": "registry:ui",
-      "title": "AI Prompt Gallery",
-      "description": "C 端 AI 灵感冒泡与场景提示词卡网格，支持分类筛选与一键注入指令。",
-      "dependencies": ["lucide-react"],
-      "registryDependencies": ["utils"],
-      "files": [
-        {
-          "path": "registry/ui/ai-prompt-gallery.tsx",
-          "type": "registry:ui",
-          "target": "@ui/ai-prompt-gallery.tsx"
-        }
-      ],
-      "cssVars": {
-        "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
-        },
-        "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
-        }
-      },
-      "css": {
-        "@layer base": {
-          ":root": {
-            "--ui-duration-instant": "80ms",
-            "--ui-duration-fast": "140ms",
-            "--ui-duration-normal": "220ms",
-            "--ui-duration-slow": "360ms",
-            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
-            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
-            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
-            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
-          }
-        }
-      }
-    },
-    {
       "name": "ai-reasoning",
       "type": "registry:ui",
       "title": "AI Reasoning",
@@ -617,48 +494,6 @@
           "path": "registry/ui/ai-reasoning.tsx",
           "type": "registry:ui",
           "target": "@ui/ai-reasoning.tsx"
-        }
-      ],
-      "cssVars": {
-        "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
-        },
-        "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
-        }
-      },
-      "css": {
-        "@layer base": {
-          ":root": {
-            "--ui-duration-instant": "80ms",
-            "--ui-duration-fast": "140ms",
-            "--ui-duration-normal": "220ms",
-            "--ui-duration-slow": "360ms",
-            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
-            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
-            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
-            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
-          }
-        }
-      }
-    },
-    {
-      "name": "ai-token-meter",
-      "type": "registry:ui",
-      "title": "AI Token Meter",
-      "description": "AI 上下文窗口与分段 Token 预算指示器，支持分类图例与一键压缩上下文。",
-      "categories": ["ai"],
-      "dependencies": ["lucide-react"],
-      "registryDependencies": ["utils", "huangshh310/UI/badge", "huangshh310/UI/button"],
-      "files": [
-        {
-          "path": "registry/ui/ai-token-meter.tsx",
-          "type": "registry:ui",
-          "target": "@ui/ai-token-meter.tsx"
         }
       ],
       "cssVars": {
@@ -1506,6 +1341,90 @@
       }
     },
     {
+      "name": "context",
+      "type": "registry:ui",
+      "title": "Context",
+      "description": "AI 上下文窗口环形微胶囊与分段 Token 占用浮层检查器，支持一键压缩上下文。",
+      "categories": ["ai"],
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/context.tsx",
+          "type": "registry:ui",
+          "target": "@ui/context.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "conversation",
+      "type": "registry:ui",
+      "title": "Conversation",
+      "description": "流式对话滚动视口原语，支持智能贴底追踪、空态居中欢迎与未读回到底部悬浮胶囊。",
+      "categories": ["ai"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/conversation.tsx",
+          "type": "registry:ui",
+          "target": "@ui/conversation.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "dashboard-shell-block",
       "type": "registry:block",
       "title": "Dashboard Shell Block",
@@ -2239,6 +2158,90 @@
       }
     },
     {
+      "name": "message",
+      "type": "registry:ui",
+      "title": "Message",
+      "description": "单回合对话复合组件，涵盖无框助手流式排版、温润用户胶囊、多版本分支切换、原位编辑与异常重试。",
+      "categories": ["ai"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/message.tsx",
+          "type": "registry:ui",
+          "target": "@ui/message.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "model-selector",
+      "type": "registry:ui",
+      "title": "Model Selector",
+      "description": "紧凑型 AI 模型、思考强度与联网能力浮层选择器，可直接嵌入输入器工具栏。",
+      "categories": ["ai"],
+      "dependencies": ["lucide-react", "@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/model-selector.tsx",
+          "type": "registry:ui",
+          "target": "@ui/model-selector.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "morphing-button",
       "type": "registry:ui",
       "title": "Morphing Button",
@@ -2836,6 +2839,48 @@
       }
     },
     {
+      "name": "prompt-queue",
+      "type": "registry:ui",
+      "title": "Prompt Queue",
+      "description": "流式生成期间吸附于输入框上方的弹簧待发消息队列，支持立即插队发送、取回编辑与移除。",
+      "categories": ["ai"],
+      "dependencies": ["lucide-react", "motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/prompt-queue.tsx",
+          "type": "registry:ui",
+          "target": "@ui/prompt-queue.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "reorder-list",
       "type": "registry:ui",
       "title": "Reorder List",
@@ -3155,6 +3200,48 @@
           "path": "registry/ui/sheet.tsx",
           "type": "registry:ui",
           "target": "@ui/sheet.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "shimmer",
+      "type": "registry:ui",
+      "title": "Shimmer",
+      "description": "面向 AI 流式等待态的微光扫掠文字与多行生成骨架原语。",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/shimmer.tsx",
+          "type": "registry:ui",
+          "target": "@ui/shimmer.tsx"
         }
       ],
       "cssVars": {
@@ -3575,6 +3662,48 @@
           "path": "registry/ui/stretch-switch.tsx",
           "type": "registry:ui",
           "target": "@ui/stretch-switch.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.99 0 0)"
+        },
+        "dark": {
+          "signal": "oklch(0.535 0.21 262)",
+          "signal-foreground": "oklch(0.99 0 0)",
+          "destructive-foreground": "oklch(0.14 0.008 265)"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "suggestion",
+      "type": "registry:ui",
+      "title": "Suggestion",
+      "description": "无外框 AI 灵感启动卡与流式追问胶囊组，支持分类筛选与复合子部件拼装。",
+      "categories": ["ai"],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/suggestion.tsx",
+          "type": "registry:ui",
+          "target": "@ui/suggestion.tsx"
         }
       ],
       "cssVars": {

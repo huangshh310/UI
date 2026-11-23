@@ -1,7 +1,6 @@
 import {
   AiAgentCockpitBlock,
   AiAgentPlan,
-  AiCanvasCard,
   AiOrb,
   AiReasoning,
   AiVoiceStage,
@@ -13,6 +12,7 @@ import {
   NumberFlow,
   OnboardingWizardBlock,
   PricingBlock,
+  PromptQueue,
   SegmentedControl,
   StaggeredList,
   StatsOverviewBlock,
@@ -24,17 +24,22 @@ import {
   AiChatThread,
   AiCitation,
   AiDiffReview,
-  AiModelSelector,
-  AiPromptGallery,
-  AiTokenMeter,
   AiToolCall,
   AiWorkspaceBlock,
   AuthBlock,
   BillingUsageBlock,
+  Context,
+  Conversation,
+  ConversationContent,
   DashboardShellBlock,
   HeroBentoBlock,
+  Message,
+  MessageContent,
+  ModelSelector,
   SettingsBlock,
+  Shimmer,
   SpotlightCard,
+  Suggestions,
   TeamMembersBlock,
 } from "@matt-ui/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
@@ -61,13 +66,29 @@ export const AiAndTactileComponents: StoryObj = {
         ]}
       />
       <HoldToConfirm label="长按部署生产环境" />
+      <div className="flex flex-wrap items-center gap-3">
+        <ModelSelector />
+        <Context />
+        <Shimmer>正在深度推理上下文…</Shimmer>
+      </div>
+      <Conversation className="rounded-2xl border border-border p-2">
+        <ConversationContent className="gap-3 py-2">
+          <Message from="user">
+            <MessageContent>设计一套无框流式 AI 对话原语</MessageContent>
+          </Message>
+          <Message from="assistant">
+            <MessageContent>
+              助手正文直接流淌于画布，配合统一轨迹线呈现推理与工具动作。
+            </MessageContent>
+          </Message>
+        </ConversationContent>
+      </Conversation>
+      <PromptQueue items={[{ id: "q1", content: "追问深色主题下的对比度门禁" }]} />
+      <Suggestions />
       <AiReasoning defaultExpanded />
       <AiChatThread />
-      <AiModelSelector />
-      <AiPromptGallery />
       <AiAgentPlan />
       <AiVoiceStage />
-      <AiCanvasCard />
       <AiToolCall toolName="search_registry" status="completed" />
       <AiApprovalCard title="授权执行生产迁移脚本" />
       <AiCitation />
@@ -76,7 +97,6 @@ export const AiAndTactileComponents: StoryObj = {
         code="export const Card = () => null;"
         preview={<div className="text-xs text-muted-foreground">实时组件预览</div>}
       />
-      <AiTokenMeter />
       <AiDiffReview />
     </div>
   ),

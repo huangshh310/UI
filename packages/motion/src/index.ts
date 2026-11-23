@@ -13,10 +13,10 @@ export type {
   AiPlanStep,
   AiPlanStepStatus,
 } from "./components/ai-agent-plan/index.js";
-export { AiCanvasCard } from "./components/ai-canvas-card/index.js";
-export type { AiCanvasCardProps } from "./components/ai-canvas-card/index.js";
 export { AiOrb } from "./components/ai-orb/index.js";
 export type { AiOrbProps, AiOrbSize, AiOrbState, AiOrbVariant } from "./components/ai-orb/index.js";
+export { PromptQueue } from "./components/prompt-queue/index.js";
+export type { PromptQueueProps, QueuedPromptItem } from "./components/prompt-queue/index.js";
 export { AiReasoning } from "./components/ai-reasoning/index.js";
 export type {
   AiReasoningProps,

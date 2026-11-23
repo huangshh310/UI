@@ -1,0 +1,6 @@
+{
+  "name": "conversation",
+  "title": "Conversation",
+  "description": "流式对话滚动视口原语，支持智能贴底追踪、空态居中欢迎与未读回到底部悬浮胶囊。",
+  "categories": ["ai"]
+}

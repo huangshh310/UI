@@ -12,20 +12,23 @@ const MOTION_AND_BLOCK_SLUGS = [
   "staggered-list",
   "hold-to-confirm",
   "segmented-control",
+  "conversation",
+  "message",
+  "shimmer",
+  "model-selector",
+  "context",
+  "suggestion",
+  "prompt-queue",
   "ai-orb",
   "ai-voice-stage",
   "audio-waves",
   "ai-chat-thread",
-  "ai-model-selector",
-  "ai-prompt-gallery",
   "ai-agent-plan",
   "ai-reasoning",
   "ai-tool-call",
   "ai-approval-card",
   "ai-citation",
   "ai-artifact",
-  "ai-canvas-card",
-  "ai-token-meter",
   "ai-diff-review",
   "auth-block",
   "pricing-block",
@@ -42,21 +45,24 @@ const MOTION_AND_BLOCK_SLUGS = [
   "onboarding-wizard-block",
 ] as const;
 
-test("AI 组件交互：AiTokenMeter 压缩上下文与 AiApprovalCard 批准执行", async ({ page }) => {
-  await page.goto("/components/ai-token-meter");
-  const meterBlock = page.getByTestId("specimen-block").first();
-  await meterBlock.getByRole("button", { name: "压缩上下文" }).click();
-  await expect(meterBlock.getByText(/已压缩 -36%/)).toBeVisible();
+test("AI 组件交互：Context 浮层压缩上下文、Message 分支切换与 AiApprovalCard 批准执行", async ({
+  page,
+}) => {
+  await page.goto("/components/context");
+  const contextBlock = page.getByTestId("specimen-block").first();
+  await contextBlock.getByRole("button", { name: /上下文窗口占用/ }).click();
+  await page.getByRole("button", { name: "压缩上下文" }).first().click();
+  await expect(page.getByText(/已释放/)).toBeVisible();
+
+  await page.goto("/components/message");
+  const messageBlock = page.getByTestId("specimen-block").first();
+  await messageBlock.getByRole("button", { name: "下一分支版本" }).click();
+  await expect(messageBlock.getByText("2 / 2")).toBeVisible();
 
   await page.goto("/components/ai-approval-card");
   const approvalBlock = page.getByTestId("specimen-block").first();
   await approvalBlock.getByRole("button", { name: "批准执行" }).click();
   await expect(approvalBlock.getByText("已批准执行")).toBeVisible();
-
-  await page.goto("/components/ai-chat-thread");
-  const chatBlock = page.getByTestId("specimen-block").first();
-  await chatBlock.getByRole("button", { name: "下一版本回复" }).click();
-  await expect(chatBlock.getByText("2 / 2")).toBeVisible();
 
   await page.goto("/components/ai-agent-plan");
   const planBlock = page.getByTestId("specimen-block").first();

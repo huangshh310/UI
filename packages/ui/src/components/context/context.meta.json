@@ -1,0 +1,6 @@
+{
+  "name": "context",
+  "title": "Context",
+  "description": "AI 上下文窗口环形微胶囊与分段 Token 占用浮层检查器，支持一键压缩上下文。",
+  "categories": ["ai"]
+}

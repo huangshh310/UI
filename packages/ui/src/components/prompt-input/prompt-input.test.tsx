@@ -1,10 +1,16 @@
 /**
- * PromptInput 单元测试：验证 Enter 提交、Shift+Enter 换行、IME 组合态防误触、停止状态与附件/建议交互。
+ * PromptInput 行为规约：验证 Enter 提交、IME 组合防误触、斜杠命令面板、流式入队与复合子部件编排。
  */
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { PromptInput } from "../../index.js";
+import {
+  PromptInput,
+  PromptInputFooter,
+  PromptInputSubmit,
+  PromptInputTextarea,
+  PromptInputTools,
+} from "../../index.js";
 
 afterEach(cleanup);
 
@@ -32,34 +38,59 @@ describe("PromptInput", () => {
     expect(onSubmit).not.toHaveBeenCalled();
   });
 
-  it("streaming 状态切换为停止按钮并触发 onStop", async () => {
+  it("streaming 状态无草稿时显示停止按钮，传入 onQueue 且输入草稿后可加入待发队列", async () => {
     const user = userEvent.setup();
     const onStop = vi.fn<() => void>();
+    const onQueue = vi.fn<(value: string) => void>();
 
-    render(<PromptInput status="streaming" onStop={onStop} />);
+    render(<PromptInput status="streaming" onStop={onStop} onQueue={onQueue} />);
     await user.click(screen.getByRole("button", { name: "停止生成" }));
     expect(onStop).toHaveBeenCalledTimes(1);
+
+    await user.type(screen.getByRole("textbox"), "追问一句边界条件");
+    await user.click(screen.getByRole("button", { name: "加入待发队列" }));
+    expect(onQueue).toHaveBeenCalledWith("追问一句边界条件");
   });
 
-  it("支持附件移除、模型切换与快捷建议点击", async () => {
+  it("输入斜杠前缀呼出指令菜单并支持键盘/点击回填，同时兼容附件、模型与复合子部件", async () => {
     const user = userEvent.setup();
     const onRemove = vi.fn<(id: string) => void>();
     const onModelChange = vi.fn<(id: string) => void>();
     const onSelectSuggestion = vi.fn<(text: string) => void>();
+    const onSubmitCompound = vi.fn<(v: string) => void>();
 
     render(
-      <PromptInput
-        attachments={[{ id: "a1", name: "design-tokens.css", size: "12 KB" }]}
-        onRemoveAttachment={onRemove}
-        models={[
-          { id: "fast", label: "快速" },
-          { id: "pro", label: "深度思考" },
-        ]}
-        selectedModel="fast"
-        onModelChange={onModelChange}
-        suggestions={["生成一套配色方案"]}
-        onSelectSuggestion={onSelectSuggestion}
-      />,
+      <div>
+        <PromptInput
+          attachments={[{ id: "a1", name: "design-tokens.css", size: "12 KB" }]}
+          onRemoveAttachment={onRemove}
+          slashCommands={[
+            {
+              id: "c1",
+              command: "review",
+              description: "深度代码审阅",
+              template: "/review 请审查无障碍焦点环：",
+            },
+          ]}
+          models={[
+            { id: "fast", label: "快速" },
+            { id: "pro", label: "深度思考" },
+          ]}
+          selectedModel="fast"
+          onModelChange={onModelChange}
+          suggestions={["生成一套配色方案"]}
+          onSelectSuggestion={onSelectSuggestion}
+        />
+        <PromptInput onSubmit={onSubmitCompound}>
+          <PromptInputTextarea placeholder="复合模式输入…" />
+          <PromptInputFooter>
+            <PromptInputTools>
+              <span>工具槽</span>
+            </PromptInputTools>
+            <PromptInputSubmit />
+          </PromptInputFooter>
+        </PromptInput>
+      </div>,
     );
 
     await user.click(screen.getByRole("button", { name: "移除附件 design-tokens.css" }));
@@ -68,8 +99,16 @@ describe("PromptInput", () => {
     await user.click(screen.getByRole("button", { name: "深度思考" }));
     expect(onModelChange).toHaveBeenCalledWith("pro");
 
+    const firstInput = screen.getAllByRole("textbox")[0]!;
+    await user.type(firstInput, "/rev");
+    await user.click(screen.getByRole("button", { name: /\/review/ }));
+    expect((firstInput as HTMLTextAreaElement).value).toBe("/review 请审查无障碍焦点环：");
+
     await user.click(screen.getByRole("button", { name: "生成一套配色方案" }));
     expect(onSelectSuggestion).toHaveBeenCalledWith("生成一套配色方案");
-    expect((screen.getByRole("textbox") as HTMLTextAreaElement).value).toBe("生成一套配色方案");
+
+    const compoundInput = screen.getByPlaceholderText("复合模式输入…");
+    await user.type(compoundInput, "复合发送{Enter}");
+    expect(onSubmitCompound).toHaveBeenCalledWith("复合发送");
   });
 });

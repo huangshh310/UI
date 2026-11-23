@@ -1,6 +1,0 @@
-{
-  "name": "ai-token-meter",
-  "title": "AI Token Meter",
-  "description": "AI 上下文窗口与分段 Token 预算指示器，支持分类图例与一键压缩上下文。",
-  "categories": ["ai"]
-}

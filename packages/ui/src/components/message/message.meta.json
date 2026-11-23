@@ -1,0 +1,6 @@
+{
+  "name": "message",
+  "title": "Message",
+  "description": "单回合对话复合组件，涵盖无框助手流式排版、温润用户胶囊、多版本分支切换、原位编辑与异常重试。",
+  "categories": ["ai"]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "model-selector",
+  "title": "Model Selector",
+  "description": "紧凑型 AI 模型、思考强度与联网能力浮层选择器，可直接嵌入输入器工具栏。",
+  "categories": ["ai"]
+}
