@@ -17,6 +17,26 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: { default: `${SITE_NAME} · React 组件库`, template: `%s · ${SITE_NAME}` },
   description: "一套讲究细节的 React 组件：可访问、可主题化、源码可读。",
+  icons: {
+    icon: [
+      { url: "/icons/light.svg", type: "image/svg+xml", media: "(prefers-color-scheme: light)" },
+      { url: "/icons/dark.svg", type: "image/svg+xml", media: "(prefers-color-scheme: dark)" },
+      {
+        url: "/icons/light-32.png",
+        sizes: "32x32",
+        type: "image/png",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/icons/dark-32.png",
+        sizes: "32x32",
+        type: "image/png",
+        media: "(prefers-color-scheme: dark)",
+      },
+      { url: "/icons/solid.ico", sizes: "any" },
+    ],
+    apple: [{ url: "/icons/solid-180.png", sizes: "180x180", type: "image/png" }],
+  },
 };
 
 const RootLayout = ({ children }: { children: ReactNode }) => (

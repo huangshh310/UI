@@ -255,13 +255,43 @@ test.describe("主题", () => {
 test.describe("窄屏", () => {
   test.use({ viewport: { width: 390, height: 800 } });
 
-  test("页头导航保持单行，页面没有横向溢出", async ({ page }) => {
+  test("页头导航与目录分类胶囊保持单行，页面没有横向溢出", async ({ page }) => {
     await page.goto("/components");
     const links = page.getByRole("navigation", { name: "主导航" }).getByRole("link");
 
     for (const link of await links.all()) {
       // 单行文字的链接高度不会超过 40px；换行后会明显更高
       expect((await link.boundingBox())!.height).toBeLessThan(40);
+    }
+
+    const tablist = page.getByRole("tablist");
+    expect((await tablist.boundingBox())!.height).toBeLessThanOrEqual(44);
+    for (const tab of await tablist.getByRole("tab").all()) {
+      expect((await tab.boundingBox())!.height).toBeLessThan(40);
+    }
+
+    // 窄屏下分类胶囊溢出时展示向右滚动按钮，点击后可向右滚动
+    const nextButton = page.getByRole("button", { name: "向右滚动分类" });
+    await expect(nextButton).toBeVisible();
+    await nextButton.click();
+    await expect.poll(() => tablist.evaluate((el) => el.scrollLeft)).toBeGreaterThan(0);
+
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
+    ).toBe(true);
+  });
+});
+
+test.describe("中等宽度屏幕", () => {
+  test.use({ viewport: { width: 1000, height: 800 } });
+
+  test("目录分类胶囊保持单行且不折行挤压", async ({ page }) => {
+    await page.goto("/components");
+    const tablist = page.getByRole("tablist");
+
+    expect((await tablist.boundingBox())!.height).toBeLessThanOrEqual(44);
+    for (const tab of await tablist.getByRole("tab").all()) {
+      expect((await tab.boundingBox())!.height).toBeLessThan(40);
     }
     expect(
       await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),

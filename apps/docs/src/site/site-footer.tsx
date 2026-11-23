@@ -2,6 +2,7 @@
  * 站点页脚：细边线分隔，左侧为品牌标识与定位，右侧为导航链接，底部为版权与协议。
  */
 import Link from "next/link";
+import { BrandLogo } from "./brand-logo";
 import { REPOSITORY_URL, SITE_NAME } from "./constants";
 
 const LINKS = [
@@ -16,12 +17,7 @@ export const SiteFooter = () => (
     <div className="mx-auto flex max-w-[1400px] flex-col gap-5 px-5 py-9 md:flex-row md:items-center md:justify-between md:px-9">
       <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
         <span className="inline-flex items-center gap-2 font-mono text-sm font-semibold tracking-tight text-foreground">
-          <span
-            aria-hidden="true"
-            className="inline-flex size-5 items-center justify-center rounded-full bg-signal shadow-[inset_0_1px_0_rgba(255,255,255,0.28)]"
-          >
-            <span className="size-1.5 rounded-full bg-signal-foreground" />
-          </span>
+          <BrandLogo className="size-6" />
           {SITE_NAME}
         </span>
         <span aria-hidden="true" className="text-border">

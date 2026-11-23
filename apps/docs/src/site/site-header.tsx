@@ -5,6 +5,7 @@
 import { GithubLogoIcon } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { CommandPalette } from "@/command/command-palette";
+import { BrandLogo } from "./brand-logo";
 import { REPOSITORY_URL, SITE_NAME } from "./constants";
 import { NavLinks } from "./nav-links";
 import { ThemeToggle } from "./theme-toggle";
@@ -17,14 +18,9 @@ export const SiteHeader = () => (
     <div className="mx-auto grid max-w-[1400px] grid-cols-[1fr_auto_1fr] items-center gap-2 px-4 md:px-9">
       <Link
         href="/"
-        className={`group inline-flex h-11 items-center gap-2.5 justify-self-start rounded-full px-3 outline-none transition-colors duration-(--ui-duration-fast) hover:border-foreground/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:pr-4 ${PILL_SURFACE}`}
+        className={`group inline-flex h-11 items-center gap-2 justify-self-start rounded-full px-2.5 outline-none transition-colors duration-(--ui-duration-fast) hover:border-foreground/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:pr-4 ${PILL_SURFACE}`}
       >
-        <span
-          aria-hidden="true"
-          className="inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-signal shadow-[inset_0_1px_0_rgba(255,255,255,0.28)] transition-transform duration-(--ui-duration-fast) group-hover:scale-[1.04]"
-        >
-          <span className="size-2 rounded-full bg-signal-foreground" />
-        </span>
+        <BrandLogo className="size-7 transition-transform duration-(--ui-duration-fast) group-hover:scale-[1.04]" />
         <span className="font-mono text-[13px] font-semibold tracking-tight max-sm:sr-only">
           {SITE_NAME}
         </span>
