@@ -288,7 +288,7 @@ const TableToolbar = ({
               value={query}
               onChange={(event) => onQueryChange(event.target.value)}
               placeholder={searchPlaceholder}
-              className="h-8 w-full rounded-full border border-solid border-border bg-secondary/50 pr-3.5 pl-8 font-sans text-xs text-foreground outline-none transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) placeholder:text-muted-foreground/80 hover:border-foreground/22 focus:border-ring focus:bg-card focus:ring-3 focus:ring-ring/20"
+              className="h-8 w-full rounded-full border border-solid border-border bg-secondary/50 pr-3.5 pl-8 font-sans text-xs text-foreground outline-none transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) placeholder:text-muted-foreground/80 hover:border-foreground/22 focus:border-ring focus:bg-card focus:ring-1 focus:ring-ring focus:ring-inset"
             />
           </div>
           <span className="shrink-0 font-mono text-xs text-muted-foreground tabular-nums">

@@ -41,7 +41,7 @@ const TRIGGER_CLASSES = cn(
   "group inline-flex h-10 w-full cursor-pointer items-center justify-between gap-2.5 rounded-xl border border-solid border-border bg-background px-3.5 dark:bg-card",
   "font-sans text-sm text-foreground shadow-xs select-none transition-[border-color,background-color,box-shadow] duration-(--ui-duration-fast)",
   "hover:border-foreground/22 hover:bg-accent/40 data-popup-open:border-ring/70",
-  "outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/20",
+  "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset",
   "data-disabled:pointer-events-none data-disabled:opacity-50",
 );
 

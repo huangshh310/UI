@@ -75,8 +75,8 @@ export interface FormRadioItemProps {
 const CONTROL_BASE = cn(
   "w-full min-w-0 appearance-none rounded-xl border border-solid border-border bg-card px-3.5 font-sans text-sm text-foreground shadow-sm",
   "placeholder:text-muted-foreground/75 transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) hover:border-foreground/22",
-  "outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/20",
-  "data-invalid:border-destructive data-invalid:focus-visible:ring-destructive/20 data-disabled:pointer-events-none data-disabled:opacity-50",
+  "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset",
+  "data-invalid:border-destructive data-invalid:focus-visible:border-destructive data-invalid:focus-visible:ring-destructive data-disabled:pointer-events-none data-disabled:opacity-50",
 );
 
 export const Form = ({

@@ -68,7 +68,7 @@ const CredentialsForm = ({
           value={email}
           onChange={(event) => onEmailChange(event.target.value)}
           placeholder="name@company.com"
-          className="h-10.5 rounded-xl border border-solid border-border bg-card px-3.5 font-sans text-sm text-foreground shadow-xs outline-none transition-[border-color,box-shadow] hover:border-foreground/20 focus:border-ring focus:ring-3 focus:ring-ring/18"
+          className="h-10.5 rounded-xl border border-solid border-border bg-card px-3.5 font-sans text-sm text-foreground shadow-xs outline-none transition-[border-color,box-shadow] hover:border-foreground/20 focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset"
         />
       </div>
       <LockInput

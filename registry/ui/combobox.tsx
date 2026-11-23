@@ -48,7 +48,7 @@ export interface ComboboxProps {
 }
 const GROUP_CLASSES = cn(
   "group relative flex h-10 w-full items-center gap-1 rounded-lg border border-solid border-border bg-background px-3 shadow-sm transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) dark:bg-card",
-  "hover:border-foreground/22 focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/20",
+  "hover:border-foreground/22 focus-within:border-ring focus-within:ring-1 focus-within:ring-ring focus-within:ring-inset",
   "data-disabled:pointer-events-none data-disabled:opacity-50",
 );
 

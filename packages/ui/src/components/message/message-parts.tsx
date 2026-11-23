@@ -180,7 +180,7 @@ export const MessageEditForm = ({
     <div
       data-slot="message-edit-form"
       className={cn(
-        "ml-auto flex w-full max-w-[88%] flex-col gap-2.5 rounded-2xl border border-solid border-border bg-card p-3 shadow-sm focus-within:border-ring/70 focus-within:ring-3 focus-within:ring-signal/12",
+        "ml-auto flex w-full max-w-[88%] flex-col gap-2.5 rounded-2xl border border-solid border-border bg-card p-3 shadow-sm focus-within:border-ring focus-within:ring-1 focus-within:ring-ring focus-within:ring-inset",
         className,
       )}
     >

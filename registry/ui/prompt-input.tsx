@@ -465,7 +465,7 @@ const DefaultToolbar = (p: {
 const COMPOSER_SHELL_CLASSES = cn(
   "flex flex-col rounded-3xl border border-solid border-border bg-card p-2.5 text-card-foreground shadow-xs",
   "transition-[border-color,box-shadow] duration-(--ui-duration-fast)",
-  "hover:border-foreground/20 focus-within:border-ring/65 focus-within:ring-3 focus-within:ring-ring/12",
+  "hover:border-foreground/20 focus-within:border-ring focus-within:ring-1 focus-within:ring-ring focus-within:ring-inset",
 );
 
 const TEXTAREA_CLASSES =

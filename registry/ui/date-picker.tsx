@@ -59,7 +59,7 @@ const TRIGGER_CLASSES = cn(
   "group inline-flex h-10 w-full cursor-pointer items-center justify-between gap-2.5 rounded-lg border border-solid border-border bg-background px-3 shadow-sm dark:bg-card",
   "font-sans text-sm text-foreground select-none transition-[border-color,background-color,box-shadow] duration-(--ui-duration-fast)",
   "hover:border-foreground/22 hover:bg-accent/40 data-popup-open:border-ring/80",
-  "outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/20",
+  "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset",
   "disabled:pointer-events-none disabled:opacity-50",
 );
 

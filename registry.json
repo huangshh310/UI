@@ -2205,7 +2205,7 @@
       "title": "Lock Input",
       "description": "A text input whose focus ring scales in and locks cleanly onto the border.",
       "categories": ["forms"],
-      "dependencies": ["lucide-react"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {

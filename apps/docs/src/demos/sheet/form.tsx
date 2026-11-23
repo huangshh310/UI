@@ -19,7 +19,7 @@ const MemberNameField = () => {
       <input
         id={nameId}
         defaultValue="林知远"
-        className="h-9 rounded-lg border border-solid border-border bg-background px-3 text-sm text-foreground outline-none focus:border-ring focus:ring-3 focus:ring-ring/20 dark:bg-card"
+        className="h-9 rounded-lg border border-solid border-border bg-background px-3 text-sm text-foreground outline-none focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset dark:bg-card"
       />
     </div>
   );

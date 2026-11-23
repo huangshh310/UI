@@ -69,7 +69,7 @@ const TextField = ({
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        className="h-9 rounded-lg border border-solid border-border bg-background px-3 text-sm text-foreground outline-none focus:border-ring focus:ring-3 focus:ring-ring/20 dark:bg-card"
+        className="h-9 rounded-lg border border-solid border-border bg-background px-3 text-sm text-foreground outline-none focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset dark:bg-card"
       />
     </div>
   );
@@ -187,7 +187,7 @@ const Toolbar = ({
   onRoleFilterChange: (next: "全部" | TeamRole) => void;
 }) => (
   <div className="flex flex-wrap items-center justify-between gap-3">
-    <label className="flex h-9 w-full items-center gap-2 rounded-lg border border-solid border-border bg-background px-3 text-sm focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/20 sm:w-64 dark:bg-card">
+    <label className="flex h-9 w-full items-center gap-2 rounded-lg border border-solid border-border bg-background px-3 text-sm focus-within:border-ring focus-within:ring-1 focus-within:ring-ring focus-within:ring-inset sm:w-64 dark:bg-card">
       <Search aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
       <input
         type="search"

@@ -2,129 +2,241 @@
 
 /**
  * LockInput：聚焦时聚焦环由中心收拢「锁定」到边框上的输入框。
- * 交互行为来自原生 <input>，通过 id / aria-describedby / aria-invalid 提供完整无障碍语义。
+ * 交互行为来自原生 <input>，通过 id / aria-describedby / aria-invalid 提供完整无障碍语义，
+ * 并扩展多套视觉变体、尺寸、圆角、可切换锁定态、一键清空、一键复制、密码显隐与字数统计。
  */
 import { cn } from "@matt-ui/utils";
-import { Lock } from "lucide-react";
-import { useId, type ReactNode } from "react";
-import type { LockInputProps } from "./lock-input.types.js";
+import { useId, type ReactNode, type RefCallback } from "react";
+import { FieldFooter, FieldHeading, TrailingActions } from "./lock-input-controls.js";
+import type {
+  LockInputProps,
+  LockInputRadius,
+  LockInputRingTone,
+  LockInputSize,
+  LockInputVariant,
+} from "./lock-input.types.js";
+import { lockInputRingVariants, lockInputShellVariants } from "./lock-input.variants.js";
+import { useCopyFeedback, useLockInputState, useMergedInputRef } from "./use-lock-input.js";
 
-const SHELL_CLASSES =
-  "relative flex h-10.5 items-center gap-2 rounded-xl border border-solid border-border bg-card px-3.5 text-foreground shadow-xs transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) hover:border-foreground/20 group-focus-within/lock:border-ring group-focus-within/lock:shadow-none data-invalid:border-destructive data-locked:bg-secondary/80";
-
-const RING_CLASSES =
-  "pointer-events-none absolute -inset-[3px] rounded-[14px] border-2 border-solid border-ring/25 opacity-0 scale-x-[1.03] scale-y-[1.1] transition-[transform,opacity] duration-(--ui-duration-normal) ease-[cubic-bezier(0.22,1,0.36,1)] group-focus-within/lock:scale-100 group-focus-within/lock:opacity-100 group-data-invalid/lock:border-destructive/35";
+const WRAPPER_CLASSES = "group/lock flex w-full max-w-sm flex-col gap-1.5 font-sans";
 
 const INPUT_CLASSES =
-  "h-full w-full min-w-0 appearance-none border-0 bg-transparent p-0 font-sans text-sm text-foreground outline-none placeholder:text-muted-foreground/80 disabled:cursor-not-allowed disabled:opacity-50";
-
-const InputFeedback = ({ id, error, hint }: { id: string; error?: string; hint?: string }) => {
-  if (error) {
-    return (
-      <p id={id} role="alert" className="m-0 text-xs text-destructive">
-        {error}
-      </p>
-    );
-  }
-  if (!hint) return null;
-  return (
-    <p id={id} className="m-0 text-xs text-muted-foreground">
-      {hint}
-    </p>
-  );
-};
-
-const TrailingSlot = ({ locked, suffix }: { locked: boolean; suffix?: ReactNode }) => {
-  if (locked) return <Lock aria-hidden="true" className="size-4 shrink-0 text-muted-foreground" />;
-  if (!suffix) return null;
-  return <span className="shrink-0 text-muted-foreground">{suffix}</span>;
-};
+  "h-full w-full min-w-0 appearance-none border-0 bg-transparent p-0 font-sans text-foreground outline-none placeholder:text-muted-foreground/75 disabled:cursor-not-allowed disabled:opacity-50";
 
 const joinDescribedBy = (custom: string | undefined, messageId: string, hasMessage: boolean) =>
   [custom, hasMessage ? messageId : undefined].filter(Boolean).join(" ") || undefined;
 
-const InputShell = ({
-  locked,
-  invalid,
-  disabled,
-  prefix,
-  suffix,
-  children,
-}: {
-  locked: boolean;
+const resolveAppearance = (props: LockInputProps) => ({
+  type: props.type ?? "text",
+  variant: (props.variant ?? "default") as LockInputVariant,
+  size: (props.size ?? "md") as LockInputSize,
+  radius: (props.radius ?? "lg") as LockInputRadius,
+  ringTone: (props.ringTone ?? "signal") as LockInputRingTone,
+});
+
+const stripCustomProps = (props: LockInputProps) => {
+  const {
+    id: _id,
+    ref: _ref,
+    type: _type,
+    variant: _variant,
+    size: _size,
+    radius: _radius,
+    ringTone: _ringTone,
+    mono: _mono,
+    label: _label,
+    labelExtra: _labelExtra,
+    hint: _hint,
+    error: _error,
+    locked: _locked,
+    defaultLocked: _defaultLocked,
+    lockable: _lockable,
+    onLockedChange: _onLockedChange,
+    clearable: _clearable,
+    onClear: _onClear,
+    copyable: _copyable,
+    onCopy: _onCopy,
+    revealable: _revealable,
+    showCount: _showCount,
+    shortcut: _shortcut,
+    prefix: _prefix,
+    suffix: _suffix,
+    readOnly: _readOnly,
+    onChange: _onChange,
+    className: _className,
+    containerClassName: _containerClassName,
+    "aria-describedby": _describedBy,
+    ...nativeProps
+  } = props;
+  return nativeProps;
+};
+
+interface InputShellProps {
+  variant: LockInputVariant;
+  size: LockInputSize;
+  radius: LockInputRadius;
+  ringTone: LockInputRingTone;
+  isLocked: boolean;
   invalid: boolean;
   disabled?: boolean;
   prefix?: ReactNode;
-  suffix?: ReactNode;
+  trailing: ReactNode;
   children: ReactNode;
-}) => (
+}
+
+const InputShell = ({
+  variant,
+  size,
+  radius,
+  ringTone,
+  isLocked,
+  invalid,
+  disabled,
+  prefix,
+  trailing,
+  children,
+}: InputShellProps) => (
   <div
     data-invalid={invalid ? "" : undefined}
-    data-locked={locked ? "" : undefined}
-    className={cn(SHELL_CLASSES, disabled && "pointer-events-none opacity-50")}
+    data-locked={isLocked ? "" : undefined}
+    className={cn(
+      lockInputShellVariants({ variant, size, radius, ringTone }),
+      disabled && "pointer-events-none opacity-50",
+    )}
   >
-    <span aria-hidden="true" data-slot="lock-input-ring" className={RING_CLASSES} />
-    {prefix && <span className="shrink-0 text-muted-foreground">{prefix}</span>}
+    <span
+      aria-hidden="true"
+      data-slot="lock-input-ring"
+      className={lockInputRingVariants({ variant, radius, ringTone })}
+    />
+    {prefix && (
+      <span className="inline-flex shrink-0 items-center text-muted-foreground">{prefix}</span>
+    )}
     {children}
-    <TrailingSlot locked={locked} suffix={suffix} />
+    {trailing}
   </div>
 );
 
-const FieldHeading = ({ htmlFor, label }: { htmlFor: string; label?: string }) =>
-  label ? (
-    <label htmlFor={htmlFor} className="text-[13px] font-medium tracking-tight text-foreground">
-      {label}
-    </label>
-  ) : null;
+interface InputFrameProps {
+  props: LockInputProps;
+  inputId: string;
+  bindInputRef: RefCallback<HTMLInputElement>;
+  describedBy?: string;
+  invalid: boolean;
+  copied: boolean;
+  onCopy: () => void;
+  state: ReturnType<typeof useLockInputState>;
+}
 
-const WRAPPER_CLASSES = "group/lock flex w-full max-w-sm flex-col gap-1.5 font-sans";
+const renderTrailing = (
+  props: LockInputProps,
+  copied: boolean,
+  onCopy: () => void,
+  state: ReturnType<typeof useLockInputState>,
+) => {
+  const { type, size, radius } = resolveAppearance(props);
+  const showClear =
+    Boolean(props.clearable) && !state.isLocked && !props.disabled && state.currentValue.length > 0;
+  return (
+    <TrailingActions
+      size={size}
+      radius={radius}
+      disabled={props.disabled}
+      isLocked={state.isLocked}
+      lockable={Boolean(props.lockable)}
+      showClear={showClear}
+      showReveal={Boolean(props.revealable) && type === "password"}
+      revealed={state.revealed}
+      copyable={Boolean(props.copyable)}
+      copied={copied}
+      shortcut={props.shortcut}
+      suffix={props.suffix}
+      onClear={state.handleClear}
+      onToggleReveal={state.toggleReveal}
+      onCopy={onCopy}
+      onToggleLock={state.handleToggleLock}
+    />
+  );
+};
 
-export const LockInput = ({
-  id,
-  label,
-  hint,
-  error,
-  locked = false,
-  prefix,
-  suffix,
-  readOnly,
-  disabled,
-  className,
-  containerClassName,
-  "aria-describedby": describedByProp,
-  ...props
-}: LockInputProps) => {
+const InputFrame = (frame: InputFrameProps) => {
+  const { props, inputId, bindInputRef, describedBy, invalid, copied, onCopy, state } = frame;
+  const { variant, size, radius, ringTone } = resolveAppearance(props);
+
+  return (
+    <InputShell
+      variant={variant}
+      size={size}
+      radius={radius}
+      ringTone={ringTone}
+      isLocked={state.isLocked}
+      invalid={invalid}
+      disabled={props.disabled}
+      prefix={props.prefix}
+      trailing={renderTrailing(props, copied, onCopy, state)}
+    >
+      <input
+        {...stripCustomProps(props)}
+        ref={bindInputRef}
+        id={inputId}
+        type={state.resolvedType}
+        readOnly={state.isLocked || props.readOnly}
+        onChange={state.handleChange}
+        aria-invalid={invalid || undefined}
+        aria-describedby={describedBy}
+        className={cn(
+          INPUT_CLASSES,
+          props.mono && "font-mono tracking-[-0.01em] tabular-nums",
+          props.className,
+        )}
+      />
+    </InputShell>
+  );
+};
+
+export const LockInput = ({ ref, ...props }: LockInputProps) => {
   const autoId = useId();
-  const inputId = id ?? autoId;
+  const inputId = props.id ?? autoId;
   const messageId = `${inputId}-message`;
-  const invalid = Boolean(error);
+  const invalid = Boolean(props.error);
+  const { variant, size } = resolveAppearance(props);
+  const { inputRef, bindInputRef } = useMergedInputRef(ref);
+  const { copied, triggerCopy } = useCopyFeedback(props.onCopy);
+  const state = useLockInputState(props, inputRef);
+  const describedBy = joinDescribedBy(
+    props["aria-describedby"],
+    messageId,
+    Boolean(props.error || props.hint),
+  );
 
   return (
     <div
       data-slot="lock-input"
-      data-locked={locked ? "" : undefined}
+      data-variant={variant}
+      data-size={size}
+      data-locked={state.isLocked ? "" : undefined}
       data-invalid={invalid ? "" : undefined}
-      className={cn(WRAPPER_CLASSES, containerClassName)}
+      className={cn(WRAPPER_CLASSES, props.containerClassName)}
     >
-      <FieldHeading htmlFor={inputId} label={label} />
-      <InputShell
-        locked={locked}
+      <FieldHeading htmlFor={inputId} label={props.label} labelExtra={props.labelExtra} />
+      <InputFrame
+        props={props}
+        inputId={inputId}
+        bindInputRef={bindInputRef}
+        describedBy={describedBy}
         invalid={invalid}
-        disabled={disabled}
-        prefix={prefix}
-        suffix={suffix}
-      >
-        <input
-          id={inputId}
-          readOnly={locked || readOnly}
-          disabled={disabled}
-          aria-invalid={invalid || undefined}
-          aria-describedby={joinDescribedBy(describedByProp, messageId, Boolean(error || hint))}
-          className={cn(INPUT_CLASSES, className)}
-          {...props}
-        />
-      </InputShell>
-      <InputFeedback id={messageId} error={error} hint={hint} />
+        copied={copied}
+        onCopy={() => triggerCopy(state.currentValue)}
+        state={state}
+      />
+      <FieldFooter
+        id={messageId}
+        error={props.error}
+        hint={props.hint}
+        showCount={Boolean(props.showCount)}
+        length={state.currentValue.length}
+        maxLength={props.maxLength}
+      />
     </div>
   );
 };

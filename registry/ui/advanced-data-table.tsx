@@ -567,7 +567,7 @@ const AdvancedTopToolbar = <TData,>(props: AdvancedToolbarProps<TData>) => (
           value={props.query}
           onChange={(event) => props.onQueryChange(event.target.value)}
           placeholder="搜索关键字…"
-          className="h-8 w-full rounded-lg border border-solid border-border bg-secondary/45 pr-3 pl-8 font-sans text-xs text-foreground outline-none transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) placeholder:text-muted-foreground/80 hover:border-foreground/22 focus:border-ring focus:bg-background focus:ring-3 focus:ring-ring/20 dark:focus:bg-card"
+          className="h-8 w-full rounded-lg border border-solid border-border bg-secondary/45 pr-3 pl-8 font-sans text-xs text-foreground outline-none transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) placeholder:text-muted-foreground/80 hover:border-foreground/22 focus:border-ring focus:bg-background focus:ring-1 focus:ring-ring focus:ring-inset dark:focus:bg-card"
         />
       </div>
       <DensityToggle value={props.density} onChange={props.onDensityChange} />

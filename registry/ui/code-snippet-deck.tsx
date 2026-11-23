@@ -89,7 +89,7 @@ const TAB_CLASSES =
   "shrink-0 cursor-pointer rounded-lg border-0 bg-transparent px-2.5 py-1 font-mono text-xs font-medium text-muted-foreground outline-none transition-all duration-(--ui-duration-fast) hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-solid aria-selected:bg-card aria-selected:text-foreground aria-selected:shadow-xs";
 
 const INPUT_CLASSES =
-  "h-9 w-full min-w-0 rounded-xl border border-solid border-border bg-card px-3 font-mono text-xs text-foreground shadow-xs transition-[border-color,box-shadow] duration-(--ui-duration-fast) outline-none hover:border-foreground/22 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/20 dark:bg-secondary/45";
+  "h-9 w-full min-w-0 rounded-xl border border-solid border-border bg-card px-3 font-mono text-xs text-foreground shadow-xs transition-[border-color,box-shadow] duration-(--ui-duration-fast) outline-none hover:border-foreground/22 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset dark:bg-secondary/45";
 
 /** 页签栏：窗口栏装饰、语言页签与复制按钮 */
 const DeckHeader = ({

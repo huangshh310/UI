@@ -143,7 +143,7 @@ const DirectoryToolbar = ({
 }) => (
   <div className="flex flex-col-reverse items-start gap-3 pb-2 xl:flex-row xl:items-center xl:justify-between xl:gap-4">
     <CategoryTabs recentSlugs={recentSlugs} />
-    <label className="flex h-10 w-full shrink-0 items-center gap-2.5 rounded-full bg-(--site-stage) px-4 text-sm transition-colors focus-within:bg-(--site-surface) focus-within:ring-1 focus-within:ring-border focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-ring sm:w-80 xl:w-64 2xl:w-72">
+    <label className="flex h-10 w-full shrink-0 items-center gap-2.5 rounded-full bg-(--site-stage) px-4 text-sm transition-colors focus-within:bg-(--site-surface) focus-within:ring-2 focus-within:ring-ring focus-within:ring-inset sm:w-80 xl:w-64 2xl:w-72">
       <MagnifyingGlassIcon className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
       <input
         type="search"
