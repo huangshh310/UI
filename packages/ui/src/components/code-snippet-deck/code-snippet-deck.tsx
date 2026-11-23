@@ -3,120 +3,133 @@
 /**
  * CodeSnippetDeck：同一个接口调用的多语言代码片段。
  *
- * 上方的页签切换语言，下方的输入框编辑参数，参数值实时代入每一种语言的代码。
+ * 上方的页签切换语言，下方的参数面板编辑参数或点选预设并实时代入高亮，
  * 页签的键盘导航与 ARIA 语义由 Base UI 的 Tabs 提供。
  */
 import { Tabs } from "@base-ui/react/tabs";
 import { cn } from "@matt-ui/utils";
 import { useState } from "react";
-import type { CodeSnippetDeckProps, Snippet, SnippetParameter } from "./code-snippet-deck.types.js";
+import type {
+  CodeSnippetDeckProps,
+  CodeSnippetDeckVariant,
+  SnippetParameter,
+} from "./code-snippet-deck.types.js";
+import {
+  deckInnerVariants,
+  deckOuterVariants,
+  deckStageVariants,
+} from "./code-snippet-deck.variants.js";
 import { fillTemplate } from "./fill-template.js";
-import { SnippetCopyButton } from "./snippet-copy-button.js";
+import { ParameterPanel } from "./snippet-params.js";
+import { CodeStage, DeckHeader } from "./snippet-parts.js";
 
-const defaults = (parameters: SnippetParameter[]) =>
+const buildDefaults = (parameters: SnippetParameter[]) =>
   Object.fromEntries(parameters.map(({ name, defaultValue }) => [name, defaultValue]));
 
-const TAB_CLASSES =
-  "shrink-0 cursor-pointer rounded-lg border-0 bg-transparent px-2.5 py-1 font-mono text-xs font-medium text-muted-foreground outline-none transition-all duration-(--ui-duration-fast) hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-solid aria-selected:bg-card aria-selected:text-foreground aria-selected:shadow-xs";
+const isModified = (parameters: SnippetParameter[], values: Record<string, string>) =>
+  parameters.some(({ name, defaultValue }) => (values[name] ?? "") !== defaultValue);
 
-const INPUT_CLASSES =
-  "h-9 w-full min-w-0 rounded-xl border border-solid border-border bg-card px-3 font-mono text-xs text-foreground shadow-xs transition-[border-color,box-shadow] duration-(--ui-duration-fast) outline-none hover:border-foreground/22 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset dark:bg-secondary/45";
+const useDeckState = (props: CodeSnippetDeckProps) => {
+  const parameters = props.parameters ?? [];
+  const [internalLanguage, setInternalLanguage] = useState(
+    props.defaultLanguage ?? props.snippets[0]?.language ?? "",
+  );
+  const [values, setValues] = useState(() => buildDefaults(parameters));
+  const [focusedParam, setFocusedParam] = useState<string | null>(null);
+  const [wrapLines, setWrapLines] = useState(Boolean(props.wrapLines));
 
-/** 页签栏：窗口栏装饰、语言页签与复制按钮 */
-const DeckHeader = ({
-  snippets,
-  code,
-  showWindowBar,
+  const language = props.language ?? internalLanguage;
+  const active = props.snippets.find((item) => item.language === language) ?? props.snippets[0];
+  const template = active?.code ?? "";
+  const code = active ? fillTemplate(template, values) : "";
+
+  const selectLanguage = (next: string) => {
+    if (props.language === undefined) setInternalLanguage(next);
+    props.onLanguageChange?.(next);
+  };
+
+  const updateParam = (name: string, value: string) =>
+    setValues((prev) => ({ ...prev, [name]: value }));
+
+  return {
+    parameters,
+    language,
+    active,
+    template,
+    code,
+    values,
+    focusedParam,
+    wrapLines,
+    dirty: isModified(parameters, values),
+    selectLanguage,
+    updateParam,
+    setFocusedParam,
+    toggleWrap: () => setWrapLines((prev) => !prev),
+    resetParams: () => setValues(buildDefaults(parameters)),
+  };
+};
+
+const DeckTabs = ({
+  props,
+  variant,
+  state,
 }: {
-  snippets: Snippet[];
-  code: string;
-  showWindowBar: boolean;
+  props: CodeSnippetDeckProps;
+  variant: CodeSnippetDeckVariant;
+  state: ReturnType<typeof useDeckState>;
 }) => (
-  <div className="flex min-w-0 items-center justify-between gap-3 border-b border-solid border-border/80 bg-secondary/55 px-4 py-2.5">
-    <div className="flex min-w-0 items-center gap-3">
-      {showWindowBar && (
-        <span aria-hidden="true" className="flex shrink-0 gap-1.5">
-          <span className="size-2.5 rounded-full bg-border" />
-          <span className="size-2.5 rounded-full bg-border" />
-          <span className="size-2.5 rounded-full bg-border" />
-        </span>
-      )}
-      <Tabs.List className="inline-flex min-w-0 items-center gap-0.5 rounded-full bg-secondary p-0.5 ring-1 ring-border/70">
-        {snippets.map(({ language, label }) => (
-          <Tabs.Tab key={language} value={language} className={TAB_CLASSES}>
-            {label}
-          </Tabs.Tab>
-        ))}
-      </Tabs.List>
-    </div>
-    <SnippetCopyButton text={code} />
-  </div>
+  <Tabs.Root value={state.language} onValueChange={(next) => state.selectLanguage(String(next))}>
+    <DeckHeader
+      variant={variant}
+      snippets={props.snippets}
+      code={state.code}
+      showWindowBar={props.showWindowBar ?? variant !== "minimal"}
+      badge={props.badge}
+      title={state.active?.filename ?? props.title}
+      allowWrapToggle={Boolean(props.allowWrapToggle)}
+      wrapLines={state.wrapLines}
+      onToggleWrap={state.toggleWrap}
+      onCopied={() => props.onCopy?.(state.code, state.language)}
+    />
+    <Tabs.Panel value={state.language} className={deckStageVariants({ variant })}>
+      <CodeStage
+        variant={variant}
+        template={state.template}
+        code={state.code}
+        values={state.values}
+        showLineNumbers={Boolean(props.showLineNumbers)}
+        highlightParameters={props.highlightParameters ?? true}
+        wrapLines={state.wrapLines}
+        focusedParam={state.focusedParam}
+      />
+    </Tabs.Panel>
+  </Tabs.Root>
 );
 
-interface ParameterFieldsProps {
-  parameters: SnippetParameter[];
-  values: Record<string, string>;
-  onChange: (name: string, value: string) => void;
-}
-
-/** 参数输入区：每个参数一个带标签的输入框 */
-const ParameterFields = ({ parameters, values, onChange }: ParameterFieldsProps) => (
-  <div className="grid grid-cols-1 gap-3 border-t border-solid border-border/80 bg-card px-4 py-3.5 @md:grid-cols-2">
-    {parameters.map(({ name, label }) => (
-      <label
-        key={name}
-        className="flex min-w-0 flex-col gap-1.5 text-[11px] font-medium text-muted-foreground"
-      >
-        {label}
-        <input
-          value={values[name] ?? ""}
-          onChange={(event) => onChange(name, event.target.value)}
-          className={INPUT_CLASSES}
-        />
-      </label>
-    ))}
-  </div>
-);
-
-export const CodeSnippetDeck = ({
-  snippets,
-  parameters = [],
-  showWindowBar = true,
-  className,
-}: CodeSnippetDeckProps) => {
-  const [language, setLanguage] = useState(snippets[0]?.language ?? "");
-  const [values, setValues] = useState(() => defaults(parameters));
-  const active = snippets.find((snippet) => snippet.language === language) ?? snippets[0];
-  const code = active ? fillTemplate(active.code, values) : "";
+export const CodeSnippetDeck = (props: CodeSnippetDeckProps) => {
+  const variant = (props.variant ?? "default") as CodeSnippetDeckVariant;
+  const state = useDeckState(props);
 
   return (
     <div
       data-slot="code-snippet-deck"
-      className={cn(
-        "@container w-full min-w-0 max-w-xl overflow-hidden rounded-[22px] border border-solid border-border bg-card font-sans text-card-foreground shadow-xs",
-        className,
-      )}
+      data-variant={variant}
+      className={cn(deckOuterVariants({ variant }), props.className)}
     >
-      <Tabs.Root value={language} onValueChange={(value) => setLanguage(String(value))}>
-        <DeckHeader snippets={snippets} code={code} showWindowBar={showWindowBar} />
-        <Tabs.Panel value={language} className="bg-secondary/28 outline-none dark:bg-background/55">
-          <pre
-            // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-            tabIndex={0}
-            aria-label="Code"
-            className="m-0 overflow-x-auto px-4 py-4 font-mono text-xs leading-relaxed whitespace-pre text-foreground outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid"
-          >
-            <code data-testid="snippet-code">{code}</code>
-          </pre>
-        </Tabs.Panel>
-      </Tabs.Root>
-      {parameters.length > 0 && (
-        <ParameterFields
-          parameters={parameters}
-          values={values}
-          onChange={(name, value) => setValues({ ...values, [name]: value })}
-        />
-      )}
+      <div className={deckInnerVariants({ variant })}>
+        <DeckTabs props={props} variant={variant} state={state} />
+        {state.parameters.length > 0 && (
+          <ParameterPanel
+            variant={variant}
+            parameters={state.parameters}
+            values={state.values}
+            dirty={state.dirty}
+            onChange={state.updateParam}
+            onFocusParam={state.setFocusedParam}
+            onReset={state.resetParams}
+          />
+        )}
+      </div>
     </div>
   );
 };

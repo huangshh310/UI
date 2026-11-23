@@ -1346,7 +1346,7 @@
       "title": "Code Snippet Deck",
       "description": "A multi-language code snippet deck with editable parameters substituted into every snippet.",
       "categories": ["buttons"],
-      "dependencies": ["lucide-react", "@base-ui/react"],
+      "dependencies": ["class-variance-authority", "lucide-react", "@base-ui/react"],
       "registryDependencies": ["utils"],
       "files": [
         {
