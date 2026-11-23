@@ -8,25 +8,48 @@
 import { OTPField } from "@base-ui/react/otp-field";
 import { cn } from "@matt-ui/utils";
 import { animate, useReducedMotion } from "motion/react";
-import { Fragment, useEffect, useId, useRef, useState } from "react";
-import type { OtpInputProps } from "./otp-input.types.js";
+import { Fragment, useEffect, useId, useRef, useState, type ReactNode } from "react";
+import type {
+  OtpInputProps,
+  OtpInputSize,
+  OtpInputStatus,
+  OtpInputVariant,
+} from "./otp-input.types.js";
+import {
+  OTP_SIZE_CLASSES,
+  OTP_SLOT_BASE,
+  OTP_STATUS_CLASSES,
+  OTP_VARIANT_CLASSES,
+} from "./otp-input.variants.js";
 
-const SLOT_CLASSES = cn(
-  "box-border h-12 w-10.5 appearance-none rounded-xl border border-solid border-border bg-card text-center font-mono text-base font-semibold text-foreground tabular-nums shadow-xs",
-  "transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) outline-none",
-  "hover:border-foreground/30 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset",
-  "data-filled:border-foreground/35 data-filled:bg-secondary/45 data-disabled:pointer-events-none data-disabled:opacity-50",
-);
+const groupedEdgeClass = (index: number, length: number, separatorAt?: number) => {
+  const isGroupStart = index === 0 || index === separatorAt;
+  const isGroupEnd =
+    index === length - 1 || (separatorAt !== undefined && index === separatorAt - 1);
+  return cn(
+    !isGroupStart && "-ml-px",
+    isGroupStart && "rounded-l-xl",
+    isGroupEnd && "rounded-r-xl",
+  );
+};
 
 const OtpSlot = ({
   index,
+  length,
+  separatorAt,
   char,
-  invalid,
+  variant,
+  size,
+  status,
   reduceMotion,
 }: {
   index: number;
+  length: number;
+  separatorAt?: number;
   char: string;
-  invalid: boolean;
+  variant: OtpInputVariant;
+  size: OtpInputSize;
+  status: OtpInputStatus;
   reduceMotion: boolean;
 }) => {
   const wrapperRef = useRef<HTMLSpanElement>(null);
@@ -38,8 +61,8 @@ const OtpSlot = ({
     if (reduceMotion || !char || char === prev || !wrapperRef.current) return;
     animate(
       wrapperRef.current,
-      { scale: [0.9, 1.08, 1] },
-      { duration: 0.24, ease: [0.34, 1.56, 0.64, 1] },
+      { scale: [0.92, 1.07, 1] },
+      { duration: 0.22, ease: [0.34, 1.56, 0.64, 1] },
     );
   }, [char, reduceMotion]);
 
@@ -47,11 +70,14 @@ const OtpSlot = ({
     <span ref={wrapperRef} className="inline-flex">
       <OTPField.Input
         aria-label={index === 0 ? undefined : `第 ${index + 1} 位`}
-        aria-invalid={invalid || undefined}
+        aria-invalid={status === "error" ? true : undefined}
         data-slot="otp-input-slot"
         className={cn(
-          SLOT_CLASSES,
-          invalid && "border-destructive focus-visible:border-destructive",
+          OTP_SLOT_BASE,
+          OTP_SIZE_CLASSES[size],
+          OTP_VARIANT_CLASSES[variant],
+          variant === "grouped" && groupedEdgeClass(index, length, separatorAt),
+          OTP_STATUS_CLASSES[status],
         )}
       />
     </span>
@@ -61,14 +87,20 @@ const OtpSlot = ({
 const OtpSlots = ({
   length,
   separatorAt,
+  separator,
   value,
-  invalid,
+  variant,
+  size,
+  status,
   reduceMotion,
 }: {
   length: number;
   separatorAt?: number;
+  separator?: ReactNode;
   value: string;
-  invalid: boolean;
+  variant: OtpInputVariant;
+  size: OtpInputSize;
+  status: OtpInputStatus;
   reduceMotion: boolean;
 }) => (
   <>
@@ -77,13 +109,19 @@ const OtpSlots = ({
         {separatorAt === index && (
           <OTPField.Separator
             aria-hidden="true"
-            className="mx-0.5 h-0.5 w-2.5 rounded-full bg-muted-foreground/35"
-          />
+            className="mx-1.5 inline-flex items-center justify-center text-muted-foreground/50"
+          >
+            {separator ?? <span className="h-0.5 w-2.5 rounded-full bg-muted-foreground/35" />}
+          </OTPField.Separator>
         )}
         <OtpSlot
           index={index}
+          length={length}
+          separatorAt={separatorAt}
           char={value[index] ?? ""}
-          invalid={invalid}
+          variant={variant}
+          size={size}
+          status={status}
           reduceMotion={reduceMotion}
         />
       </Fragment>
@@ -108,54 +146,77 @@ const useOtpState = (
   };
 };
 
-export const OtpInput = ({
-  id,
-  length = 6,
-  separatorAt,
-  label,
-  value,
-  defaultValue = "",
-  invalid = false,
-  onValueChange,
-  onComplete,
-  className,
-  "aria-label": ariaLabel,
-  ...rest
-}: OtpInputProps) => {
+const OtpFeedback = ({ hint, error }: { hint?: string; error?: string }) => {
+  if (error) {
+    return (
+      <p role="alert" className="m-0 text-xs text-destructive">
+        {error}
+      </p>
+    );
+  }
+  if (hint) {
+    return <p className="m-0 text-xs text-muted-foreground">{hint}</p>;
+  }
+  return null;
+};
+
+const normalizeOtpConfig = (props: OtpInputProps) => ({
+  length: props.length ?? 6,
+  variant: props.variant ?? "default",
+  size: props.size ?? "md",
+  status: (props.error || props.invalid ? "error" : (props.status ?? "default")) as OtpInputStatus,
+  defaultValue: props.defaultValue ?? "",
+  labelText: props.label ?? props["aria-label"] ?? "一次性验证码",
+});
+
+export const OtpInput = (props: OtpInputProps) => {
   const autoId = useId();
-  const rootId = id ?? autoId;
+  const rootId = props.id ?? autoId;
+  const config = normalizeOtpConfig(props);
   const reduceMotion = Boolean(useReducedMotion());
-  const state = useOtpState(value, defaultValue, onValueChange);
+  const state = useOtpState(props.value, config.defaultValue, props.onValueChange);
 
   return (
     <div
       data-slot="otp-input"
-      data-invalid={invalid ? "" : undefined}
-      className={cn("inline-flex flex-col gap-2 font-sans", className)}
+      data-status={config.status}
+      data-invalid={config.status === "error" ? "" : undefined}
+      className={cn("inline-flex flex-col gap-2 font-sans", props.className)}
     >
       <label
         htmlFor={rootId}
-        className={label ? "text-[13px] font-medium tracking-tight text-foreground" : "sr-only"}
+        className={
+          props.label ? "text-[13px] font-medium tracking-tight text-foreground" : "sr-only"
+        }
       >
-        {label ?? ariaLabel ?? "一次性验证码"}
+        {config.labelText}
       </label>
       <OTPField.Root
         id={rootId}
-        length={length}
+        name={props.name}
+        length={config.length}
+        validationType={props.validationType}
+        mask={props.mask}
+        disabled={props.disabled}
+        readOnly={props.readOnly}
+        required={props.required}
         {...state.controlledProps}
         onValueChange={state.handleChange}
-        onValueComplete={(completed) => onComplete?.(completed)}
-        className="inline-flex items-center gap-2"
-        {...rest}
+        onValueComplete={(completed) => props.onComplete?.(completed)}
+        className={cn("inline-flex items-center", config.variant === "grouped" ? "gap-0" : "gap-2")}
       >
         <OtpSlots
-          length={length}
-          separatorAt={separatorAt}
+          length={config.length}
+          separatorAt={props.separatorAt}
+          separator={props.separator}
           value={state.current}
-          invalid={invalid}
+          variant={config.variant}
+          size={config.size}
+          status={config.status}
           reduceMotion={reduceMotion}
         />
       </OTPField.Root>
+      <OtpFeedback hint={props.hint} error={props.error} />
     </div>
   );
 };

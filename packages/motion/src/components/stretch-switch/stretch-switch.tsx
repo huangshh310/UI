@@ -8,33 +8,36 @@ import { Switch } from "@base-ui/react/switch";
 import { cn } from "@matt-ui/utils";
 import { motion, useReducedMotion } from "motion/react";
 import { useId, useState, type ReactNode } from "react";
-import type { StretchSwitchProps } from "./stretch-switch.types.js";
+import type {
+  StretchSwitchProps,
+  StretchSwitchSize,
+  StretchSwitchTone,
+  StretchSwitchVariant,
+} from "./stretch-switch.types.js";
+import {
+  SWITCH_GEOMETRY,
+  SWITCH_THUMB_BASE,
+  SWITCH_TONE_CLASSES,
+  SWITCH_TRACK_BASE,
+  SWITCH_WRAPPER_VARIANTS,
+  type SwitchGeometry,
+} from "./stretch-switch.variants.js";
 
 const SPRING = { type: "spring", stiffness: 540, damping: 32 } as const;
-const THUMB_REST = 18;
-const THUMB_STRETCH = 23;
-const TRAVEL = 20;
 
-const TRACK_BASE = cn(
-  "relative m-0 box-border inline-flex h-6 w-11 shrink-0 cursor-pointer appearance-none items-center rounded-full border border-solid border-border bg-secondary p-[2px] shadow-[inset_0_1px_2px_rgba(0,0,0,0.06)]",
-  "transition-[background-color,border-color] duration-(--ui-duration-normal) outline-none",
-  "hover:border-foreground/22 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid",
-  "data-disabled:pointer-events-none data-disabled:opacity-50",
-);
-
-const TONE_CLASSES: Record<NonNullable<StretchSwitchProps["tone"]>, string> = {
-  primary: "data-checked:border-transparent data-checked:bg-primary data-checked:shadow-none",
-  signal:
-    "data-checked:border-transparent data-checked:bg-signal data-checked:shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]",
-};
-
-const computeThumbGeometry = (on: boolean, pressed: boolean, blockStretch: boolean) => {
-  const width = pressed && !blockStretch ? THUMB_STRETCH : THUMB_REST;
-  const x = on ? TRAVEL - (width - THUMB_REST) : 0;
+const computeThumbGeometry = (
+  geometry: SwitchGeometry,
+  on: boolean,
+  pressed: boolean,
+  blockStretch: boolean,
+) => {
+  const width = pressed && !blockStretch ? geometry.stretch : geometry.rest;
+  const x = on ? geometry.travel - (width - geometry.rest) : 0;
   return { x, width };
 };
 
 const useStretchState = (
+  size: StretchSwitchSize,
   checked: boolean | undefined,
   defaultChecked: boolean,
   onCheckedChange: ((checked: boolean) => void) | undefined,
@@ -43,13 +46,16 @@ const useStretchState = (
   const [internal, setInternal] = useState(defaultChecked);
   const [pressed, setPressed] = useState(false);
   const on = checked ?? internal;
+  const geometry = SWITCH_GEOMETRY[size];
   const handleChange = (next: boolean) => {
     if (checked === undefined) setInternal(next);
     onCheckedChange?.(next);
   };
 
   return {
-    ...computeThumbGeometry(on, pressed, blockStretch),
+    on,
+    geometry,
+    ...computeThumbGeometry(geometry, on, pressed, blockStretch),
     handleChange,
     pressHandlers: {
       onPointerDown: () => setPressed(true),
@@ -60,17 +66,58 @@ const useStretchState = (
   };
 };
 
-const SwitchLabel = ({
-  htmlFor,
+const SwitchText = ({
   label,
   description,
+  icon,
+  badge,
+}: {
+  label: string;
+  description?: string;
+  icon?: ReactNode;
+  badge?: string;
+}) => (
+  <span className="flex min-w-0 items-center gap-2.5">
+    {icon && (
+      <span aria-hidden="true" className="inline-flex shrink-0 text-muted-foreground">
+        {icon}
+      </span>
+    )}
+    <span className="flex min-w-0 flex-col gap-0.5">
+      <span className="flex items-center gap-1.5">
+        <span className="text-[13px] leading-snug font-medium text-foreground">{label}</span>
+        {badge && (
+          <span className="rounded-full bg-secondary px-1.5 py-0.5 font-mono text-[10px] leading-none font-medium text-secondary-foreground">
+            {badge}
+          </span>
+        )}
+      </span>
+      {description && (
+        <span className="text-xs leading-relaxed text-muted-foreground">{description}</span>
+      )}
+    </span>
+  </span>
+);
+
+const SwitchLabelWrapper = ({
+  htmlFor,
+  variant,
+  controlPosition,
+  label,
+  description,
+  icon,
+  badge,
   disabled,
   className,
   children,
 }: {
   htmlFor: string;
+  variant: StretchSwitchVariant;
+  controlPosition: "left" | "right";
   label: string;
   description?: string;
+  icon?: ReactNode;
+  badge?: string;
   disabled?: boolean;
   className?: string;
   children: ReactNode;
@@ -79,87 +126,146 @@ const SwitchLabel = ({
     htmlFor={htmlFor}
     data-disabled={disabled ? "" : undefined}
     className={cn(
-      "inline-flex cursor-pointer items-center gap-3 font-sans select-none data-disabled:cursor-not-allowed data-disabled:opacity-60",
+      "cursor-pointer font-sans select-none data-disabled:cursor-not-allowed data-disabled:opacity-60",
+      SWITCH_WRAPPER_VARIANTS[variant],
       className,
     )}
   >
-    {children}
-    <span className="flex flex-col gap-0.5">
-      <span className="text-[13px] leading-snug font-medium text-foreground">{label}</span>
-      {description && (
-        <span className="text-xs leading-relaxed text-muted-foreground">{description}</span>
-      )}
-    </span>
+    {controlPosition === "left" && children}
+    <SwitchText label={label} description={description} icon={icon} badge={badge} />
+    {controlPosition === "right" && children}
   </label>
 );
 
 const StretchThumb = ({
   x,
   width,
+  thumbClass,
   tone,
+  on,
+  thumbIcon,
   reduceMotion,
 }: {
   x: number;
   width: number;
-  tone: NonNullable<StretchSwitchProps["tone"]>;
+  thumbClass: string;
+  tone: StretchSwitchTone;
+  on: boolean;
+  thumbIcon?: StretchSwitchProps["thumbIcon"];
   reduceMotion: boolean;
 }) => (
   <Switch.Thumb
     data-slot="stretch-switch-thumb"
     render={
-      <motion.span animate={{ x, width }} transition={reduceMotion ? { duration: 0 } : SPRING} />
+      <motion.span animate={{ x, width }} transition={reduceMotion ? { duration: 0 } : SPRING}>
+        {thumbIcon ? (on ? thumbIcon.checked : thumbIcon.unchecked) : null}
+      </motion.span>
     }
     className={cn(
-      "block h-[18px] rounded-full bg-signal-foreground shadow-sm ring-1 ring-black/8",
-      tone === "primary" && "data-checked:bg-primary-foreground data-checked:ring-0",
+      SWITCH_THUMB_BASE,
+      thumbClass,
+      tone === "primary" && "data-checked:bg-primary-foreground data-checked:text-primary",
     )}
   />
 );
 
-export const StretchSwitch = ({
-  id,
-  label,
-  description,
-  checked,
-  defaultChecked = false,
-  tone = "primary",
-  onCheckedChange,
-  className,
-  "aria-label": ariaLabel,
-  ...rest
-}: StretchSwitchProps) => {
-  const autoId = useId();
-  const controlId = id ?? autoId;
-  const reduceMotion = Boolean(useReducedMotion());
-  const block = Boolean(rest.disabled || rest.readOnly || reduceMotion);
-  const state = useStretchState(checked, defaultChecked, onCheckedChange, block);
+const normalizeSwitchConfig = (props: StretchSwitchProps) => {
+  const variant = props.variant ?? "default";
+  const isTrailing = variant === "card" || variant === "row";
+  return {
+    variant,
+    size: props.size ?? "md",
+    tone: props.tone ?? "primary",
+    controlPosition: props.controlPosition ?? (isTrailing ? "right" : "left"),
+    defaultChecked: props.defaultChecked ?? false,
+  };
+};
 
+const SwitchTrackControl = ({
+  controlId,
+  props,
+  tone,
+  defaultChecked,
+  state,
+  reduceMotion,
+}: {
+  controlId: string;
+  props: StretchSwitchProps;
+  tone: StretchSwitchTone;
+  defaultChecked: boolean;
+  state: ReturnType<typeof useStretchState>;
+  reduceMotion: boolean;
+}) => (
+  <Switch.Root
+    id={controlId}
+    name={props.name}
+    value={props.value}
+    checked={props.checked}
+    defaultChecked={defaultChecked}
+    disabled={props.disabled}
+    readOnly={props.readOnly}
+    required={props.required}
+    aria-label={props.label ? undefined : props["aria-label"]}
+    onCheckedChange={state.handleChange}
+    data-slot="stretch-switch"
+    className={cn(
+      SWITCH_TRACK_BASE,
+      state.geometry.trackClass,
+      SWITCH_TONE_CLASSES[tone],
+      !props.label && props.className,
+    )}
+    {...state.pressHandlers}
+  >
+    <StretchThumb
+      x={state.x}
+      width={state.width}
+      thumbClass={state.geometry.thumbClass}
+      tone={tone}
+      on={state.on}
+      thumbIcon={props.thumbIcon}
+      reduceMotion={reduceMotion}
+    />
+  </Switch.Root>
+);
+
+export const StretchSwitch = (props: StretchSwitchProps) => {
+  const autoId = useId();
+  const controlId = props.id ?? autoId;
+  const config = normalizeSwitchConfig(props);
+  const reduceMotion = Boolean(useReducedMotion());
+  const block = Boolean(props.disabled || props.readOnly || reduceMotion);
+  const state = useStretchState(
+    config.size,
+    props.checked,
+    config.defaultChecked,
+    props.onCheckedChange,
+    block,
+  );
   const control = (
-    <Switch.Root
-      id={controlId}
-      checked={checked}
-      defaultChecked={defaultChecked}
-      aria-label={label ? undefined : ariaLabel}
-      onCheckedChange={state.handleChange}
-      data-slot="stretch-switch"
-      className={cn(TRACK_BASE, TONE_CLASSES[tone], !label && className)}
-      {...state.pressHandlers}
-      {...rest}
-    >
-      <StretchThumb x={state.x} width={state.width} tone={tone} reduceMotion={reduceMotion} />
-    </Switch.Root>
+    <SwitchTrackControl
+      controlId={controlId}
+      props={props}
+      tone={config.tone}
+      defaultChecked={config.defaultChecked}
+      state={state}
+      reduceMotion={reduceMotion}
+    />
   );
 
-  if (!label) return control;
+  if (!props.label) return control;
   return (
-    <SwitchLabel
+    <SwitchLabelWrapper
       htmlFor={controlId}
-      label={label}
-      description={description}
-      disabled={rest.disabled}
-      className={className}
+      variant={config.variant}
+      controlPosition={config.controlPosition}
+      label={props.label}
+      description={props.description}
+      icon={props.icon}
+      badge={props.badge}
+      disabled={props.disabled}
+      className={props.className}
     >
       {control}
-    </SwitchLabel>
+    </SwitchLabelWrapper>
   );
 };

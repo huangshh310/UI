@@ -9,8 +9,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { Combobox } from "../../index.js";
 
 const FRAMEWORKS = [
-  { value: "next", label: "Next.js", description: "React 全栈框架" },
-  { value: "vite", label: "Vite", description: "轻量前端构建器" },
+  { value: "next", label: "Next.js", description: "React 全栈框架", badge: "v16" },
+  { value: "vite", label: "Vite", description: "轻量前端构建器", badge: "v7" },
   { value: "astro", label: "Astro", description: "内容优先框架" },
 ];
 
@@ -66,5 +66,46 @@ describe("Combobox", () => {
     await userEvent.click(screen.getByRole("button", { name: "清除选项" }));
     expect(onValueChange).toHaveBeenCalledWith(null);
     expect((screen.getByRole("combobox", { name: "前端框架" }) as HTMLInputElement).value).toBe("");
+  });
+
+  it("支持 multiple 多选模式：可连续勾选生成可移除芯片，并支持移除单个芯片", async () => {
+    const onValueChange = vi.fn<(value: string[]) => void>();
+    render(
+      <Combobox
+        multiple
+        label="项目标签"
+        placeholder="搜索并添加框架…"
+        options={FRAMEWORKS}
+        defaultValue={["next"]}
+        onValueChange={onValueChange}
+      />,
+    );
+
+    expect(screen.getByRole("button", { name: "移除 Next.js" })).toBeTruthy();
+
+    const input = screen.getByRole("combobox", { name: "项目标签" });
+    await userEvent.click(input);
+    await userEvent.click(await screen.findByRole("option", { name: /Vite/ }));
+    expect(onValueChange).toHaveBeenLastCalledWith(["next", "vite"]);
+
+    await userEvent.keyboard("{Escape}");
+    await userEvent.click(screen.getByRole("button", { name: "移除 Next.js" }));
+    expect(onValueChange).toHaveBeenLastCalledWith(["vite"]);
+  });
+
+  it("支持变体、提示文案与错误校验态（aria-invalid）", () => {
+    render(
+      <Combobox
+        label="目标框架"
+        variant="filled"
+        size="lg"
+        error="请选择至少一个构建框架"
+        options={FRAMEWORKS}
+      />,
+    );
+
+    const input = screen.getByRole("combobox", { name: "目标框架" });
+    expect(input.getAttribute("aria-invalid")).toBe("true");
+    expect(screen.getByText("请选择至少一个构建框架")).toBeTruthy();
   });
 });

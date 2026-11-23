@@ -36,7 +36,7 @@ export const selectTriggerVariants = cva(
         pill: "rounded-full",
       },
       invalid: {
-        true: "border-destructive hover:border-destructive data-popup-open:border-destructive focus-visible:border-destructive focus-visible:ring-destructive",
+        true: "border-destructive hover:border-destructive data-popup-open:border-destructive focus-visible:border-destructive focus-visible:ring-destructive dark:border-destructive dark:hover:border-destructive",
         false: "",
       },
     },
