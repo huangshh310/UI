@@ -22,17 +22,17 @@ const SIZE_MAP: Record<AiOrbSize, string> = {
 };
 
 const AURORA_MESH: Record<AiOrbState, string> = {
-  idle: "conic-gradient(from 40deg, #64748b, #3b82f6, #6366f1, #94a3b8, #64748b)",
-  thinking: "conic-gradient(from 0deg, #2563eb, #7c3aed, #ec4899, #06b6d4, #2563eb)",
-  listening: "conic-gradient(from 90deg, #0284c7, #2563eb, #06b6d4, #38bdf8, #0284c7)",
-  speaking: "conic-gradient(from 180deg, #10b981, #06b6d4, #3b82f6, #6366f1, #10b981)",
+  idle: "conic-gradient(from 40deg, #52525b, #3b82f6, #60a5fa, #71717a, #52525b)",
+  thinking: "conic-gradient(from 0deg, #155dfc, #3b82f6, #38bdf8, #818cf8, #155dfc)",
+  listening: "conic-gradient(from 90deg, #0284c7, #155dfc, #38bdf8, #60a5fa, #0284c7)",
+  speaking: "conic-gradient(from 180deg, #10b981, #14b8a6, #3b82f6, #60a5fa, #10b981)",
 };
 
 const LATTICE_DOT_TONE: Record<AiOrbState, string> = {
-  idle: "bg-slate-400",
-  thinking: "bg-indigo-400 shadow-[0_0_8px_rgba(129,140,248,0.85)]",
-  listening: "bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.85)]",
-  speaking: "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.85)]",
+  idle: "bg-muted-foreground/45",
+  thinking: "bg-signal shadow-[0_0_6px_color-mix(in_srgb,var(--ui-signal)_45%,transparent)]",
+  listening: "bg-sky-500 shadow-[0_0_6px_rgba(14,165,233,0.45)]",
+  speaking: "bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.45)]",
 };
 
 const LATTICE_CELLS = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -53,7 +53,7 @@ const LatticeOrb = ({
     <span
       aria-hidden="true"
       className={cn(
-        "inline-grid grid-cols-3 place-items-center rounded-2xl border border-solid border-white/15 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 p-1.5 shadow-md",
+        "inline-grid grid-cols-3 place-items-center rounded-2xl border border-solid border-border bg-secondary p-1.5 shadow-xs dark:border-white/10 dark:bg-neutral-900",
         SIZE_MAP[size],
       )}
     >
@@ -106,17 +106,17 @@ const AuroraOrb = ({
       {state !== "idle" && (
         <motion.span
           animate={
-            reduced ? { opacity: 0.4 } : { scale: [0.95, 1.25, 0.95], opacity: [0.35, 0.65, 0.35] }
+            reduced ? { opacity: 0.22 } : { scale: [0.96, 1.12, 0.96], opacity: [0.18, 0.34, 0.18] }
           }
-          transition={{ duration: 2.2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+          transition={{ duration: 2.4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
           style={{ background: mesh }}
-          className="pointer-events-none absolute -inset-1 rounded-full blur-md"
+          className="pointer-events-none absolute -inset-0.5 rounded-full blur-sm"
         />
       )}
       <motion.span
         animate={reduced ? { scale: 1 } : { scale: cfg.scale }}
         transition={{ duration: cfg.beat, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-        className="relative inline-flex size-full items-center justify-center overflow-hidden rounded-full border border-solid border-white/35 bg-slate-950 shadow-[0_8px_22px_-4px_rgba(37,99,235,0.45)]"
+        className="relative inline-flex size-full items-center justify-center overflow-hidden rounded-full border border-solid border-white/60 bg-neutral-950 shadow-sm dark:border-white/25"
       >
         <motion.span
           animate={spin}

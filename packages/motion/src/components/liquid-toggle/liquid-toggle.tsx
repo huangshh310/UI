@@ -19,7 +19,7 @@ const TRACK_CLASSES = cn(
   "relative m-0 box-border inline-flex h-8 w-14 shrink-0 cursor-pointer appearance-none items-center rounded-full border-0 bg-input p-1",
   "transition-colors duration-(--ui-duration-normal) data-[state=on]:bg-signal",
   "outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid",
-  "disabled:pointer-events-none disabled:opacity-50",
+  "disabled:pointer-events-none disabled:opacity-45",
 );
 
 export const LiquidToggle = ({
@@ -62,7 +62,7 @@ export const LiquidToggle = ({
       <motion.span
         aria-hidden="true"
         data-slot="liquid-toggle-thumb"
-        className="block size-6 rounded-full bg-signal-foreground shadow-md"
+        className="block size-6 rounded-full bg-signal-foreground shadow-sm"
         ref={thumb}
         initial={false}
         animate={{ x: on ? TRAVEL_PX : 0 }}

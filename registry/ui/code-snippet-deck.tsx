@@ -101,16 +101,16 @@ const DeckHeader = ({
   code: string;
   showWindowBar: boolean;
 }) => (
-  <div className="flex min-w-0 items-center justify-between gap-3 border-b border-solid border-border/80 bg-secondary/45 px-4 py-2.5">
+  <div className="flex min-w-0 items-center justify-between gap-3 border-b border-solid border-border/80 bg-secondary/55 px-4 py-2.5">
     <div className="flex min-w-0 items-center gap-3">
       {showWindowBar && (
         <span aria-hidden="true" className="flex shrink-0 gap-1.5">
-          <span className="size-2.5 rounded-full bg-rose-400/80 shadow-xs" />
-          <span className="size-2.5 rounded-full bg-amber-400/80 shadow-xs" />
-          <span className="size-2.5 rounded-full bg-emerald-400/80 shadow-xs" />
+          <span className="size-2.5 rounded-full bg-border" />
+          <span className="size-2.5 rounded-full bg-border" />
+          <span className="size-2.5 rounded-full bg-border" />
         </span>
       )}
-      <Tabs.List className="inline-flex min-w-0 items-center gap-0.5 rounded-xl border border-solid border-border/75 bg-secondary/80 p-0.5">
+      <Tabs.List className="inline-flex min-w-0 items-center gap-0.5 rounded-full bg-secondary p-0.5 ring-1 ring-border/70">
         {snippets.map(({ language, label }) => (
           <Tabs.Tab key={language} value={language} className={TAB_CLASSES}>
             {label}
@@ -130,7 +130,7 @@ interface ParameterFieldsProps {
 
 /** 参数输入区：每个参数一个带标签的输入框 */
 const ParameterFields = ({ parameters, values, onChange }: ParameterFieldsProps) => (
-  <div className="grid gap-3 border-t border-solid border-border/80 bg-card px-4 py-3.5 sm:grid-cols-2">
+  <div className="grid grid-cols-1 gap-3 border-t border-solid border-border/80 bg-card px-4 py-3.5 @md:grid-cols-2">
     {parameters.map(({ name, label }) => (
       <label
         key={name}
@@ -162,7 +162,7 @@ export const CodeSnippetDeck = ({
     <div
       data-slot="code-snippet-deck"
       className={cn(
-        "w-full min-w-0 max-w-xl overflow-hidden rounded-[22px] border border-solid border-border/90 bg-card font-sans text-card-foreground shadow-md",
+        "@container w-full min-w-0 max-w-xl overflow-hidden rounded-[22px] border border-solid border-border bg-card font-sans text-card-foreground shadow-xs",
         className,
       )}
     >
@@ -173,7 +173,7 @@ export const CodeSnippetDeck = ({
             // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex
             tabIndex={0}
             aria-label="Code"
-            className="m-0 border-l-2 border-solid border-signal/60 px-4 py-4 font-mono text-xs leading-relaxed break-all whitespace-pre-wrap text-foreground outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid"
+            className="m-0 overflow-x-auto px-4 py-4 font-mono text-xs leading-relaxed whitespace-pre text-foreground outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid"
           >
             <code data-testid="snippet-code">{code}</code>
           </pre>

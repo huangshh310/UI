@@ -35,24 +35,24 @@ export interface AiReasoningProps {
 const DEFAULT_STEPS: AiReasoningStep[] = [
   {
     id: "s1",
-    tag: "检索",
-    title: "检索设计 Token 与对比度基线",
-    detail: "定位 --ui-specular 高光变量与 WCAG AA 4.5:1 阈值。",
-    duration: "0.8s",
+    tag: "天气",
+    title: "查询京都本周末天气与日落时间",
+    detail: "周六多云转晴 21°C，鸭川日落约 17:42，适合户外步行。",
+    duration: "0.6s",
   },
   {
     id: "s2",
-    tag: "推理",
-    title: "构建单交互底座无障碍状态机",
-    detail: "隔离底座类型并绑定方向键与焦点环。",
-    duration: "1.1s",
+    tag: "路线",
+    title: "按步行距离串联东山与冈崎街区",
+    detail: "南禅寺 → 哲学之道 → 京瓷美术馆总步行约 3.2 公里。",
+    duration: "0.9s",
   },
   {
     id: "s3",
-    tag: "生成",
-    title: "生成 shadcn Registry 单文件产物",
-    detail: "扁平化子模块并登记 registryDependencies。",
-    duration: "0.7s",
+    tag: "精选",
+    title: "筛选高评分手冲咖啡馆与晚餐位置",
+    detail: "剔除需长队预约门店，保留三家可直接到店的小馆。",
+    duration: "0.5s",
   },
 ];
 
@@ -63,28 +63,28 @@ const StepTimeline = ({
   steps: AiReasoningStep[];
   reduced: boolean | null;
 }) => (
-  <div className="border-t border-solid border-border/75 bg-secondary/30 px-4 py-3">
-    <ol className="m-0 flex list-none flex-col gap-2.5 border-l-2 border-solid border-signal/35 pl-3.5">
+  <div className="border-t border-solid border-border/70 px-4 py-3.5">
+    <ol className="m-0 flex list-none flex-col gap-3 border-l border-solid border-border pl-4">
       {steps.map((step, idx) => (
         <motion.li
           key={step.id}
-          initial={reduced ? false : { x: -3 }}
-          animate={{ x: 0 }}
+          initial={reduced ? false : { opacity: 0, y: 2 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.16, delay: idx * 0.04 }}
-          className="relative flex flex-col gap-0.5 rounded-xl border border-solid border-border/65 bg-card/90 px-3 py-2 shadow-xs"
+          className="relative flex flex-col gap-0.5"
         >
           <span
             aria-hidden="true"
-            className="absolute top-3 -left-[20.5px] size-2.5 rounded-full border-2 border-solid border-card bg-signal shadow-xs"
+            className="absolute top-1.5 -left-[20.5px] size-2 rounded-full border border-solid border-border bg-card"
           />
           <div className="flex items-center justify-between gap-2">
-            <div className="flex min-w-0 items-center gap-1.5">
+            <div className="flex min-w-0 items-center gap-2">
+              <span className="truncate text-[13px] font-medium text-foreground">{step.title}</span>
               {step.tag && (
-                <span className="shrink-0 rounded-md bg-blue-500/10 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-blue-800 dark:bg-blue-400/15 dark:text-blue-200">
+                <span className="shrink-0 rounded-md bg-secondary px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
                   {step.tag}
                 </span>
               )}
-              <span className="truncate text-xs font-semibold text-foreground">{step.title}</span>
             </div>
             {step.duration && (
               <span className="shrink-0 font-mono text-[11px] text-muted-foreground tabular-nums">
@@ -92,7 +92,9 @@ const StepTimeline = ({
               </span>
             )}
           </div>
-          {step.detail && <p className="m-0 text-xs text-muted-foreground">{step.detail}</p>}
+          {step.detail && (
+            <p className="m-0 text-xs leading-relaxed text-muted-foreground">{step.detail}</p>
+          )}
         </motion.li>
       ))}
     </ol>
@@ -102,10 +104,8 @@ const StepTimeline = ({
 const ReasoningBadge = ({ status }: { status: AiReasoningStatus }) => (
   <span
     className={cn(
-      "inline-flex size-7 items-center justify-center rounded-xl border border-solid shadow-xs",
-      status === "thinking"
-        ? "border-signal bg-gradient-to-br from-signal to-indigo-600 text-signal-foreground"
-        : "border-signal/25 bg-signal/10 text-signal",
+      "inline-flex size-7 items-center justify-center rounded-full",
+      status === "thinking" ? "bg-primary text-primary-foreground" : "bg-secondary text-foreground",
     )}
   >
     <Sparkles aria-hidden="true" className="size-3.5" />

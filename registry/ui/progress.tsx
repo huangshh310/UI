@@ -72,7 +72,7 @@ export const Progress = ({
       <ProgressHeader label={label} pct={pct} />
       <BaseProgress.Track
         className={cn(
-          "relative w-full overflow-hidden rounded-full bg-secondary",
+          "relative w-full overflow-hidden rounded-full bg-foreground/[0.09] dark:bg-foreground/[0.12]",
           SIZE_CLASS[size],
         )}
       >

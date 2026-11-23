@@ -20,9 +20,9 @@ describe("AiChatThread", () => {
     await user.click(screen.getByRole("button", { name: "赞同回复" }));
     expect(onFeedback).toHaveBeenCalledWith("m2", "up");
 
-    await user.click(screen.getByRole("button", { name: "生成双主题阴影 Token" }));
-    expect(onFollowUp).toHaveBeenCalledWith("生成双主题阴影 Token");
-    expect(screen.getByText(/已收到「生成双主题阴影 Token」/)).toBeTruthy();
+    await user.click(screen.getByRole("button", { name: "加上第二天行程" }));
+    expect(onFollowUp).toHaveBeenCalledWith("加上第二天行程");
+    expect(screen.getByText(/已按「加上第二天行程」/)).toBeTruthy();
   });
 
   it("连续快速点击多次追问时生成唯一消息键且无控制台告警", async () => {
@@ -33,8 +33,8 @@ describe("AiChatThread", () => {
     await user.click(screen.getByRole("button", { name: "追问一" }));
     await user.click(screen.getByRole("button", { name: "追问二" }));
 
-    expect(screen.getByText(/已收到「追问一」/)).toBeTruthy();
-    expect(screen.getByText(/已收到「追问二」/)).toBeTruthy();
+    expect(screen.getByText(/已按「追问一」/)).toBeTruthy();
+    expect(screen.getByText(/已按「追问二」/)).toBeTruthy();
     expect(errorSpy).not.toHaveBeenCalled();
     errorSpy.mockRestore();
   });

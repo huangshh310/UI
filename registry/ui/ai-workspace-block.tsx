@@ -89,10 +89,10 @@ const ThreadSidebar = ({
   onSelect: (id: string) => void;
   onNew: () => void;
 }) => (
-  <div className="flex shrink-0 flex-col gap-3 border-b border-solid border-border bg-secondary/35 p-3.5 md:w-60 md:border-r md:border-b-0">
+  <div className="flex shrink-0 flex-col gap-3 border-b border-solid border-border bg-secondary/35 p-3.5 @2xl:w-60 @2xl:border-r @2xl:border-b-0">
     <div className="flex items-center justify-between gap-2">
       <div className="flex items-center gap-2">
-        <span className="inline-flex size-6 items-center justify-center rounded-md bg-signal text-signal-foreground">
+        <span className="inline-flex size-6 items-center justify-center rounded-lg bg-primary text-primary-foreground">
           <Sparkles aria-hidden="true" className="size-3.5" />
         </span>
         <span className="text-sm font-semibold text-foreground">AI 工程助手</span>
@@ -101,14 +101,14 @@ const ThreadSidebar = ({
         <Plus className="size-4" />
       </Button>
     </div>
-    <div className="flex flex-row gap-1.5 overflow-x-auto md:flex-col">
+    <div className="flex flex-row gap-1.5 overflow-x-auto @2xl:flex-col">
       {threads.map((thread) => (
         <button
           key={thread.id}
           type="button"
           onClick={() => onSelect(thread.id)}
           className={cn(
-            "flex shrink-0 cursor-pointer items-center justify-between gap-2 rounded-lg border border-solid px-2.5 py-2 text-left text-xs transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            "flex shrink-0 cursor-pointer items-center justify-between gap-2 rounded-xl border border-solid px-3 py-2 text-left text-xs transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
             activeId === thread.id
               ? "border-border bg-background font-medium text-foreground shadow-xs dark:bg-card"
               : "border-transparent bg-transparent text-muted-foreground hover:bg-accent hover:text-foreground",
@@ -118,7 +118,7 @@ const ThreadSidebar = ({
             <MessageSquare aria-hidden="true" className="size-3.5 shrink-0" />
             <span className="truncate">{thread.title}</span>
           </span>
-          <span className="hidden shrink-0 font-mono text-[10px] text-muted-foreground md:inline">
+          <span className="hidden shrink-0 font-mono text-[10px] text-muted-foreground @2xl:inline">
             {thread.updatedAt}
           </span>
         </button>
@@ -128,7 +128,7 @@ const ThreadSidebar = ({
 );
 
 const MessageList = ({ messages }: { messages: AiMessage[] }) => (
-  <div className="flex flex-1 flex-col gap-3 overflow-y-auto p-4">
+  <div className="flex flex-1 flex-col gap-4 overflow-y-auto p-5">
     {messages.map((msg) => (
       <div
         key={msg.id}
@@ -138,7 +138,7 @@ const MessageList = ({ messages }: { messages: AiMessage[] }) => (
           className={cn(
             "mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full border border-solid",
             msg.role === "user"
-              ? "border-signal bg-signal text-signal-foreground"
+              ? "border-primary bg-primary text-primary-foreground"
               : "border-border bg-secondary text-foreground",
           )}
         >
@@ -150,10 +150,10 @@ const MessageList = ({ messages }: { messages: AiMessage[] }) => (
         </span>
         <div
           className={cn(
-            "max-w-[82%] rounded-xl border border-solid px-3.5 py-2.5 text-xs leading-relaxed",
+            "max-w-[82%] px-3.5 py-2.5 text-[13px] leading-relaxed",
             msg.role === "user"
-              ? "border-signal bg-signal text-signal-foreground"
-              : "border-border bg-secondary/45 text-foreground",
+              ? "rounded-[18px] rounded-tr-sm bg-secondary text-foreground"
+              : "rounded-[18px] rounded-tl-sm border border-solid border-border/75 bg-background text-foreground dark:bg-secondary/35",
           )}
         >
           <p className="m-0">{msg.content}</p>
@@ -266,27 +266,23 @@ export const AiWorkspaceBlock = ({
   };
 
   return (
-    <div
-      data-slot="ai-workspace-block"
-      className={cn(
-        "flex w-full flex-col overflow-hidden rounded-2xl border border-solid border-border bg-card shadow-sm md:min-h-[430px] md:flex-row",
-        className,
-      )}
-    >
-      <ThreadSidebar
-        threads={threads}
-        activeId={activeThread?.id ?? ""}
-        onSelect={setActiveId}
-        onNew={handleNewThread}
-      />
-      <ChatPane
-        thread={activeThread}
-        model={model}
-        draft={draft}
-        onModelChange={setModel}
-        onDraftChange={setDraft}
-        onSubmit={handleSubmit}
-      />
+    <div data-slot="ai-workspace-block" className={cn("@container w-full", className)}>
+      <div className="flex w-full flex-col overflow-hidden rounded-[24px] border border-solid border-border bg-card shadow-xs @2xl:min-h-[430px] @2xl:flex-row">
+        <ThreadSidebar
+          threads={threads}
+          activeId={activeThread?.id ?? ""}
+          onSelect={setActiveId}
+          onNew={handleNewThread}
+        />
+        <ChatPane
+          thread={activeThread}
+          model={model}
+          draft={draft}
+          onModelChange={setModel}
+          onDraftChange={setDraft}
+          onSubmit={handleSubmit}
+        />
+      </div>
     </div>
   );
 };

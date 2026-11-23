@@ -62,6 +62,7 @@ export * from "./components/spring-select/index.js";
 export * from "./components/suggestion/index.js";
 export * from "./components/tabs/index.js";
 export * from "./components/team-members-block/index.js";
+export * from "./components/thinking-orb/index.js";
 export * from "./components/toast/index.js";
 export * from "./components/tree/index.js";
 export * from "./components/typewriter-button/index.js";

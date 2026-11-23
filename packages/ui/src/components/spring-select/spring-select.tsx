@@ -10,8 +10,8 @@ import { Check, ChevronDown } from "lucide-react";
 import type { SpringSelectOption, SpringSelectProps } from "./spring-select.types.js";
 
 const TRIGGER_CLASSES = cn(
-  "group inline-flex h-10 w-full cursor-pointer items-center justify-between gap-2.5 rounded-lg border border-solid border-border bg-background px-3 dark:bg-card",
-  "font-sans text-sm text-foreground shadow-sm select-none transition-[border-color,background-color,box-shadow] duration-(--ui-duration-fast)",
+  "group inline-flex h-10 w-full cursor-pointer items-center justify-between gap-2.5 rounded-xl border border-solid border-border bg-background px-3.5 dark:bg-card",
+  "font-sans text-sm text-foreground shadow-xs select-none transition-[border-color,background-color,box-shadow] duration-(--ui-duration-fast)",
   "hover:border-foreground/22 hover:bg-accent/40 data-popup-open:border-ring/70",
   "outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/20",
   "data-disabled:pointer-events-none data-disabled:opacity-50",
@@ -53,7 +53,7 @@ const SelectDropdown = ({ options }: { options: SpringSelectOption[] }) => (
                   </span>
                 )}
               </span>
-              <Select.ItemIndicator className="inline-flex shrink-0 text-signal">
+              <Select.ItemIndicator className="inline-flex shrink-0 text-foreground">
                 <Check aria-hidden="true" className="size-3.5" />
               </Select.ItemIndicator>
             </Select.Item>

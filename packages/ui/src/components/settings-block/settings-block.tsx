@@ -120,7 +120,8 @@ export const SettingsBlock = ({ onSave, className }: SettingsBlockProps) => {
         </span>
         <Button
           size="sm"
-          variant="signal"
+          variant="primary"
+          className="rounded-full"
           onClick={() => {
             setSaved(true);
             onSave?.({ region, releaseAlert, auditAlert });

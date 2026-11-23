@@ -81,8 +81,8 @@ const TabBody = ({ active }: { active: FolderTabItem }) => (
             <p className="m-0 mt-0.5 text-xs text-muted-foreground">{active.caption}</p>
           )}
         </div>
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-solid border-blue-600/20 bg-blue-500/10 px-2.5 py-0.5 font-mono text-[11px] font-semibold text-blue-800 dark:border-blue-400/25 dark:bg-blue-400/15 dark:text-blue-200">
-          <span aria-hidden="true" className="size-1.5 rounded-full bg-signal" />
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-2.5 py-1 text-[11px] font-medium text-foreground">
+          <span aria-hidden="true" className="size-1.5 rounded-full bg-foreground/60" />
           {active.label}
         </span>
       </div>
@@ -101,19 +101,15 @@ export const FolderTabCard = ({ tabs, defaultTabId, className }: FolderTabCardPr
       <div
         data-slot="folder-tab-card"
         className={cn(
-          "w-full max-w-md overflow-hidden rounded-[22px] border border-solid border-border/90 bg-gradient-to-b from-secondary/75 to-secondary/45 p-2 shadow-md",
+          "w-full max-w-md overflow-hidden rounded-[24px] border border-solid border-border/80 bg-secondary p-1.5 shadow-sm",
           className,
         )}
       >
         <TabBar tabs={tabs} activeId={active.id} uid={uid} onSelect={setActiveId} />
         <div
           role="tabpanel"
-          className="relative overflow-hidden rounded-2xl border border-solid border-border/85 bg-card p-5 shadow-sm"
+          className="relative overflow-hidden rounded-[18px] border border-solid border-border/75 bg-card p-5 shadow-xs"
         >
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute -top-12 -right-12 size-36 rounded-full bg-signal/10 blur-2xl"
-          />
           <TabBody active={active} />
         </div>
       </div>

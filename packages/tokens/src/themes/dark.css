@@ -1,11 +1,8 @@
 /*
  * 深色主题的语义色。变量名与 light.css 一一对应。
  *
- * 启用方式：在任意祖先元素上添加 .dark 类或 data-theme="dark" 属性。
- * 不自动跟随系统偏好，由宿主应用决定何时切换。
- *
- * 采用 EasyUI / shadcn / BeUI / BoardUI 同源的深黑曜石三级表面阶梯
- * （background → card → popover），搭配纤细发丝边框与清亮蓝焦点环。
+ * 采用 BoardUI 纯中性深黑曜石三阶梯（#121212 → #1a1a1a → #262626），
+ * 零发蓝发紫偏色，清晰拉开底布、卡片与浮层的明度层次。
  *
  * 可访问性约束与 light.css 相同。
  */
@@ -13,53 +10,53 @@
 [data-theme="dark"] {
   color-scheme: dark;
 
-  /* 页面底色与正文：深邃曜石蓝黑画布 */
-  --ui-background: oklch(0.14 0.008 265);
-  --ui-foreground: oklch(0.968 0.004 264);
+  /* 页面底色与正文：BoardUI neutral-925 纯中性黑曜石画布（对比度 17.95:1） */
+  --ui-background: #121212;
+  --ui-foreground: #fafafa;
 
-  /* 抬升的表面：深色下越靠上的表面越清透 */
-  --ui-card: oklch(0.182 0.01 265);
-  --ui-card-foreground: oklch(0.968 0.004 264);
-  --ui-popover: oklch(0.212 0.012 265);
-  --ui-popover-foreground: oklch(0.968 0.004 264);
+  /* 抬升的表面：深色下逐级清晰抬亮 */
+  --ui-card: #1a1a1a;
+  --ui-card-foreground: #fafafa;
+  --ui-popover: #262626;
+  --ui-popover-foreground: #fafafa;
 
-  /* 主要操作：陶瓷白实底 */
-  --ui-primary: oklch(0.97 0.004 264);
-  --ui-primary-foreground: oklch(0.14 0.008 265);
+  /* 主要操作：极浅纯白实底 */
+  --ui-primary: #fafafa;
+  --ui-primary-foreground: #121212;
 
-  /* 次要操作 */
-  --ui-secondary: oklch(0.228 0.011 265);
-  --ui-secondary-foreground: oklch(0.968 0.004 264);
+  /* 次要操作与柔暗凹槽表面 */
+  --ui-secondary: #222222;
+  --ui-secondary-foreground: #fafafa;
 
-  /* 弱化的表面与辅助文字 */
-  --ui-muted: oklch(0.215 0.01 265);
-  --ui-muted-foreground: oklch(0.71 0.01 262);
+  /* 弱化的表面与辅助文字（BoardUI neutral-400，相对背景 7.25:1，相对 card 6.74:1） */
+  --ui-muted: #1e1e1e;
+  --ui-muted-foreground: #a1a1a1;
 
   /* 交互反馈表面 */
-  --ui-accent: oklch(0.265 0.013 265);
-  --ui-accent-foreground: oklch(0.968 0.004 264);
+  --ui-accent: #2a2a2a;
+  --ui-accent-foreground: #fafafa;
 
-  /* 信号色：两个主题下保持同一个宝石钴蓝色值 */
-  --ui-signal: oklch(0.535 0.21 262);
-  --ui-signal-foreground: oklch(0.99 0 0);
+  /* 信号色：与浅色保持同一个 BoardUI 品牌蓝（accent-600），对白字 5.25:1 */
+  --ui-signal: #155dfc;
+  --ui-signal-foreground: #ffffff;
 
-  /* 边线：微光玻璃边线与清亮焦点环 */
-  --ui-border: oklch(0.28 0.012 265);
-  --ui-input: oklch(0.51 0.012 262);
-  --ui-ring: oklch(0.655 0.195 262);
+  /* 边线：纯中性微光发丝边框，input 对背景 3.52:1，ring 对背景 5.09:1 */
+  --ui-border: #2a2a2a;
+  --ui-input: #6b6b6b;
+  --ui-ring: #3b82f6;
 
   /* 状态色 */
-  --ui-success: oklch(0.75 0.155 155);
-  --ui-success-foreground: oklch(0.14 0.008 265);
-  --ui-warning: oklch(0.83 0.155 80);
-  --ui-warning-foreground: oklch(0.14 0.008 265);
-  --ui-destructive: oklch(0.69 0.19 25);
-  --ui-destructive-foreground: oklch(0.14 0.008 265);
-  --ui-info: oklch(0.73 0.15 252);
-  --ui-info-foreground: oklch(0.14 0.008 265);
+  --ui-success: #10b981;
+  --ui-success-foreground: #0a0a0a;
+  --ui-warning: #fbbf24;
+  --ui-warning-foreground: #0a0a0a;
+  --ui-destructive: #f87171;
+  --ui-destructive-foreground: #0a0a0a;
+  --ui-info: #60a5fa;
+  --ui-info-foreground: #0a0a0a;
 
-  /* 阴影的基色与深色顶部玻璃高光边：营造曜石卡片的高级 C 端层次 */
-  --ui-shadow-color: oklch(0 0 0);
-  --ui-specular: oklch(1 0 0 / 0.105);
-  --ui-bevel: oklch(0 0 0 / 0.42);
+  /* 阴影基色与极微弱顶边高光 */
+  --ui-shadow-color: #000000;
+  --ui-specular: rgba(255, 255, 255, 0.06);
+  --ui-bevel: rgba(0, 0, 0, 0.32);
 }

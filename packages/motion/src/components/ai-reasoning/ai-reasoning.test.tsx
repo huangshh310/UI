@@ -10,9 +10,9 @@ describe("AiReasoning", () => {
     const user = userEvent.setup();
     render(<AiReasoning defaultExpanded />);
 
-    expect(screen.getByText(/检索设计 Token 与对比度基线/)).toBeTruthy();
+    expect(screen.getByText(/查询京都本周末天气与日落时间/)).toBeTruthy();
 
     await user.click(screen.getByRole("button", { name: /已完成深度推理/ }));
-    expect(screen.queryByText(/检索设计 Token 与对比度基线/)).toBeNull();
+    expect(screen.queryByText(/查询京都本周末天气与日落时间/)).toBeNull();
   });
 });

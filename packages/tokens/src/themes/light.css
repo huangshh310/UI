@@ -1,68 +1,64 @@
 /*
- * 浅色主题的语义色（默认主题）。视觉方向：纯净中性灰阶 + 克制钴蓝信号色。
+ * 浅色主题的语义色（默认主题）。视觉方向：BoardUI 纯中性零色偏灰阶 + 克制品牌蓝。
  *
- * 参考 EasyUI、shadcn/ui、BeUI 与 BoardUI 的现代中性阶梯：
- * 干净的纯白画布、柔和冷中性次级表面、纤细的 1px 发丝边线，配以高辨识度的钴蓝作为唯一品牌信号与聚焦高亮。
- * 每个表面色都有配对的 -foreground，表示放在该表面上的文字与图标颜色。
+ * 摒弃带冷蓝紫偏色的灰阶，采用纯粹干净的中性表面阶梯（#fafafa 画布 / #ffffff 卡片 / #f4f4f5 柔和次级面 / #ebebeb 1px 发丝线），
+ * 搭配高辨识度的品牌蓝（#155dfc）作为全系统克制克纯的唯一高饱和信号色。
  *
  * 可访问性：所有 前景/表面 配对的对比度不低于 4.5:1；
  * input 与 ring 相对页面背景不低于 3:1（WCAG 1.4.11 非文本对比度）。
- * 修改任何数值后都需要重新核对对比度。
- *
- * .light 与 data-theme="light" 用于在深色页面内嵌入一块浅色区域。
  */
 :root,
 .light,
 [data-theme="light"] {
   color-scheme: light;
 
-  /* 页面底色与正文：柔润瓷白底色让纯白抬升卡片自然浮现，告别扁平后台框线感 */
-  --ui-background: oklch(0.98 0.003 255);
-  --ui-foreground: oklch(0.145 0.006 264);
+  /* 页面底色与正文：极净微暖纯白画布配纯黑正文（对比度 18.9:1） */
+  --ui-background: #fafafa;
+  --ui-foreground: #0a0a0a;
 
-  /* 抬升的表面：陶瓷纯白卡片与浮层 */
-  --ui-card: oklch(1 0 0);
-  --ui-card-foreground: oklch(0.145 0.006 264);
-  --ui-popover: oklch(1 0 0);
-  --ui-popover-foreground: oklch(0.145 0.006 264);
+  /* 抬升的表面：纯白卡片与浮层，从 #fafafa 画布中自然轻盈浮出 */
+  --ui-card: #ffffff;
+  --ui-card-foreground: #0a0a0a;
+  --ui-popover: #ffffff;
+  --ui-popover-foreground: #0a0a0a;
 
-  /* 主要操作：深曜石实底 */
-  --ui-primary: oklch(0.175 0.008 264);
-  --ui-primary-foreground: oklch(0.99 0 0);
+  /* 主要操作：纯黑实底 */
+  --ui-primary: #0a0a0a;
+  --ui-primary-foreground: #ffffff;
 
-  /* 次要操作与柔雾凹槽表面 */
-  --ui-secondary: oklch(0.952 0.005 258);
-  --ui-secondary-foreground: oklch(0.175 0.008 264);
+  /* 次要操作与柔浅中性表面（BoardUI neutral-100，清晰区分 #f5f5f5 舞台与纯白卡片） */
+  --ui-secondary: #ededed;
+  --ui-secondary-foreground: #171717;
 
-  /* 弱化的表面与辅助文字（相对 secondary 表面保持 >= 5.2:1 对比度） */
-  --ui-muted: oklch(0.955 0.005 258);
-  --ui-muted-foreground: oklch(0.47 0.012 260);
+  /* 弱化的表面与辅助文字（相对 secondary 对比度 4.90:1，相对 accent 为 4.60:1） */
+  --ui-muted: #f4f4f4;
+  --ui-muted-foreground: #666666;
 
-  /* 交互反馈表面：悬停、选中项的底色（与 shadcn 的 accent 语义一致） */
-  --ui-accent: oklch(0.938 0.008 258);
-  --ui-accent-foreground: oklch(0.145 0.006 264);
+  /* 交互反馈表面：悬停、选中项的弱表面（与 shadcn 的 accent 语义一致） */
+  --ui-accent: #e6e6e6;
+  --ui-accent-foreground: #0a0a0a;
 
-  /* 信号色：高纯度宝石钴蓝，在浅色与深色主题下保持一致且对比度 >= 5:1 */
-  --ui-signal: oklch(0.535 0.21 262);
-  --ui-signal-foreground: oklch(0.99 0 0);
+  /* 信号色：BoardUI 品牌蓝（accent-600），浅深主题一致，对白字对比度 5.25:1 */
+  --ui-signal: #155dfc;
+  --ui-signal-foreground: #ffffff;
 
-  /* 边线：细腻柔灰发丝边框，input 保留 >= 3:1 非文本对比度，ring 用于焦点环 */
-  --ui-border: oklch(0.905 0.006 258);
-  --ui-input: oklch(0.64 0.009 260);
-  --ui-ring: oklch(0.535 0.21 262);
+  /* 边线：BoardUI neutral-200 极细发丝边框，input 对背景 3.10:1，ring 为品牌蓝 */
+  --ui-border: #ebebeb;
+  --ui-input: #8c8c8c;
+  --ui-ring: #155dfc;
 
-  /* 状态色 */
-  --ui-success: oklch(0.51 0.135 155);
-  --ui-success-foreground: oklch(0.99 0 0);
-  --ui-warning: oklch(0.78 0.155 78);
-  --ui-warning-foreground: oklch(0.145 0.006 264);
-  --ui-destructive: oklch(0.545 0.215 24);
-  --ui-destructive-foreground: oklch(0.99 0 0);
-  --ui-info: oklch(0.535 0.21 262);
-  --ui-info-foreground: oklch(0.99 0 0);
+  /* 状态色（均满足 >= 4.8:1 前景/表面对比度） */
+  --ui-success: #008256;
+  --ui-success-foreground: #ffffff;
+  --ui-warning: #f59e0b;
+  --ui-warning-foreground: #0a0a0a;
+  --ui-destructive: #dc2626;
+  --ui-destructive-foreground: #ffffff;
+  --ui-info: #155dfc;
+  --ui-info-foreground: #ffffff;
 
-  /* 阴影的基色与 C 端立体触感高光/底缘 */
-  --ui-shadow-color: oklch(0.17 0.018 262);
-  --ui-specular: oklch(1 0 0 / 0.94);
-  --ui-bevel: oklch(0.17 0.018 262 / 0.065);
+  /* 阴影基色与极克制的边缘微光 */
+  --ui-shadow-color: #0a0a0a;
+  --ui-specular: rgba(255, 255, 255, 0.8);
+  --ui-bevel: rgba(10, 10, 10, 0.04);
 }

@@ -64,7 +64,7 @@ const ToastCard = ({
       data-slot="toast"
       data-tone={tone}
       className={cn(
-        "flex w-88 max-w-[calc(100vw-2rem)] items-start gap-3 rounded-xl border border-solid border-border bg-popover p-4 text-popover-foreground shadow-lg",
+        "flex w-[380px] max-w-[calc(100vw-2rem)] items-start gap-3 rounded-2xl border border-solid border-border bg-popover p-4 text-popover-foreground shadow-md",
         "transition-[opacity,transform] duration-(--ui-duration-fast) ease-(--ui-ease-out) motion-reduce:transition-none",
         "data-starting-style:translate-y-2 data-starting-style:opacity-0 data-ending-style:translate-y-2 data-ending-style:opacity-0",
       )}
@@ -83,7 +83,7 @@ const ToastCard = ({
         )}
       </BaseToast.Content>
       {item.actionProps && (
-        <BaseToast.Action className="h-7 shrink-0 cursor-pointer rounded-md border border-solid border-border bg-background px-2.5 font-sans text-xs font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:bg-card" />
+        <BaseToast.Action className="h-7 shrink-0 cursor-pointer rounded-full border border-solid border-border bg-background px-3 font-sans text-xs font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:bg-card" />
       )}
       <BaseToast.Close
         aria-label="关闭通知"

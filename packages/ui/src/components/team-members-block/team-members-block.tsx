@@ -58,7 +58,7 @@ const TeamHeader = ({
     </div>
     <div className="flex flex-wrap items-center gap-3">
       <AvatarStack items={members} max={4} size="sm" />
-      <Button size="sm" variant="signal" onClick={onInviteClick}>
+      <Button size="sm" variant="primary" className="rounded-full" onClick={onInviteClick}>
         <UserPlus className="size-3.5" />
         <span>邀请成员</span>
       </Button>

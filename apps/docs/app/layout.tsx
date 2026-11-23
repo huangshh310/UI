@@ -29,7 +29,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => (
     <head>
       <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
     </head>
-    <body className="flex min-h-dvh flex-col bg-background font-sans text-foreground antialiased">
+    <body className="flex min-h-dvh flex-col bg-(--site-canvas) font-sans text-foreground antialiased">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-(--ui-z-tooltip) focus:rounded-md focus:bg-signal focus:px-3 focus:py-2 focus:text-sm focus:text-signal-foreground"

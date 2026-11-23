@@ -52,10 +52,8 @@ const WaveBars = ({
             ease: "easeInOut",
           }}
           className={cn(
-            "w-1 rounded-full",
-            isActive
-              ? "bg-gradient-to-t from-signal via-indigo-500 to-cyan-400"
-              : "bg-muted-foreground/45",
+            "w-[3px] rounded-full",
+            isActive ? "bg-foreground" : "bg-muted-foreground/35",
           )}
         />
       );
@@ -72,7 +70,7 @@ const MicTrigger = ({ isActive, onToggle }: { isActive: boolean; onToggle: () =>
     className={cn(
       "relative inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full border border-solid transition-all active:scale-95 outline-none focus-visible:ring-2 focus-visible:ring-ring",
       isActive
-        ? "border-signal bg-signal text-signal-foreground shadow-[0_0_0_4px_color-mix(in_oklab,var(--ui-signal)_16%,transparent),0_4px_12px_-2px_color-mix(in_oklab,var(--ui-signal)_50%,transparent)]"
+        ? "border-primary bg-primary text-primary-foreground shadow-xs"
         : "border-border bg-secondary text-foreground hover:bg-accent",
     )}
   >
@@ -138,7 +136,7 @@ export const AudioWaves = ({
       data-active={isActive ? "true" : "false"}
       data-variant={variant}
       className={cn(
-        "inline-flex flex-col gap-2 rounded-[22px] border border-solid border-border/90 bg-card p-2.5 text-card-foreground shadow-md",
+        "inline-flex flex-col gap-2.5 rounded-[22px] border border-solid border-border bg-card p-3 text-card-foreground shadow-xs",
         className,
       )}
     >

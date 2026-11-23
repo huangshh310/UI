@@ -51,13 +51,13 @@ const parseScorePct = (score?: string) => {
 const CitationCard = ({ source }: { source: AiCitationSource }) => {
   const pct = parseScorePct(source.score);
   return (
-    <div className="flex flex-col gap-2.5 rounded-2xl border border-solid border-border/80 bg-secondary/40 p-3.5 shadow-xs">
+    <div className="flex flex-col gap-3 rounded-2xl border border-solid border-border/80 bg-secondary/45 p-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex min-w-0 items-center gap-2">
-          <span className="inline-flex size-5.5 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-signal to-indigo-600 font-mono text-[11px] font-semibold text-signal-foreground shadow-xs">
+        <div className="flex min-w-0 items-center gap-2.5">
+          <span className="inline-flex size-5.5 shrink-0 items-center justify-center rounded-full bg-primary font-mono text-[11px] font-semibold text-primary-foreground">
             {source.index}
           </span>
-          <span className="truncate text-xs font-semibold text-foreground">{source.title}</span>
+          <span className="truncate text-[13px] font-semibold text-foreground">{source.title}</span>
         </div>
         <div className="flex shrink-0 items-center gap-1.5">
           {source.badge && (
@@ -66,23 +66,23 @@ const CitationCard = ({ source }: { source: AiCitationSource }) => {
             </Badge>
           )}
           {source.score && (
-            <Badge variant="success" shape="tag">
+            <Badge variant="secondary" shape="tag">
               {source.score}
             </Badge>
           )}
         </div>
       </div>
-      <p className="m-0 border-l-2 border-solid border-signal/55 pl-3 text-xs leading-relaxed text-muted-foreground">
+      <p className="m-0 border-l-2 border-solid border-border pl-3 text-[13px] leading-relaxed text-muted-foreground">
         “{source.snippet}”
       </p>
       <div className="flex items-center justify-between gap-3 pt-0.5">
         <div className="flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground">
-          <FileText aria-hidden="true" className="size-3 text-signal" />
+          <FileText aria-hidden="true" className="size-3 text-muted-foreground" />
           <span>{source.domain}</span>
           <ArrowUpRight aria-hidden="true" className="size-3 opacity-70" />
         </div>
-        <div aria-hidden="true" className="h-1 w-20 overflow-hidden rounded-full bg-secondary">
-          <div className="h-full rounded-full bg-signal" style={{ width: `${pct}%` }} />
+        <div aria-hidden="true" className="h-1 w-20 overflow-hidden rounded-full bg-border">
+          <div className="h-full rounded-full bg-foreground/75" style={{ width: `${pct}%` }} />
         </div>
       </div>
     </div>
@@ -108,10 +108,10 @@ const CitationPillList = ({
           aria-pressed={isSelected}
           onClick={() => onPick(src)}
           className={cn(
-            "inline-flex h-6.5 cursor-pointer items-center gap-1 rounded-full border border-solid px-2.5 font-mono text-[11px] font-medium transition-all outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            "inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-full border border-solid px-2.5 font-mono text-[11px] font-medium transition-all outline-none focus-visible:ring-2 focus-visible:ring-ring",
             isSelected
-              ? "border-signal bg-signal text-signal-foreground shadow-sm"
-              : "border-border/85 bg-secondary/60 text-muted-foreground hover:border-signal/35 hover:text-foreground",
+              ? "border-primary bg-primary text-primary-foreground shadow-xs"
+              : "border-border bg-background text-muted-foreground hover:border-foreground/25 hover:text-foreground dark:bg-secondary/50",
           )}
         >
           <span>[{src.index}]</span>
@@ -136,18 +136,20 @@ export const AiCitation = ({
     <div
       data-slot="ai-citation"
       className={cn(
-        "flex w-full max-w-xl flex-col gap-3 rounded-[22px] border border-solid border-border/90 bg-card p-4 text-card-foreground shadow-md",
+        "flex w-full max-w-xl flex-col gap-3.5 rounded-[22px] border border-solid border-border bg-card p-5 text-card-foreground shadow-xs",
         className,
       )}
     >
       <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
-          <BookOpen aria-hidden="true" className="size-3.5 text-signal" />
+        <div className="flex items-center gap-2 text-xs font-semibold text-foreground">
+          <BookOpen aria-hidden="true" className="size-3.5 text-muted-foreground" />
           <span>已引用 {sources.length} 处知识库上下文</span>
         </div>
-        <span className="font-mono text-[10px] text-muted-foreground">RAG Verified</span>
+        <span className="rounded-full bg-secondary px-2 py-0.5 font-mono text-[10px] font-medium text-muted-foreground">
+          已校验来源
+        </span>
       </div>
-      {answer && <p className="m-0 text-xs leading-relaxed text-foreground/90">{answer}</p>}
+      {answer && <p className="m-0 text-[13px] leading-relaxed text-foreground/90">{answer}</p>}
       <CitationPillList
         sources={sources}
         activeId={active?.id}

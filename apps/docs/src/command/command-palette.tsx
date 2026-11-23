@@ -22,15 +22,11 @@ export const CommandPalette = () => {
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger className="inline-flex h-9 cursor-pointer items-center gap-2 rounded-full border border-border/80 bg-(--site-surface) px-2.5 text-xs text-muted-foreground shadow-xs outline-none transition-colors duration-(--ui-duration-fast) hover:border-foreground/25 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring md:px-3.5">
+      <Dialog.Trigger
+        aria-label="打开搜索"
+        className="inline-flex size-8 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent text-muted-foreground outline-none transition-colors duration-(--ui-duration-fast) hover:bg-(--site-stage) hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      >
         <MagnifyingGlassIcon weight="bold" className="size-4 shrink-0" aria-hidden="true" />
-        <span className="sr-only md:not-sr-only">打开搜索</span>
-        <kbd
-          aria-hidden="true"
-          className="hidden rounded-md border border-border bg-secondary px-1.5 py-0.5 font-mono text-[10px] leading-none text-muted-foreground md:inline"
-        >
-          ⌘K
-        </kbd>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Backdrop className="fixed inset-0 z-(--ui-z-overlay) bg-background/75 backdrop-blur-sm" />

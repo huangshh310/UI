@@ -31,23 +31,23 @@ export interface TabsProps {
   className?: string;
 }
 const LIST_CLASS: Record<TabsVariant, string> = {
-  pill: "relative inline-flex items-center gap-0.5 rounded-lg border border-solid border-border/75 bg-secondary/70 p-1",
-  underline: "relative flex items-center gap-5 border-b border-solid border-border",
-  card: "relative inline-flex items-center gap-1 rounded-xl border border-solid border-border bg-card p-1 shadow-sm",
+  pill: "relative inline-flex items-center gap-0.5 rounded-full bg-secondary p-1",
+  underline: "relative flex items-center gap-6 border-b border-solid border-border",
+  card: "relative inline-flex items-center gap-1 rounded-2xl border border-solid border-border bg-card p-1 shadow-xs",
 };
 
 const TAB_CLASS: Record<TabsVariant, string> = {
-  pill: "relative z-10 inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-md px-3 font-sans text-xs font-medium text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:text-foreground data-active:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-45",
+  pill: "relative z-10 inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-full px-3.5 font-sans text-xs font-medium whitespace-nowrap text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:text-foreground data-active:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-45",
   underline:
-    "relative z-10 inline-flex cursor-pointer items-center gap-1.5 pb-2.5 font-sans text-sm font-medium text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:text-foreground data-active:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-45",
-  card: "relative z-10 inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg px-3.5 font-sans text-xs font-medium text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:text-foreground data-active:text-signal-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-45",
+    "relative z-10 inline-flex cursor-pointer items-center gap-1.5 pb-2.5 font-sans text-sm font-medium whitespace-nowrap text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:text-foreground data-active:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-45",
+  card: "relative z-10 inline-flex h-8.5 cursor-pointer items-center gap-1.5 rounded-xl px-3.5 font-sans text-xs font-medium whitespace-nowrap text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:text-foreground data-active:text-primary-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-45",
 };
 
 const INDICATOR_CLASS: Record<TabsVariant, string> = {
-  pill: "absolute top-1 left-0 z-0 h-[calc(100%-0.5rem)] w-(--active-tab-width) translate-x-(--active-tab-left) rounded-md bg-background shadow-sm transition-[transform,width] duration-(--ui-duration-fast) ease-(--ui-ease-out) motion-reduce:transition-none dark:bg-card dark:ring-1 dark:ring-border",
+  pill: "absolute top-1 left-0 z-0 h-[calc(100%-0.5rem)] w-(--active-tab-width) translate-x-(--active-tab-left) rounded-full bg-card shadow-sm transition-[transform,width] duration-(--ui-duration-fast) ease-(--ui-ease-out) motion-reduce:transition-none dark:ring-1 dark:ring-border",
   underline:
-    "absolute bottom-0 left-0 z-0 h-0.5 w-(--active-tab-width) translate-x-(--active-tab-left) rounded-full bg-signal transition-[transform,width] duration-(--ui-duration-fast) ease-(--ui-ease-out) motion-reduce:transition-none",
-  card: "absolute top-1 left-0 z-0 h-[calc(100%-0.5rem)] w-(--active-tab-width) translate-x-(--active-tab-left) rounded-lg bg-signal shadow-sm transition-[transform,width] duration-(--ui-duration-fast) ease-(--ui-ease-out) motion-reduce:transition-none",
+    "absolute bottom-0 left-0 z-0 h-0.5 w-(--active-tab-width) translate-x-(--active-tab-left) rounded-full bg-foreground transition-[transform,width] duration-(--ui-duration-fast) ease-(--ui-ease-out) motion-reduce:transition-none",
+  card: "absolute top-1 left-0 z-0 h-[calc(100%-0.5rem)] w-(--active-tab-width) translate-x-(--active-tab-left) rounded-xl bg-primary shadow-xs transition-[transform,width] duration-(--ui-duration-fast) ease-(--ui-ease-out) motion-reduce:transition-none",
 };
 
 export const Tabs = ({

@@ -35,36 +35,25 @@ const FOLDERS = [
   {
     name: "Token 主题",
     count: "6 项",
-    iconClass:
-      "border-blue-500/20 bg-blue-500/12 text-blue-700 dark:border-blue-400/25 dark:text-blue-300",
   },
   {
     name: "Registry 清单",
     count: "89 项",
-    iconClass:
-      "border-violet-500/20 bg-violet-500/12 text-violet-700 dark:border-violet-400/25 dark:text-violet-300",
   },
   {
     name: "架构文档",
     count: "12 项",
-    iconClass:
-      "border-emerald-500/20 bg-emerald-500/12 text-emerald-700 dark:border-emerald-400/25 dark:text-emerald-300",
   },
 ];
 
 const FolderCards = () => (
-  <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+  <div className="grid grid-cols-1 gap-3 @xl:grid-cols-3">
     {FOLDERS.map((folder) => (
       <div
         key={folder.name}
-        className="flex items-center gap-3 rounded-2xl border border-solid border-border/80 bg-secondary/35 p-3.5 shadow-xs transition-colors hover:bg-secondary/55"
+        className="flex items-center gap-3 rounded-2xl border border-solid border-border/80 bg-secondary/40 p-3.5 transition-colors hover:bg-secondary/65"
       >
-        <span
-          className={cn(
-            "inline-flex size-10 shrink-0 items-center justify-center rounded-xl border border-solid shadow-xs",
-            folder.iconClass,
-          )}
-        >
+        <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl border border-solid border-border bg-background text-foreground shadow-xs dark:bg-card">
           <Folder aria-hidden="true" className="size-4.5" />
         </span>
         <div className="min-w-0">
@@ -123,7 +112,7 @@ const UploadHeader = ({ open, onToggle }: { open: boolean; onToggle: () => void 
     <button
       type="button"
       onClick={onToggle}
-      className="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-lg border border-solid border-signal bg-signal px-3 font-sans text-xs font-medium text-signal-foreground transition-opacity hover:opacity-92 outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="inline-flex h-8.5 cursor-pointer items-center gap-1.5 rounded-full border border-solid border-primary bg-primary px-3.5 font-sans text-xs font-medium text-primary-foreground transition-opacity hover:opacity-90 outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <UploadCloud aria-hidden="true" className="size-3.5" />
       <span>{open ? "收起上传" : "上传文件"}</span>
@@ -173,7 +162,7 @@ export const FileManagerBlock = (props: FileManagerBlockProps) => {
     <div
       data-slot="file-manager-block"
       className={cn(
-        "flex w-full max-w-4xl flex-col gap-4 rounded-2xl border border-solid border-border bg-card p-5 shadow-sm",
+        "@container flex w-full max-w-4xl flex-col gap-4 rounded-[24px] border border-solid border-border bg-card p-6 shadow-xs",
         props.className,
       )}
     >

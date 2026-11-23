@@ -90,7 +90,7 @@ const ModelOptionRow = ({
       onClick={onSelect}
       className={cn(
         "flex w-full cursor-pointer items-start justify-between gap-3 rounded-xl border-0 px-2.5 py-2 text-left transition-colors duration-(--ui-duration-fast) focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
-        active ? "bg-signal/10 text-foreground" : "bg-transparent hover:bg-accent/70",
+        active ? "bg-secondary text-foreground" : "bg-transparent hover:bg-accent/70",
       )}
     >
       <div className="min-w-0 flex-1">
@@ -120,7 +120,7 @@ const ModelOptionRow = ({
           </p>
         )}
       </div>
-      {active && <Check aria-hidden="true" className="mt-0.5 size-3.5 shrink-0 text-signal" />}
+      {active && <Check aria-hidden="true" className="mt-0.5 size-3.5 shrink-0 text-foreground" />}
     </button>
   </li>
 );
@@ -209,7 +209,7 @@ export const SelectorFooter = ({
         className={cn(
           "inline-flex h-6 cursor-pointer items-center gap-1 rounded-full border border-solid px-2 font-sans text-[11px] font-medium transition-colors duration-(--ui-duration-fast) focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
           webSearch
-            ? "border-signal/40 bg-signal/12 text-signal"
+            ? "border-primary bg-primary text-primary-foreground"
             : "border-border bg-card text-muted-foreground hover:text-foreground",
         )}
       >

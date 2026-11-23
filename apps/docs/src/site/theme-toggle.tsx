@@ -26,10 +26,10 @@ export const ThemeToggle = () => (
     variant="ghost"
     size="icon"
     aria-label="切换主题"
-    className="rounded-full border border-transparent text-muted-foreground hover:border-border hover:text-foreground"
+    className="size-8 rounded-full border-0 text-muted-foreground hover:bg-(--site-stage) hover:text-foreground"
     onClick={toggleTheme}
   >
-    <SunIcon weight="bold" className="hidden dark:block" aria-hidden="true" />
-    <MoonIcon weight="bold" className="dark:hidden" aria-hidden="true" />
+    <SunIcon weight="bold" className="hidden size-4 dark:block" aria-hidden="true" />
+    <MoonIcon weight="bold" className="size-4 dark:hidden" aria-hidden="true" />
   </Button>
 );

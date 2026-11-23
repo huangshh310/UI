@@ -67,14 +67,14 @@ const VoiceControls = (p: {
   onToggleCaption: () => void;
   onEnd: () => void;
 }) => (
-  <div className="flex items-center justify-center gap-2.5">
+  <div className="inline-flex items-center justify-center gap-2 rounded-full border border-solid border-border/80 bg-secondary/75 p-1.5">
     <CircleAction
       label={p.muted ? "取消静音" : "静音麦克风"}
       pressed={p.muted}
       toneClass={
         p.muted
-          ? "border-amber-500/40 bg-amber-500/15 text-amber-800 dark:text-amber-300"
-          : "border-border bg-card text-foreground shadow-sm hover:bg-accent"
+          ? "border-transparent bg-primary text-primary-foreground shadow-xs"
+          : "border-transparent bg-card text-foreground shadow-xs hover:bg-accent"
       }
       onClick={p.onToggleMute}
     >
@@ -82,7 +82,7 @@ const VoiceControls = (p: {
     </CircleAction>
     <CircleAction
       label="切换语音状态"
-      toneClass="border-signal/35 bg-signal/12 text-signal shadow-sm hover:bg-signal/20"
+      toneClass="border-transparent bg-card text-foreground shadow-xs hover:bg-accent"
       onClick={p.onCycleState}
     >
       <Sparkles className="size-4" />
@@ -92,8 +92,8 @@ const VoiceControls = (p: {
       pressed={p.showCaption}
       toneClass={
         p.showCaption
-          ? "border-signal/40 bg-card text-signal shadow-sm"
-          : "border-border bg-secondary text-muted-foreground"
+          ? "border-transparent bg-card text-foreground shadow-xs hover:bg-accent"
+          : "border-transparent bg-transparent text-muted-foreground hover:bg-card/60 hover:text-foreground"
       }
       onClick={p.onToggleCaption}
     >
@@ -101,7 +101,7 @@ const VoiceControls = (p: {
     </CircleAction>
     <CircleAction
       label="结束语音会话"
-      toneClass="border-destructive bg-destructive text-destructive-foreground shadow-sm hover:opacity-90"
+      toneClass="border-transparent bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90"
       onClick={p.onEnd}
     >
       <PhoneOff className="size-4" />
@@ -113,16 +113,18 @@ const EndedCard = ({ onReconnect, className }: { onReconnect: () => void; classN
   <div
     data-slot="ai-voice-stage"
     className={cn(
-      "flex w-full max-w-sm flex-col items-center justify-center gap-3 rounded-[24px] border border-solid border-border/90 bg-card p-6 text-center shadow-md",
+      "flex w-full max-w-sm flex-col items-center justify-center gap-3 rounded-[28px] border border-solid border-border/90 bg-card p-7 text-center shadow-md",
       className,
     )}
   >
-    <p className="m-0 text-sm font-semibold text-foreground">语音会话已结束</p>
-    <p className="m-0 text-xs text-muted-foreground">本次双工通话记录已自动归档至对话线程。</p>
+    <p className="m-0 text-[15px] font-semibold tracking-tight text-foreground">语音会话已结束</p>
+    <p className="m-0 text-xs leading-relaxed text-muted-foreground">
+      本次通话记录已自动保存，随时可继续对话。
+    </p>
     <button
       type="button"
       onClick={onReconnect}
-      className="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-full border border-solid border-signal bg-signal px-3.5 font-sans text-xs font-medium text-signal-foreground shadow-sm transition-opacity hover:opacity-92 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+      className="mt-1 inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-full border-0 bg-primary px-4 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-opacity hover:bg-primary/90 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
     >
       <RotateCcw aria-hidden="true" className="size-3.5" />
       <span>重新连线</span>
@@ -142,30 +144,29 @@ const StageBody = (p: {
     data-slot="ai-voice-stage"
     data-state={p.state}
     className={cn(
-      "relative flex w-full max-w-sm flex-col items-center gap-4 overflow-hidden rounded-[26px] border border-solid border-border/90 bg-card p-5 text-center text-card-foreground shadow-lg",
+      "relative flex w-full max-w-sm flex-col items-center gap-5 overflow-hidden rounded-[28px] border border-solid border-border/90 bg-card p-6 text-center text-card-foreground shadow-md",
       p.className,
     )}
   >
-    <span
-      aria-hidden="true"
-      className="pointer-events-none absolute -top-12 size-44 rounded-full bg-gradient-to-br from-signal/20 via-indigo-500/18 to-cyan-400/18 blur-3xl"
-    />
-    <div className="relative z-10 flex w-full items-center justify-between text-[11px]">
-      <span className="font-semibold text-foreground">{p.assistantName}</span>
-      <span className="rounded-full border border-solid border-emerald-600/20 bg-emerald-500/12 px-2 py-0.5 font-mono text-[10px] font-semibold text-emerald-800 dark:text-emerald-300">
-        LIVE · 48kHz
+    <div className="flex w-full items-center justify-between text-xs">
+      <span className="font-semibold tracking-tight text-foreground">{p.assistantName}</span>
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-2.5 py-0.5 font-mono text-[10px] font-medium text-muted-foreground">
+        <span aria-hidden="true" className="size-1.5 rounded-full bg-emerald-500" />
+        LIVE
       </span>
     </div>
-    <div className="relative z-10 flex flex-col items-center gap-2.5 py-1">
+    <div className="flex flex-col items-center gap-3 py-3">
       <AiOrb state={p.state} variant="aurora" size="lg" />
-      <p className="m-0 text-xs font-medium text-foreground">{STATUS_COPY[p.state]}</p>
+      <p className="m-0 text-[13px] font-medium tracking-tight text-foreground">
+        {STATUS_COPY[p.state]}
+      </p>
     </div>
     {p.showCaption && (
-      <p className="relative z-10 m-0 w-full rounded-2xl border border-solid border-border/75 bg-secondary/45 px-3.5 py-2 text-xs leading-relaxed text-muted-foreground">
+      <p className="m-0 w-full rounded-2xl bg-secondary/75 px-4 py-2.5 text-xs leading-relaxed text-muted-foreground">
         {p.caption}
       </p>
     )}
-    <div className="relative z-10">{p.controls}</div>
+    <div>{p.controls}</div>
   </div>
 );
 
@@ -203,8 +204,8 @@ const useVoiceStage = (defaultState: AiOrbState, onStateChange?: (s: AiOrbState)
 
 export const AiVoiceStage = ({
   defaultState = "listening",
-  assistantName = "Matt Live Voice",
-  caption = "“已为你把语音极光球切换到低延迟双工模式，随时可以打断我。”",
+  assistantName = "实时语音助手",
+  caption = "“明天东京多云转晴，21°C，很适合上午去代官山散步，要我帮你记进日程吗？”",
   onStateChange,
   onEndSession,
   className,

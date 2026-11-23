@@ -1,13 +1,12 @@
 /*
- * 圆角刻度。
+ * 圆角刻度（C 端亲和圆润比例）。
  *
- * 对齐 shadcn/ui、EasyUI 与 BoardUI 的现代比例：
- * 基准 --ui-radius = 8px（输入框、下拉与标准按钮），
- * sm = 4px（复选框与微标签），md = 6px（紧凑项与菜单行），xl = 12px（弹层与单选卡），2xl = 16px（卡片与对话框）。
- * 在 :root 上修改 --ui-radius 即可整体按比例微调。
+ * 基准 --ui-radius = 10px（对齐 BoardUI 2lg 与现代消费级应用控件曲率），
+ * sm = 5px（复选框与微标签），md = 7.5px（紧凑菜单行），lg = 10px（按钮与输入框），
+ * xl = 15px（弹层与内嵌块），2xl = 20px（卡片与对话框）。
  */
 :root {
-  --ui-radius: 0.5rem;
+  --ui-radius: 0.625rem;
 
   --ui-radius-sm: calc(var(--ui-radius) * 0.5);
   --ui-radius-md: calc(var(--ui-radius) * 0.75);

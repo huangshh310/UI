@@ -178,7 +178,7 @@ export const Calendar = (props: CalendarProps) => {
       data-slot="calendar"
       aria-label={props["aria-label"]}
       className={cn(
-        "w-fit rounded-2xl border border-solid border-border bg-card p-3 font-sans text-card-foreground shadow-sm select-none",
+        "w-fit rounded-[22px] border border-solid border-border bg-card p-4 font-sans text-card-foreground shadow-xs select-none",
         props.className,
       )}
     >

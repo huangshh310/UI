@@ -69,7 +69,7 @@ const TRIGGER_LINK_CLASS = cn(
 
 const PeekIdentityCard = ({ identity }: { identity: NonNullable<PeekCardProps["identity"]> }) => (
   <div className="flex items-center gap-2.5 rounded-xl border border-solid border-border/75 bg-secondary/45 p-2.5">
-    <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-signal/12 text-xs font-semibold text-signal">
+    <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
       {identity.initials}
     </span>
     <div className="min-w-0">

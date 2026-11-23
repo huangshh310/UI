@@ -28,7 +28,8 @@ export const NeonEdgeButton = ({
       "transition-transform duration-(--ui-duration-fast) active:scale-[0.98]",
       "outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid",
       "disabled:pointer-events-none disabled:opacity-50",
-      glow && "shadow-[0_0_20px_-8px] shadow-signal",
+      glow &&
+        "shadow-[0_4px_14px_-4px_color-mix(in_oklab,var(--ui-signal)_30%,transparent)] dark:shadow-[0_0_24px_-6px_var(--ui-signal)]",
       className,
     )}
     {...props}

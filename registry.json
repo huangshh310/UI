@@ -20,14 +20,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -69,14 +69,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -115,14 +115,56 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-agent-activity",
+      "type": "registry:ui",
+      "title": "AI Agent Activity",
+      "description": "极简克制的 AI 智能体工具调用轨迹与推理时间线，支持复合子部件、参数/代码/输出明细抽屉与一键全部展开收起。",
+      "categories": ["ai", "motion"],
+      "dependencies": ["lucide-react", "motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/ai-agent-activity.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-agent-activity.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
+        },
+        "dark": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -164,14 +206,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -205,14 +247,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -247,14 +289,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -289,14 +331,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -320,7 +362,7 @@
       "title": "AI Chat Thread",
       "description": "C 端 AI 对话消息流，支持用户/助手气泡、多版本回复分支切换、复制反馈与快捷追问。",
       "dependencies": ["lucide-react"],
-      "registryDependencies": ["utils", "huangshh310/UI/badge"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "registry/ui/ai-chat-thread.tsx",
@@ -330,14 +372,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -372,14 +414,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -414,14 +456,56 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-image-reveal",
+      "type": "registry:ui",
+      "title": "AI Image Reveal",
+      "description": "AI 图像生成显影组件，从呼吸粒子云聚拢为像素马赛克再柔焦解析至高清成图，支持重播与减弱动效降级。",
+      "categories": ["ai", "motion"],
+      "dependencies": ["motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/ai-image-reveal.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-image-reveal.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
+        },
+        "dark": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -456,14 +540,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -498,14 +582,56 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-response",
+      "type": "registry:ui",
+      "title": "AI Response",
+      "description": "流式 AI 回复容器，内置安全 Markdown 渲染、工具调用折叠摘要、参考来源卡片与反馈操作栏。",
+      "categories": ["ai", "motion"],
+      "dependencies": ["lucide-react", "motion"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/ai-response.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-response.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
+        },
+        "dark": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -540,14 +666,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -581,14 +707,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -628,14 +754,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -670,14 +796,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -712,14 +838,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -754,14 +880,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -796,14 +922,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -844,14 +970,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -886,14 +1012,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -928,14 +1054,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -979,14 +1105,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1021,14 +1147,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1063,14 +1189,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1105,14 +1231,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1147,14 +1273,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1189,14 +1315,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1231,14 +1357,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1273,14 +1399,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1315,14 +1441,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1357,14 +1483,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1399,14 +1525,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1449,14 +1575,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1491,14 +1617,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1533,14 +1659,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1575,14 +1701,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1617,14 +1743,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1659,14 +1785,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1701,14 +1827,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1747,14 +1873,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1789,14 +1915,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1831,14 +1957,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1880,14 +2006,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1922,14 +2048,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -1964,14 +2090,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2006,14 +2132,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2048,14 +2174,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2090,14 +2216,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2132,14 +2258,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2174,14 +2300,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2216,14 +2342,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2258,14 +2384,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2300,14 +2426,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2342,14 +2468,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2384,14 +2510,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2426,14 +2552,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2473,14 +2599,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2515,14 +2641,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2557,14 +2683,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2599,14 +2725,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2641,14 +2767,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2683,14 +2809,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2729,14 +2855,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2771,14 +2897,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2813,14 +2939,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2855,14 +2981,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2902,14 +3028,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2944,14 +3070,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -2986,14 +3112,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3028,14 +3154,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3070,14 +3196,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3120,14 +3246,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3162,14 +3288,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3204,14 +3330,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3246,14 +3372,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3288,14 +3414,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3330,14 +3456,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3372,14 +3498,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3414,14 +3540,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3456,14 +3582,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3498,14 +3624,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3540,14 +3666,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3582,14 +3708,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3624,14 +3750,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3666,14 +3792,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3708,14 +3834,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3750,14 +3876,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3801,14 +3927,56 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "thinking-orb",
+      "type": "registry:ui",
+      "title": "Thinking Orb",
+      "description": "极简单色 3D 球面粒子思考球，内置 9 种 AI 认知状态与明暗极性自适应，纯 Canvas 驱动零动画库依赖。",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/thinking-orb.tsx",
+          "type": "registry:ui",
+          "target": "@ui/thinking-orb.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
+        },
+        "dark": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3843,14 +4011,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3885,14 +4053,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {
@@ -3927,14 +4095,14 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.99 0 0)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "oklch(0.535 0.21 262)",
-          "signal-foreground": "oklch(0.99 0 0)",
-          "destructive-foreground": "oklch(0.14 0.008 265)"
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
         }
       },
       "css": {

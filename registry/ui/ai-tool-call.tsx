@@ -45,11 +45,11 @@ export interface AiToolCallProps {
 }
 const STATUS_META: Record<
   AiToolCallStatus,
-  { label: string; variant: "signal" | "success" | "destructive"; rail: string }
+  { label: string; variant: "secondary" | "success" | "destructive" }
 > = {
-  running: { label: "执行中", variant: "signal", rail: "border-l-signal" },
-  completed: { label: "已完成", variant: "success", rail: "border-l-emerald-500" },
-  error: { label: "失败", variant: "destructive", rail: "border-l-rose-500" },
+  running: { label: "执行中", variant: "secondary" },
+  completed: { label: "已完成", variant: "success" },
+  error: { label: "失败", variant: "destructive" },
 };
 
 const StatusIcon = ({ status }: { status: AiToolCallStatus }) => {
@@ -196,12 +196,12 @@ const ToolHeaderButton = ({
     <div className="flex w-full flex-wrap items-center justify-between gap-2">
       <div className="flex min-w-0 items-center gap-2">
         <StatusIcon status={status} />
-        <span className="inline-flex items-center gap-1.5 rounded-lg border border-solid border-border/80 bg-secondary/75 px-2.5 py-0.5 font-mono text-xs font-semibold text-foreground shadow-xs">
-          <Terminal aria-hidden="true" className="size-3 text-signal" />
+        <span className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-foreground">
+          <Terminal aria-hidden="true" className="size-3.5 text-muted-foreground" />
           {toolName}
         </span>
         {provider && (
-          <span className="rounded-md bg-blue-500/10 px-1.5 py-0.5 font-mono text-[10px] font-medium text-blue-800 dark:bg-blue-400/15 dark:text-blue-200">
+          <span className="rounded-md bg-secondary px-1.5 py-0.5 font-mono text-[10px] font-medium text-muted-foreground">
             {provider}
           </span>
         )}
@@ -231,8 +231,7 @@ export const AiToolCall = ({
       data-slot="ai-tool-call"
       data-status={status}
       className={cn(
-        "w-full max-w-xl overflow-hidden rounded-[22px] border border-l-[3px] border-solid border-border/90 bg-card text-card-foreground shadow-md",
-        STATUS_META[status].rail,
+        "w-full max-w-xl overflow-hidden rounded-[22px] border border-solid border-border/90 bg-card text-card-foreground shadow-xs",
         className,
       )}
     >

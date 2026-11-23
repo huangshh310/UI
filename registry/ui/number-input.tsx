@@ -74,7 +74,7 @@ export const NumberInput = (props: NumberInputProps) => {
       className={cn("flex w-full max-w-48 flex-col gap-1.5", props.className)}
     >
       <NumberLabel id={inputId} label={props.label} scrub={scrub} />
-      <NumberField.Group className="inline-flex h-9 w-full items-center overflow-hidden rounded-lg border border-solid border-border bg-background shadow-sm transition-[border-color,box-shadow] duration-(--ui-duration-fast) focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/20 dark:bg-card">
+      <NumberField.Group className="inline-flex h-10 w-full items-center overflow-hidden rounded-xl border border-solid border-border bg-background shadow-xs transition-[border-color,box-shadow] duration-(--ui-duration-fast) focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/20 dark:bg-card">
         <NumberField.Decrement
           aria-label="减少"
           className={cn(STEP_BTN, "border-r border-solid border-border/70")}

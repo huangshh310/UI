@@ -1,0 +1,6 @@
+{
+  "name": "ai-agent-activity",
+  "title": "AI Agent Activity",
+  "description": "极简克制的 AI 智能体工具调用轨迹与推理时间线，支持复合子部件、参数/代码/输出明细抽屉与一键全部展开收起。",
+  "categories": ["ai", "motion"]
+}

@@ -10,10 +10,10 @@ import { useId, type ReactNode } from "react";
 import type { LockInputProps } from "./lock-input.types.js";
 
 const SHELL_CLASSES =
-  "relative flex h-10 items-center gap-2 rounded-lg border border-solid border-border bg-background px-3 text-foreground shadow-sm transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) hover:border-foreground/22 group-focus-within/lock:border-ring group-focus-within/lock:shadow-none data-invalid:border-destructive data-locked:bg-muted/70 dark:bg-card dark:data-locked:bg-muted/50";
+  "relative flex h-10.5 items-center gap-2 rounded-xl border border-solid border-border bg-card px-3.5 text-foreground shadow-xs transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) hover:border-foreground/20 group-focus-within/lock:border-ring group-focus-within/lock:shadow-none data-invalid:border-destructive data-locked:bg-secondary/80";
 
 const RING_CLASSES =
-  "pointer-events-none absolute -inset-[3px] rounded-[11px] border-2 border-solid border-ring/30 opacity-0 scale-x-[1.03] scale-y-[1.12] transition-[transform,opacity] duration-(--ui-duration-normal) ease-[cubic-bezier(0.22,1,0.36,1)] group-focus-within/lock:scale-100 group-focus-within/lock:opacity-100 group-data-invalid/lock:border-destructive/35";
+  "pointer-events-none absolute -inset-[3px] rounded-[14px] border-2 border-solid border-ring/25 opacity-0 scale-x-[1.03] scale-y-[1.1] transition-[transform,opacity] duration-(--ui-duration-normal) ease-[cubic-bezier(0.22,1,0.36,1)] group-focus-within/lock:scale-100 group-focus-within/lock:opacity-100 group-data-invalid/lock:border-destructive/35";
 
 const INPUT_CLASSES =
   "h-full w-full min-w-0 appearance-none border-0 bg-transparent p-0 font-sans text-sm text-foreground outline-none placeholder:text-muted-foreground/80 disabled:cursor-not-allowed disabled:opacity-50";

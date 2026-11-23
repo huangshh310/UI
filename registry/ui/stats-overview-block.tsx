@@ -170,9 +170,9 @@ const Sparkline = ({ path }: { path: string }) => (
   <svg
     aria-hidden="true"
     viewBox="0 0 80 28"
-    className="h-7 w-20 shrink-0 overflow-visible text-signal"
+    className="h-7 w-20 shrink-0 overflow-visible text-foreground/75"
   >
-    <path d={path} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    <path d={path} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
   </svg>
 );
 
@@ -180,32 +180,32 @@ const MetricCard = ({ item }: { item: MetricItem }) => {
   const { Icon } = item;
   const spark = SPARK_PATHS[item.id] ?? SPARK_PATHS.mrr ?? "";
   return (
-    <div className="flex flex-col justify-between gap-3.5 rounded-[20px] border border-solid border-border/85 bg-card p-5 shadow-sm transition-shadow hover:shadow-md">
+    <div className="flex flex-col justify-between gap-4 rounded-[22px] border border-solid border-border/90 bg-card p-5 shadow-xs transition-[border-color,box-shadow] hover:border-foreground/15 hover:shadow-sm">
       <div className="flex items-center justify-between gap-2">
-        <span className="text-xs font-medium text-muted-foreground">{item.label}</span>
-        <span className="inline-flex size-8 items-center justify-center rounded-xl border border-solid border-signal/20 bg-signal/10 text-signal">
-          <Icon className="size-3.5" />
+        <span className="text-[13px] font-medium text-muted-foreground">{item.label}</span>
+        <span className="inline-flex size-8 items-center justify-center rounded-xl bg-secondary text-foreground/75">
+          <Icon className="size-4" />
         </span>
       </div>
       <div className="flex items-end justify-between gap-2">
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1.5">
           <NumberFlow
             value={item.value}
             prefix={item.prefix}
             suffix={item.suffix}
             format={{ maximumFractionDigits: 0 }}
-            className="text-2xl font-semibold tracking-tight text-foreground"
+            className="text-3xl font-semibold tracking-tight text-foreground"
           />
-          <span className="w-fit rounded-full border border-solid border-emerald-600/20 bg-emerald-500/10 px-2 py-0.5 font-mono text-[11px] font-semibold text-emerald-800 dark:text-emerald-300">
+          <span className="w-fit rounded-full bg-emerald-500/10 px-2 py-0.5 font-mono text-[11px] font-medium text-emerald-700 dark:text-emerald-300">
             {item.delta}
           </span>
         </div>
         <Sparkline path={spark} />
       </div>
-      <div className="flex flex-col gap-1.5 border-t border-solid border-border/60 pt-2.5">
+      <div className="flex flex-col gap-1.5 border-t border-solid border-border/70 pt-3">
         <div className="h-1.5 w-full overflow-hidden rounded-full bg-secondary">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-signal to-indigo-500 transition-[width] duration-(--ui-duration-normal)"
+            className="h-full rounded-full bg-foreground/80 transition-[width] duration-(--ui-duration-normal)"
             style={{ width: `${item.goalPct}%` }}
           />
         </div>
@@ -225,15 +225,16 @@ export const StatsOverviewBlock = ({
   const metrics = METRICS_BY_PERIOD[period];
 
   return (
-    <div data-slot="stats-overview-block" className={cn("flex w-full flex-col gap-5", className)}>
+    <div
+      data-slot="stats-overview-block"
+      className={cn("@container flex w-full flex-col gap-5", className)}
+    >
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="m-0 text-base font-semibold tracking-tight text-foreground">核心业务指标</p>
-          <p className="m-0 mt-0.5 text-xs text-muted-foreground">
-            切换时间周期，观察 NumberFlow 按位滚轮平滑过渡。
-          </p>
+          <p className="m-0 text-[17px] font-semibold tracking-tight text-foreground">数据概览</p>
+          <p className="m-0 mt-0.5 text-xs text-muted-foreground">按周期查看增长与订阅健康度</p>
         </div>
-        <div className="inline-flex items-center gap-1 rounded-xl border border-solid border-border bg-secondary/60 p-1">
+        <div className="inline-flex items-center gap-0.5 rounded-full bg-secondary p-1 ring-1 ring-border/70">
           {PERIOD_LABELS.map(({ id, label }) => (
             <button
               key={id}
@@ -241,9 +242,9 @@ export const StatsOverviewBlock = ({
               aria-pressed={period === id}
               onClick={() => setPeriod(id)}
               className={cn(
-                "h-7 cursor-pointer rounded-lg border-0 px-3 font-sans text-xs font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                "h-7 cursor-pointer rounded-full border-0 px-3 font-sans text-xs font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
                 period === id
-                  ? "bg-background text-foreground shadow-xs dark:bg-card"
+                  ? "bg-card text-foreground shadow-xs"
                   : "bg-transparent text-muted-foreground hover:text-foreground",
               )}
             >
@@ -252,7 +253,7 @@ export const StatsOverviewBlock = ({
           ))}
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 @md:grid-cols-2 @3xl:grid-cols-4">
         {metrics.map((item) => (
           <MetricCard key={item.id} item={item} />
         ))}

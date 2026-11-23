@@ -6,6 +6,7 @@ import { REGISTRY_ADDRESS } from "@/site/constants";
 import { ACCORDION_DOC } from "./accordion.doc";
 import { ACTIVITY_FEED_BLOCK_DOC } from "./activity-feed-block.doc";
 import { ADVANCED_DATA_TABLE_DOC } from "./advanced-data-table.doc";
+import { AI_AGENT_ACTIVITY_DOC } from "./ai-agent-activity.doc";
 import { AI_AGENT_COCKPIT_BLOCK_DOC } from "./ai-agent-cockpit-block.doc";
 import { AI_AGENT_PLAN_DOC } from "./ai-agent-plan.doc";
 import { AI_APPROVAL_CARD_DOC } from "./ai-approval-card.doc";
@@ -13,11 +14,14 @@ import { AI_ARTIFACT_DOC } from "./ai-artifact.doc";
 import { AI_CHAT_THREAD_DOC } from "./ai-chat-thread.doc";
 import { AI_CITATION_DOC } from "./ai-citation.doc";
 import { AI_DIFF_REVIEW_DOC } from "./ai-diff-review.doc";
+import { AI_IMAGE_REVEAL_DOC } from "./ai-image-reveal.doc";
 import { AI_ORB_DOC } from "./ai-orb.doc";
 import { AI_REASONING_DOC } from "./ai-reasoning.doc";
+import { AI_RESPONSE_DOC } from "./ai-response.doc";
 import { AI_TOOL_CALL_DOC } from "./ai-tool-call.doc";
 import { AI_VOICE_STAGE_DOC } from "./ai-voice-stage.doc";
 import { AI_WORKSPACE_BLOCK_DOC } from "./ai-workspace-block.doc";
+import { THINKING_ORB_DOC } from "./thinking-orb.doc";
 import { CONTEXT_DOC } from "./context.doc";
 import { CONVERSATION_DOC } from "./conversation.doc";
 import { MESSAGE_DOC } from "./message.doc";
@@ -170,6 +174,10 @@ export const COMPONENTS: ComponentDoc[] = [
   SPOTLIGHT_CARD_DOC,
   FOLDER_TAB_CARD_DOC,
   STAGGERED_LIST_DOC,
+  THINKING_ORB_DOC,
+  AI_IMAGE_REVEAL_DOC,
+  AI_AGENT_ACTIVITY_DOC,
+  AI_RESPONSE_DOC,
   CONVERSATION_DOC,
   MESSAGE_DOC,
   SHIMMER_DOC,
@@ -230,15 +238,15 @@ export const DIRECTORY: DirectoryEntry[] = COMPONENTS.flatMap((component) =>
  * 避免同一组件的多组基础变体占满首屏网格。
  */
 const FEATURED_SLUGS = [
+  "thinking-orb",
+  "lock-input",
+  "origin-dropdown",
+  "pagination",
+  "spring-select",
+  "liquid-toggle",
+  "ai-image-reveal",
+  "ai-agent-activity",
   "button",
-  "conversation",
-  "message",
-  "model-selector",
-  "context",
-  "prompt-queue",
-  "ai-orb",
-  "ai-voice-stage",
-  "hold-to-confirm",
 ];
 
 /** 首页展示的精选示例（每个组件取代表性主示例） */

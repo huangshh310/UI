@@ -190,12 +190,12 @@ export const MessageAction = ({
       onClick={handleClick}
       className={cn(
         ACTION_BTN_CLASSES,
-        active && "bg-signal/12 text-signal hover:bg-signal/16 hover:text-signal",
+        active && "bg-secondary text-foreground hover:bg-secondary/90",
         className,
       )}
       {...props}
     >
-      {copied ? <Check aria-hidden="true" className="size-3.5 text-signal" /> : children}
+      {copied ? <Check aria-hidden="true" className="size-3.5 text-foreground" /> : children}
     </button>
   );
 };

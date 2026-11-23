@@ -64,7 +64,7 @@ const CategoryBar = ({
           className={cn(
             "h-6 cursor-pointer rounded-full border border-solid px-2.5 font-sans text-xs font-medium transition-colors duration-(--ui-duration-fast) outline-none focus-visible:ring-2 focus-visible:ring-ring",
             selected
-              ? "border-signal/30 bg-signal/12 text-signal"
+              ? "border-primary bg-primary text-primary-foreground"
               : "border-transparent bg-transparent text-muted-foreground hover:bg-accent hover:text-foreground",
           )}
         >
@@ -79,7 +79,7 @@ const PreviewPane = ({ active }: { active?: SpotlightSearchItem }) =>
   active ? (
     <div className="hidden flex-col justify-between bg-secondary/20 p-4 sm:col-span-2 sm:flex">
       <div>
-        <span className="inline-block rounded-full bg-signal/12 px-2 py-0.5 text-[11px] font-medium text-signal">
+        <span className="inline-block rounded-full bg-secondary px-2.5 py-0.5 text-[11px] font-medium text-foreground">
           {active.category}
         </span>
         <p className="m-0 mt-2 text-sm font-semibold text-foreground">{active.title}</p>
@@ -121,7 +121,7 @@ const ResultSplitPane = ({
             className={cn(
               "flex w-full cursor-pointer flex-col items-start gap-0.5 rounded-xl border border-solid px-3 py-2 text-left transition-colors duration-(--ui-duration-fast) outline-none focus-visible:ring-2 focus-visible:ring-ring",
               idx === activeIndex
-                ? "border-signal/25 bg-signal/10 text-foreground"
+                ? "border-border bg-secondary text-foreground"
                 : "border-transparent bg-transparent text-foreground hover:bg-accent/60",
             )}
           >

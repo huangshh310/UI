@@ -5,7 +5,7 @@ import { cn } from "@matt-ui/utils";
 import type { SliderMark, SliderProps, SliderValue } from "./slider.types.js";
 
 const THUMB_CLASS = cn(
-  "size-4 cursor-pointer rounded-full border-2 border-solid border-signal bg-background shadow-sm outline-none",
+  "size-4.5 cursor-pointer rounded-full border-2 border-solid border-primary bg-background shadow-sm outline-none",
   "transition-[transform,box-shadow] duration-(--ui-duration-fast) hover:scale-110 focus-visible:ring-4 focus-visible:ring-ring/25 data-dragging:scale-110 dark:bg-card",
 );
 
@@ -55,7 +55,7 @@ const normalizeValue = (next: number | readonly number[], min: number, max: numb
 const SliderTrackBar = ({ isRange, label }: { isRange: boolean; label?: string }) => (
   <BaseSlider.Control className="flex w-full touch-none items-center py-2">
     <BaseSlider.Track className="relative h-1.5 w-full rounded-full bg-secondary">
-      <BaseSlider.Indicator className="h-full rounded-full bg-signal" />
+      <BaseSlider.Indicator className="h-full rounded-full bg-primary" />
       <BaseSlider.Thumb index={0} aria-label={label ?? "滑块"} className={THUMB_CLASS} />
       {isRange && (
         <BaseSlider.Thumb

@@ -2,6 +2,21 @@
  * @matt-ui/motion 的公开入口。
  * 只有从这里导出的内容才是对外承诺的接口。
  */
+export {
+  AiAgentActivity,
+  AiAgentActivityHeader,
+  AiAgentActivityItem,
+  AiAgentActivityTimeline,
+  useAiAgentActivity,
+} from "./components/ai-agent-activity/index.js";
+export type {
+  AiAgentActivityHeaderProps,
+  AiAgentActivityItemData,
+  AiAgentActivityItemProps,
+  AiAgentActivityProps,
+  AiAgentActivityStatus,
+  AiAgentActivityTimelineProps,
+} from "./components/ai-agent-activity/index.js";
 export { AiAgentCockpitBlock } from "./components/ai-agent-cockpit-block/index.js";
 export type {
   AiAgentCockpitBlockProps,
@@ -13,8 +28,35 @@ export type {
   AiPlanStep,
   AiPlanStepStatus,
 } from "./components/ai-agent-plan/index.js";
+export { AiImageReveal } from "./components/ai-image-reveal/index.js";
+export type {
+  AiImageRevealHandle,
+  AiImageRevealPhase,
+  AiImageRevealProps,
+} from "./components/ai-image-reveal/index.js";
 export { AiOrb } from "./components/ai-orb/index.js";
 export type { AiOrbProps, AiOrbSize, AiOrbState, AiOrbVariant } from "./components/ai-orb/index.js";
+export {
+  AiResponse,
+  AiResponseActions,
+  AiResponseContent,
+  AiResponseHeader,
+  AiResponseSources,
+  AiResponseToolsSummary,
+  safeHref,
+  useAiResponse,
+} from "./components/ai-response/index.js";
+export type {
+  AiResponseActionsProps,
+  AiResponseContentProps,
+  AiResponseHeaderProps,
+  AiResponseProps,
+  AiResponseSource,
+  AiResponseSourcesProps,
+  AiResponseStatus,
+  AiResponseTool,
+  AiResponseToolsSummaryProps,
+} from "./components/ai-response/index.js";
 export { PromptQueue } from "./components/prompt-queue/index.js";
 export type { PromptQueueProps, QueuedPromptItem } from "./components/prompt-queue/index.js";
 export { AiReasoning } from "./components/ai-reasoning/index.js";

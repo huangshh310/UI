@@ -54,7 +54,7 @@ const SegmentButton = ({
     onClick={onSelect}
     onKeyDown={onKeyDown}
     className={cn(
-      "relative inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-lg border-0 bg-transparent px-3 font-sans text-xs font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
+      "relative inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-full border-0 bg-transparent px-3.5 font-sans text-xs font-medium whitespace-nowrap transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
       active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
     )}
   >
@@ -62,14 +62,14 @@ const SegmentButton = ({
       <motion.span
         layoutId={`seg-thumb-${trackId}`}
         transition={
-          reduced ? { duration: 0 } : { type: "spring", stiffness: 500, damping: 36, mass: 0.6 }
+          reduced ? { duration: 0 } : { type: "spring", stiffness: 460, damping: 34, mass: 0.65 }
         }
-        className="pointer-events-none absolute inset-0 rounded-lg border border-solid border-border/80 bg-card shadow-sm"
+        className="pointer-events-none absolute inset-0 rounded-full bg-card shadow-sm ring-1 ring-black/5 dark:ring-white/10"
       />
     )}
     <span className="relative z-10">{item.label}</span>
     {item.badge && (
-      <span className="relative z-10 rounded-full bg-signal px-1.5 py-0.5 font-mono text-[10px] leading-none text-signal-foreground">
+      <span className="relative z-10 rounded-full bg-primary px-1.5 py-0.5 font-mono text-[10px] leading-none text-primary-foreground">
         {item.badge}
       </span>
     )}
@@ -130,7 +130,7 @@ export const SegmentedControl = ({
       aria-label={ariaLabel}
       data-slot="segmented-control"
       className={cn(
-        "m-0 inline-flex flex-wrap items-center gap-1 rounded-xl border border-solid border-border/80 bg-secondary/75 p-1 shadow-inner",
+        "m-0 inline-flex flex-wrap items-center gap-0.5 rounded-full border-0 bg-secondary p-1 ring-1 ring-border/70",
         className,
       )}
     >

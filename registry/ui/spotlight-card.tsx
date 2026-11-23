@@ -17,7 +17,7 @@ export interface SpotlightCardProps extends HTMLAttributes<HTMLDivElement> {
   glowBorder?: boolean;
 }
 export const SpotlightCard = ({
-  tone = "signal",
+  tone = "neutral",
   glowBorder = true,
   children,
   className,
@@ -34,8 +34,8 @@ export const SpotlightCard = ({
 
   const spotColor =
     tone === "signal"
-      ? "color-mix(in oklch, var(--ui-signal) 15%, transparent)"
-      : "color-mix(in oklch, var(--ui-foreground) 9%, transparent)";
+      ? "color-mix(in srgb, var(--ui-signal) 10%, transparent)"
+      : "color-mix(in srgb, var(--ui-foreground) 6%, transparent)";
 
   return (
     <div
@@ -44,8 +44,9 @@ export const SpotlightCard = ({
       onPointerMove={handlePointerMove}
       style={{ "--spot-x": "50%", "--spot-y": "0%", ...style } as CSSProperties}
       className={cn(
-        "group relative overflow-hidden rounded-2xl border border-solid border-border bg-card p-6 text-card-foreground shadow-sm [&>*:not([data-slot=spotlight-glow])]:relative [&>*:not([data-slot=spotlight-glow])]:z-10",
-        glowBorder && "transition-colors duration-(--ui-duration-normal) hover:border-signal/35",
+        "group relative overflow-hidden rounded-[22px] border border-solid border-border/90 bg-card p-6 text-card-foreground shadow-xs [&>*:not([data-slot=spotlight-glow])]:relative [&>*:not([data-slot=spotlight-glow])]:z-10",
+        glowBorder &&
+          "transition-colors duration-(--ui-duration-normal) hover:border-foreground/20",
         className,
       )}
       {...props}

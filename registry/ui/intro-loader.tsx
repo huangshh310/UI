@@ -78,7 +78,7 @@ const LoaderProgressBar = ({ lang, progress }: { lang?: string; progress: number
     )}
     <div className="h-0.5 w-36 overflow-hidden rounded-full bg-secondary">
       <motion.div
-        className="h-full bg-signal"
+        className="h-full bg-foreground"
         initial={{ width: "0%" }}
         animate={{ width: `${progress}%` }}
         transition={{ duration: 0.28 }}
@@ -132,21 +132,17 @@ const LoaderCurtain = ({
       "relative flex flex-col items-center justify-center overflow-hidden bg-card/95 backdrop-blur-xl",
       fullscreen
         ? "fixed inset-0 z-50"
-        : "min-h-52 w-full rounded-[22px] border border-solid border-border/85 p-7 shadow-md",
+        : "min-h-52 w-full rounded-[22px] border border-solid border-border p-7 shadow-xs",
       className,
     )}
   >
-    <span
-      aria-hidden="true"
-      className="pointer-events-none absolute -top-16 size-56 rounded-full bg-gradient-to-br from-signal/22 via-indigo-500/18 to-cyan-400/15 blur-3xl"
-    />
     <AnimatedGreeting text={current.text} />
     <LoaderProgressBar lang={current.lang} progress={progress} />
     {skippable && (
       <button
         type="button"
         onClick={onSkip}
-        className="absolute right-4 bottom-4 cursor-pointer rounded-lg border border-solid border-border bg-card px-2.5 py-1 font-mono text-[11px] text-muted-foreground transition-colors hover:border-foreground/22 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="absolute right-4 bottom-4 cursor-pointer rounded-full border border-solid border-border bg-background px-3 py-1 font-mono text-[11px] text-muted-foreground transition-colors hover:border-foreground/25 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:bg-secondary/60"
       >
         跳过 · ESC
       </button>

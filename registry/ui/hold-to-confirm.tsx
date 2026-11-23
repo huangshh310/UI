@@ -68,52 +68,50 @@ interface HoldButtonProps {
   onCancel: () => void;
 }
 
-const HoldButton = ({
-  holding,
-  confirmed,
-  disabled,
-  tone,
-  label,
-  confirmedLabel,
-  holdDurationMs,
-  reduced,
-  onStart,
-  onCancel,
-}: HoldButtonProps) => {
-  const activeBorder = tone === "destructive" ? "border-destructive/60" : "border-signal/60";
+const HoldButton = (p: HoldButtonProps) => {
+  const activeBorder = p.tone === "destructive" ? "border-destructive/60" : "border-signal/60";
   const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
     if (e.key !== " " && e.key !== "Enter") return;
     e.preventDefault();
-    if (!e.repeat) onStart();
+    if (!e.repeat) p.onStart();
   };
   const handleKeyUp = (e: KeyboardEvent<HTMLButtonElement>) => {
-    if (e.key === " " || e.key === "Enter") onCancel();
+    if (e.key === " " || e.key === "Enter") p.onCancel();
   };
 
   return (
     <button
       type="button"
-      disabled={disabled}
-      onPointerDown={onStart}
-      onPointerUp={onCancel}
-      onPointerLeave={onCancel}
-      onPointerCancel={onCancel}
-      onBlur={onCancel}
+      disabled={p.disabled}
+      onPointerDown={p.onStart}
+      onPointerUp={p.onCancel}
+      onPointerLeave={p.onCancel}
+      onPointerCancel={p.onCancel}
+      onBlur={p.onCancel}
       onKeyDown={handleKeyDown}
       onKeyUp={handleKeyUp}
       className={cn(
-        "relative inline-flex h-10 cursor-pointer items-center justify-center overflow-hidden rounded-xl border border-solid px-4 font-sans text-xs font-medium transition-all select-none outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
-        confirmed
-          ? "border-signal bg-signal text-signal-foreground shadow-sm"
-          : cn("border-border bg-card text-foreground shadow-sm", holding && activeBorder),
+        "relative inline-flex h-11 cursor-pointer items-center justify-center overflow-hidden rounded-full border border-solid px-5 font-sans text-sm font-medium tracking-[-0.01em] transition-[background-color,border-color,transform,box-shadow] select-none outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-45",
+        p.holding && "scale-[0.985]",
+        p.confirmed
+          ? "border-primary bg-primary text-primary-foreground shadow-sm"
+          : cn(
+              "border-border bg-card text-foreground shadow-sm hover:border-foreground/20 dark:bg-secondary",
+              p.holding && activeBorder,
+            ),
       )}
     >
-      {!confirmed && (
-        <HoldFill holding={holding} tone={tone} holdDurationMs={holdDurationMs} reduced={reduced} />
+      {!p.confirmed && (
+        <HoldFill
+          holding={p.holding}
+          tone={p.tone}
+          holdDurationMs={p.holdDurationMs}
+          reduced={p.reduced}
+        />
       )}
       <span className="relative z-10 inline-flex items-center gap-1.5">
-        {confirmed && <Check aria-hidden="true" className="size-3.5" />}
-        <span>{confirmed ? confirmedLabel : label}</span>
+        {p.confirmed && <Check aria-hidden="true" className="size-3.5" />}
+        <span>{p.confirmed ? p.confirmedLabel : p.label}</span>
       </span>
     </button>
   );

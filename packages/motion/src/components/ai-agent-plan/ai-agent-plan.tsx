@@ -12,39 +12,39 @@ import type { AiAgentPlanProps, AiPlanStep, AiPlanStepStatus } from "./ai-agent-
 const DEFAULT_STEPS: AiPlanStep[] = [
   {
     id: "p1",
-    title: "扫描双主题设计令牌与阴影阶梯",
-    tool: "read_tokens",
+    title: "检索 11 月京都天气与红叶实况",
+    tool: "weather_search",
     duration: "0.4s",
     status: "completed",
   },
   {
     id: "p2",
-    title: "合成 15 款 C 端 AI 交互组件",
-    tool: "generate_ui",
-    duration: "1.9s",
+    title: "筛选东山区步行可达的小众咖啡馆",
+    tool: "places_rank",
+    duration: "1.2s",
     status: "running",
   },
-  { id: "p3", title: "扁平化 shadcn Registry 清单", tool: "registry_build", status: "pending" },
-  { id: "p4", title: "运行双主题 Playwright axe 门禁", tool: "run_e2e", status: "pending" },
+  { id: "p3", title: "按步行距离排布三天慢逛动线", tool: "route_plan", status: "pending" },
+  { id: "p4", title: "生成可离线查看的行程手账卡片", tool: "export_card", status: "pending" },
 ];
 
 const StepGlyph = ({ status }: { status: AiPlanStepStatus }) => {
   if (status === "completed") {
     return (
-      <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">
+      <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-secondary text-foreground">
         <Check aria-hidden="true" className="size-3" />
       </span>
     );
   }
   if (status === "running") {
     return (
-      <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-signal/15 text-signal">
+      <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
         <Loader2 aria-hidden="true" className="size-3 animate-spin motion-reduce:animate-none" />
       </span>
     );
   }
   return (
-    <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-secondary text-muted-foreground">
+    <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-secondary/70 text-muted-foreground">
       <Circle aria-hidden="true" className="size-2.5" />
     </span>
   );
@@ -81,12 +81,12 @@ const PlanHeader = ({
         {done} / {total} 步 · {pct}%
       </span>
     </div>
-    <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
+    <div className="h-1.5 w-full overflow-hidden rounded-full bg-secondary">
       <motion.div
         initial={false}
         animate={{ width: `${pct}%` }}
         transition={{ duration: reduced ? 0 : 0.35, ease: "easeOut" }}
-        className="h-full rounded-full bg-gradient-to-r from-signal via-indigo-500 to-emerald-500"
+        className="h-full rounded-full bg-foreground"
       />
     </div>
   </div>
@@ -98,10 +98,10 @@ const PlanStepList = ({ steps }: { steps: AiPlanStep[] }) => (
       <li
         key={step.id}
         className={cn(
-          "flex items-center justify-between gap-2.5 rounded-xl border border-solid px-3 py-2 text-xs transition-colors",
+          "flex items-center justify-between gap-2.5 rounded-xl border border-solid px-3 py-2.5 text-xs transition-colors",
           step.status === "running"
-            ? "border-signal/55 bg-signal/8 shadow-xs"
-            : "border-border/70 bg-secondary/25",
+            ? "border-foreground/20 bg-secondary/75"
+            : "border-border/60 bg-background/60 dark:bg-secondary/20",
         )}
       >
         <div className="flex min-w-0 items-center gap-2.5">
@@ -158,7 +158,7 @@ const PlanFooter = ({
       <button
         type="button"
         onClick={onAdvance}
-        className="inline-flex h-7.5 cursor-pointer items-center gap-1.5 rounded-full border border-solid border-signal bg-signal px-3 font-sans text-xs font-medium text-signal-foreground shadow-sm transition-opacity hover:opacity-92 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+        className="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-full border border-solid border-primary bg-primary px-3.5 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-opacity hover:opacity-90 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
       >
         <Play aria-hidden="true" className="size-3" />
         <span>推进下一步</span>
@@ -187,7 +187,7 @@ export const AiAgentPlan = ({
     <div
       data-slot="ai-agent-plan"
       className={cn(
-        "flex w-full max-w-xl flex-col gap-3.5 rounded-[22px] border border-solid border-border/90 bg-card p-4 text-card-foreground shadow-md",
+        "flex w-full max-w-xl flex-col gap-4 rounded-[22px] border border-solid border-border bg-card p-5 text-card-foreground shadow-xs",
         className,
       )}
     >

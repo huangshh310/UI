@@ -93,13 +93,13 @@ export const Suggestion = ({
       onClick?.(event);
     }}
     className={cn(
-      "inline-flex h-8 shrink-0 cursor-pointer items-center gap-1.5 rounded-full border border-solid border-border/85 bg-card px-3.5 font-sans text-xs font-medium text-foreground shadow-xs",
-      "transition-[transform,border-color,background-color] duration-(--ui-duration-fast) hover:-translate-y-0.5 hover:border-signal/40 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none active:scale-98",
+      "inline-flex h-8 shrink-0 cursor-pointer items-center gap-1.5 rounded-full border border-solid border-border bg-card px-3.5 font-sans text-xs font-medium text-foreground shadow-xs",
+      "transition-[transform,border-color,background-color] duration-(--ui-duration-fast) hover:-translate-y-0.5 hover:border-foreground/25 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none active:scale-98",
       className,
     )}
     {...props}
   >
-    {icon ?? <Sparkles aria-hidden="true" className="size-3 text-signal" />}
+    {icon ?? <Sparkles aria-hidden="true" className="size-3 text-muted-foreground" />}
     <span>{children ?? suggestion}</span>
   </button>
 );
@@ -150,7 +150,7 @@ const StarterCardGrid = ({
       >
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1.5">
-            {item.icon && <span className="text-signal">{item.icon}</span>}
+            {item.icon && <span className="text-muted-foreground">{item.icon}</span>}
             <span className="truncate font-sans text-xs font-semibold text-foreground">
               {item.label}
             </span>
@@ -163,7 +163,7 @@ const StarterCardGrid = ({
         </div>
         <ArrowUpRight
           aria-hidden="true"
-          className="mt-0.5 size-3.5 shrink-0 text-muted-foreground transition-transform duration-(--ui-duration-fast) group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-signal"
+          className="mt-0.5 size-3.5 shrink-0 text-muted-foreground transition-transform duration-(--ui-duration-fast) group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground"
         />
       </button>
     ))}

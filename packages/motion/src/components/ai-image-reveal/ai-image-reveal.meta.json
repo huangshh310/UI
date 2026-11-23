@@ -1,0 +1,6 @@
+{
+  "name": "ai-image-reveal",
+  "title": "AI Image Reveal",
+  "description": "AI 图像生成显影组件，从呼吸粒子云聚拢为像素马赛克再柔焦解析至高清成图，支持重播与减弱动效降级。",
+  "categories": ["ai", "motion"]
+}

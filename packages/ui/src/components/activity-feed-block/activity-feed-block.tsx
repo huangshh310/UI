@@ -60,11 +60,11 @@ const DEFAULT_ITEMS: ActivityEntry[] = [
 
 const CATEGORY_META: Record<
   ActivityCategory,
-  { label: string; variant: "signal" | "warning" | "secondary" }
+  { label: string; variant: "secondary" | "warning" | "outline" }
 > = {
-  deploy: { label: "部署", variant: "signal" },
+  deploy: { label: "部署", variant: "secondary" },
   security: { label: "安全", variant: "warning" },
-  team: { label: "协作", variant: "secondary" },
+  team: { label: "协作", variant: "outline" },
 };
 
 const FeedItemRow = ({
@@ -79,7 +79,7 @@ const FeedItemRow = ({
     <div
       className={cn(
         "flex flex-wrap items-start justify-between gap-3 border-b border-solid border-border/75 px-4 py-3.5 transition-colors last:border-b-0",
-        item.unread ? "bg-signal/5" : "bg-transparent",
+        item.unread ? "bg-secondary/45" : "bg-transparent",
       )}
     >
       <div className="flex min-w-0 flex-1 items-start gap-3">

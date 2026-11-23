@@ -9,8 +9,8 @@ import { waitForEntranceAnimations } from "./support/animations";
 
 const CLI_COMMAND = "pnpm dlx shadcn@latest add huangshh310/UI/button";
 
-/** 目录中的代表性卡片总数：按钮 19，表单 13，浮层 11，展示 9，导航与布局 10，动效 5，AI 与智能体 18，区块 13 */
-const SPECIMEN_COUNT = 98;
+/** 目录中的代表性卡片总数：按钮 19，表单 13，浮层 11，展示 9，导航与布局 10，动效 5，AI 与智能体 22，区块 13 */
+const SPECIMEN_COUNT = 102;
 const BUTTON_SPECIMEN_COUNT = 19;
 const FORM_SPECIMEN_COUNT = 13;
 
@@ -32,22 +32,14 @@ test.describe("首页", () => {
     await expect(page.locator('[data-slot="button"]').first()).toBeVisible();
   });
 
-  test("首屏快捷安装命令支持切换包管理器，吸顶页头带有遮罩背景避免文字穿透", async ({ page }) => {
+  test("首页呈现 9 张精选画廊卡片，悬浮胶囊页头带有清晰不透明底色", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("tabpanel", { name: "pnpm" })).toContainText(
-      "pnpm dlx shadcn@latest add",
-    );
+    await expect(specimens(page)).toHaveCount(9);
 
-    await page.getByRole("tab", { name: "npm", exact: true }).click();
-    await expect(page.getByRole("tabpanel", { name: "npm", exact: true })).toContainText(
-      "npx shadcn@latest add",
-    );
-
-    const headerBg = await page
-      .locator("header")
-      .first()
+    const navBg = await page
+      .getByRole("navigation", { name: "主导航" })
       .evaluate((el) => getComputedStyle(el).backgroundColor);
-    expect(headerBg).not.toBe("rgba(0, 0, 0, 0)");
+    expect(navBg).not.toBe("rgba(0, 0, 0, 0)");
   });
 });
 

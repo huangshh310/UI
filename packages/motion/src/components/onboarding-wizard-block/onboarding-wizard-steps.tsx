@@ -32,16 +32,18 @@ const StepBadgeItem = ({
     className={cn(
       "flex items-center gap-2.5 rounded-xl border border-solid px-3 py-2.5 text-xs transition-colors",
       active
-        ? "border-signal bg-signal/8 text-foreground"
+        ? "border-foreground/25 bg-secondary/75 text-foreground"
         : done
-          ? "border-border bg-secondary/45 text-foreground"
+          ? "border-border bg-secondary/35 text-foreground"
           : "border-border/70 bg-transparent text-muted-foreground",
     )}
   >
     <span
       className={cn(
         "inline-flex size-6 shrink-0 items-center justify-center rounded-full font-mono text-[11px] font-semibold",
-        active || done ? "bg-signal text-signal-foreground" : "bg-secondary text-muted-foreground",
+        active || done
+          ? "bg-primary text-primary-foreground"
+          : "bg-secondary text-muted-foreground",
       )}
     >
       {done ? <Check aria-hidden="true" className="size-3.5" /> : item.id + 1}
@@ -115,7 +117,7 @@ export const StepProfile = ({
               className={cn(
                 "cursor-pointer rounded-xl border border-solid px-3 py-2.5 text-left text-xs font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
                 region === item
-                  ? "border-signal bg-signal/8 text-foreground"
+                  ? "border-primary bg-secondary/75 text-foreground"
                   : "border-border bg-background text-muted-foreground hover:text-foreground dark:bg-card",
               )}
             >
@@ -189,7 +191,7 @@ export const StepSummary = ({
 }) =>
   completed ? (
     <div className="flex flex-col items-center gap-2 py-6 text-center">
-      <span className="inline-flex size-11 items-center justify-center rounded-full bg-signal text-signal-foreground">
+      <span className="inline-flex size-11 items-center justify-center rounded-full bg-primary text-primary-foreground">
         <CheckCircle2 aria-hidden="true" className="size-5" />
       </span>
       <p className="m-0 text-base font-semibold text-foreground">工作区已就绪</p>
@@ -200,7 +202,7 @@ export const StepSummary = ({
   ) : (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
-        <ShieldCheck aria-hidden="true" className="size-4 text-signal" />
+        <ShieldCheck aria-hidden="true" className="size-4 text-foreground" />
         <p className="m-0 text-sm font-semibold text-foreground">确认并启动工作区</p>
       </div>
       <div className="grid grid-cols-1 gap-3 rounded-xl border border-solid border-border bg-secondary/35 p-4 text-xs sm:grid-cols-3">

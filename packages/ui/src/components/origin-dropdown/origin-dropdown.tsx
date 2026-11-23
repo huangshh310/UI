@@ -20,7 +20,7 @@ const POPUP_CLASS = cn(
 );
 
 const TRIGGER_CLASS = cn(
-  "group inline-flex h-9 cursor-pointer items-center gap-2 rounded-lg border border-solid border-border bg-background px-3 font-sans text-sm font-medium text-foreground shadow-sm dark:bg-card",
+  "group inline-flex h-10 cursor-pointer items-center gap-2 rounded-xl border border-solid border-border bg-background px-3.5 font-sans text-sm font-medium text-foreground shadow-xs dark:bg-card",
   "transition-colors duration-(--ui-duration-fast) hover:border-foreground/22 hover:bg-accent/50 outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/20",
 );
 
@@ -64,7 +64,7 @@ const CheckboxRow = ({ item }: { item: OriginDropdownCheckboxEntry }) => (
     onCheckedChange={(checked) => item.onCheckedChange?.(checked)}
     className="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-sm text-foreground outline-none select-none transition-colors duration-(--ui-duration-fast) data-disabled:pointer-events-none data-disabled:opacity-45 data-highlighted:bg-accent"
   >
-    <span className="inline-flex size-4 shrink-0 items-center justify-center rounded border border-solid border-border bg-background text-signal dark:bg-card">
+    <span className="inline-flex size-4 shrink-0 items-center justify-center rounded border border-solid border-border bg-background text-foreground dark:bg-card">
       <Menu.CheckboxItemIndicator>
         <Check aria-hidden="true" className="size-3 stroke-[2.5]" />
       </Menu.CheckboxItemIndicator>

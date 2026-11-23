@@ -42,11 +42,11 @@ const SIZE_MAP: Record<AvatarStackSize, { avatar: string; overlap: string; text:
 };
 
 const AVATAR_TONES = [
-  "bg-gradient-to-br from-blue-500/20 to-indigo-500/25 text-blue-900 dark:from-blue-400/25 dark:to-indigo-400/30 dark:text-blue-100",
-  "bg-gradient-to-br from-violet-500/20 to-fuchsia-500/25 text-violet-900 dark:from-violet-400/25 dark:to-fuchsia-400/30 dark:text-violet-100",
-  "bg-gradient-to-br from-emerald-500/20 to-teal-500/25 text-emerald-900 dark:from-emerald-400/25 dark:to-teal-400/30 dark:text-emerald-100",
-  "bg-gradient-to-br from-amber-500/20 to-orange-500/25 text-amber-900 dark:from-amber-400/25 dark:to-orange-400/30 dark:text-amber-100",
-  "bg-gradient-to-br from-rose-500/20 to-pink-500/25 text-rose-900 dark:from-rose-400/25 dark:to-pink-400/30 dark:text-rose-100",
+  "bg-zinc-900/10 text-zinc-900 dark:bg-zinc-100/15 dark:text-zinc-100",
+  "bg-blue-500/14 text-blue-900 dark:bg-blue-400/20 dark:text-blue-100",
+  "bg-emerald-500/14 text-emerald-900 dark:bg-emerald-400/20 dark:text-emerald-100",
+  "bg-amber-500/14 text-amber-900 dark:bg-amber-400/20 dark:text-amber-100",
+  "bg-stone-500/16 text-stone-900 dark:bg-stone-400/20 dark:text-stone-100",
 ];
 
 const STATUS_DOT: Record<NonNullable<AvatarStackItem["status"]>, string> = {
@@ -110,7 +110,7 @@ const AvatarCell = ({
           <span
             aria-hidden="true"
             className={cn(
-              "absolute right-0 bottom-0 z-10 size-2.5 rounded-full ring-2 ring-card",
+              "absolute right-0.5 bottom-0.5 z-10 size-2 rounded-full ring-2 ring-card",
               STATUS_DOT[item.status],
             )}
           />

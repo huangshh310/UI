@@ -25,11 +25,11 @@ const DEFAULT_OPTIONS: AiApprovalOption[] = [
 
 const RISK_META: Record<
   AiApprovalRisk,
-  { label: string; variant: "secondary" | "warning" | "destructive"; accent: string }
+  { label: string; variant: "secondary" | "warning" | "destructive" }
 > = {
-  low: { label: "低风险", variant: "secondary", accent: "from-signal/10 via-transparent" },
-  medium: { label: "需确认", variant: "warning", accent: "from-amber-500/12 via-transparent" },
-  high: { label: "高危操作", variant: "destructive", accent: "from-rose-500/14 via-transparent" },
+  low: { label: "低风险", variant: "secondary" },
+  medium: { label: "需确认", variant: "warning" },
+  high: { label: "高危操作", variant: "destructive" },
 };
 
 const OptionList = ({
@@ -51,10 +51,10 @@ const OptionList = ({
           aria-pressed={active}
           onClick={() => onSelect(opt.id)}
           className={cn(
-            "flex cursor-pointer items-center justify-between gap-2.5 rounded-xl border border-solid px-3 py-2 text-left transition-all outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            "flex cursor-pointer items-center justify-between gap-2.5 rounded-xl border border-solid px-3.5 py-2.5 text-left transition-all outline-none focus-visible:ring-2 focus-visible:ring-ring",
             active
-              ? "border-signal/65 bg-signal/8 shadow-xs"
-              : "border-border/80 bg-secondary/25 hover:bg-accent/45",
+              ? "border-foreground/25 bg-secondary/75"
+              : "border-border/80 bg-transparent hover:bg-secondary/40",
           )}
         >
           <div className="min-w-0">
@@ -67,7 +67,7 @@ const OptionList = ({
             className={cn(
               "inline-flex size-4.5 shrink-0 items-center justify-center rounded-full border border-solid",
               active
-                ? "border-signal bg-signal text-signal-foreground shadow-xs"
+                ? "border-primary bg-primary text-primary-foreground"
                 : "border-border bg-card",
             )}
           >
@@ -109,20 +109,15 @@ const ApprovalHeader = ({
 }: {
   title: string;
   description: string;
-  risk: { label: string; variant: "secondary" | "warning" | "destructive"; accent: string };
+  risk: { label: string; variant: "secondary" | "warning" | "destructive" };
 }) => (
-  <div
-    className={cn(
-      "flex items-start justify-between gap-3 rounded-xl bg-gradient-to-r to-transparent p-2.5",
-      risk.accent,
-    )}
-  >
+  <div className="flex items-start justify-between gap-3">
     <div className="flex items-center gap-2.5">
-      <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-xl border border-solid border-signal/25 bg-card text-signal shadow-xs">
+      <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-xl border border-solid border-border bg-secondary/70 text-foreground">
         <ShieldAlert aria-hidden="true" className="size-4" />
       </span>
       <div className="min-w-0">
-        <p className="m-0 text-xs font-semibold text-foreground">{title}</p>
+        <p className="m-0 text-[13px] font-semibold text-foreground">{title}</p>
         <p className="m-0 mt-0.5 text-[11px] text-muted-foreground">{description}</p>
       </div>
     </div>
@@ -139,14 +134,14 @@ const ApprovalFooter = ({
   onReject: () => void;
   onApprove: () => void;
 }) => (
-  <div className="flex items-center justify-between gap-2 border-t border-solid border-border/70 pt-2.5">
+  <div className="flex items-center justify-between gap-2 border-t border-solid border-border/70 pt-3">
     <span className="font-mono text-[10px] text-muted-foreground">护栏保护 · 可回滚</span>
     <div className="flex items-center gap-2">
-      <Button size="sm" variant="outline" onClick={onReject}>
+      <Button size="sm" variant="outline" className="rounded-full" onClick={onReject}>
         <X className="size-3.5" />
         <span>拒绝</span>
       </Button>
-      <Button size="sm" variant="signal" onClick={onApprove}>
+      <Button size="sm" variant="primary" className="rounded-full" onClick={onApprove}>
         <Check className="size-3.5" />
         <span>批准执行</span>
       </Button>
@@ -172,7 +167,7 @@ export const AiApprovalCard = (props: AiApprovalCardProps) => {
       <div
         data-slot="ai-approval-card"
         className={cn(
-          "w-full max-w-md overflow-hidden rounded-[22px] border border-solid border-border/90 bg-card shadow-md",
+          "w-full max-w-md overflow-hidden rounded-[22px] border border-solid border-border bg-card shadow-xs",
           props.className,
         )}
       >
@@ -189,13 +184,13 @@ export const AiApprovalCard = (props: AiApprovalCardProps) => {
     <div
       data-slot="ai-approval-card"
       className={cn(
-        "flex w-full max-w-md flex-col gap-2.5 rounded-[22px] border border-solid border-border/90 bg-card p-3.5 text-card-foreground shadow-md",
+        "flex w-full max-w-md flex-col gap-3 rounded-[22px] border border-solid border-border bg-card p-5 text-card-foreground shadow-xs",
         props.className,
       )}
     >
       <ApprovalHeader title={props.title} description={description} risk={RISK_META[riskLevel]} />
       <div className="flex items-center gap-2 rounded-xl border border-solid border-border/80 bg-secondary/50 px-3 py-2 font-mono text-[11px] text-foreground">
-        <Terminal aria-hidden="true" className="size-3.5 shrink-0 text-signal" />
+        <Terminal aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
         <span className="truncate">{command}</span>
       </div>
       <OptionList options={options} selectedId={selectedId} onSelect={setSelectedId} />

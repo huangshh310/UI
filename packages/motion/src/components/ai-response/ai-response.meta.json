@@ -1,0 +1,6 @@
+{
+  "name": "ai-response",
+  "title": "AI Response",
+  "description": "流式 AI 回复容器，内置安全 Markdown 渲染、工具调用折叠摘要、参考来源卡片与反馈操作栏。",
+  "categories": ["ai", "motion"]
+}

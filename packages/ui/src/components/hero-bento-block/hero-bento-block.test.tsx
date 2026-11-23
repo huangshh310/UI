@@ -12,10 +12,10 @@ describe("HeroBentoBlock", () => {
     const onSecondary = vi.fn<() => void>();
 
     render(<HeroBentoBlock onPrimaryClick={onPrimary} onSecondaryClick={onSecondary} />);
-    expect(screen.getByText(/统一设计 Token/)).toBeTruthy();
+    expect(screen.getByText(/让创意从灵感到落地/)).toBeTruthy();
 
-    await user.click(screen.getByRole("button", { name: "开始集成" }));
-    await user.click(screen.getByRole("button", { name: "查看架构文档" }));
+    await user.click(screen.getByRole("button", { name: "免费开始" }));
+    await user.click(screen.getByRole("button", { name: "了解更多" }));
 
     expect(onPrimary).toHaveBeenCalledTimes(1);
     expect(onSecondary).toHaveBeenCalledTimes(1);

@@ -45,7 +45,7 @@ const CredentialsForm = ({
           value={email}
           onChange={(event) => onEmailChange(event.target.value)}
           placeholder="name@company.com"
-          className="h-9 rounded-lg border border-solid border-border bg-background px-3 font-sans text-sm text-foreground shadow-sm outline-none transition-[border-color,box-shadow] focus:border-ring focus:ring-3 focus:ring-ring/20 dark:bg-card"
+          className="h-10.5 rounded-xl border border-solid border-border bg-card px-3.5 font-sans text-sm text-foreground shadow-xs outline-none transition-[border-color,box-shadow] hover:border-foreground/20 focus:border-ring focus:ring-3 focus:ring-ring/18"
         />
       </div>
       <LockInput
@@ -54,7 +54,7 @@ const CredentialsForm = ({
         onChange={(event) => onPasswordChange(event.target.value)}
         placeholder="输入访问密码"
       />
-      <Button type="submit" variant="signal" className="mt-1 w-full">
+      <Button type="submit" variant="primary" size="lg" className="mt-1.5 w-full rounded-xl">
         {isLogin ? "立即登录" : "创建工作区账号"}
       </Button>
     </form>
@@ -102,24 +102,46 @@ interface AuthFormCardProps {
   className?: string;
 }
 
+const AuthFooter = ({ isLogin, onToggle }: { isLogin: boolean; onToggle: () => void }) => (
+  <CardFooter muted className="justify-center text-xs text-muted-foreground">
+    <span>{isLogin ? "还没有账号？" : "已有工作区账号？"}</span>
+    <button
+      type="button"
+      onClick={onToggle}
+      className="cursor-pointer border-0 bg-transparent p-0 font-medium text-foreground underline-offset-4 hover:underline"
+    >
+      {isLogin ? "注册新账号" : "返回登录"}
+    </button>
+  </CardFooter>
+);
+
 const AuthFormCard = (p: AuthFormCardProps) => (
   <Card
     data-slot={p.isCardLayout ? "auth-block" : undefined}
-    className={cn(p.isCardLayout ? "w-full max-w-sm" : "w-full border-0 shadow-none", p.className)}
+    className={cn(
+      p.isCardLayout ? "w-full max-w-[380px] shadow-md" : "w-full border-0 shadow-none",
+      p.className,
+    )}
   >
-    <CardHeader>
-      <div className="mb-2 inline-flex size-9 items-center justify-center rounded-xl bg-signal text-signal-foreground shadow-sm">
-        <Shield aria-hidden="true" className="size-4" />
+    <CardHeader className="items-center text-center">
+      <div className="mb-2 inline-flex size-11 items-center justify-center rounded-2xl border border-solid border-border bg-secondary text-foreground shadow-xs">
+        <Shield aria-hidden="true" className="size-5" />
       </div>
-      <CardTitle>{p.isLogin ? `登录 ${p.brandName}` : `创建 ${p.brandName} 账号`}</CardTitle>
+      <CardTitle className="text-lg">
+        {p.isLogin ? `登录 ${p.brandName}` : `创建 ${p.brandName} 账号`}
+      </CardTitle>
       <CardDescription>
-        {p.isLogin
-          ? "使用 SSO 或工作邮箱进入团队控制台。"
-          : "几秒内初始化你的组件与 Token 工作区。"}
+        {p.isLogin ? "使用单点登录或工作邮箱进入你的空间" : "几秒内开启你的专属产品空间"}
       </CardDescription>
     </CardHeader>
     <CardContent className="flex flex-col gap-4">
-      <Button type="button" variant="outline" className="w-full" onClick={p.onSsoClick}>
+      <Button
+        type="button"
+        variant="outline"
+        size="lg"
+        className="w-full rounded-xl text-sm"
+        onClick={p.onSsoClick}
+      >
         使用企业单点登录（SSO）
       </Button>
       <Separator label="或使用邮箱" />
@@ -132,16 +154,7 @@ const AuthFormCard = (p: AuthFormCardProps) => (
         onSubmit={p.onSubmit}
       />
     </CardContent>
-    <CardFooter muted className="justify-center text-xs text-muted-foreground">
-      <span>{p.isLogin ? "还没有账号？" : "已有工作区账号？"}</span>
-      <button
-        type="button"
-        onClick={p.onToggleMode}
-        className="cursor-pointer border-0 bg-transparent p-0 font-medium text-signal underline-offset-4 hover:underline dark:text-ring"
-      >
-        {p.isLogin ? "注册新账号" : "返回登录"}
-      </button>
-    </CardFooter>
+    <AuthFooter isLogin={p.isLogin} onToggle={p.onToggleMode} />
   </Card>
 );
 

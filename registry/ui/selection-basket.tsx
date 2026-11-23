@@ -88,7 +88,7 @@ const BasketCounter = ({
       key={count}
       initial={{ scale: 0.75 }}
       animate={{ scale: 1 }}
-      className="inline-flex size-6 items-center justify-center rounded-full bg-signal font-mono text-xs font-semibold text-signal-foreground tabular-nums"
+      className="inline-flex size-6 items-center justify-center rounded-full bg-primary font-mono text-xs font-semibold text-primary-foreground tabular-nums"
     >
       {count}
     </motion.span>
@@ -97,7 +97,7 @@ const BasketCounter = ({
       <button
         type="button"
         onClick={onSelectAll}
-        className="cursor-pointer border-0 bg-transparent text-xs text-signal underline underline-offset-2 hover:opacity-80"
+        className="cursor-pointer border-0 bg-transparent text-xs font-medium text-foreground underline underline-offset-2 hover:opacity-80"
       >
         全选 ({totalCount})
       </button>

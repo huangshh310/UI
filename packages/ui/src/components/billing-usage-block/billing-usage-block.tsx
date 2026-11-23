@@ -94,18 +94,18 @@ export const BillingUsageBlock = ({
       <div>
         <div className="flex flex-wrap items-center gap-2">
           <CardTitle>{planName}</CardTitle>
-          <Badge variant="signal">当前生效</Badge>
+          <Badge variant="secondary">当前生效</Badge>
         </div>
         <CardDescription className="mt-1">
           下一次自动扣费日期为 2026-12-01，当前周期费用 {priceLabel}。
         </CardDescription>
       </div>
       <div className="flex flex-wrap items-center gap-2">
-        <Button size="sm" variant="outline">
+        <Button size="sm" variant="outline" className="rounded-full">
           <CreditCard className="size-3.5" />
           <span>支付方式</span>
         </Button>
-        <Button size="sm" variant="signal" onClick={onUpgrade}>
+        <Button size="sm" variant="primary" className="rounded-full" onClick={onUpgrade}>
           升级企业版
         </Button>
       </div>

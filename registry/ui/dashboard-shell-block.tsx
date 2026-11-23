@@ -39,7 +39,7 @@ const COLUMNS: DataTableColumn<DeployRow>[] = [
     header: "状态",
     accessor: (row) => row.status,
     cell: (row) => (
-      <Badge variant={row.status === "健康" ? "success" : "signal"} dot>
+      <Badge variant={row.status === "健康" ? "success" : "secondary"} dot>
         {row.status}
       </Badge>
     ),
@@ -69,14 +69,16 @@ interface SidebarProps {
 const ShellSidebar = ({ workspaceName, collapsed, activeNav, onSelectNav }: SidebarProps) => (
   <div
     className={cn(
-      "flex shrink-0 flex-col gap-3 border-b border-solid border-border bg-secondary/35 p-3 transition-[width] duration-(--ui-duration-fast) md:border-r md:border-b-0",
-      collapsed ? "md:w-15" : "md:w-52",
+      "flex shrink-0 flex-col gap-3 border-b border-solid border-border bg-secondary/60 p-3.5 transition-[width] duration-(--ui-duration-fast) @2xl:border-r @2xl:border-b-0",
+      collapsed ? "@2xl:w-16" : "@2xl:w-52",
     )}
   >
     <div className="flex items-center gap-2 px-1.5 py-1">
-      <span className="size-2.5 shrink-0 rounded-full bg-signal" />
+      <span className="size-2.5 shrink-0 rounded-full bg-primary" />
       {!collapsed && (
-        <span className="truncate text-sm font-semibold text-foreground">{workspaceName}</span>
+        <span className="truncate text-sm font-semibold tracking-tight text-foreground">
+          {workspaceName}
+        </span>
       )}
     </div>
     {!collapsed && (
@@ -94,16 +96,16 @@ const ShellSidebar = ({ workspaceName, collapsed, activeNav, onSelectNav }: Side
         ]}
       />
     )}
-    <div className="flex flex-row gap-1 md:flex-col">
+    <div className="flex flex-row flex-wrap gap-1 @2xl:flex-col">
       {NAV_ITEMS.map(({ id, label, Icon }) => (
         <button
           key={id}
           type="button"
           onClick={() => onSelectNav(id)}
           className={cn(
-            "flex h-8 cursor-pointer items-center gap-2 rounded-lg border-0 px-2.5 font-sans text-xs font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            "flex h-8.5 cursor-pointer items-center gap-2 rounded-xl border-0 px-2.5 font-sans text-xs font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
             activeNav === id
-              ? "bg-background text-foreground shadow-sm dark:bg-card"
+              ? "bg-card text-foreground shadow-xs"
               : "bg-transparent text-muted-foreground hover:bg-accent hover:text-foreground",
           )}
         >
@@ -116,12 +118,12 @@ const ShellSidebar = ({ workspaceName, collapsed, activeNav, onSelectNav }: Side
 );
 
 const KpiGrid = () => (
-  <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+  <div className="grid grid-cols-1 gap-3 @md:grid-cols-3">
     {KPIS.map((kpi) => (
       <Card key={kpi.label}>
         <CardContent className="flex items-end justify-between py-4">
-          <div>
-            <p className="m-0 text-xs text-muted-foreground">{kpi.label}</p>
+          <div className="min-w-0">
+            <p className="m-0 truncate text-xs text-muted-foreground">{kpi.label}</p>
             <p className="m-0 mt-1 font-mono text-xl font-semibold text-foreground tabular-nums">
               {kpi.value}
             </p>
@@ -161,7 +163,7 @@ const ShellTopBar = ({
         items={[{ label: workspaceName }, { label: currentLabel }]}
       />
     </div>
-    <Button size="sm" variant="signal">
+    <Button size="sm" variant="primary" className="rounded-full">
       新建发布
     </Button>
   </div>
@@ -177,36 +179,32 @@ export const DashboardShellBlock = ({
   const currentLabel = NAV_ITEMS.find((item) => item.id === activeNav)?.label ?? "运行概览";
 
   return (
-    <div
-      data-slot="dashboard-shell-block"
-      className={cn(
-        "flex w-full flex-col overflow-hidden rounded-2xl border border-solid border-border bg-background shadow-sm md:flex-row",
-        className,
-      )}
-    >
-      <ShellSidebar
-        workspaceName={workspaceName}
-        collapsed={collapsed}
-        activeNav={activeNav}
-        onSelectNav={setActiveNav}
-      />
-      <div className="flex min-w-0 flex-1 flex-col">
-        <ShellTopBar
-          uid={uid}
+    <div data-slot="dashboard-shell-block" className={cn("@container w-full", className)}>
+      <div className="flex w-full flex-col overflow-hidden rounded-[24px] border border-solid border-border bg-card shadow-xs @2xl:flex-row">
+        <ShellSidebar
           workspaceName={workspaceName}
-          currentLabel={currentLabel}
           collapsed={collapsed}
-          onToggleCollapse={() => setCollapsed((c) => !c)}
+          activeNav={activeNav}
+          onSelectNav={setActiveNav}
         />
-        <div className="flex flex-col gap-4 p-4">
-          <KpiGrid />
-          <DataTable
-            columns={COLUMNS}
-            data={ROWS}
-            getRowId={(r) => r.id}
-            searchable={false}
-            pageSize={5}
+        <div className="flex min-w-0 flex-1 flex-col">
+          <ShellTopBar
+            uid={uid}
+            workspaceName={workspaceName}
+            currentLabel={currentLabel}
+            collapsed={collapsed}
+            onToggleCollapse={() => setCollapsed((c) => !c)}
           />
+          <div className="flex flex-col gap-4 p-4">
+            <KpiGrid />
+            <DataTable
+              columns={COLUMNS}
+              data={ROWS}
+              getRowId={(r) => r.id}
+              searchable={false}
+              pageSize={5}
+            />
+          </div>
         </div>
       </div>
     </div>

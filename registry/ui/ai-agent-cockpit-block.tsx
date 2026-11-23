@@ -91,7 +91,7 @@ const ComposerBar = ({
   <div className="flex flex-col gap-3 rounded-2xl border border-solid border-border bg-secondary/35 p-3.5">
     <div className="flex flex-wrap items-center gap-1.5">
       <span className="inline-flex items-center gap-1 text-[11px] font-medium text-muted-foreground">
-        <Sparkles aria-hidden="true" className="size-3 text-signal" />
+        <Sparkles aria-hidden="true" className="size-3 text-muted-foreground" />
         快捷指令：
       </span>
       {QUICK_PROMPTS.map((prompt) => (
@@ -99,7 +99,7 @@ const ComposerBar = ({
           key={prompt}
           type="button"
           onClick={() => onRun(prompt)}
-          className="cursor-pointer rounded-full border border-solid border-border bg-background px-2.5 py-1 font-sans text-[11px] font-medium text-foreground shadow-xs transition-colors hover:border-foreground/25 hover:bg-accent outline-none focus-visible:ring-2 focus-visible:ring-ring dark:bg-card"
+          className="cursor-pointer rounded-full border border-solid border-border bg-background px-2.5 py-1 font-sans text-[11px] font-medium text-foreground transition-colors hover:border-foreground/25 hover:bg-accent outline-none focus-visible:ring-2 focus-visible:ring-ring dark:bg-card"
         >
           {prompt}
         </button>
@@ -112,13 +112,13 @@ const ComposerBar = ({
         onChange={(e) => onDraftChange(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && draft.trim() && onRun(draft.trim())}
         placeholder="输入设计需求、语音听写或架构审查指令…"
-        className="h-9 min-w-0 flex-1 rounded-xl border border-solid border-border bg-background px-3.5 text-xs text-foreground shadow-xs outline-none focus:border-ring focus:ring-2 focus:ring-ring/25 dark:bg-card"
+        className="h-10 min-w-0 flex-1 rounded-full border border-solid border-border bg-background px-4 text-xs text-foreground outline-none focus:border-ring focus:ring-2 focus:ring-ring/20 dark:bg-card"
       />
       <button
         type="button"
         aria-label="执行指令"
         onClick={() => draft.trim() && onRun(draft.trim())}
-        className="inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-xl border border-solid border-signal bg-signal px-3.5 font-sans text-xs font-medium text-signal-foreground shadow-sm transition-opacity hover:opacity-92 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+        className="inline-flex h-10 cursor-pointer items-center gap-1.5 rounded-full border border-solid border-primary bg-primary px-4 font-sans text-xs font-medium text-primary-foreground transition-opacity hover:opacity-90 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
       >
         <Send aria-hidden="true" className="size-3.5" />
         <span>执行</span>
@@ -194,17 +194,13 @@ export const AiAgentCockpitBlock = ({
     <div
       data-slot="ai-agent-cockpit-block"
       className={cn(
-        "relative flex w-full max-w-4xl flex-col gap-5 overflow-hidden rounded-[26px] border border-solid border-border/90 bg-card p-6 text-card-foreground shadow-lg",
+        "@container relative flex w-full max-w-4xl flex-col gap-5 overflow-hidden rounded-[24px] border border-solid border-border bg-card p-6 text-card-foreground shadow-xs",
         className,
       )}
     >
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-24 left-1/2 h-48 w-96 -translate-x-1/2 rounded-full bg-gradient-to-r from-signal/15 via-indigo-500/15 to-cyan-400/15 blur-3xl"
-      />
       <div className="relative z-10 flex flex-col gap-5">
         <CockpitHeader mode={c.mode} tokens={c.tokens} onModeChange={c.handleModeChange} />
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 @2xl:grid-cols-2">
           <AiReasoning
             status={c.mode === "research" ? "thinking" : "completed"}
             defaultExpanded

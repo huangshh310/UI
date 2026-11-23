@@ -139,8 +139,7 @@ const DAY_BASE = cn(
   "disabled:pointer-events-none disabled:opacity-35",
 );
 
-const SELECTED_CLASSES =
-  "bg-signal font-medium text-signal-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] hover:bg-signal/92";
+const SELECTED_CLASSES = "bg-primary font-medium text-primary-foreground hover:bg-primary/90";
 
 interface CalendarGridProps {
   month: Date;
@@ -209,16 +208,16 @@ const getDayState = (
 const cellBandClass = (state: DayState, hasRangeSpan: boolean) =>
   cn(
     "p-0 text-center",
-    state.inRange && "bg-signal/12 first:rounded-l-lg last:rounded-r-lg",
-    hasRangeSpan && state.rangeStart && "rounded-l-lg bg-signal/12",
-    hasRangeSpan && state.rangeEnd && "rounded-r-lg bg-signal/12",
+    state.inRange && "bg-secondary first:rounded-l-lg last:rounded-r-lg",
+    hasRangeSpan && state.rangeStart && "rounded-l-lg bg-secondary",
+    hasRangeSpan && state.rangeEnd && "rounded-r-lg bg-secondary",
   );
 
 const dayButtonClass = (outside: boolean, state: DayState) =>
   cn(
     DAY_BASE,
     outside && !state.selected && "text-muted-foreground",
-    state.inRange && "rounded-none hover:bg-signal/20",
+    state.inRange && "rounded-none hover:bg-accent",
     state.selected && SELECTED_CLASSES,
   );
 
@@ -262,7 +261,7 @@ const DayCell = (props: DayCellProps) => {
             aria-hidden="true"
             className={cn(
               "absolute bottom-1 size-1 rounded-full",
-              state.selected ? "bg-signal-foreground" : "bg-signal",
+              state.selected ? "bg-primary-foreground" : "bg-foreground",
             )}
           />
         )}
@@ -493,7 +492,7 @@ export const Calendar = (props: CalendarProps) => {
       data-slot="calendar"
       aria-label={props["aria-label"]}
       className={cn(
-        "w-fit rounded-2xl border border-solid border-border bg-card p-3 font-sans text-card-foreground shadow-sm select-none",
+        "w-fit rounded-[22px] border border-solid border-border bg-card p-4 font-sans text-card-foreground shadow-xs select-none",
         props.className,
       )}
     >

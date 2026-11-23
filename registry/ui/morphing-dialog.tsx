@@ -61,7 +61,7 @@ const MorphTriggerCard = ({
   >
     <div className="flex w-full items-center justify-between gap-2">
       {tag ? (
-        <span className="rounded-full bg-signal px-2 py-0.5 font-mono text-[11px] font-medium text-signal-foreground">
+        <span className="rounded-full bg-secondary px-2.5 py-0.5 font-mono text-[11px] font-medium text-foreground">
           {tag}
         </span>
       ) : (
@@ -91,7 +91,7 @@ const MorphHeader = ({
   <div className="flex items-start justify-between gap-4">
     <div className="min-w-0">
       {tag && (
-        <span className="mb-2 inline-block rounded-full bg-signal px-2 py-0.5 font-mono text-[11px] font-medium text-signal-foreground">
+        <span className="mb-2 inline-block rounded-full bg-secondary px-2.5 py-0.5 font-mono text-[11px] font-medium text-foreground">
           {tag}
         </span>
       )}

@@ -40,7 +40,7 @@ const WizardFooter = ({
       <button
         type="button"
         onClick={onNext}
-        className="inline-flex h-8 cursor-pointer items-center rounded-lg border border-solid border-signal bg-signal px-3.5 font-sans text-xs font-medium text-signal-foreground transition-opacity hover:opacity-92"
+        className="inline-flex h-9 cursor-pointer items-center rounded-full border border-solid border-primary bg-primary px-4 font-sans text-xs font-medium text-primary-foreground transition-opacity hover:opacity-90"
       >
         {step === STEPS.length - 1 ? "完成初始化" : "下一步"}
       </button>

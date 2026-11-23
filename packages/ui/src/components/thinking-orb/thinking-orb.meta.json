@@ -1,0 +1,6 @@
+{
+  "name": "thinking-orb",
+  "title": "Thinking Orb",
+  "description": "极简单色 3D 球面粒子思考球，内置 9 种 AI 认知状态与明暗极性自适应，纯 Canvas 驱动零动画库依赖。",
+  "categories": ["ai"]
+}

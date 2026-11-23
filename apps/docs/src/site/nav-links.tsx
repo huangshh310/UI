@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * 顶部导航链接：居中分段胶囊，当前页以抬升卡片高亮。
+ * 顶部导航链接：居中悬浮毛玻璃胶囊，当前页以柔灰底色轻盈高亮。
  * 需要读取当前路径来标记选中项，因此是客户端组件。
  */
 import Link from "next/link";
@@ -18,14 +18,14 @@ export const NavLinks = () => {
   return (
     <nav
       aria-label="主导航"
-      className="flex items-center gap-0.5 rounded-full border border-border/75 bg-secondary/65 p-1"
+      className="pointer-events-auto flex h-11 items-center gap-0.5 rounded-full border border-border/80 bg-(--site-surface)/88 p-1 shadow-[0_2px_10px_rgba(0,0,0,0.04)] backdrop-blur-xl dark:shadow-[0_2px_12px_rgba(0,0,0,0.28)]"
     >
       {NAV_LINKS.map(({ href, label }) => (
         <Link
           key={href}
           href={href}
           aria-current={isActive(pathname, href) ? "page" : undefined}
-          className="rounded-full px-3 py-1.5 text-sm font-medium whitespace-nowrap text-muted-foreground outline-none transition-all duration-(--ui-duration-fast) hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:px-4 aria-[current=page]:bg-card aria-[current=page]:text-foreground aria-[current=page]:shadow-xs"
+          className="rounded-full px-3 py-1.5 text-sm font-medium whitespace-nowrap text-muted-foreground outline-none transition-colors duration-(--ui-duration-fast) hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:px-4 aria-[current=page]:bg-(--site-stage) aria-[current=page]:text-foreground"
         >
           {label}
         </Link>

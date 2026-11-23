@@ -84,8 +84,8 @@ const TRIGGER_CLASS = cn(
 
 const ITEM_CLASS = cn(
   "flex cursor-pointer items-center justify-between gap-3 rounded-lg px-2.5 py-2 text-sm text-foreground outline-none select-none",
-  "transition-colors duration-(--ui-duration-fast) data-[highlighted]:bg-signal/10 data-[highlighted]:text-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-45",
-  "[&_mark]:rounded [&_mark]:bg-signal/20 [&_mark]:px-0.5 [&_mark]:text-signal [&_mark]:font-medium",
+  "transition-colors duration-(--ui-duration-fast) data-[highlighted]:bg-secondary data-[highlighted]:text-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-45",
+  "[&_mark]:rounded [&_mark]:bg-signal/15 [&_mark]:px-0.5 [&_mark]:text-signal [&_mark]:dark:text-info [&_mark]:font-medium",
 );
 
 const useGlobalCommandShortcut = (enabled: boolean, key: string, toggle: () => void) => {

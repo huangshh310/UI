@@ -18,7 +18,7 @@ export const Skeleton = ({
     data-slot="skeleton"
     data-variant={variant}
     className={cn(
-      "relative overflow-hidden bg-secondary/85",
+      "relative overflow-hidden bg-foreground/[0.08] dark:bg-foreground/[0.12]",
       SHAPE_CLASS[shape],
       variant === "pulse"
         ? "animate-pulse motion-reduce:animate-none"

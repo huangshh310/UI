@@ -31,7 +31,7 @@ const QueueRowActions = ({
         aria-label={`立即插队发送：${item.content}`}
         title="中断当前生成并立即发送"
         onClick={() => onSendNow(item)}
-        className={cn(ITEM_ACTION_BTN, "hover:text-signal")}
+        className={cn(ITEM_ACTION_BTN, "hover:text-foreground")}
       >
         <Zap aria-hidden="true" className="size-3.5" />
       </button>
@@ -83,7 +83,7 @@ const QueueRow = ({
     className="flex items-center justify-between gap-2.5 rounded-xl border border-solid border-border/75 bg-card px-3 py-2 shadow-xs"
   >
     <div className="flex min-w-0 flex-1 items-center gap-2">
-      <CornerDownRight aria-hidden="true" className="size-3.5 shrink-0 text-signal" />
+      <CornerDownRight aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
       <span className="font-mono text-[10px] text-muted-foreground tabular-nums">#{index + 1}</span>
       <span className="truncate font-sans text-xs text-foreground">{item.content}</span>
       {item.meta && (
@@ -114,9 +114,11 @@ const QueueHeader = ({
       onClick={onToggle}
       className="inline-flex cursor-pointer items-center gap-2 border-0 bg-transparent p-0 font-sans text-xs font-medium text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
-      <span className="inline-flex size-2 animate-pulse rounded-full bg-signal motion-reduce:animate-none" />
+      <span className="inline-flex size-2 animate-pulse rounded-full bg-foreground motion-reduce:animate-none" />
       <span>{count} 条待发送</span>
-      <span className="text-[11px] font-normal text-muted-foreground">当前回复完成后自动发出</span>
+      <span className="hidden text-[11px] font-normal text-muted-foreground @sm:inline">
+        当前回复完成后自动发出
+      </span>
       <ChevronDown
         aria-hidden="true"
         className={cn(
@@ -156,7 +158,7 @@ export const PromptQueue = ({
     <div
       data-slot="prompt-queue"
       className={cn(
-        "flex w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-solid border-border bg-secondary/75 font-sans text-foreground",
+        "@container flex w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-solid border-border bg-secondary/75 font-sans text-foreground",
         className,
       )}
     >
