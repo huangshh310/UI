@@ -17,4 +17,21 @@ describe("Slider", () => {
     expect(thumbs.length).toBe(2);
     expect(screen.getByText("¥20 – ¥80")).toBeTruthy();
   });
+
+  it("支持尺寸、色调与浮动数值气泡", () => {
+    const { container } = render(
+      <Slider
+        label="推理温度"
+        defaultValue={70}
+        size="lg"
+        tone="signal"
+        showTooltip
+        formatValue={(v) => `${v}%`}
+      />,
+    );
+    const root = container.querySelector('[data-slot="slider"]');
+    expect(root?.getAttribute("data-size")).toBe("lg");
+    expect(root?.getAttribute("data-tone")).toBe("signal");
+    expect(screen.getByText("70%")).toBeTruthy();
+  });
 });

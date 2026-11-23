@@ -27,4 +27,18 @@ describe("Breadcrumb", () => {
     await user.click(screen.getByRole("button", { name: "展开省略路径" }));
     expect(screen.getByText("组件库")).toBeTruthy();
   });
+
+  it("支持 slash 与 pill 变体并渲染对应标识属性", () => {
+    const { container } = render(
+      <Breadcrumb
+        variant="slash"
+        size="sm"
+        items={[{ label: "工作区", href: "#ws" }, { label: "设置" }]}
+      />,
+    );
+    const nav = container.querySelector('[data-slot="breadcrumb"]');
+    expect(nav?.getAttribute("data-variant")).toBe("slash");
+    expect(nav?.getAttribute("data-size")).toBe("sm");
+    expect(screen.getByText("/")).toBeTruthy();
+  });
 });

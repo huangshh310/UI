@@ -1,9 +1,11 @@
 /**
  * AdvancedDataTable 组件的类型定义。
  */
+import type { ReactNode } from "react";
 import type { DataTableColumn } from "../data-table/index.js";
 
 export type TableDensity = "compact" | "normal" | "comfortable";
+export type AdvancedDataTableVariant = "default" | "minimal" | "elevated";
 
 export interface AdvancedTableColumn<TData> extends DataTableColumn<TData> {
   /** 是否默认隐藏该列 */
@@ -32,6 +34,22 @@ export interface AdvancedDataTableProps<TData> {
   getRowId?: (row: TData, index: number) => string;
   title?: string;
   description?: string;
+  /** 容器外观风格 */
+  variant?: AdvancedDataTableVariant;
+  /** 是否开启斑马纹交替底色 */
+  striped?: boolean;
+  /** 是否展示顶部搜索输入框，默认 true */
+  searchable?: boolean;
+  /** 搜索输入框占位文案 */
+  searchPlaceholder?: string;
+  /** 是否展示行密度切换器，默认 true */
+  showDensityToggle?: boolean;
+  /** 顶部工具栏自定义扩展操作 */
+  toolbarActions?: ReactNode;
+  /** 加载骨架态 */
+  loading?: boolean;
+  /** 单行点击回调（自动忽略复选框与内部按钮点击） */
+  onRowClick?: (row: TData) => void;
   /** 分面筛选分组 */
   facets?: AdvancedTableFacet<TData>[];
   /** 多选批量操作 */

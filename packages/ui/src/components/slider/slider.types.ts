@@ -1,5 +1,9 @@
 export type SliderValue = number | [number, number];
 
+export type SliderSize = "sm" | "md" | "lg";
+
+export type SliderTone = "default" | "signal" | "emerald";
+
 export interface SliderMark {
   value: number;
   label: string;
@@ -18,10 +22,16 @@ export interface SliderProps {
   max?: number;
   /** 步进 */
   step?: number;
+  /** 轨道与滑块尺寸 */
+  size?: SliderSize;
+  /** 激活轨道色调 */
+  tone?: SliderTone;
   /** 字段标签 */
   label?: string;
   /** 是否在右上角展示当前值 */
   showValue?: boolean;
+  /** 是否在滑块上方悬停/拖拽时显示浮动数值气泡 */
+  showTooltip?: boolean;
   /** 自定义数值格式化 */
   formatValue?: (val: number) => string;
   /** 底部刻度标记 */

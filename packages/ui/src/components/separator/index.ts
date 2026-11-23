@@ -1,2 +1,7 @@
 export { Separator } from "./separator.js";
-export type { SeparatorProps } from "./separator.types.js";
+export type {
+  SeparatorLabelAlign,
+  SeparatorOrientation,
+  SeparatorProps,
+  SeparatorVariant,
+} from "./separator.types.js";

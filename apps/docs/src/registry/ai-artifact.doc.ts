@@ -5,10 +5,11 @@ import type { ComponentDoc } from "./registry.types";
 export const AI_ARTIFACT_DOC: ComponentDoc = {
   slug: "ai-artifact",
   name: "AI Artifact",
-  description: "AI 生成代码与交互预览分栏产物卡片，支持版本标记、预览/源码切换与一键复制。",
+  description:
+    "AI 生成代码与交互预览产物画布，内置点阵预览画布、暗色曜石源码舞台、多版本切换与一键复制下载。",
   category: "ai",
   registryName: "ai-artifact",
-  dependencies: ["lucide-react"],
+  dependencies: ["class-variance-authority", "lucide-react"],
   createdAt: "2026-11-22",
   usage: `import { AiArtifact } from "@/components/ui/ai-artifact";
 
@@ -18,15 +19,16 @@ export function Example() {
   specimens: [
     {
       slug: "basic",
-      name: "生成组件实时预览与源码切换",
-      description: "顶栏集成产物版本标签、预览/源码分段切换器与一键复制反馈。",
+      name: "生成组件实时预览与暗色源码切换",
+      description:
+        "顶栏集成产物版本切换器、预览/源码分段切换与一键复制反馈，预览区附带微点阵底纹。",
       file: "ai-artifact/basic.tsx",
       Demo: AiArtifactBasicDemo,
     },
     {
       slug: "code-first",
-      name: "默认源码模式 Token 配方卡",
-      description: '通过 defaultTab="code" 默认聚焦生成代码并提供语言角标。',
+      name: "默认源码模式曜石代码舞台",
+      description: '通过 defaultTab="code" 默认聚焦带行号的曜石暗色源码视图与语言角标。',
       file: "ai-artifact/code-first.tsx",
       Demo: AiArtifactCodeFirstDemo,
       directory: false,
@@ -34,6 +36,18 @@ export function Example() {
   ],
   api: [
     { name: "title", type: "string", defaultValue: "必填", description: "产物文件名或标题" },
+    {
+      name: "variant",
+      type: '"card" | "split" | "compact"',
+      defaultValue: '"card"',
+      description: "页签切换、分栏对照或紧凑布局",
+    },
+    {
+      name: "previewSurface",
+      type: '"plain" | "grid" | "obsidian"',
+      defaultValue: '"grid"',
+      description: "预览画布底纹（纯净、微点阵网格或曜石暗色）",
+    },
     {
       name: "version",
       type: "string",
@@ -49,8 +63,14 @@ export function Example() {
     {
       name: "language",
       type: "string",
-      defaultValue: '"TSX"',
+      defaultValue: '"tsx"',
       description: "源码语言标识",
+    },
+    {
+      name: "showLineNumbers",
+      type: "boolean",
+      defaultValue: "true",
+      description: "是否在源码视图显示行号",
     },
     { name: "code", type: "string", defaultValue: "必填", description: "源码文本" },
     { name: "preview", type: "ReactNode", defaultValue: "—", description: "实时渲染预览内容" },
@@ -61,11 +81,31 @@ export function Example() {
       description: "默认视图",
     },
     {
+      name: "onVersionChange",
+      type: "(version: string) => void",
+      defaultValue: "—",
+      description: "切换版本号回调",
+    },
+    {
+      name: "onTabChange",
+      type: "(tab: AiArtifactTab) => void",
+      defaultValue: "—",
+      description: "切换预览/源码页签回调",
+    },
+    {
       name: "onCopy",
       type: "(code: string) => void",
       defaultValue: "—",
       description: "复制源码回调（组件内部会同步写入剪贴板）",
     },
+    {
+      name: "onDownload",
+      type: "(code: string) => void",
+      defaultValue: "—",
+      description: "可选下载源码回调（传入后显示下载按钮）",
+    },
   ],
-  accessibility: ["视图切换按钮均声明 aria-pressed，复制按钮提供明确 aria-label 与状态文字反馈。"],
+  accessibility: [
+    "视图切换按钮均声明 aria-pressed，复制与下载按钮提供明确 aria-label 与状态反馈。",
+  ],
 };

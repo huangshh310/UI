@@ -26,5 +26,12 @@ const REVIEW_THREADS = [
 ];
 
 export default function AiWorkspaceBlockReviewDemo() {
-  return <AiWorkspaceBlock initialThreads={REVIEW_THREADS} />;
+  return (
+    <AiWorkspaceBlock
+      initialThreads={REVIEW_THREADS}
+      title="PR 审查副驾驶"
+      variant="compact"
+      defaultModel="gemini-pro"
+    />
+  );
 }

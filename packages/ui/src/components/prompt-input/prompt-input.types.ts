@@ -38,6 +38,9 @@ export interface PromptModelOption {
 }
 
 export type PromptInputStatus = "idle" | "submitting" | "streaming" | "disabled";
+export type PromptInputVariant = "default" | "filled" | "elevated";
+export type PromptInputSize = "sm" | "md" | "lg";
+export type PromptInputRadius = "lg" | "xl";
 
 export interface PromptInputProps {
   /** 受控输入值 */
@@ -54,6 +57,14 @@ export interface PromptInputProps {
   onStop?: () => void;
   /** 当前运行状态 */
   status?: PromptInputStatus;
+  /** 输入器外壳视觉风格 */
+  variant?: PromptInputVariant;
+  /** 内边距与输入区尺寸密度 */
+  size?: PromptInputSize;
+  /** 外壳圆角等级 */
+  radius?: PromptInputRadius;
+  /** 校验或请求失败错误提示 */
+  error?: string;
   /** 输入框占位提示 */
   placeholder?: string;
   /** 最大字符数，传入时在工具栏显示字数统计 */
@@ -78,8 +89,10 @@ export interface PromptInputProps {
   selectedModel?: string;
   /** 模型切换回调 */
   onModelChange?: (id: string) => void;
-  /** 输入器下方的快捷提示词建议 */
+  /** 快捷提示词建议 */
   suggestions?: string[];
+  /** 快捷提示词位置：底部或顶部 */
+  suggestionsPosition?: "bottom" | "top";
   /** 点击快捷提示词时的回调 */
   onSelectSuggestion?: (text: string) => void;
   /** 底部工具栏左侧自定义插槽（可嵌入 ModelSelector、Context 等紧凑组件） */

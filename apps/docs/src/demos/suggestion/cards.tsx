@@ -11,7 +11,7 @@ export default function SuggestionCardsDemo() {
 
   return (
     <div className="flex w-full max-w-xl flex-col gap-2.5">
-      <Suggestions variant="cards" onSelect={(prompt) => setPicked(prompt)} />
+      <Suggestions variant="cards" surface="glass" onSelect={(prompt) => setPicked(prompt)} />
       {picked && <p className="m-0 font-mono text-xs text-muted-foreground">注入指令：{picked}</p>}
     </div>
   );

@@ -28,9 +28,11 @@ describe("AiResponse", () => {
       "```",
     ].join("\n");
 
-    render(<AiResponse content={md} model="Matt AI" />);
+    render(<AiResponse content={md} model="Matt AI" modelBadge="200K" timestamp="1.2s" />);
 
     expect(screen.getByText("Matt AI")).toBeTruthy();
+    expect(screen.getByText("200K")).toBeTruthy();
+    expect(screen.getByText("1.2s")).toBeTruthy();
     expect(screen.getByText("方案建议")).toBeTruthy();
     expect(screen.getByText("const ok = true;")).toBeTruthy();
 
@@ -47,9 +49,15 @@ describe("AiResponse", () => {
     render(
       <AiResponse
         content="分析完成。"
+        variant="ghost"
         tools={[{ id: "t1", name: "search_docs", status: "complete", duration: "0.4s" }]}
         sources={[
-          { id: "s1", title: "设计规范", url: "https://matt-ui.dev/spec" },
+          {
+            id: "s1",
+            title: "设计规范",
+            url: "https://matt-ui.dev/spec",
+            snippet: "双主题对比度与发丝边框基线",
+          },
           { id: "s2", title: "无效协议", url: "javascript:void(0)" },
         ]}
         onRegenerate={onRegenerate}
@@ -57,11 +65,16 @@ describe("AiResponse", () => {
       />,
     );
 
+    expect(document.querySelector('[data-slot="ai-response"]')?.getAttribute("data-variant")).toBe(
+      "ghost",
+    );
+
     fireEvent.click(screen.getByRole("button", { name: /已调用 1 项工具/ }));
     expect(screen.getByText("search_docs")).toBeTruthy();
 
     fireEvent.click(screen.getByRole("button", { name: /参考来源（1）/ }));
     expect(screen.getByRole("link", { name: /设计规范/ })).toBeTruthy();
+    expect(screen.getByText("双主题对比度与发丝边框基线")).toBeTruthy();
 
     fireEvent.click(screen.getByRole("button", { name: "重新生成" }));
     expect(onRegenerate).toHaveBeenCalledTimes(1);

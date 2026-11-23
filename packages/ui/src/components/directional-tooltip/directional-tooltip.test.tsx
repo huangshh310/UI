@@ -24,14 +24,16 @@ describe("DirectionalTooltip", () => {
     expect(screen.queryByText("复制命令")).toBeNull();
   });
 
-  it("支持受控打开并记录方向属性", () => {
+  it("支持受控打开、反色变体与快捷键键帽标注", () => {
     render(
-      <DirectionalTooltip open content="右侧说明" side="right">
+      <DirectionalTooltip open content="右侧说明" shortcut="⌘K" variant="inverted" side="right">
         <button type="button">信息</button>
       </DirectionalTooltip>,
     );
 
     const popup = screen.getByText("右侧说明").closest('[data-slot="directional-tooltip"]');
     expect(popup).toBeTruthy();
+    expect(popup?.getAttribute("data-variant")).toBe("inverted");
+    expect(screen.getByText("⌘K")).toBeTruthy();
   });
 });

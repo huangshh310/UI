@@ -1,5 +1,5 @@
 /**
- * ModelSelector 行为规约：验证紧凑胶囊打开 Popover、搜索过滤模型、切换思考强度与联网开关。
+ * ModelSelector 行为规约：验证紧凑胶囊打开 Popover、按厂商分组、搜索过滤模型、切换思考强度与联网开关。
  */
 import { cleanup, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -32,6 +32,27 @@ describe("ModelSelector", () => {
     await user.click(screen.getByRole("button", { name: "深度" }));
     expect(onValueChange).toHaveBeenLastCalledWith(
       expect.objectContaining({ modelId: "flash", effort: "deep" }),
+    );
+  });
+
+  it("支持按 provider 分组展示、ghost 触发器变体与联网开关切换", async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn<(next: ModelSelectorValue) => void>();
+
+    render(
+      <ModelSelector variant="ghost" size="sm" groupByProvider onValueChange={onValueChange} />,
+    );
+
+    const trigger = screen.getByRole("button", { name: /选择模型/ });
+    expect(trigger.getAttribute("data-variant")).toBe("ghost");
+    await user.click(trigger);
+
+    expect(screen.getByText("Anthropic")).toBeTruthy();
+    expect(screen.getByText("Google")).toBeTruthy();
+
+    await user.click(screen.getByRole("button", { name: "联网" }));
+    expect(onValueChange).toHaveBeenLastCalledWith(
+      expect.objectContaining({ modelId: "pro", webSearch: true }),
     );
   });
 });

@@ -17,7 +17,7 @@ import type { UploadFileItem } from "./animated-file-upload.types.js";
 import { formatFileSize } from "./upload-helpers.js";
 
 const ROW_ACTION_CLASSES =
-  "inline-flex size-7 shrink-0 cursor-pointer items-center justify-center rounded-lg border-0 bg-transparent text-muted-foreground outline-none transition-colors duration-(--ui-duration-fast) hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring";
+  "inline-flex size-7 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-solid border-transparent bg-transparent text-muted-foreground outline-none transition-colors duration-(--ui-duration-fast) hover:bg-accent hover:text-foreground focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
 
 const FilePreview = ({ item }: { item: UploadFileItem }) => {
   if (item.previewUrl) {
@@ -25,7 +25,7 @@ const FilePreview = ({ item }: { item: UploadFileItem }) => {
       <img
         src={item.previewUrl}
         alt=""
-        className="size-9 shrink-0 rounded-lg border border-solid border-border object-cover"
+        className="size-9 shrink-0 rounded-lg border border-solid border-border/80 object-cover dark:border-white/12"
       />
     );
   }
@@ -37,7 +37,7 @@ const FilePreview = ({ item }: { item: UploadFileItem }) => {
   return (
     <span
       aria-hidden="true"
-      className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg border border-solid border-border/80 bg-secondary/70 text-muted-foreground"
+      className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg border border-solid border-border/80 bg-secondary/70 text-muted-foreground dark:border-white/10"
     >
       <Icon className="size-4" />
     </span>
@@ -53,7 +53,7 @@ const statusLabel = (item: UploadFileItem) => {
 
 const RowInfo = ({ item }: { item: UploadFileItem }) => (
   <div className="min-w-0 flex-1">
-    <p className="m-0 truncate text-sm font-medium text-foreground">{item.name}</p>
+    <p className="m-0 truncate text-[13px] font-medium text-foreground">{item.name}</p>
     <p
       className={cn(
         "m-0 mt-0.5 flex items-center gap-1 text-xs",
@@ -61,7 +61,7 @@ const RowInfo = ({ item }: { item: UploadFileItem }) => (
       )}
     >
       {item.status === "success" && (
-        <CheckCircle2 aria-hidden="true" className="size-3.5 text-success" />
+        <CheckCircle2 aria-hidden="true" className="size-3.5 shrink-0 text-emerald-500" />
       )}
       <span className="truncate">{statusLabel(item)}</span>
     </p>
@@ -130,8 +130,8 @@ export const UploadRow = ({
     data-slot="upload-file-row"
     data-status={item.status}
     className={cn(
-      "relative flex items-center gap-3 overflow-hidden rounded-xl border border-solid border-border bg-card px-3 py-2.5 shadow-sm",
-      item.status === "error" && "border-destructive/30 bg-destructive/6",
+      "relative flex items-center gap-3 overflow-hidden rounded-xl border border-solid border-border/80 bg-card px-3 py-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.03)] dark:border-white/10",
+      item.status === "error" && "border-destructive/65 bg-destructive/6 dark:border-destructive",
     )}
   >
     <FilePreview item={item} />

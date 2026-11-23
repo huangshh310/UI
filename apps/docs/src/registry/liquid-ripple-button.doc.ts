@@ -11,11 +11,15 @@ export const LIQUID_RIPPLE_BUTTON_DOC: ComponentDoc = {
   description: "按下时从指针位置扩散出一道波纹的按钮。",
   category: "buttons",
   registryName: "liquid-ripple-button",
-  dependencies: ["clsx", "tailwind-merge"],
+  dependencies: ["class-variance-authority", "clsx", "tailwind-merge"],
   usage: `import { LiquidRippleButton } from "@/components/ui/liquid-ripple-button";
 
 export function Demo() {
-  return <LiquidRippleButton onClick={() => console.log("run")}>运行</LiquidRippleButton>;
+  return (
+    <LiquidRippleButton variant="signal" onClick={() => console.log("run")}>
+      运行
+    </LiquidRippleButton>
+  );
 }`,
   createdAt: "2026-11-22",
   specimens: [
@@ -29,13 +33,37 @@ export function Demo() {
     {
       slug: "variants",
       name: "信号色与描边水波纹按钮",
-      description: "展示不同视觉变体下从点击坐标扩散的流体波纹效果。",
+      description: "展示不同视觉变体、尺寸与圆角下从点击坐标扩散的流体波纹效果。",
       file: "liquid-ripple-button/variants.tsx",
       Demo: LiquidRippleButtonVariantsDemo,
       directory: false,
     },
   ],
   api: [
+    {
+      name: "variant",
+      type: '"primary" | "signal" | "secondary" | "outline" | "destructive"',
+      defaultValue: '"primary"',
+      description: "视觉变体，波纹颜色会自动与底色匹配。",
+    },
+    {
+      name: "size",
+      type: '"sm" | "md" | "lg"',
+      defaultValue: '"md"',
+      description: "按钮尺寸。",
+    },
+    {
+      name: "radius",
+      type: '"pill" | "default"',
+      defaultValue: '"pill"',
+      description: "圆角风格：胶囊圆角或标准圆角。",
+    },
+    {
+      name: "rippleColor",
+      type: "string",
+      defaultValue: "-",
+      description: "自定义波纹颜色（任意合法 CSS 颜色值）。",
+    },
     {
       name: "children",
       type: "ReactNode",

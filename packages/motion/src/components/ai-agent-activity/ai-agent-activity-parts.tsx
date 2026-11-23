@@ -1,19 +1,88 @@
 "use client";
 
 /**
- * AiAgentActivity 内部状态图标与明细抽屉子部件。
+ * AiAgentActivity 内部状态图标、明细抽屉与页头控制子部件。
  */
 import { cn } from "@matt-ui/utils";
-import { AlertCircle, Check, Pause, RotateCw } from "lucide-react";
+import { AlertCircle, Check, ChevronDown, Pause, RotateCw } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import type { AiAgentActivityDetails, AiAgentActivityStatus } from "./ai-agent-activity.types.js";
+import { ACTIVITY_FOCUS_RING, ACTIVITY_SPRING } from "./ai-agent-activity.variants.js";
 
-export const ACTIVITY_SPRING = {
-  type: "spring" as const,
-  stiffness: 320,
-  damping: 32,
-  mass: 0.6,
+export const ActivityHeaderTitle = ({
+  title,
+  collapsible,
+  collapsed,
+  onToggle,
+}: {
+  title: string;
+  collapsible: boolean;
+  collapsed: boolean;
+  onToggle: () => void;
+}) => {
+  if (!collapsible) {
+    return (
+      <span className="truncate text-sm font-medium tracking-tight text-foreground">{title}</span>
+    );
+  }
+  return (
+    <button
+      type="button"
+      aria-expanded={!collapsed}
+      onClick={onToggle}
+      className={cn(
+        "inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-solid border-transparent bg-transparent p-0 font-sans text-sm font-medium tracking-tight text-foreground",
+        ACTIVITY_FOCUS_RING,
+      )}
+    >
+      <ChevronDown
+        aria-hidden="true"
+        className={cn(
+          "size-3.5 text-muted-foreground transition-transform duration-(--ui-duration-fast)",
+          collapsed && "-rotate-90",
+        )}
+      />
+      <span className="truncate">{title}</span>
+    </button>
+  );
 };
+
+export const ActivityHeaderProgressLine = ({ visible, pct }: { visible: boolean; pct: number }) => {
+  if (!visible || pct <= 0) return null;
+  return (
+    <span
+      aria-hidden="true"
+      style={{ width: `${pct}%` }}
+      className="pointer-events-none absolute bottom-0 left-0 h-px bg-signal/65 transition-[width] duration-(--ui-duration-normal)"
+    />
+  );
+};
+
+export const ActivityHeaderStatus = ({
+  isRunning,
+  completedCount,
+  total,
+}: {
+  isRunning: boolean;
+  completedCount: number;
+  total: number;
+}) => (
+  <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+    {isRunning ? (
+      <>
+        <span
+          aria-hidden="true"
+          className="size-1.5 animate-pulse rounded-full bg-emerald-500 motion-reduce:animate-none"
+        />
+        <span className="font-medium text-foreground">运行中</span>
+      </>
+    ) : (
+      <span className="font-mono text-[11px] tabular-nums">
+        已完成 {completedCount} / {total}
+      </span>
+    )}
+  </span>
+);
 
 export const ActivityStatusGlyph = ({ status }: { status: AiAgentActivityStatus }) => {
   if (status === "running") {
@@ -38,17 +107,42 @@ export const ActivityStatusGlyph = ({ status }: { status: AiAgentActivityStatus 
       />
     );
   }
-  return <span aria-hidden="true" className="size-1.5 rounded-full bg-border" />;
+  return <span aria-hidden="true" className="size-1.5 rounded-full bg-border dark:bg-white/25" />;
 };
 
-export const statusCircleClass = (status: AiAgentActivityStatus) => {
-  if (status === "running") {
-    return "border border-solid border-border bg-card ring-2 ring-emerald-500/20";
-  }
-  if (status === "success") return "bg-emerald-500/12 dark:bg-emerald-500/18";
-  if (status === "error") return "bg-destructive/12";
-  return "border border-solid border-border bg-card";
-};
+export const ActivityHeaderControls = ({
+  onExpandAll,
+  onCollapseAll,
+}: {
+  onExpandAll: () => void;
+  onCollapseAll: () => void;
+}) => (
+  <div className="flex shrink-0 items-center gap-1 text-xs text-muted-foreground">
+    <button
+      type="button"
+      onClick={onExpandAll}
+      className={cn(
+        "cursor-pointer rounded-md border border-solid border-transparent bg-transparent px-1.5 py-0.5 font-sans text-xs text-muted-foreground transition-colors hover:bg-accent/70 hover:text-foreground",
+        ACTIVITY_FOCUS_RING,
+      )}
+    >
+      全部展开
+    </button>
+    <span aria-hidden="true" className="text-border">
+      /
+    </span>
+    <button
+      type="button"
+      onClick={onCollapseAll}
+      className={cn(
+        "cursor-pointer rounded-md border border-solid border-transparent bg-transparent px-1.5 py-0.5 font-sans text-xs text-muted-foreground transition-colors hover:bg-accent/70 hover:text-foreground",
+        ACTIVITY_FOCUS_RING,
+      )}
+    >
+      全部收起
+    </button>
+  </div>
+);
 
 const formatPayload = (value: string | Record<string, unknown>) =>
   typeof value === "string" ? value : JSON.stringify(value, null, 2);
@@ -66,7 +160,7 @@ const PayloadBlock = ({
     <span className="text-[11px] font-medium text-muted-foreground">{label}</span>
     <pre
       className={cn(
-        "m-0 overflow-x-auto rounded-xl border border-solid border-border/70 bg-secondary/55 p-2.5 text-xs leading-relaxed text-foreground select-text",
+        "m-0 overflow-x-auto rounded-xl border border-solid border-border/70 bg-secondary/55 p-2.5 text-xs leading-relaxed text-foreground select-text dark:border-white/8 dark:bg-white/5",
         mono ? "font-mono" : "font-sans whitespace-pre-wrap",
       )}
     >
@@ -83,7 +177,7 @@ const MetadataChips = ({ metadata }: { metadata?: Record<string, string | number
       {entries.map(([k, v]) => (
         <span
           key={k}
-          className="inline-flex items-center gap-1 rounded-md border border-solid border-border/70 bg-secondary/60 px-2 py-0.5 font-mono text-[11px] text-muted-foreground"
+          className="inline-flex items-center gap-1 rounded-md border border-solid border-border/70 bg-secondary/60 px-2 py-0.5 font-mono text-[11px] text-muted-foreground dark:border-white/10 dark:bg-white/6"
         >
           <span>{k}:</span>
           <span className="font-medium text-foreground">{String(v)}</span>
@@ -128,7 +222,7 @@ export const ActivityDetailsDrawer = ({
         animate={{ opacity: 1, height: "auto" }}
         exit={{ opacity: 0, height: 0 }}
         transition={reduced ? { duration: 0 } : ACTIVITY_SPRING}
-        className="mt-2.5 overflow-hidden border-l border-solid border-border/80 pl-3"
+        className="mt-2.5 overflow-hidden border-l border-solid border-border/80 pl-3 dark:border-white/12"
       >
         <DrawerBody details={details} metadata={metadata} />
       </motion.div>

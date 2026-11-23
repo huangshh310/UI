@@ -1,2 +1,2 @@
 export { Tree } from "./tree.js";
-export type { TreeNode, TreeProps } from "./tree.types.js";
+export type { TreeDensity, TreeNode, TreeProps, TreeVariant } from "./tree.types.js";

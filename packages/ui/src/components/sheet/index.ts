@@ -1,3 +1,3 @@
 export { Sheet } from "./sheet.js";
-export type { SheetProps, SheetSide, SheetSize } from "./sheet.types.js";
-export { sheetPanelVariants } from "./sheet.variants.js";
+export type { SheetBackdrop, SheetProps, SheetSide, SheetSize } from "./sheet.types.js";
+export { sheetBackdropVariants, sheetPanelVariants } from "./sheet.variants.js";

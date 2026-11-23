@@ -14,4 +14,5 @@ export type {
   AiAgentActivityStatus,
   AiAgentActivityTimelineProps,
   AiAgentActivityType,
+  AiAgentActivityVariant,
 } from "./ai-agent-activity.types.js";

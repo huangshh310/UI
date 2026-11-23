@@ -5,7 +5,8 @@ import type { ComponentDoc } from "./registry.types";
 export const AUDIO_WAVES_DOC: ComponentDoc = {
   slug: "audio-waves",
   name: "Audio Waves",
-  description: "AI 语音声波律动条与听写胶囊，支持实时声波动画、聆听/暂停切换与计时读数。",
+  description:
+    "AI 语音声波律动条与听写胶囊，支持镜像声波、音柱与点阵三种波形，以及曜石暗色和紧凑胶囊形态。",
   category: "ai",
   registryName: "audio-waves",
   dependencies: ["motion", "lucide-react"],
@@ -13,7 +14,7 @@ export const AUDIO_WAVES_DOC: ComponentDoc = {
   usage: `import { AudioWaves } from "@/components/ui/audio-waves";
 
 export function Example() {
-  return <AudioWaves defaultActive />;
+  return <AudioWaves defaultActive tone="signal" locale="中 / EN" />;
 }`,
   specimens: [
     {
@@ -25,8 +26,8 @@ export function Example() {
     },
     {
       slug: "compact",
-      name: "多规格音柱密度对比",
-      description: "通过 bars 自定义音柱数量，适配长句实时转写与紧凑内联口述条。",
+      name: "多波形与暗色紧凑胶囊对比",
+      description: "组合 variant、tone 与 compact 属性，适配暗色语音面板和聊天输入框内联口述场景。",
       file: "audio-waves/compact.tsx",
       Demo: AudioWavesCompactDemo,
       directory: false,
@@ -43,9 +44,27 @@ export function Example() {
     },
     {
       name: "variant",
-      type: '"bars" | "mirror"',
+      type: '"mirror" | "bars" | "dots"',
       defaultValue: '"mirror"',
-      description: "声波排列形态（对称镜像或底边对齐音柱）",
+      description: "声波排列形态（对称镜像、底边对齐音柱或律动点阵）",
+    },
+    {
+      name: "size",
+      type: '"sm" | "md" | "lg"',
+      defaultValue: '"md"',
+      description: "声波区域高度规格",
+    },
+    {
+      name: "tone",
+      type: '"default" | "signal" | "emerald" | "obsidian"',
+      defaultValue: '"default"',
+      description: "外壳与声波色彩风格",
+    },
+    {
+      name: "compact",
+      type: "boolean",
+      defaultValue: "false",
+      description: "紧凑胶囊模式（隐藏转写字幕区域）",
     },
     { name: "bars", type: "number", defaultValue: "14", description: "声波音柱数量" },
     { name: "label", type: "string", defaultValue: "按状态自动切换", description: "右侧状态文案" },

@@ -26,8 +26,34 @@ describe("AuthBlock", () => {
   });
 
   it("支持 split 双栏品牌布局变体", () => {
-    render(<AuthBlock layout="split" brandName="Acme Studio" />);
+    render(<AuthBlock layout="split" brandName="Acme Studio" variant="elevated" />);
     expect(screen.getByText("登录 Acme Studio")).toBeTruthy();
     expect(screen.getByText(/统一设计 Token/)).toBeTruthy();
+  });
+
+  it("支持多 SSO 提供方、忘记密码回调与错误提示横幅", async () => {
+    const user = userEvent.setup();
+    const onSsoClick = vi.fn<(providerId?: string) => void>();
+    const onForgotPassword = vi.fn<() => void>();
+
+    render(
+      <AuthBlock
+        showForgotPassword
+        error="邮箱或密码不正确，请重试。"
+        ssoProviders={[
+          { id: "github", label: "GitHub" },
+          { id: "passkey", label: "Passkey" },
+        ]}
+        onSsoClick={onSsoClick}
+        onForgotPassword={onForgotPassword}
+      />,
+    );
+
+    expect(screen.getByRole("alert").textContent).toContain("邮箱或密码不正确");
+    await user.click(screen.getByRole("button", { name: "Passkey" }));
+    expect(onSsoClick).toHaveBeenCalledWith("passkey");
+
+    await user.click(screen.getByRole("button", { name: "忘记密码？" }));
+    expect(onForgotPassword).toHaveBeenCalledTimes(1);
   });
 });

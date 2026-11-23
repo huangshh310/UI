@@ -11,11 +11,87 @@
  */
 
 import { cn } from "@/lib/utils";
+import { cva, type VariantProps } from "class-variance-authority";
 import { type ComponentProps, type MouseEvent, useEffect, useRef, useState } from "react";
+
+const BASE_CLASSES = [
+  "m-0 box-border inline-flex shrink-0 cursor-pointer appearance-none items-center justify-center gap-2 border border-solid",
+  "font-mono font-medium tracking-[-0.01em] whitespace-nowrap select-none",
+  "transition-[background-color,border-color,color,transform,box-shadow] duration-(--ui-duration-fast) ease-out active:scale-[0.98] motion-reduce:active:scale-100",
+  "outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid",
+  "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-45",
+].join(" ");
+
+export const typewriterButtonVariants = cva(BASE_CLASSES, {
+  variants: {
+    variant: {
+      outline:
+        "border-border bg-card text-foreground shadow-xs hover:border-foreground/22 hover:bg-accent/70 dark:bg-card/85 dark:hover:bg-accent",
+      primary:
+        "border-transparent bg-primary text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.08)] hover:bg-primary/90 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_1px_2px_rgba(0,0,0,0.3)]",
+      signal:
+        "border-transparent bg-signal text-signal-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.24),0_1px_2px_rgba(21,93,252,0.28)] hover:bg-signal/92",
+      terminal:
+        "border-neutral-800 bg-neutral-950 text-neutral-50 shadow-sm hover:border-neutral-700 hover:bg-neutral-900 dark:border-neutral-700/80 dark:bg-neutral-900 dark:hover:bg-neutral-800",
+    },
+    size: {
+      sm: "h-8 px-3.5 text-xs",
+      md: "h-10 px-5 text-sm",
+      lg: "h-11 px-6 text-[15px]",
+    },
+    radius: {
+      pill: "rounded-full",
+      default: "rounded-lg",
+    },
+  },
+  compoundVariants: [{ size: "lg", radius: "default", class: "rounded-xl" }],
+  defaultVariants: {
+    variant: "outline",
+    size: "md",
+    radius: "pill",
+  },
+});
+
+/** 不同变体下的前缀提示符颜色，浅深主题均保证高对比度 */
+export const PREFIX_TONE_CLASSES = {
+  outline: "text-muted-foreground",
+  primary: "text-primary-foreground",
+  signal: "text-signal-foreground",
+  terminal: "text-emerald-400",
+} as const;
+
+/** 光标形态 */
+export const CARET_STYLE_CLASSES = {
+  line: "ml-px h-[1.1em] w-[1.5px] rounded-full bg-current",
+  block: "ml-0.5 h-[1.05em] w-[0.55em] rounded-[2px] bg-current",
+} as const;
+type TypewriterVariantProps = VariantProps<typeof typewriterButtonVariants>;
+
+/** 视觉变体 */
+export type TypewriterButtonVariant = NonNullable<TypewriterVariantProps["variant"]>;
+
+/** 尺寸 */
+export type TypewriterButtonSize = NonNullable<TypewriterVariantProps["size"]>;
+
+/** 圆角风格 */
+export type TypewriterButtonRadius = NonNullable<TypewriterVariantProps["radius"]>;
+
+/** 光标形态：竖线或终端方块 */
+export type TypewriterCursorStyle = "line" | "block";
 
 export interface TypewriterButtonProps extends Omit<ComponentProps<"button">, "children"> {
   /** 按钮上的文字，逐字显示的就是它 */
   label: string;
+  /** 视觉变体，默认 outline */
+  variant?: TypewriterButtonVariant;
+  /** 按钮尺寸，默认 md */
+  size?: TypewriterButtonSize;
+  /** 圆角风格，默认 pill */
+  radius?: TypewriterButtonRadius;
+  /** 可选命令提示符前缀（如 "$" 或 ">"），纯视觉装饰 */
+  prefix?: string;
+  /** 打字光标样式，默认 line */
+  cursorStyle?: TypewriterCursorStyle;
   /** 每个字符之间的间隔，单位毫秒，默认 75 */
   charDuration?: number;
   /** 挂载后是否立即开始打字，默认否 */
@@ -203,16 +279,55 @@ const useTypewriter = ({
 
   return { text: label.slice(0, visible), typing, start };
 };
-const BUTTON_CLASSES = cn(
-  "m-0 box-border inline-flex h-10 cursor-pointer appearance-none items-center justify-center rounded-full border border-solid border-border bg-background px-5 shadow-sm dark:bg-card",
-  "font-mono text-sm whitespace-nowrap text-foreground select-none",
-  "transition-colors duration-(--ui-duration-fast) hover:border-foreground/22 hover:bg-accent",
-  "outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid",
-  "disabled:pointer-events-none disabled:opacity-50",
+interface TypewriterContentProps {
+  label: string;
+  text: string;
+  prefix?: string | undefined;
+  variant: TypewriterButtonVariant;
+  cursorStyle: TypewriterCursorStyle;
+}
+
+const TypewriterContent = ({
+  label,
+  text,
+  prefix,
+  variant,
+  cursorStyle,
+}: TypewriterContentProps) => (
+  <>
+    {prefix && (
+      <span
+        aria-hidden="true"
+        data-slot="typewriter-prefix"
+        className={PREFIX_TONE_CLASSES[variant]}
+      >
+        {prefix}
+      </span>
+    )}
+    <span aria-hidden="true" className="relative inline-flex items-center">
+      {/* 不可见的完整文字，只用来占住宽度 */}
+      <span className="invisible">{label}</span>
+      <span className="absolute inset-0 flex items-center">
+        <span data-testid="typewriter-text">{text}</span>
+        <span
+          data-slot="typewriter-caret"
+          className={cn(
+            "opacity-0 in-data-typing:animate-pulse in-data-typing:opacity-100 motion-reduce:animate-none",
+            CARET_STYLE_CLASSES[cursorStyle],
+          )}
+        />
+      </span>
+    </span>
+  </>
 );
 
 export const TypewriterButton = ({
   label,
+  variant = "outline",
+  size = "md",
+  radius = "pill",
+  prefix,
+  cursorStyle = "line",
   charDuration = 75,
   autoStart = false,
   sound = true,
@@ -240,22 +355,21 @@ export const TypewriterButton = ({
       type={type}
       aria-label={label}
       data-slot="typewriter-button"
+      data-variant={variant}
+      data-size={size}
+      data-radius={radius}
       data-typing={typing ? "" : undefined}
-      className={cn(BUTTON_CLASSES, className)}
+      className={cn(typewriterButtonVariants({ variant, size, radius }), className)}
       onClick={handleClick}
       {...props}
     >
-      <span aria-hidden="true" className="relative inline-flex items-center">
-        {/* 不可见的完整文字，只用来占住宽度 */}
-        <span className="invisible">{label}</span>
-        <span className="absolute inset-0 flex items-center">
-          <span data-testid="typewriter-text">{text}</span>
-          <span
-            data-slot="typewriter-caret"
-            className="ml-px h-[1.1em] w-px bg-current opacity-0 in-data-typing:animate-pulse in-data-typing:opacity-100 motion-reduce:animate-none"
-          />
-        </span>
-      </span>
+      <TypewriterContent
+        label={label}
+        text={text}
+        prefix={prefix}
+        variant={variant}
+        cursorStyle={cursorStyle}
+      />
     </button>
   );
 };

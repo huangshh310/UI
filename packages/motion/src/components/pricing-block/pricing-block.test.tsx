@@ -19,4 +19,29 @@ describe("PricingBlock", () => {
     await user.click(screen.getByRole("button", { name: "升级专业版" }));
     expect(onSelectPlan).toHaveBeenCalledWith("pro", "yearly");
   });
+
+  it("支持 defaultCycle、currency、discountBadge 与 spotlight 视觉变体", async () => {
+    const user = userEvent.setup();
+    const onSelectPlan = vi.fn<(id: string, cycle: "monthly" | "yearly") => void>();
+
+    const { container } = render(
+      <PricingBlock
+        variant="spotlight"
+        defaultCycle="yearly"
+        currency="$"
+        discountBadge="立省 2 个月"
+        compact
+        onSelectPlan={onSelectPlan}
+      />,
+    );
+
+    expect(
+      container.querySelector('[data-slot="pricing-block"]')?.getAttribute("data-variant"),
+    ).toBe("spotlight");
+    expect(screen.getByText("立省 2 个月")).toBeTruthy();
+    expect(screen.getByText(/159/)).toBeTruthy();
+
+    await user.click(screen.getByRole("button", { name: "升级专业版" }));
+    expect(onSelectPlan).toHaveBeenCalledWith("pro", "yearly");
+  });
 });

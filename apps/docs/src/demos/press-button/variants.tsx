@@ -9,6 +9,9 @@ export default function PressButtonVariantsDemo() {
       <PressButton variant="secondary" pressStrength={0.05}>
         保存草稿
       </PressButton>
+      <PressButton variant="outline" elevation="flat" pressStrength={0.04}>
+        平面描边
+      </PressButton>
       <PressButton variant="destructive" pressStrength={0.06}>
         回滚快照
       </PressButton>

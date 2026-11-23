@@ -16,4 +16,18 @@ describe("Separator", () => {
     expect(screen.getByText("或使用邮箱继续")).toBeTruthy();
     expect(screen.getAllByRole("separator").length).toBeGreaterThanOrEqual(2);
   });
+
+  it("支持左对齐标签与 dashed / gradient 线条变体", () => {
+    const { container } = render(
+      <div>
+        <Separator label="基础设置" labelAlign="left" variant="dashed" />
+        <Separator variant="gradient" />
+      </div>,
+    );
+
+    const labeled = screen.getByText("基础设置").closest('[data-slot="separator"]');
+    expect(labeled?.getAttribute("data-align")).toBe("left");
+    expect(labeled?.getAttribute("data-variant")).toBe("dashed");
+    expect(container.querySelector('[data-variant="gradient"]')).toBeTruthy();
+  });
 });

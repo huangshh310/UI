@@ -21,9 +21,11 @@ import {
   type Header,
   type Row,
 } from "@tanstack/react-table";
+import type { MouseEvent } from "react";
 import { DrawCheckbox } from "../draw-checkbox/index.js";
 import { ALIGN_CLASS, SortHeaderButton, TableLoadingRows } from "./data-table-parts.js";
-import type { DataTableColumn } from "./data-table.types.js";
+import type { DataTableColumn, DataTableDensity } from "./data-table.types.js";
+import { dataTableCellVariants, dataTableHeadCellVariants } from "./data-table.variants.js";
 
 export const DATA_TABLE_FEATURES = tableFeatures({
   columnFilteringFeature,
@@ -43,12 +45,17 @@ export type DataTableFeatures = typeof DATA_TABLE_FEATURES;
 const ariaSort = (sorted: false | "asc" | "desc") =>
   sorted === "asc" ? "ascending" : sorted === "desc" ? "descending" : undefined;
 
+const isInteractiveTarget = (target: EventTarget | null) =>
+  target instanceof Element && Boolean(target.closest("button,a,input,label,[role='checkbox']"));
+
 const HeaderCell = <TData extends object>({
   header,
   col,
+  density,
 }: {
   header: Header<DataTableFeatures, TData, unknown>;
   col?: DataTableColumn<TData>;
+  density: DataTableDensity;
 }) => {
   const align = col?.align ?? "left";
   const sorted = header.column.getIsSorted();
@@ -56,10 +63,7 @@ const HeaderCell = <TData extends object>({
     <th
       scope="col"
       aria-sort={col?.sortable ? ariaSort(sorted) : undefined}
-      className={cn(
-        "px-4 py-2.5 text-xs font-medium whitespace-nowrap text-muted-foreground",
-        ALIGN_CLASS[align],
-      )}
+      className={cn(dataTableHeadCellVariants({ density }), ALIGN_CLASS[align])}
     >
       {col?.sortable ? (
         <SortHeaderButton
@@ -78,6 +82,8 @@ const HeaderCell = <TData extends object>({
 export const DataTableHead = <TData extends object>({
   headers,
   columns,
+  density,
+  stickyHeader,
   selectable,
   allSelected,
   someSelected,
@@ -85,15 +91,17 @@ export const DataTableHead = <TData extends object>({
 }: {
   headers: Header<DataTableFeatures, TData, unknown>[];
   columns: DataTableColumn<TData>[];
+  density: DataTableDensity;
+  stickyHeader: boolean;
   selectable: boolean;
   allSelected: boolean;
   someSelected: boolean;
   onToggleAll: (checked: boolean) => void;
 }) => (
-  <thead>
-    <tr className="border-b border-solid border-border/80 bg-secondary/35">
+  <thead className={cn(stickyHeader && "sticky top-0 z-10 backdrop-blur-md")}>
+    <tr className="border-b border-solid border-border/75 bg-secondary/35 dark:border-white/10 dark:bg-white/[0.03]">
       {selectable && (
-        <th scope="col" className="w-10 px-4 py-2.5 text-left">
+        <th scope="col" className={cn("w-10 text-left", dataTableHeadCellVariants({ density }))}>
           <DrawCheckbox
             tone="signal"
             aria-label="选择当前页全部行"
@@ -104,42 +112,29 @@ export const DataTableHead = <TData extends object>({
         </th>
       )}
       {headers.map((header, idx) => (
-        <HeaderCell key={header.id} header={header} col={columns[idx]} />
+        <HeaderCell key={header.id} header={header} col={columns[idx]} density={density} />
       ))}
     </tr>
   </thead>
 );
 
-const DataTableRow = <TData extends object>({
+const DataTableRowCells = <TData extends object>({
   row,
   columns,
-  selectable,
+  density,
 }: {
   row: Row<DataTableFeatures, TData>;
   columns: DataTableColumn<TData>[];
-  selectable: boolean;
+  density: DataTableDensity;
 }) => (
-  <tr
-    data-selected={row.getIsSelected() ? "" : undefined}
-    className="border-t border-solid border-border/60 transition-colors duration-(--ui-duration-instant) hover:bg-accent/45 data-selected:bg-signal/6"
-  >
-    {selectable && (
-      <td className="w-10 px-4 py-3">
-        <DrawCheckbox
-          tone="signal"
-          aria-label={`选择第 ${row.index + 1} 行`}
-          checked={row.getIsSelected()}
-          onCheckedChange={(checked) => row.toggleSelected(checked)}
-        />
-      </td>
-    )}
+  <>
     {row.getAllCells().map((cell, idx) => {
       const align = columns[idx]?.align ?? "left";
       return (
         <td
           key={cell.id}
           className={cn(
-            "px-4 py-3 text-sm text-foreground",
+            dataTableCellVariants({ density }),
             ALIGN_CLASS[align],
             align === "right" && "tabular-nums",
           )}
@@ -148,21 +143,72 @@ const DataTableRow = <TData extends object>({
         </td>
       );
     })}
-  </tr>
+  </>
 );
+
+const DataTableRow = <TData extends object>({
+  row,
+  columns,
+  density,
+  striped,
+  selectable,
+  onRowClick,
+}: {
+  row: Row<DataTableFeatures, TData>;
+  columns: DataTableColumn<TData>[];
+  density: DataTableDensity;
+  striped: boolean;
+  selectable: boolean;
+  onRowClick?: (row: TData) => void;
+}) => {
+  const handleClick = (event: MouseEvent<HTMLTableRowElement>) => {
+    if (!onRowClick || isInteractiveTarget(event.target)) return;
+    onRowClick(row.original);
+  };
+
+  return (
+    <tr
+      data-selected={row.getIsSelected() ? "" : undefined}
+      onClick={onRowClick ? handleClick : undefined}
+      className={cn(
+        "border-t border-solid border-border/55 transition-colors duration-(--ui-duration-instant) hover:bg-accent/45 data-selected:bg-signal/6 dark:border-white/7",
+        striped && "even:bg-secondary/25 dark:even:bg-white/[0.025]",
+        onRowClick && "cursor-pointer",
+      )}
+    >
+      {selectable && (
+        <td className={cn("w-10", dataTableCellVariants({ density }))}>
+          <DrawCheckbox
+            tone="signal"
+            aria-label={`选择第 ${row.index + 1} 行`}
+            checked={row.getIsSelected()}
+            onCheckedChange={(checked) => row.toggleSelected(checked)}
+          />
+        </td>
+      )}
+      <DataTableRowCells row={row} columns={columns} density={density} />
+    </tr>
+  );
+};
 
 export const DataTableBody = <TData extends object>({
   rows,
   columns,
+  density,
+  striped,
   selectable,
   loading,
   emptyMessage,
+  onRowClick,
 }: {
   rows: Row<DataTableFeatures, TData>[];
   columns: DataTableColumn<TData>[];
+  density: DataTableDensity;
+  striped: boolean;
   selectable: boolean;
   loading: boolean;
   emptyMessage: string;
+  onRowClick?: (row: TData) => void;
 }) => {
   const colSpan = columns.length + (selectable ? 1 : 0);
   if (loading) return <TableLoadingRows colSpan={colSpan} />;
@@ -178,7 +224,15 @@ export const DataTableBody = <TData extends object>({
   return (
     <>
       {rows.map((row) => (
-        <DataTableRow key={row.id} row={row} columns={columns} selectable={selectable} />
+        <DataTableRow
+          key={row.id}
+          row={row}
+          columns={columns}
+          density={density}
+          striped={striped}
+          selectable={selectable}
+          onRowClick={onRowClick}
+        />
       ))}
     </>
   );

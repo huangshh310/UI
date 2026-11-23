@@ -39,4 +39,19 @@ describe("Tree", () => {
     await user.click(screen.getByRole("treeitem", { name: /index\.ts/ }));
     expect(onValueChange).toHaveBeenCalledWith("src/index.ts");
   });
+
+  it("支持 ghost 侧栏外观与 compact 紧凑密度", () => {
+    const { container } = render(
+      <Tree
+        ariaLabel="侧栏目录"
+        nodes={NODES}
+        variant="ghost"
+        density="compact"
+        showGuides={false}
+      />,
+    );
+    const root = container.querySelector('[data-slot="tree"]');
+    expect(root?.getAttribute("data-variant")).toBe("ghost");
+    expect(root?.getAttribute("data-density")).toBe("compact");
+  });
 });

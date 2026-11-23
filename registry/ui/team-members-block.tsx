@@ -16,7 +16,36 @@ import { cn } from "@/lib/utils";
 import { Search, Trash2, UserPlus } from "lucide-react";
 import { type FormEvent, useId, useState } from "react";
 
+export const TEAM_ROLE_OPTIONS: { value: TeamRole; label: string }[] = [
+  { value: "管理员", label: "管理员" },
+  { value: "开发", label: "开发" },
+  { value: "设计", label: "设计" },
+];
+
+export const TEAM_FILTER_ROLES: ("全部" | TeamRole)[] = ["全部", "管理员", "开发", "设计"];
+
+export const TEAM_ROLE_BADGE_VARIANT: Record<TeamRole, "soft" | "secondary" | "outline"> = {
+  管理员: "soft",
+  开发: "secondary",
+  设计: "outline",
+};
+
+export const TEAM_STATUS_DOT_CLASS: Record<TeamMemberStatus, string> = {
+  online: "bg-emerald-500",
+  busy: "bg-amber-500",
+  offline: "bg-muted-foreground/45",
+};
+
+export const TEAM_STATUS_LABEL: Record<TeamMemberStatus, string> = {
+  online: "在线",
+  busy: "专注中",
+  offline: "离线",
+};
 export type TeamRole = "管理员" | "开发" | "设计";
+
+export type TeamMemberStatus = "online" | "busy" | "offline";
+
+export type TeamMembersVariant = "default" | "elevated" | "subtle";
 
 export interface TeamMember {
   id: string;
@@ -24,25 +53,31 @@ export interface TeamMember {
   email: string;
   role: TeamRole;
   initials: string;
-  status?: "online" | "busy" | "offline";
+  status?: TeamMemberStatus;
 }
 
 export interface TeamMembersBlockProps {
   /** 初始成员列表 */
   initialMembers?: TeamMember[];
+  /** 区块标题 */
+  title?: string;
+  /** 区块副标题 */
+  description?: string;
+  /** 卡片视觉变体 */
+  variant?: TeamMembersVariant;
+  /** 是否使用紧凑行高 */
+  compact?: boolean;
+  /** 可选最大席位数，传入后在头部展示席位占比 */
+  maxSeats?: number;
   /** 邀请新成员提交回调 */
   onInvite?: (payload: { name: string; email: string; role: TeamRole }) => void;
+  /** 成员角色变更回调 */
+  onRoleChange?: (id: string, role: TeamRole) => void;
+  /** 移除成员回调 */
+  onRemove?: (id: string) => void;
   /** 自定义容器类名 */
   className?: string;
 }
-const ROLE_OPTIONS = [
-  { value: "管理员", label: "管理员" },
-  { value: "开发", label: "开发" },
-  { value: "设计", label: "设计" },
-];
-
-const FILTER_ROLES: ("全部" | TeamRole)[] = ["全部", "管理员", "开发", "设计"];
-
 const TextField = ({
   label,
   value,
@@ -69,7 +104,7 @@ const TextField = ({
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        className="h-9 rounded-lg border border-solid border-border bg-background px-3 text-sm text-foreground outline-none focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset dark:bg-card"
+        className="h-9.5 rounded-xl border border-solid border-border/80 bg-background px-3 text-sm text-foreground outline-none transition-[border-color,box-shadow] focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset dark:border-white/12 dark:bg-card"
       />
     </div>
   );
@@ -127,7 +162,7 @@ const InviteDialog = ({
         />
         <SpringSelect
           label="默认角色"
-          options={ROLE_OPTIONS}
+          options={TEAM_ROLE_OPTIONS}
           value={role}
           onValueChange={(n) => n && setRole(n as TeamRole)}
         />
@@ -137,33 +172,67 @@ const InviteDialog = ({
   );
 };
 
+const MemberIdentity = ({
+  member,
+  status,
+  compact,
+}: {
+  member: TeamMember;
+  status: TeamMemberStatus;
+  compact: boolean;
+}) => (
+  <div className="flex min-w-0 items-center gap-3">
+    <span className="relative inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-solid border-border/80 bg-secondary font-sans text-xs font-semibold text-foreground dark:border-white/12">
+      {member.initials}
+      <span
+        aria-hidden="true"
+        title={TEAM_STATUS_LABEL[status]}
+        className={cn(
+          "absolute -right-0.5 -bottom-0.5 size-2.5 rounded-full ring-2 ring-card",
+          TEAM_STATUS_DOT_CLASS[status],
+        )}
+      />
+    </span>
+    <div className="min-w-0">
+      <div className="flex flex-wrap items-center gap-2">
+        <p className="m-0 truncate text-sm font-medium text-foreground">{member.name}</p>
+        <Badge variant={TEAM_ROLE_BADGE_VARIANT[member.role]} size="sm">
+          {member.role}
+        </Badge>
+        {!compact && (
+          <span className="hidden text-[11px] text-muted-foreground sm:inline">
+            {TEAM_STATUS_LABEL[status]}
+          </span>
+        )}
+      </div>
+      <p className="m-0 truncate font-mono text-xs text-muted-foreground">{member.email}</p>
+    </div>
+  </div>
+);
+
 const MemberRow = ({
   member,
+  compact,
   onRoleChange,
   onRemove,
 }: {
   member: TeamMember;
+  compact: boolean;
   onRoleChange: (role: TeamRole) => void;
   onRemove: () => void;
 }) => (
-  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-solid border-border/75 px-4 py-3 last:border-b-0">
-    <div className="flex min-w-0 items-center gap-3">
-      <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-solid border-border bg-secondary font-sans text-xs font-semibold text-foreground">
-        {member.initials}
-      </span>
-      <div className="min-w-0">
-        <div className="flex items-center gap-2">
-          <p className="m-0 truncate text-sm font-medium text-foreground">{member.name}</p>
-          <Badge variant={member.role === "管理员" ? "signal" : "secondary"}>{member.role}</Badge>
-        </div>
-        <p className="m-0 truncate font-mono text-xs text-muted-foreground">{member.email}</p>
-      </div>
-    </div>
+  <div
+    className={cn(
+      "flex flex-wrap items-center justify-between gap-3 border-b border-solid border-border/75 transition-colors last:border-b-0 hover:bg-secondary/35 dark:border-white/10 dark:hover:bg-secondary/25",
+      compact ? "px-3.5 py-2.5" : "px-4 py-3.5",
+    )}
+  >
+    <MemberIdentity member={member} status={member.status ?? "offline"} compact={compact} />
     <div className="flex items-center gap-2">
-      <div className="w-32">
+      <div className="w-30">
         <SpringSelect
           aria-label={`切换 ${member.name} 的角色`}
-          options={ROLE_OPTIONS}
+          options={TEAM_ROLE_OPTIONS}
           value={member.role}
           onValueChange={(n) => n && onRoleChange(n as TeamRole)}
         />
@@ -175,19 +244,53 @@ const MemberRow = ({
   </div>
 );
 
+const RoleFilterRail = ({
+  roleFilter,
+  roleCounts,
+  onRoleFilterChange,
+}: {
+  roleFilter: "全部" | TeamRole;
+  roleCounts: Record<"全部" | TeamRole, number>;
+  onRoleFilterChange: (next: "全部" | TeamRole) => void;
+}) => (
+  <div className="flex flex-wrap items-center gap-1 rounded-xl border border-solid border-border/80 bg-secondary/55 p-1 dark:border-white/10 dark:bg-secondary/35">
+    {TEAM_FILTER_ROLES.map((role) => (
+      <button
+        key={role}
+        type="button"
+        aria-pressed={roleFilter === role}
+        onClick={() => onRoleFilterChange(role)}
+        className={cn(
+          "inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-lg border-0 px-2.5 font-sans text-xs font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
+          roleFilter === role
+            ? "bg-card text-foreground shadow-xs ring-1 ring-border/70 dark:ring-white/12"
+            : "bg-transparent text-muted-foreground hover:text-foreground",
+        )}
+      >
+        <span>{role}</span>
+        <span className="font-mono text-[10px] text-muted-foreground tabular-nums">
+          {roleCounts[role]}
+        </span>
+      </button>
+    ))}
+  </div>
+);
+
 const Toolbar = ({
   query,
   roleFilter,
+  roleCounts,
   onQueryChange,
   onRoleFilterChange,
 }: {
   query: string;
   roleFilter: "全部" | TeamRole;
+  roleCounts: Record<"全部" | TeamRole, number>;
   onQueryChange: (next: string) => void;
   onRoleFilterChange: (next: "全部" | TeamRole) => void;
 }) => (
   <div className="flex flex-wrap items-center justify-between gap-3">
-    <label className="flex h-9 w-full items-center gap-2 rounded-lg border border-solid border-border bg-background px-3 text-sm focus-within:border-ring focus-within:ring-1 focus-within:ring-ring focus-within:ring-inset sm:w-64 dark:bg-card">
+    <label className="flex h-9.5 w-full items-center gap-2 rounded-xl border border-solid border-border/80 bg-background px-3 text-sm transition-[border-color,box-shadow] focus-within:border-ring focus-within:ring-1 focus-within:ring-ring focus-within:ring-inset sm:w-64 dark:border-white/10 dark:bg-card">
       <Search aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
       <input
         type="search"
@@ -198,33 +301,23 @@ const Toolbar = ({
         className="w-full border-0 bg-transparent text-xs text-foreground outline-none placeholder:text-muted-foreground"
       />
     </label>
-    <div className="flex flex-wrap items-center gap-1 rounded-lg border border-solid border-border bg-secondary/50 p-1">
-      {FILTER_ROLES.map((role) => (
-        <button
-          key={role}
-          type="button"
-          onClick={() => onRoleFilterChange(role)}
-          className={cn(
-            "h-7 cursor-pointer rounded-md border-0 px-2.5 font-sans text-xs font-medium transition-colors",
-            roleFilter === role
-              ? "bg-background text-foreground shadow-xs dark:bg-card"
-              : "bg-transparent text-muted-foreground hover:text-foreground",
-          )}
-        >
-          {role}
-        </button>
-      ))}
-    </div>
+    <RoleFilterRail
+      roleFilter={roleFilter}
+      roleCounts={roleCounts}
+      onRoleFilterChange={onRoleFilterChange}
+    />
   </div>
 );
 
 const MemberListSection = ({
   members,
+  compact,
   onReset,
   onRoleChange,
   onRemove,
 }: {
   members: TeamMember[];
+  compact: boolean;
   onReset: () => void;
   onRoleChange: (id: string, role: TeamRole) => void;
   onRemove: (id: string) => void;
@@ -243,11 +336,12 @@ const MemberListSection = ({
     );
   }
   return (
-    <div className="overflow-hidden rounded-xl border border-solid border-border">
+    <div className="overflow-hidden rounded-2xl border border-solid border-border/80 bg-card/60 dark:border-white/10">
       {members.map((member) => (
         <MemberRow
           key={member.id}
           member={member}
+          compact={compact}
           onRoleChange={(role) => onRoleChange(member.id, role)}
           onRemove={() => onRemove(member.id)}
         />
@@ -287,21 +381,39 @@ const filterMembers = (members: TeamMember[], query: string, roleFilter: "全部
   );
 };
 
+const countRoles = (members: TeamMember[]): Record<"全部" | TeamRole, number> => ({
+  全部: members.length,
+  管理员: members.filter((m) => m.role === "管理员").length,
+  开发: members.filter((m) => m.role === "开发").length,
+  设计: members.filter((m) => m.role === "设计").length,
+});
+
 const TeamHeader = ({
+  title,
+  description,
   members,
+  maxSeats,
   onInviteClick,
 }: {
+  title: string;
+  description: string;
   members: TeamMember[];
+  maxSeats?: number;
   onInviteClick: () => void;
 }) => (
-  <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+  <CardHeader className="flex flex-col gap-4 border-b border-solid border-border/75 pb-5 sm:flex-row sm:items-center sm:justify-between dark:border-white/10">
     <div>
-      <CardTitle>团队成员与权限</CardTitle>
-      <CardDescription>管理工作区协作成员、角色策略与发布权限。</CardDescription>
+      <div className="flex flex-wrap items-center gap-2">
+        <CardTitle>{title}</CardTitle>
+        <Badge variant="secondary" size="sm" className="font-mono tabular-nums">
+          {maxSeats ? `${members.length} / ${maxSeats} 席` : `${members.length} 人`}
+        </Badge>
+      </div>
+      <CardDescription className="mt-1">{description}</CardDescription>
     </div>
     <div className="flex flex-wrap items-center gap-3">
       <AvatarStack items={members} max={4} size="sm" />
-      <Button size="sm" variant="primary" className="rounded-full" onClick={onInviteClick}>
+      <Button size="sm" variant="primary" radius="pill" onClick={onInviteClick}>
         <UserPlus className="size-3.5" />
         <span>邀请成员</span>
       </Button>
@@ -309,17 +421,12 @@ const TeamHeader = ({
   </CardHeader>
 );
 
-export const TeamMembersBlock = ({
-  initialMembers = DEFAULT_MEMBERS,
-  onInvite,
-  className,
-}: TeamMembersBlockProps) => {
-  const [members, setMembers] = useState(initialMembers);
+const useTeamState = (props: TeamMembersBlockProps) => {
+  const [members, setMembers] = useState(props.initialMembers ?? DEFAULT_MEMBERS);
   const [query, setQuery] = useState("");
   const [roleFilter, setRoleFilter] = useState<"全部" | TeamRole>("全部");
   const [inviteOpen, setInviteOpen] = useState(false);
 
-  const visible = filterMembers(members, query, roleFilter);
   const handleInvite = (payload: { name: string; email: string; role: TeamRole }) => {
     const next: TeamMember = {
       id: `m-${Date.now()}`,
@@ -328,29 +435,67 @@ export const TeamMembersBlock = ({
       status: "online",
     };
     setMembers((prev) => [next, ...prev]);
-    onInvite?.(payload);
+    props.onInvite?.(payload);
   };
+  const handleRoleChange = (id: string, role: TeamRole) => {
+    setMembers((prev) => prev.map((m) => (m.id === id ? { ...m, role } : m)));
+    props.onRoleChange?.(id, role);
+  };
+  const handleRemove = (id: string) => {
+    setMembers((prev) => prev.filter((m) => m.id !== id));
+    props.onRemove?.(id);
+  };
+  return {
+    members,
+    visible: filterMembers(members, query, roleFilter),
+    query,
+    setQuery,
+    roleFilter,
+    setRoleFilter,
+    inviteOpen,
+    setInviteOpen,
+    handleInvite,
+    handleRoleChange,
+    handleRemove,
+  };
+};
 
+export const TeamMembersBlock = (props: TeamMembersBlockProps) => {
+  const state = useTeamState(props);
   return (
-    <Card data-slot="team-members-block" className={cn("w-full", className)}>
-      <TeamHeader members={members} onInviteClick={() => setInviteOpen(true)} />
-      <CardContent className="flex flex-col gap-4">
+    <Card
+      variant={props.variant ?? "default"}
+      data-slot="team-members-block"
+      className={cn("w-full border-border/80 dark:border-white/10", props.className)}
+    >
+      <TeamHeader
+        title={props.title ?? "团队成员与权限"}
+        description={props.description ?? "管理工作区协作成员、角色策略与发布权限。"}
+        members={state.members}
+        maxSeats={props.maxSeats}
+        onInviteClick={() => state.setInviteOpen(true)}
+      />
+      <CardContent className="flex flex-col gap-4 pt-5 pb-6">
         <Toolbar
-          query={query}
-          roleFilter={roleFilter}
-          onQueryChange={setQuery}
-          onRoleFilterChange={setRoleFilter}
+          query={state.query}
+          roleFilter={state.roleFilter}
+          roleCounts={countRoles(state.members)}
+          onQueryChange={state.setQuery}
+          onRoleFilterChange={state.setRoleFilter}
         />
         <MemberListSection
-          members={visible}
-          onReset={() => (setQuery(""), setRoleFilter("全部"))}
-          onRoleChange={(id, role) =>
-            setMembers((prev) => prev.map((m) => (m.id === id ? { ...m, role } : m)))
-          }
-          onRemove={(id) => setMembers((prev) => prev.filter((m) => m.id !== id))}
+          members={state.visible}
+          compact={props.compact ?? false}
+          onReset={() => (state.setQuery(""), state.setRoleFilter("全部"))}
+          onRoleChange={state.handleRoleChange}
+          onRemove={state.handleRemove}
         />
       </CardContent>
-      <InviteDialog open={inviteOpen} onOpenChange={setInviteOpen} onSubmit={handleInvite} />
+      <InviteDialog
+        open={state.inviteOpen}
+        onOpenChange={state.setInviteOpen}
+        onSubmit={state.handleInvite}
+      />
     </Card>
   );
 };

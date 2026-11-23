@@ -2,13 +2,18 @@
 
 import { MorphingDialog } from "@matt-ui/motion";
 import { Button } from "@matt-ui/ui";
+import { Sparkles } from "lucide-react";
 
 export default function MorphingDialogReleaseDemo() {
   return (
     <MorphingDialog
       tag="CHANGELOG"
+      tagTone="signal"
+      size="lg"
+      icon={<Sparkles className="size-3.5" />}
       title="悬浮 Sheet 与 12 区块模板"
       subtitle="点击展开完整更新摘要与升级指南"
+      meta="v2.4.0 · 71 个 Registry 条目"
       footer={
         <Button size="sm" variant="signal">
           复制升级命令

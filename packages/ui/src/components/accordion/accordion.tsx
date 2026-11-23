@@ -1,37 +1,108 @@
 "use client";
 
+/**
+ * Accordion：基于 Base UI Accordion 的精密折叠面板，支持 default / card / separated 变体与 chevron / plus 指示器。
+ */
 import { Accordion as BaseAccordion } from "@base-ui/react/accordion";
 import { cn } from "@matt-ui/utils";
 import { ChevronDown } from "lucide-react";
-import type { AccordionItem, AccordionProps, AccordionVariant } from "./accordion.types.js";
+import type {
+  AccordionIndicator,
+  AccordionItem,
+  AccordionProps,
+  AccordionVariant,
+} from "./accordion.types.js";
+import {
+  accordionBodyVariants,
+  accordionItemVariants,
+  accordionRootVariants,
+  accordionTriggerVariants,
+} from "./accordion.variants.js";
 
-const AccordionRow = ({ item, variant }: { item: AccordionItem; variant: AccordionVariant }) => (
-  <BaseAccordion.Item value={item.value} disabled={item.disabled}>
+type ResolvedAccordionVariant = "default" | "card" | "separated";
+
+const resolveVariant = (variant: AccordionVariant): ResolvedAccordionVariant => {
+  if (variant === "divided") return "default";
+  if (variant === "boxed") return "card";
+  return variant;
+};
+
+const AccordionIcon = ({ indicator }: { indicator: AccordionIndicator }) => {
+  if (indicator === "plus") {
+    return (
+      <span
+        aria-hidden="true"
+        className="relative flex size-5 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors duration-(--ui-duration-fast) group-hover:text-foreground"
+      >
+        <span className="h-[1.5px] w-3 rounded-full bg-current" />
+        <span className="absolute h-3 w-[1.5px] rounded-full bg-current transition-[transform,opacity] duration-(--ui-duration-fast) group-data-panel-open:scale-y-0 group-data-panel-open:opacity-0 motion-reduce:transition-none" />
+      </span>
+    );
+  }
+  return (
+    <ChevronDown
+      aria-hidden="true"
+      className="size-4 shrink-0 text-muted-foreground transition-transform duration-(--ui-duration-fast) group-hover:text-foreground group-data-panel-open:rotate-180 motion-reduce:transition-none"
+    />
+  );
+};
+
+const AccordionTriggerLabel = ({ item }: { item: AccordionItem }) => (
+  <span className="flex min-w-0 items-center gap-3">
+    {item.icon && (
+      <span
+        aria-hidden="true"
+        className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-solid border-border/75 bg-secondary/60 text-foreground dark:border-white/12 dark:bg-white/[0.06]"
+      >
+        {item.icon}
+      </span>
+    )}
+    <span className="flex min-w-0 flex-col gap-0.5">
+      <span className="flex items-center gap-2">
+        <span className="truncate">{item.title}</span>
+        {item.badge && (
+          <span className="rounded-full bg-secondary px-1.5 py-0.5 font-mono text-[10px] leading-none text-muted-foreground">
+            {item.badge}
+          </span>
+        )}
+      </span>
+      {item.subtitle && (
+        <span className="text-xs font-normal text-muted-foreground">{item.subtitle}</span>
+      )}
+    </span>
+  </span>
+);
+
+const AccordionRow = ({
+  item,
+  variant,
+  indicator,
+}: {
+  item: AccordionItem;
+  variant: ResolvedAccordionVariant;
+  indicator: AccordionIndicator;
+}) => (
+  <BaseAccordion.Item
+    value={item.value}
+    disabled={item.disabled}
+    data-slot="accordion-item"
+    className={accordionItemVariants({ variant })}
+  >
     <BaseAccordion.Header render={<div />} className="m-0">
       <BaseAccordion.Trigger
-        className={cn(
-          "group flex w-full cursor-pointer items-center justify-between gap-4 border-0 bg-transparent text-left font-sans text-sm font-medium text-foreground outline-none",
-          "transition-colors duration-(--ui-duration-fast) hover:text-foreground/85 focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-45",
-          variant === "boxed" ? "px-5 py-3.5" : "px-1 py-3.5",
-        )}
+        data-slot="accordion-trigger"
+        className={accordionTriggerVariants({ variant })}
       >
-        <span className="flex min-w-0 flex-col gap-0.5">
-          <span>{item.title}</span>
-          {item.subtitle && (
-            <span className="text-xs font-normal text-muted-foreground">{item.subtitle}</span>
-          )}
-        </span>
-        <ChevronDown
-          aria-hidden="true"
-          className="size-4 shrink-0 text-muted-foreground transition-transform duration-(--ui-duration-fast) group-data-panel-open:rotate-180 motion-reduce:transition-none"
-        />
+        <AccordionTriggerLabel item={item} />
+        <AccordionIcon indicator={indicator} />
       </BaseAccordion.Trigger>
     </BaseAccordion.Header>
     <BaseAccordion.Panel
       role="presentation"
-      className="h-(--accordion-panel-height) overflow-hidden text-xs leading-relaxed text-muted-foreground transition-[height,opacity] duration-(--ui-duration-normal) ease-(--ui-ease-out) data-ending-style:h-0 data-ending-style:opacity-0 data-starting-style:h-0 data-starting-style:opacity-0 motion-reduce:transition-none"
+      data-slot="accordion-panel"
+      className="h-(--accordion-panel-height) overflow-hidden transition-[height,opacity] duration-(--ui-duration-normal) ease-(--ui-ease-out) data-ending-style:h-0 data-ending-style:opacity-0 data-starting-style:h-0 data-starting-style:opacity-0 motion-reduce:transition-none"
     >
-      <div className={cn(variant === "boxed" ? "px-5 pb-4" : "px-1 pb-4")}>{item.content}</div>
+      <div className={accordionBodyVariants({ variant })}>{item.content}</div>
     </BaseAccordion.Panel>
   </BaseAccordion.Item>
 );
@@ -42,26 +113,25 @@ export const Accordion = ({
   value,
   defaultValue,
   onValueChange,
-  variant = "divided",
+  variant = "default",
+  indicator = "chevron",
   className,
-}: AccordionProps) => (
-  <BaseAccordion.Root
-    multiple={multiple}
-    value={value}
-    defaultValue={defaultValue}
-    onValueChange={(next) => onValueChange?.(next.map(String))}
-    data-slot="accordion"
-    data-variant={variant}
-    className={cn(
-      "flex w-full flex-col divide-y divide-border/80",
-      variant === "boxed"
-        ? "overflow-hidden rounded-2xl border border-solid border-border bg-card shadow-sm"
-        : "border-y border-solid border-border/80",
-      className,
-    )}
-  >
-    {items.map((item) => (
-      <AccordionRow key={item.value} item={item} variant={variant} />
-    ))}
-  </BaseAccordion.Root>
-);
+}: AccordionProps) => {
+  const visualVariant = resolveVariant(variant);
+  return (
+    <BaseAccordion.Root
+      multiple={multiple}
+      value={value}
+      defaultValue={defaultValue}
+      onValueChange={(next) => onValueChange?.(next.map(String))}
+      data-slot="accordion"
+      data-variant={variant}
+      data-indicator={indicator}
+      className={cn(accordionRootVariants({ variant: visualVariant }), className)}
+    >
+      {items.map((item) => (
+        <AccordionRow key={item.value} item={item} variant={visualVariant} indicator={indicator} />
+      ))}
+    </BaseAccordion.Root>
+  );
+};

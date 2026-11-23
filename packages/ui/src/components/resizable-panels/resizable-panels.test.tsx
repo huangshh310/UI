@@ -33,4 +33,23 @@ describe("ResizablePanels", () => {
     await user.keyboard("{ArrowRight}");
     expect(handle.getAttribute("aria-valuenow")).not.toBe(before);
   });
+
+  it("支持垂直分栏与 line / dots 手柄风格", () => {
+    const { container } = render(
+      <ResizablePanels
+        orientation="vertical"
+        variant="flush"
+        handleStyle="line"
+        panels={[
+          { id: "top", defaultSize: 60, content: <div>编辑区</div> },
+          { id: "bottom", defaultSize: 40, content: <div>终端输出</div> },
+        ]}
+      />,
+    );
+
+    const root = container.firstElementChild;
+    expect(root?.getAttribute("data-variant")).toBe("flush");
+    expect(root?.getAttribute("data-handle-style")).toBe("line");
+    expect(screen.getByRole("separator").getAttribute("aria-orientation")).toBe("horizontal");
+  });
 });

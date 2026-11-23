@@ -42,4 +42,24 @@ describe("SettleModal", () => {
     await user.click(screen.getByRole("button", { name: "关闭弹窗" }));
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
+
+  it("支持 tone、align、size 与 icon 扩展属性", () => {
+    render(
+      <SettleModal
+        open
+        tone="destructive"
+        align="top"
+        size="xl"
+        icon={<span data-testid="modal-icon">!</span>}
+        title="永久删除项目"
+      >
+        <p>此操作不可恢复</p>
+      </SettleModal>,
+    );
+
+    const dialog = screen.getByRole("dialog", { name: "永久删除项目" });
+    expect(dialog.getAttribute("data-tone")).toBe("destructive");
+    expect(dialog.getAttribute("data-align")).toBe("top");
+    expect(screen.getByTestId("modal-icon")).toBeTruthy();
+  });
 });

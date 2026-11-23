@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+export type CommandMenuSize = "sm" | "md" | "lg";
+
 export interface CommandMenuSubPage {
   heading: string;
   items: Omit<CommandMenuItem, "subPage">[];
@@ -8,7 +10,9 @@ export interface CommandMenuSubPage {
 export interface CommandMenuItem {
   id: string;
   label: string;
+  description?: string;
   keywords?: string[];
+  badge?: string;
   shortcut?: string;
   icon?: ReactNode;
   disabled?: boolean;
@@ -43,6 +47,10 @@ export interface CommandMenuProps {
   groups: CommandMenuGroup[];
   /** 无匹配结果时的提示 */
   emptyText?: string;
+  /** 弹窗最大宽度预设 */
+  size?: CommandMenuSize;
+  /** 是否在面板底部显示键盘操作提示栏 */
+  showFooter?: boolean;
   /** 选中叶子命令后的回调 */
   onSelect?: (id: string) => void;
   /** 面板自定义类名 */

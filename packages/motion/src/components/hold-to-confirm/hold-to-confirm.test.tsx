@@ -44,4 +44,40 @@ describe("HoldToConfirm", () => {
     expect(onConfirm).not.toHaveBeenCalled();
     vi.useRealTimers();
   });
+
+  it("支持 variant、tone、size、radius 以及重置按钮回调", async () => {
+    const onConfirm = vi.fn<() => void>();
+    const onReset = vi.fn<() => void>();
+    render(
+      <HoldToConfirm
+        variant="solid"
+        tone="emerald"
+        size="sm"
+        radius="default"
+        holdDurationMs={30}
+        label="长按发布"
+        confirmedLabel="已发布"
+        onConfirm={onConfirm}
+        onReset={onReset}
+      />,
+    );
+
+    const btn = screen.getByRole("button", { name: "长按发布" });
+    const root = btn.closest('[data-slot="hold-to-confirm"]');
+    expect(root?.getAttribute("data-variant")).toBe("solid");
+    expect(root?.getAttribute("data-tone")).toBe("emerald");
+    expect(root?.getAttribute("data-size")).toBe("sm");
+    expect(root?.getAttribute("data-radius")).toBe("default");
+
+    fireEvent.pointerDown(btn);
+    await waitFor(() => {
+      expect(onConfirm).toHaveBeenCalledTimes(1);
+    });
+    expect(root?.hasAttribute("data-confirmed")).toBe(true);
+
+    const resetBtn = screen.getByRole("button", { name: "重置确认状态" });
+    fireEvent.click(resetBtn);
+    expect(onReset).toHaveBeenCalledTimes(1);
+    expect(root?.hasAttribute("data-confirmed")).toBe(false);
+  });
 });

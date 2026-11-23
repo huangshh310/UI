@@ -2,12 +2,67 @@
 "use client";
 
 /**
- * ThinkingOrb：极简纯单色 3D 球面粒子思考球，支持 9 种 AI 认知状态、明暗极性自动适配、离屏暂停与减弱动效降级。
+ * ThinkingOrb：极简纯单色 3D 球面粒子思考球，支持 9 种 AI 认知状态、玻璃表圈/光晕变体、状态胶囊与离屏暂停。
  */
 
 import { cn } from "@/lib/utils";
+import { cva } from "class-variance-authority";
 import { type CSSProperties, useEffect, useRef, useState } from "react";
 
+export const THINKING_ORB_STATE_LABELS: Record<ThinkingOrbState, string> = {
+  working: "处理中",
+  searching: "检索中",
+  solving: "求解中",
+  listening: "聆听中",
+  connecting: "连接中",
+  weaving: "编织上下文",
+  composing: "组织回答",
+  breathing: "静候待命",
+  shaping: "构思塑形",
+};
+
+export const thinkingOrbFrameVariants = cva(
+  "relative inline-flex shrink-0 items-center justify-center rounded-full transition-[transform,box-shadow,border-color] duration-(--ui-duration-fast)",
+  {
+    variants: {
+      variant: {
+        minimal: "",
+        framed:
+          "border border-solid border-border/80 bg-card/85 shadow-[0_8px_24px_-10px_rgba(0,0,0,0.14),inset_0_1px_0_rgba(255,255,255,0.65)] backdrop-blur-md dark:border-white/10 dark:bg-card/70 dark:shadow-[0_14px_32px_-10px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.08)]",
+        halo: "border border-solid border-border/70 bg-background/75 shadow-[0_0_0_4px_color-mix(in_oklab,var(--color-foreground)_4%,transparent),0_10px_28px_-12px_rgba(0,0,0,0.16)] backdrop-blur-md dark:border-white/12 dark:bg-card/60 dark:shadow-[0_0_0_4px_rgba(255,255,255,0.04),0_14px_36px_-10px_rgba(0,0,0,0.72)]",
+      },
+      interactive: {
+        true: "hover:scale-103 hover:border-foreground/22 dark:hover:border-white/22",
+        false: "",
+      },
+    },
+    defaultVariants: {
+      variant: "minimal",
+      interactive: false,
+    },
+  },
+);
+
+export const thinkingOrbRootVariants = cva("inline-flex shrink-0 items-center justify-center", {
+  variants: {
+    hasLabel: {
+      true: "",
+      false: "relative",
+    },
+    placement: {
+      bottom: "flex-col gap-2",
+      right: "flex-row gap-2.5",
+    },
+  },
+  defaultVariants: {
+    hasLabel: false,
+    placement: "bottom",
+  },
+});
+
+export const thinkingOrbLabelVariants = cva(
+  "inline-flex items-center gap-1.5 rounded-full border border-solid border-border/80 bg-card/90 px-2.5 py-0.5 font-mono text-[11px] font-medium text-muted-foreground shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-card/75",
+);
 /** ThinkingOrb 支持的 9 种智能体认知状态 */
 export type ThinkingOrbState =
   | "working"
@@ -20,9 +75,17 @@ export type ThinkingOrbState =
   | "breathing"
   | "shaping";
 
+/** ThinkingOrb 外观变体：极简无框、毛玻璃表圈、环境光晕 */
+export type ThinkingOrbVariant = "minimal" | "framed" | "halo";
+
+/** 认知状态文字标签相对球体的位置 */
+export type ThinkingOrbLabelPlacement = "bottom" | "right";
+
 export interface ThinkingOrbProps {
   /** 智能体当前认知状态预设，默认 "working" */
   state?: ThinkingOrbState;
+  /** 外观风格：minimal 无框纯粒子、framed 玻璃表圈、halo 柔光氛围环，默认 "minimal" */
+  variant?: ThinkingOrbVariant;
   /** 球体直径（像素），默认 64 */
   size?: number;
   /** 动效速率倍率，默认 1 */
@@ -31,6 +94,14 @@ export interface ThinkingOrbProps {
   dark?: boolean;
   /** 暂停当前轨道动画（保留粒子当前坐标） */
   paused?: boolean;
+  /** 是否显示当前认知状态说明胶囊，默认 false */
+  showLabel?: boolean;
+  /** 自定义状态展示文案；传入时会自动展示状态说明 */
+  label?: string;
+  /** 状态说明的排布方位，默认 "bottom" */
+  labelPlacement?: ThinkingOrbLabelPlacement;
+  /** 是否启用轻微悬浮反馈（适合语音/助手触发器），默认 false */
+  interactive?: boolean;
   className?: string;
   style?: CSSProperties;
   "aria-label"?: string;
@@ -315,18 +386,6 @@ const renderOrbFrame = (
   }
   drawNucleus(ctx, size, time, cfg, isDark);
 };
-const STATE_LABELS: Record<ThinkingOrbState, string> = {
-  working: "处理中",
-  searching: "检索中",
-  solving: "求解中",
-  listening: "聆听中",
-  connecting: "连接中",
-  weaving: "编织上下文",
-  composing: "组织回答",
-  breathing: "静候待命",
-  shaping: "构思塑形",
-};
-
 const readDarkTheme = (): boolean => {
   if (typeof document === "undefined") return false;
   const root = document.documentElement;
@@ -446,40 +505,124 @@ const useOrbCanvasLoop = (
   }, [canvasRef, particlesRef, opts, reducedRef]);
 };
 
-export const ThinkingOrb = ({
-  state = "working",
-  size = 64,
-  speed = 1,
-  dark,
-  paused = false,
-  className,
-  style,
-  "aria-label": ariaLabel,
-}: ThinkingOrbProps) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const particlesRef = useRef<OrbParticle[]>(createOrbParticles(orbParticleCountForSize(size)));
-  const isDark = useAutoDarkTheme(dark);
+const ThinkingOrbCaption = ({ label, paused }: { label: string; paused: boolean }) => (
+  <span data-slot="thinking-orb-label" className={thinkingOrbLabelVariants()}>
+    <span
+      aria-hidden="true"
+      className={cn(
+        "size-1.5 rounded-full bg-signal",
+        !paused && "animate-pulse motion-reduce:animate-none",
+      )}
+    />
+    <span>{label}</span>
+  </span>
+);
 
-  useEffect(() => {
-    particlesRef.current = createOrbParticles(orbParticleCountForSize(size));
-  }, [size]);
+const resolveOrbDefaults = (props: ThinkingOrbProps) => ({
+  state: props.state ?? "working",
+  variant: props.variant ?? "minimal",
+  size: props.size ?? 64,
+  speed: props.speed ?? 1,
+  paused: props.paused ?? false,
+  showLabel: props.showLabel ?? false,
+  labelPlacement: props.labelPlacement ?? "bottom",
+  interactive: props.interactive ?? false,
+});
 
-  useOrbCanvasLoop(canvasRef, particlesRef, { state, size, speed, isDark, paused });
+interface ThinkingOrbViewProps {
+  opts: ReturnType<typeof resolveOrbDefaults>;
+  frameClass: string;
+  frameSize: number;
+  aria: string;
+  resolvedLabel: string;
+  hasVisibleLabel: boolean;
+  className?: string;
+  style?: ThinkingOrbProps["style"];
+  canvasNode: React.ReactNode;
+}
 
+const ThinkingOrbView = (p: ThinkingOrbViewProps) => {
+  if (!p.hasVisibleLabel) {
+    return (
+      <output
+        data-slot="thinking-orb"
+        data-state={p.opts.state}
+        data-variant={p.opts.variant}
+        aria-label={p.aria}
+        className={cn(p.frameClass, p.className)}
+        style={{ width: p.frameSize, height: p.frameSize, ...p.style }}
+      >
+        {p.canvasNode}
+      </output>
+    );
+  }
   return (
     <output
       data-slot="thinking-orb"
-      data-state={state}
-      aria-label={ariaLabel ?? `智能体状态球：${STATE_LABELS[state]}`}
-      className={cn("relative inline-flex shrink-0 items-center justify-center", className)}
-      style={{ width: size, height: size, ...style }}
+      data-state={p.opts.state}
+      data-variant={p.opts.variant}
+      aria-label={p.aria}
+      className={cn(
+        thinkingOrbRootVariants({ hasLabel: true, placement: p.opts.labelPlacement }),
+        p.className,
+      )}
+      style={p.style}
     >
-      <canvas
-        ref={canvasRef}
-        aria-hidden="true"
-        className="block"
-        style={{ width: size, height: size }}
-      />
+      <span
+        data-slot="thinking-orb-frame"
+        className={p.frameClass}
+        style={{ width: p.frameSize, height: p.frameSize }}
+      >
+        {p.canvasNode}
+      </span>
+      <ThinkingOrbCaption label={p.resolvedLabel} paused={p.opts.paused} />
     </output>
+  );
+};
+
+export const ThinkingOrb = (props: ThinkingOrbProps) => {
+  const opts = resolveOrbDefaults(props);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const particlesRef = useRef<OrbParticle[]>(
+    createOrbParticles(orbParticleCountForSize(opts.size)),
+  );
+  const isDark = useAutoDarkTheme(props.dark);
+
+  useEffect(() => {
+    particlesRef.current = createOrbParticles(orbParticleCountForSize(opts.size));
+  }, [opts.size]);
+
+  useOrbCanvasLoop(canvasRef, particlesRef, {
+    state: opts.state,
+    size: opts.size,
+    speed: opts.speed,
+    isDark,
+    paused: opts.paused,
+  });
+
+  const resolvedLabel = props.label ?? THINKING_ORB_STATE_LABELS[opts.state];
+  const frameSize = opts.variant === "minimal" ? opts.size : opts.size + 12;
+  return (
+    <ThinkingOrbView
+      opts={opts}
+      frameClass={thinkingOrbFrameVariants({
+        variant: opts.variant,
+        interactive: opts.interactive,
+      })}
+      frameSize={frameSize}
+      aria={props["aria-label"] ?? `智能体状态球：${resolvedLabel}`}
+      resolvedLabel={resolvedLabel}
+      hasVisibleLabel={Boolean(props.label) || opts.showLabel}
+      className={props.className}
+      style={props.style}
+      canvasNode={
+        <canvas
+          ref={canvasRef}
+          aria-hidden="true"
+          className="block"
+          style={{ width: opts.size, height: opts.size }}
+        />
+      }
+    />
   );
 };

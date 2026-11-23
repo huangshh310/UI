@@ -4,6 +4,7 @@
 import { ButtonDisabled } from "@/demos/button/disabled";
 import { ButtonIconOnly } from "@/demos/button/icon-only";
 import { ButtonLoading } from "@/demos/button/loading";
+import { ButtonRadiusDemo } from "@/demos/button/radius";
 import { ButtonSignal } from "@/demos/button/signal";
 import { ButtonSizes } from "@/demos/button/sizes";
 import { ButtonVariants } from "@/demos/button/variants";
@@ -50,6 +51,14 @@ export function Demo() {
       Demo: ButtonSizes,
     },
     {
+      slug: "radius",
+      name: "胶囊圆角",
+      description: '通过 radius="pill" 切换柔和胶囊造型，适配 C 端主操作与浮层按钮。',
+      file: "button/radius.tsx",
+      Demo: ButtonRadiusDemo,
+      directory: false,
+    },
+    {
       slug: "with-icon",
       name: "带图标",
       description: "图标作为子元素传入，尺寸自动统一为 16px。",
@@ -90,6 +99,12 @@ export function Demo() {
       type: '"sm" | "md" | "lg" | "icon"',
       defaultValue: '"md"',
       description: "尺寸。icon 是只含图标的方形按钮。",
+    },
+    {
+      name: "radius",
+      type: '"default" | "pill"',
+      defaultValue: '"default"',
+      description: "圆角风格。pill 为全圆角胶囊造型。",
     },
     {
       name: "loading",

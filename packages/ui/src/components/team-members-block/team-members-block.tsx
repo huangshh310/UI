@@ -7,6 +7,7 @@ import { cn } from "@matt-ui/utils";
 import { UserPlus } from "lucide-react";
 import { useState } from "react";
 import { AvatarStack } from "../avatar-stack/index.js";
+import { Badge } from "../badge/index.js";
 import { Button } from "../button/index.js";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../card/index.js";
 import { InviteDialog, MemberListSection, Toolbar } from "./team-members-parts.js";
@@ -44,21 +45,39 @@ const filterMembers = (members: TeamMember[], query: string, roleFilter: "全部
   );
 };
 
+const countRoles = (members: TeamMember[]): Record<"全部" | TeamRole, number> => ({
+  全部: members.length,
+  管理员: members.filter((m) => m.role === "管理员").length,
+  开发: members.filter((m) => m.role === "开发").length,
+  设计: members.filter((m) => m.role === "设计").length,
+});
+
 const TeamHeader = ({
+  title,
+  description,
   members,
+  maxSeats,
   onInviteClick,
 }: {
+  title: string;
+  description: string;
   members: TeamMember[];
+  maxSeats?: number;
   onInviteClick: () => void;
 }) => (
-  <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+  <CardHeader className="flex flex-col gap-4 border-b border-solid border-border/75 pb-5 sm:flex-row sm:items-center sm:justify-between dark:border-white/10">
     <div>
-      <CardTitle>团队成员与权限</CardTitle>
-      <CardDescription>管理工作区协作成员、角色策略与发布权限。</CardDescription>
+      <div className="flex flex-wrap items-center gap-2">
+        <CardTitle>{title}</CardTitle>
+        <Badge variant="secondary" size="sm" className="font-mono tabular-nums">
+          {maxSeats ? `${members.length} / ${maxSeats} 席` : `${members.length} 人`}
+        </Badge>
+      </div>
+      <CardDescription className="mt-1">{description}</CardDescription>
     </div>
     <div className="flex flex-wrap items-center gap-3">
       <AvatarStack items={members} max={4} size="sm" />
-      <Button size="sm" variant="primary" className="rounded-full" onClick={onInviteClick}>
+      <Button size="sm" variant="primary" radius="pill" onClick={onInviteClick}>
         <UserPlus className="size-3.5" />
         <span>邀请成员</span>
       </Button>
@@ -66,17 +85,12 @@ const TeamHeader = ({
   </CardHeader>
 );
 
-export const TeamMembersBlock = ({
-  initialMembers = DEFAULT_MEMBERS,
-  onInvite,
-  className,
-}: TeamMembersBlockProps) => {
-  const [members, setMembers] = useState(initialMembers);
+const useTeamState = (props: TeamMembersBlockProps) => {
+  const [members, setMembers] = useState(props.initialMembers ?? DEFAULT_MEMBERS);
   const [query, setQuery] = useState("");
   const [roleFilter, setRoleFilter] = useState<"全部" | TeamRole>("全部");
   const [inviteOpen, setInviteOpen] = useState(false);
 
-  const visible = filterMembers(members, query, roleFilter);
   const handleInvite = (payload: { name: string; email: string; role: TeamRole }) => {
     const next: TeamMember = {
       id: `m-${Date.now()}`,
@@ -85,29 +99,67 @@ export const TeamMembersBlock = ({
       status: "online",
     };
     setMembers((prev) => [next, ...prev]);
-    onInvite?.(payload);
+    props.onInvite?.(payload);
   };
+  const handleRoleChange = (id: string, role: TeamRole) => {
+    setMembers((prev) => prev.map((m) => (m.id === id ? { ...m, role } : m)));
+    props.onRoleChange?.(id, role);
+  };
+  const handleRemove = (id: string) => {
+    setMembers((prev) => prev.filter((m) => m.id !== id));
+    props.onRemove?.(id);
+  };
+  return {
+    members,
+    visible: filterMembers(members, query, roleFilter),
+    query,
+    setQuery,
+    roleFilter,
+    setRoleFilter,
+    inviteOpen,
+    setInviteOpen,
+    handleInvite,
+    handleRoleChange,
+    handleRemove,
+  };
+};
 
+export const TeamMembersBlock = (props: TeamMembersBlockProps) => {
+  const state = useTeamState(props);
   return (
-    <Card data-slot="team-members-block" className={cn("w-full", className)}>
-      <TeamHeader members={members} onInviteClick={() => setInviteOpen(true)} />
-      <CardContent className="flex flex-col gap-4">
+    <Card
+      variant={props.variant ?? "default"}
+      data-slot="team-members-block"
+      className={cn("w-full border-border/80 dark:border-white/10", props.className)}
+    >
+      <TeamHeader
+        title={props.title ?? "团队成员与权限"}
+        description={props.description ?? "管理工作区协作成员、角色策略与发布权限。"}
+        members={state.members}
+        maxSeats={props.maxSeats}
+        onInviteClick={() => state.setInviteOpen(true)}
+      />
+      <CardContent className="flex flex-col gap-4 pt-5 pb-6">
         <Toolbar
-          query={query}
-          roleFilter={roleFilter}
-          onQueryChange={setQuery}
-          onRoleFilterChange={setRoleFilter}
+          query={state.query}
+          roleFilter={state.roleFilter}
+          roleCounts={countRoles(state.members)}
+          onQueryChange={state.setQuery}
+          onRoleFilterChange={state.setRoleFilter}
         />
         <MemberListSection
-          members={visible}
-          onReset={() => (setQuery(""), setRoleFilter("全部"))}
-          onRoleChange={(id, role) =>
-            setMembers((prev) => prev.map((m) => (m.id === id ? { ...m, role } : m)))
-          }
-          onRemove={(id) => setMembers((prev) => prev.filter((m) => m.id !== id))}
+          members={state.visible}
+          compact={props.compact ?? false}
+          onReset={() => (state.setQuery(""), state.setRoleFilter("全部"))}
+          onRoleChange={state.handleRoleChange}
+          onRemove={state.handleRemove}
         />
       </CardContent>
-      <InviteDialog open={inviteOpen} onOpenChange={setInviteOpen} onSubmit={handleInvite} />
+      <InviteDialog
+        open={state.inviteOpen}
+        onOpenChange={state.setInviteOpen}
+        onSubmit={state.handleInvite}
+      />
     </Card>
   );
 };

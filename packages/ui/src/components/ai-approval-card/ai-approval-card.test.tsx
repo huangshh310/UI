@@ -17,4 +17,31 @@ describe("AiApprovalCard", () => {
     expect(onApprove).toHaveBeenCalledWith("once");
     expect(screen.getByText(/已批准执行/)).toBeTruthy();
   });
+
+  it("支持拒绝操作、工作目录与来源标注以及点击重审恢复待审批态", async () => {
+    const user = userEvent.setup();
+    const onReject = vi.fn<() => void>();
+
+    render(
+      <AiApprovalCard
+        title="写入边缘配置"
+        riskLevel="high"
+        agentName="Claude Code · Bash"
+        workingDir="~/work/UI"
+        impact="影响 2 个节点 · 自动快照"
+        onReject={onReject}
+      />,
+    );
+
+    expect(screen.getByText(/Claude Code · Bash/)).toBeTruthy();
+    expect(screen.getByText("~/work/UI")).toBeTruthy();
+    expect(screen.getByText("影响 2 个节点 · 自动快照")).toBeTruthy();
+
+    await user.click(screen.getByRole("button", { name: "拒绝" }));
+    expect(onReject).toHaveBeenCalledTimes(1);
+    expect(screen.getByText("已拒绝执行")).toBeTruthy();
+
+    await user.click(screen.getByRole("button", { name: "重审" }));
+    expect(screen.getByRole("button", { name: "批准执行" })).toBeTruthy();
+  });
 });

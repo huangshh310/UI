@@ -1,11 +1,13 @@
 import ReorderListBasicDemo from "@/demos/reorder-list/basic";
+import ReorderListDividedDemo from "@/demos/reorder-list/divided";
 import ReorderListRoadmapDemo from "@/demos/reorder-list/roadmap";
 import type { ComponentDoc } from "./registry.types";
 
 export const REORDER_LIST_DOC: ComponentDoc = {
   slug: "reorder-list",
   name: "Reorder List",
-  description: "基于精确锁版本 UI SDK 与 motion 的拖拽与键盘双通道可重排列表。",
+  description:
+    "基于精确锁版本 UI SDK 与 motion 的拖拽与键盘双通道可重排列表，支持 cards / divided 变体、实时序号与紧凑密度。",
   category: "navigation",
   registryName: "reorder-list",
   dependencies: [
@@ -16,7 +18,7 @@ export const REORDER_LIST_DOC: ComponentDoc = {
   ],
   usage: `import { ReorderList } from "@/components/ui/reorder-list";
 
-<ReorderList items={tasks} onValueChange={setOrder} />`,
+<ReorderList variant="divided" showIndex items={tasks} onValueChange={setOrder} />`,
   createdAt: "2026-11-22",
   specimens: [
     {
@@ -25,6 +27,15 @@ export const REORDER_LIST_DOC: ComponentDoc = {
       description: "支持鼠标/触摸拖拽，以及空格拿起、方向键换位、空格放下、Esc 取消的纯键盘排序。",
       file: "reorder-list/basic.tsx",
       Demo: ReorderListBasicDemo,
+    },
+    {
+      slug: "divided",
+      name: "发丝分隔紧凑队列与实时序号",
+      description:
+        '使用 variant="divided"、density="compact" 与 showIndex 呈现 Linear 风格优先级队列。',
+      file: "reorder-list/divided.tsx",
+      Demo: ReorderListDividedDemo,
+      directory: false,
     },
     {
       slug: "roadmap",
@@ -36,8 +47,25 @@ export const REORDER_LIST_DOC: ComponentDoc = {
     },
   ],
   api: [
-    { name: "items", type: "ReorderListItem[]", defaultValue: "必填", description: "排序条目内容" },
+    {
+      name: "items",
+      type: "ReorderListItem[]",
+      defaultValue: "必填",
+      description: "排序条目内容，支持 subtitle、icon 与 badge",
+    },
     { name: "value", type: "string[]", defaultValue: "—", description: "受控条目 id 顺序" },
+    {
+      name: "variant / density",
+      type: '"cards" | "divided" / "compact" | "comfortable"',
+      defaultValue: '"cards" / "comfortable"',
+      description: "列表容器外观与条目密度",
+    },
+    {
+      name: "showIndex",
+      type: "boolean",
+      defaultValue: "false",
+      description: "是否在条目左侧显示实时更新的等宽序号",
+    },
     {
       name: "onValueChange",
       type: "(ids: string[]) => void",

@@ -3,6 +3,7 @@
  */
 import { LiquidToggleBasic } from "@/demos/liquid-toggle/basic";
 import LiquidToggleControlledDemo from "@/demos/liquid-toggle/controlled";
+import LiquidToggleVariantsDemo from "@/demos/liquid-toggle/variants";
 import type { ComponentDoc } from "./registry.types";
 
 export const LIQUID_TOGGLE_DOC: ComponentDoc = {
@@ -15,7 +16,13 @@ export const LIQUID_TOGGLE_DOC: ComponentDoc = {
   usage: `import { LiquidToggle } from "@/components/ui/liquid-toggle";
 
 export function Demo() {
-  return <LiquidToggle aria-label="推送通知" onCheckedChange={setEnabled} />;
+  return (
+    <LiquidToggle
+      tone="emerald"
+      aria-label="推送通知"
+      onCheckedChange={setEnabled}
+    />
+  );
 }`,
   createdAt: "2026-11-22",
   specimens: [
@@ -34,6 +41,15 @@ export function Demo() {
       Demo: LiquidToggleControlledDemo,
       directory: false,
     },
+    {
+      slug: "variants",
+      name: "三档尺寸、语义色调与微描边轨道",
+      description:
+        "对比 sm / md / lg 尺寸、primary / signal / emerald / destructive 色调及 subtle 轨道。",
+      file: "liquid-toggle/variants.tsx",
+      Demo: LiquidToggleVariantsDemo,
+      directory: false,
+    },
   ],
   api: [
     { name: "checked", type: "boolean", defaultValue: "-", description: "受控的开关状态。" },
@@ -48,6 +64,24 @@ export function Demo() {
       type: "(checked: boolean) => void",
       defaultValue: "-",
       description: "状态变化时调用。",
+    },
+    {
+      name: "size",
+      type: '"sm" | "md" | "lg"',
+      defaultValue: '"md"',
+      description: "开关尺寸，滑块行程自动按尺寸比例匹配。",
+    },
+    {
+      name: "tone",
+      type: '"signal" | "primary" | "emerald" | "destructive"',
+      defaultValue: '"signal"',
+      description: "开启状态的语义色调。",
+    },
+    {
+      name: "variant",
+      type: '"filled" | "subtle"',
+      defaultValue: '"filled"',
+      description: "轨道材质：实底凹槽或细描边柔底。",
     },
   ],
   accessibility: [

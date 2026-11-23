@@ -2,6 +2,8 @@
  * Form 的文档数据。
  */
 import { FormBasic } from "@/demos/form/basic";
+import FormProfileDemo from "@/demos/form/profile";
+import FormVariantsDemo from "@/demos/form/variants";
 import FormWebhookDemo from "@/demos/form/webhook";
 import type { ComponentDoc } from "./registry.types";
 
@@ -9,18 +11,18 @@ export const FORM_DOC: ComponentDoc = {
   slug: "form",
   name: "Form",
   description:
-    "基于 Base UI Form、Field 与 RadioGroup 的模块化可组合表单系统，内置无障碍校验关联与错误提示。",
+    "基于 Base UI Form、Field 与 RadioGroup 的极简模块化表单系统，支持表面与控件变体继承、水平分栏布局、分组操作栏与无障碍校验联动。",
   category: "forms",
   registryName: "form",
-  dependencies: ["@base-ui/react", "clsx", "tailwind-merge"],
-  usage: `import { Form, FormField, FormLabel, FormInput, FormError } from "@/components/ui/form";
+  dependencies: ["@base-ui/react", "class-variance-authority", "clsx", "tailwind-merge"],
+  usage: `import { Form, FormField, FormLabel, FormInput, FormError, FormActions } from "@/components/ui/form";
 
 export function Demo() {
   return (
-    <Form onFormSubmit={(values) => console.log(values)}>
+    <Form variant="card" controlVariant="default" onFormSubmit={(values) => console.log(values)}>
       <FormField name="email">
         <FormLabel required>邮箱</FormLabel>
-        <FormInput type="email" required />
+        <FormInput type="email" required placeholder="you@studio.dev" />
         <FormError />
       </FormField>
     </Form>
@@ -31,9 +33,25 @@ export function Demo() {
     {
       slug: "form-basic",
       name: "可组合表单与校验",
-      description: "包含文本输入、多行输入、卡片式单选组、辅助说明与自定义校验错误提示。",
+      description: "包含文本输入、多行输入、紧凑单选卡片、选填标注与自定义校验错误提示。",
       file: "form/basic.tsx",
       Demo: FormBasic,
+    },
+    {
+      slug: "variants",
+      name: "填充风变体与服务端错误回显",
+      description: "展示 subtle 表面、filled 控件继承、双列单选网格与外部 errors 状态联动。",
+      file: "form/variants.tsx",
+      Demo: FormVariantsDemo,
+      directory: false,
+    },
+    {
+      slug: "profile",
+      name: "分组与水平分栏设置表单",
+      description: '组合 FormSection、layout="horizontal" 与失焦校验（onBlur）构建设置面板。',
+      file: "form/profile.tsx",
+      Demo: FormProfileDemo,
+      directory: false,
     },
     {
       slug: "webhook",
@@ -45,6 +63,18 @@ export function Demo() {
     },
   ],
   api: [
+    {
+      name: "variant / density",
+      type: `"default" | "card" | "subtle" / "default" | "compact" | "relaxed"`,
+      defaultValue: `"default" / "default"`,
+      description: "表单容器外观（无框 / 发丝卡片 / 柔灰面板）与字段垂直间距密度。",
+    },
+    {
+      name: "controlVariant / controlSize / controlRadius",
+      type: `"default" | "filled" | "ghost" / "sm" | "md" | "lg" / "md" | "lg" | "pill"`,
+      defaultValue: `"default" / "md" / "md"`,
+      description: "透传给内部 FormInput 与 FormTextarea 的默认外观、尺寸与圆角。",
+    },
     {
       name: "validationMode",
       type: `"onSubmit" | "onBlur" | "onChange"`,
@@ -64,16 +94,30 @@ export function Demo() {
       description: "全部字段校验通过后提交的回调。",
     },
     {
-      name: "FormField.validate",
-      type: "(value: unknown) => string | string[] | null | void",
+      name: "FormField.layout / validate",
+      type: `"vertical" | "horizontal" / (value: unknown) => string | string[] | null | void`,
+      defaultValue: `"vertical" / -`,
+      description: "单字段排布方向（纵向堆叠或桌面端左右分栏）与自定义校验函数。",
+    },
+    {
+      name: "FormLabel.required / optional",
+      type: "boolean / boolean",
+      defaultValue: "false / false",
+      description: "显示必填星号或柔和的“选填”标注。",
+    },
+    {
+      name: "FormSection / FormActions",
+      type: "Compound parts",
       defaultValue: "-",
-      description: "单字段自定义校验规则。",
+      description:
+        "带标题和分割线的字段分组容器，以及支持 start / end / between 对齐的底部操作栏。",
     },
     {
       name: "FormRadioGroup / FormRadioItem",
       type: "Compound parts",
       defaultValue: "-",
-      description: "带卡片外观与方向键导航的单选组部件。",
+      description:
+        "支持 vertical / horizontal 网格排布、card / compact / minimal 变体与 badge 徽章的单选组。",
     },
   ],
   accessibility: [

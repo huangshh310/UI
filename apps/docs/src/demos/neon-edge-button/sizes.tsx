@@ -3,9 +3,15 @@ import { NeonEdgeButton } from "@matt-ui/ui";
 export default function NeonEdgeButtonSizesDemo() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-3">
-      <NeonEdgeButton speed={0.6}>舒缓流光（0.6x）</NeonEdgeButton>
-      <NeonEdgeButton speed={1.8}>高速流光（1.8x）</NeonEdgeButton>
-      <NeonEdgeButton glow={false}>克制无外晕</NeonEdgeButton>
+      <NeonEdgeButton size="sm" speed={0.8}>
+        紧凑尺寸
+      </NeonEdgeButton>
+      <NeonEdgeButton size="md" speed={1.2}>
+        标准流光
+      </NeonEdgeButton>
+      <NeonEdgeButton size="lg" speed={1.6}>
+        主视觉大号
+      </NeonEdgeButton>
     </div>
   );
 }

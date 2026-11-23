@@ -42,4 +42,21 @@ describe("Sheet", () => {
     expect(dialog.getAttribute("data-side")).toBe("bottom");
     expect(dialog.getAttribute("data-inset")).toBe("false");
   });
+
+  it("支持 icon、badge 与 xl 尺寸预设", () => {
+    render(
+      <Sheet
+        open
+        size="xl"
+        badge="LIVE"
+        icon={<span data-testid="sheet-icon">#</span>}
+        title="实时巡检面板"
+      >
+        <p>节点状态正常</p>
+      </Sheet>,
+    );
+
+    expect(screen.getByText("LIVE")).toBeTruthy();
+    expect(screen.getByTestId("sheet-icon")).toBeTruthy();
+  });
 });

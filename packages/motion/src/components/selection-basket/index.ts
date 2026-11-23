@@ -1,2 +1,8 @@
 export { SelectionBasket } from "./selection-basket.js";
-export type { SelectionBasketAction, SelectionBasketProps } from "./selection-basket.types.js";
+export type {
+  SelectionBasketAction,
+  SelectionBasketPosition,
+  SelectionBasketProps,
+  SelectionBasketSize,
+  SelectionBasketVariant,
+} from "./selection-basket.types.js";

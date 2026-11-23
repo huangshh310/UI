@@ -21,4 +21,27 @@ describe("Pagination", () => {
     await user.click(screen.getByRole("button", { name: "第 1 页" }));
     expect(onPageChange).toHaveBeenCalledWith(1);
   });
+
+  it("支持 pills / minimal 变体与首尾页快捷跳转", async () => {
+    const user = userEvent.setup();
+    const onPageChange = vi.fn<(page: number) => void>();
+
+    const { container } = render(
+      <Pagination
+        page={3}
+        totalPages={10}
+        variant="minimal"
+        size="sm"
+        showEdges
+        onPageChange={onPageChange}
+      />,
+    );
+
+    const nav = container.querySelector('[data-slot="pagination"]');
+    expect(nav?.getAttribute("data-variant")).toBe("minimal");
+    expect(nav?.getAttribute("data-size")).toBe("sm");
+
+    await user.click(screen.getByRole("button", { name: "最后一页" }));
+    expect(onPageChange).toHaveBeenCalledWith(10);
+  });
 });

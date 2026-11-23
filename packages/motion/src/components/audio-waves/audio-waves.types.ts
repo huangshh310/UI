@@ -1,4 +1,6 @@
-export type AudioWavesVariant = "bars" | "mirror";
+export type AudioWavesVariant = "bars" | "mirror" | "dots";
+export type AudioWavesSize = "sm" | "md" | "lg";
+export type AudioWavesTone = "default" | "signal" | "emerald" | "obsidian";
 
 export interface AudioWavesProps {
   /** 受控激活态 */
@@ -7,8 +9,14 @@ export interface AudioWavesProps {
   defaultActive?: boolean;
   /** 状态切换回调 */
   onActiveChange?: (active: boolean) => void;
-  /** 波形样式 */
+  /** 波形样式：对称镜像（mirror）、底边对齐音柱（bars）或律动点阵（dots） */
   variant?: AudioWavesVariant;
+  /** 尺寸规格 */
+  size?: AudioWavesSize;
+  /** 色彩风格 */
+  tone?: AudioWavesTone;
+  /** 紧凑胶囊模式（隐藏多余装饰边距，适合嵌入输入框） */
+  compact?: boolean;
   /** 音柱数量 */
   bars?: number;
   /** 自定义状态文案 */

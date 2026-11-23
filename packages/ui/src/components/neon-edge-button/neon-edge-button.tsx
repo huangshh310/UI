@@ -7,11 +7,20 @@
  */
 import { cn } from "@matt-ui/utils";
 import type { NeonEdgeButtonProps } from "./neon-edge-button.types.js";
+import {
+  NEON_BEAM_CLASSES,
+  neonEdgeInnerVariants,
+  neonEdgeShellVariants,
+} from "./neon-edge-button.variants.js";
 
 /** 速度倍数为 1 时绕行一圈的秒数 */
 const BASE_DURATION_S = 3;
 
 export const NeonEdgeButton = ({
+  variant = "primary",
+  tone = "signal",
+  size = "md",
+  radius = "pill",
   speed = 1,
   glow = true,
   className,
@@ -22,26 +31,22 @@ export const NeonEdgeButton = ({
   <button
     type={type}
     data-slot="neon-edge-button"
-    className={cn(
-      "relative isolate m-0 box-border inline-flex cursor-pointer appearance-none overflow-hidden rounded-full border-0 bg-border p-px",
-      "font-sans text-sm font-medium whitespace-nowrap text-primary-foreground select-none",
-      "transition-transform duration-(--ui-duration-fast) active:scale-[0.98]",
-      "outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid",
-      "disabled:pointer-events-none disabled:opacity-50",
-      glow &&
-        "shadow-[0_4px_14px_-4px_color-mix(in_oklab,var(--ui-signal)_30%,transparent)] dark:shadow-[0_0_24px_-6px_var(--ui-signal)]",
-      className,
-    )}
+    data-variant={variant}
+    data-tone={tone}
+    data-size={size}
+    data-radius={radius}
+    className={cn(neonEdgeShellVariants({ radius, tone, glow }), className)}
     {...props}
   >
     <span
       aria-hidden="true"
       data-slot="neon-edge-light"
       style={{ animationDuration: `${BASE_DURATION_S / Math.max(speed, 0.1)}s` }}
-      className="absolute inset-[-150%] -z-10 animate-spin bg-conic from-transparent from-78% to-signal motion-reduce:animate-none"
+      className={cn(
+        "absolute inset-[-150%] -z-10 animate-spin bg-conic from-transparent from-76% motion-reduce:animate-none",
+        NEON_BEAM_CLASSES[tone],
+      )}
     />
-    <span className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-primary px-5">
-      {children}
-    </span>
+    <span className={neonEdgeInnerVariants({ variant, size, radius })}>{children}</span>
   </button>
 );

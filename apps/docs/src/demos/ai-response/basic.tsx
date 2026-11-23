@@ -32,8 +32,18 @@ const SAMPLE_TOOLS = [
 ];
 
 const SAMPLE_SOURCES = [
-  { id: "s1", title: "设计系统 Token 规范", url: "https://matt-ui.dev/docs" },
-  { id: "s2", title: "Motion 弹簧物理指南", url: "https://motion.dev/docs" },
+  {
+    id: "s1",
+    title: "设计系统 Token 规范",
+    url: "https://matt-ui.dev/docs",
+    snippet: "浅色与深色双主题语义阶梯与焦点环约束",
+  },
+  {
+    id: "s2",
+    title: "Motion 弹簧物理指南",
+    url: "https://motion.dev/docs",
+    snippet: "基于阻尼与刚度参数的自然物理过渡",
+  },
 ];
 
 export default function AiResponseBasicDemo() {
@@ -42,14 +52,18 @@ export default function AiResponseBasicDemo() {
   return (
     <div className="flex w-full max-w-md flex-col gap-2">
       <AiResponse
-        model="Matt AI"
+        model="Claude 4.5 Sonnet"
+        modelBadge="200K"
+        timestamp="0.8s"
         content={SAMPLE_MARKDOWN}
         tools={SAMPLE_TOOLS}
         sources={SAMPLE_SOURCES}
         onRegenerate={() => setNote("已触发重新生成")}
         onFeedback={(type) => setNote(type === "up" ? "已记录正向反馈" : "已记录改进建议")}
       />
-      {note && <p className="m-0 px-2 text-right text-[11px] text-muted-foreground">{note}</p>}
+      {note && (
+        <p className="m-0 px-2 text-right font-mono text-[11px] text-muted-foreground">{note}</p>
+      )}
     </div>
   );
 }

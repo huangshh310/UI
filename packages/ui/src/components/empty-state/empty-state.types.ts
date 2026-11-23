@@ -1,8 +1,14 @@
 import type { ReactNode } from "react";
 
+export type EmptyStateVariant = "default" | "card" | "dashed" | "compact";
+
 export interface EmptyStateProps {
+  /** 容器视觉形态 */
+  variant?: EmptyStateVariant;
   /** 顶部图标槽 */
   icon?: ReactNode;
+  /** 自定义插画槽（传入时替代默认图标徽章） */
+  illustration?: ReactNode;
   /** 空态标题 */
   title: string;
   /** 空态补充说明 */

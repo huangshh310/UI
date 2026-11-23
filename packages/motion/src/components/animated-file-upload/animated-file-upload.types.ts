@@ -3,6 +3,7 @@
  */
 
 export type UploadFileStatus = "ready" | "uploading" | "success" | "error";
+export type AnimatedFileUploadVariant = "default" | "filled" | "minimal";
 
 export interface UploadFileItem {
   id: string;
@@ -34,6 +35,14 @@ export interface AnimatedFileUploadProps {
   /** 最多允许保留的文件数 */
   maxFiles?: number;
   disabled?: boolean;
+  /** 拖拽区视觉风格 */
+  variant?: AnimatedFileUploadVariant;
+  /** 紧凑横向条模式，适合嵌入表单行或窄侧栏 */
+  compact?: boolean;
+  /** 是否在拖拽区展示体积与数量约束徽章，默认 true */
+  showMetaBadges?: boolean;
+  /** 外部表单校验错误文案 */
+  error?: string;
   /** 拖拽区主提示文案 */
   label?: string;
   /** 拖拽区副说明文案 */

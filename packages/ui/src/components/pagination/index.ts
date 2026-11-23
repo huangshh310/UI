@@ -1,2 +1,2 @@
 export { Pagination } from "./pagination.js";
-export type { PaginationProps } from "./pagination.types.js";
+export type { PaginationProps, PaginationSize, PaginationVariant } from "./pagination.types.js";

@@ -6,9 +6,10 @@ export default function AudioWavesBasicDemo() {
   return (
     <AudioWaves
       defaultActive
+      tone="signal"
       locale="中 / EN"
       durationLabel="00:18"
-      transcript="把顶部高光和流体极光球同步到智能体驾驶舱…"
+      transcript="把审批卡片与代码差异审阅统一到同一套发丝边框设计语言…"
     />
   );
 }

@@ -33,4 +33,22 @@ describe("PeekCard", () => {
     expect(screen.getByText("林知远")).toBeTruthy();
     expect(screen.getByText("已结算")).toBeTruthy();
   });
+
+  it("支持 size、badge 与 statusTone 扩展属性", () => {
+    render(
+      <PeekCard
+        open
+        size="lg"
+        badge="MAIN"
+        statusTone="success"
+        title="matt-ui/ui"
+        status="构建通过"
+      />,
+    );
+
+    const card = screen.getByText("matt-ui/ui").closest('[data-slot="peek-card"]');
+    expect(card?.getAttribute("data-size")).toBe("lg");
+    expect(screen.getByText("MAIN")).toBeTruthy();
+    expect(screen.getByText("构建通过")).toBeTruthy();
+  });
 });

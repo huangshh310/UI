@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { type HTMLAttributes } from "react";
 
 export type SkeletonVariant = "pulse" | "shimmer";
-export type SkeletonShape = "line" | "circle" | "card";
+export type SkeletonShape = "line" | "text" | "circle" | "card" | "rounded";
 
 export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
   /** 动画形态 */
@@ -13,8 +13,16 @@ export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
 }
 const SHAPE_CLASS: Record<SkeletonShape, string> = {
   line: "h-4 w-full rounded-md",
+  text: "h-3.5 w-full rounded-md",
   circle: "size-10 rounded-full",
-  card: "h-28 w-full rounded-xl",
+  card: "h-28 w-full rounded-2xl",
+  rounded: "h-10 w-full rounded-xl",
+};
+
+const VARIANT_CLASS: Record<SkeletonVariant, string> = {
+  pulse: "bg-foreground/[0.08] animate-pulse motion-reduce:animate-none dark:bg-foreground/[0.12]",
+  shimmer:
+    "bg-foreground/[0.07] dark:bg-foreground/[0.10] after:pointer-events-none after:absolute after:inset-0 after:animate-[pulse_1.5s_ease-in-out_infinite] after:bg-gradient-to-r after:from-transparent after:via-card/85 after:to-transparent dark:after:via-foreground/[0.14] motion-reduce:after:animate-none",
 };
 
 export const Skeleton = ({
@@ -27,12 +35,11 @@ export const Skeleton = ({
     aria-hidden="true"
     data-slot="skeleton"
     data-variant={variant}
+    data-shape={shape}
     className={cn(
-      "relative overflow-hidden bg-foreground/[0.08] dark:bg-foreground/[0.12]",
+      "relative overflow-hidden",
       SHAPE_CLASS[shape],
-      variant === "pulse"
-        ? "animate-pulse motion-reduce:animate-none"
-        : "after:absolute after:inset-0 after:-translate-x-full after:animate-[pulse_1.6s_ease-in-out_infinite] after:bg-gradient-to-r after:from-transparent after:via-background/55 after:to-transparent motion-reduce:after:animate-none",
+      VARIANT_CLASS[variant],
       className,
     )}
     {...props}

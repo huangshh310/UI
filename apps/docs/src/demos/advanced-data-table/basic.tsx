@@ -36,7 +36,7 @@ const COLUMNS: AdvancedTableColumn<ComponentItem>[] = [
           className={
             r.status === "new"
               ? "size-1.5 rounded-full bg-signal"
-              : "size-1.5 rounded-full bg-success"
+              : "size-1.5 rounded-full bg-emerald-500"
           }
         />
         {r.status}

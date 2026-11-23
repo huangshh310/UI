@@ -10,8 +10,10 @@ export default function AiReasoningStreamingDemo() {
   return (
     <div className="flex w-full max-w-xl flex-col items-center gap-3">
       <AiReasoning
+        variant="ghost"
         status={status}
         durationLabel={status === "thinking" ? "1.4s" : "3.1s"}
+        tokensLabel={status === "thinking" ? "214 tok…" : "612 tok"}
         defaultExpanded
       />
       <Button

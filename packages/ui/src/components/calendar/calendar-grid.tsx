@@ -17,14 +17,13 @@ import {
   isSameMonth,
   startOfDay,
 } from "./calendar-date.js";
-import type { DateRange } from "./calendar.types.js";
-
-const DAY_BASE = cn(
-  "relative m-0 box-border inline-flex size-9 cursor-pointer appearance-none items-center justify-center rounded-lg border-0 bg-transparent",
-  "font-sans text-sm font-normal text-foreground tabular-nums select-none transition-colors duration-(--ui-duration-instant)",
-  "hover:bg-accent outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-card",
-  "disabled:pointer-events-none disabled:opacity-35",
-);
+import type { CalendarRadius, CalendarSize, DateRange } from "./calendar.types.js";
+import {
+  calendarDayVariants,
+  calendarRowVariants,
+  calendarTableVariants,
+  calendarWeekdayVariants,
+} from "./calendar.variants.js";
 
 const SELECTED_CLASSES = "bg-primary font-medium text-primary-foreground hover:bg-primary/90";
 
@@ -34,15 +33,20 @@ export interface CalendarGridProps {
   locale: string;
   weekStartsOn: 0 | 1;
   mode: "single" | "range";
+  size: CalendarSize;
+  radius: CalendarRadius;
   selectedDate: Date | null;
   selectedRange: DateRange;
+  previewRange: DateRange;
   focusedDate: Date;
   today: Date;
+  highlightKeys: Set<string>;
   minDate?: Date;
   maxDate?: Date;
   isDateDisabled?: (date: Date) => boolean;
   showOutsideDays: boolean;
   onSelect: (date: Date) => void;
+  onHoverDate?: (date: Date | null) => void;
   onFocusDate: (date: Date) => void;
   gridLabel: string;
 }
@@ -72,7 +76,7 @@ const getDayState = (
   date: Date,
   mode: "single" | "range",
   selectedDate: Date | null,
-  selectedRange: DateRange,
+  activeRange: DateRange,
 ): DayState => {
   if (mode === "single") {
     return {
@@ -82,28 +86,49 @@ const getDayState = (
       inRange: false,
     };
   }
-  const rangeStart = isSameDay(date, selectedRange.start);
-  const rangeEnd = isSameDay(date, selectedRange.end);
+  const rangeStart = isSameDay(date, activeRange.start);
+  const rangeEnd = isSameDay(date, activeRange.end);
   return {
     selected: rangeStart || rangeEnd,
     rangeStart,
     rangeEnd,
-    inRange: isBetweenRange(date, selectedRange),
+    inRange: isBetweenRange(date, activeRange),
   };
 };
 
-const cellBandClass = (state: DayState, hasRangeSpan: boolean) =>
+const BAND_START_RADIUS: Record<CalendarRadius, string> = {
+  md: "rounded-l-lg",
+  lg: "rounded-l-xl",
+  full: "rounded-l-full",
+};
+
+const BAND_END_RADIUS: Record<CalendarRadius, string> = {
+  md: "rounded-r-lg",
+  lg: "rounded-r-xl",
+  full: "rounded-r-full",
+};
+
+const cellBandClass = (state: DayState, hasRangeSpan: boolean, radius: CalendarRadius) =>
   cn(
     "p-0 text-center",
-    state.inRange && "bg-secondary first:rounded-l-lg last:rounded-r-lg",
-    hasRangeSpan && state.rangeStart && "rounded-l-lg bg-secondary",
-    hasRangeSpan && state.rangeEnd && "rounded-r-lg bg-secondary",
+    state.inRange && "bg-secondary/85 first:rounded-l-lg last:rounded-r-lg dark:bg-white/8",
+    hasRangeSpan &&
+      state.rangeStart &&
+      cn("bg-secondary/85 dark:bg-white/8", BAND_START_RADIUS[radius]),
+    hasRangeSpan &&
+      state.rangeEnd &&
+      cn("bg-secondary/85 dark:bg-white/8", BAND_END_RADIUS[radius]),
   );
 
-const dayButtonClass = (outside: boolean, state: DayState) =>
+const dayButtonClass = (
+  outside: boolean,
+  state: DayState,
+  size: CalendarSize,
+  radius: CalendarRadius,
+) =>
   cn(
-    DAY_BASE,
-    outside && !state.selected && "text-muted-foreground",
+    calendarDayVariants({ size, radius }),
+    outside && !state.selected && "text-muted-foreground/65",
     state.inRange && "rounded-none hover:bg-accent",
     state.selected && SELECTED_CLASSES,
   );
@@ -113,42 +138,48 @@ interface DayCellProps {
   outside: boolean;
   disabled: boolean;
   isToday: boolean;
+  isHighlighted: boolean;
   isFocused: boolean;
+  size: CalendarSize;
+  radius: CalendarRadius;
   state: DayState;
   hasRangeSpan: boolean;
   locale: string;
   showOutsideDays: boolean;
   onSelect: (date: Date) => void;
+  onHoverDate?: (date: Date | null) => void;
   onKeyDown: (event: KeyboardEvent<HTMLButtonElement>, date: Date) => void;
 }
 
 const DayCell = (props: DayCellProps) => {
-  const { day, outside, disabled, isToday, isFocused, state, hasRangeSpan, locale } = props;
+  const { day, outside, disabled, isToday, isHighlighted, isFocused, state } = props;
   if (outside && !props.showOutsideDays) {
-    return <td aria-hidden="true" className="size-9 p-0" />;
+    return <td aria-hidden="true" className="p-0" />;
   }
 
   return (
-    <td className={cellBandClass(state, hasRangeSpan)}>
+    <td className={cellBandClass(state, props.hasRangeSpan, props.radius)}>
       <button
         type="button"
         data-day={dateKey(day)}
         tabIndex={isFocused ? 0 : -1}
         disabled={disabled}
-        aria-label={formatDayLabel(day, locale)}
+        aria-label={formatDayLabel(day, props.locale)}
         aria-pressed={state.selected}
         aria-current={isToday ? "date" : undefined}
         onClick={() => props.onSelect(day)}
+        onMouseEnter={() => props.onHoverDate?.(day)}
+        onMouseLeave={() => props.onHoverDate?.(null)}
         onKeyDown={(event) => props.onKeyDown(event, day)}
-        className={dayButtonClass(outside, state)}
+        className={dayButtonClass(outside, state, props.size, props.radius)}
       >
         <span>{day.getDate()}</span>
-        {isToday && (
+        {(isToday || isHighlighted) && (
           <span
             aria-hidden="true"
             className={cn(
               "absolute bottom-1 size-1 rounded-full",
-              state.selected ? "bg-primary-foreground" : "bg-foreground",
+              state.selected ? "bg-primary-foreground" : isToday ? "bg-signal" : "bg-foreground/45",
             )}
           />
         )}
@@ -157,15 +188,11 @@ const DayCell = (props: DayCellProps) => {
   );
 };
 
-const WeekdayHeader = ({ weekdays }: { weekdays: string[] }) => (
+const WeekdayHeader = ({ weekdays, size }: { weekdays: string[]; size: CalendarSize }) => (
   <thead>
     <tr>
       {weekdays.map((dayName, idx) => (
-        <th
-          key={`${dayName}-${idx}`}
-          scope="col"
-          className="size-9 p-0 text-center text-xs font-medium text-muted-foreground"
-        >
+        <th key={`${dayName}-${idx}`} scope="col" className={calendarWeekdayVariants({ size })}>
           {dayName}
         </th>
       ))}
@@ -173,9 +200,53 @@ const WeekdayHeader = ({ weekdays }: { weekdays: string[] }) => (
   </thead>
 );
 
+const CalendarWeekRow = ({
+  week,
+  props,
+  activeRange,
+  hasRangeSpan,
+  onKeyDown,
+}: {
+  week: Date[];
+  props: CalendarGridProps;
+  activeRange: DateRange;
+  hasRangeSpan: boolean;
+  onKeyDown: (event: KeyboardEvent<HTMLButtonElement>, date: Date) => void;
+}) => (
+  <tr className={calendarRowVariants({ size: props.size })}>
+    {week.map((day) => {
+      const outside = !isSameMonth(day, props.month);
+      const key = dateKey(day);
+      return (
+        <DayCell
+          key={key}
+          day={day}
+          outside={outside}
+          disabled={isDateBlocked(day, props.minDate, props.maxDate, props.isDateDisabled)}
+          isToday={isSameDay(day, props.today)}
+          isHighlighted={props.highlightKeys.has(key)}
+          isFocused={isSameDay(day, props.focusedDate) && !outside}
+          size={props.size}
+          radius={props.radius}
+          state={getDayState(day, props.mode, props.selectedDate, activeRange)}
+          hasRangeSpan={hasRangeSpan}
+          locale={props.locale}
+          showOutsideDays={props.showOutsideDays}
+          onSelect={props.onSelect}
+          onHoverDate={props.onHoverDate}
+          onKeyDown={onKeyDown}
+        />
+      );
+    })}
+  </tr>
+);
+
 export const CalendarGrid = (props: CalendarGridProps) => {
   const weeks = buildMonthWeeks(props.month, props.weekStartsOn);
-  const hasRangeSpan = Boolean(props.selectedRange.start && props.selectedRange.end);
+  const activeRange = props.previewRange.start ? props.previewRange : props.selectedRange;
+  const hasRangeSpan = Boolean(
+    activeRange.start && activeRange.end && !isSameDay(activeRange.start, activeRange.end),
+  );
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>, date: Date) => {
     const next = resolveKeyMove(date, event.key, props.weekStartsOn);
@@ -185,37 +256,18 @@ export const CalendarGrid = (props: CalendarGridProps) => {
   };
 
   return (
-    <table aria-label={props.gridLabel} className="w-[252px] border-collapse">
-      <WeekdayHeader weekdays={props.weekdays} />
+    <table aria-label={props.gridLabel} className={calendarTableVariants({ size: props.size })}>
+      <WeekdayHeader weekdays={props.weekdays} size={props.size} />
       <tbody>
         {weeks.map((week, rowIndex) => (
-          <tr key={rowIndex} className="h-9">
-            {week.map((day) => {
-              const outside = !isSameMonth(day, props.month);
-              const disabled = isDateBlocked(
-                day,
-                props.minDate,
-                props.maxDate,
-                props.isDateDisabled,
-              );
-              return (
-                <DayCell
-                  key={dateKey(day)}
-                  day={day}
-                  outside={outside}
-                  disabled={disabled}
-                  isToday={isSameDay(day, props.today)}
-                  isFocused={isSameDay(day, props.focusedDate) && !outside}
-                  state={getDayState(day, props.mode, props.selectedDate, props.selectedRange)}
-                  hasRangeSpan={hasRangeSpan}
-                  locale={props.locale}
-                  showOutsideDays={props.showOutsideDays}
-                  onSelect={props.onSelect}
-                  onKeyDown={handleKeyDown}
-                />
-              );
-            })}
-          </tr>
+          <CalendarWeekRow
+            key={rowIndex}
+            week={week}
+            props={props}
+            activeRange={activeRange}
+            hasRangeSpan={hasRangeSpan}
+            onKeyDown={handleKeyDown}
+          />
         ))}
       </tbody>
     </table>

@@ -1,15 +1,19 @@
 "use client";
 
 import { FolderTabCard } from "@matt-ui/motion";
+import { Layers, ShieldCheck, Sparkles } from "lucide-react";
 
 export default function FolderTabCardReleasesDemo() {
   return (
     <div className="w-full max-w-md">
       <FolderTabCard
+        variant="tinted"
         tabs={[
           {
             id: "v2",
             label: "悬浮 Sheet",
+            icon: <Sparkles />,
+            badge: "NEW",
             metric: "v2.4",
             caption: "四周圆角与留白",
             content: (
@@ -20,7 +24,9 @@ export default function FolderTabCardReleasesDemo() {
           },
           {
             id: "blocks",
-            label: "12 区块",
+            label: "页面区块",
+            icon: <Layers />,
+            badge: "12",
             metric: "12",
             caption: "registry:block",
             content: (
@@ -32,6 +38,7 @@ export default function FolderTabCardReleasesDemo() {
           {
             id: "a11y",
             label: "无障碍门禁",
+            icon: <ShieldCheck />,
             metric: "0 违规",
             caption: "WCAG AA",
             content: (

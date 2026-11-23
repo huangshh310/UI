@@ -7,6 +7,10 @@ export default function BillingUsageBlockEnterpriseDemo() {
     <BillingUsageBlock
       planName="企业版 · 专属节点"
       priceLabel="¥699 / 月"
+      paymentMethod="对公月结 · 自动开票"
+      upgradeLabel="扩容节点"
+      variant="elevated"
+      compact
       quotas={[
         {
           id: "api",

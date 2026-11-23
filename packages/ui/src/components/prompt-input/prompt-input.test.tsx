@@ -111,4 +111,22 @@ describe("PromptInput", () => {
     await user.type(compoundInput, "复合发送{Enter}");
     expect(onSubmitCompound).toHaveBeenCalledWith("复合发送");
   });
+
+  it("支持变体、顶部建议条与 error 告警提示", async () => {
+    const user = userEvent.setup();
+    render(
+      <PromptInput
+        variant="elevated"
+        size="sm"
+        radius="lg"
+        suggestionsPosition="top"
+        suggestions={["生成发布说明"]}
+        error="超出上下文上限"
+      />,
+    );
+
+    expect(screen.getByRole("alert").textContent).toBe("超出上下文上限");
+    await user.click(screen.getByRole("button", { name: "生成发布说明" }));
+    expect((screen.getByRole("textbox") as HTMLTextAreaElement).value).toBe("生成发布说明");
+  });
 });

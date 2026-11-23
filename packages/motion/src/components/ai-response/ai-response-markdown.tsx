@@ -86,14 +86,14 @@ const MarkdownCodeBlock = ({ lang, code }: { lang: string; code: string }) => {
   };
 
   return (
-    <div className="my-3 overflow-hidden rounded-xl border border-solid border-border/80 bg-secondary/40">
-      <div className="flex items-center justify-between border-b border-solid border-border/70 px-3.5 py-2">
+    <div className="my-3 overflow-hidden rounded-xl border border-solid border-border/80 bg-secondary/40 dark:border-white/10 dark:bg-white/5">
+      <div className="flex items-center justify-between border-b border-solid border-border/70 px-3.5 py-2 dark:border-white/10">
         <span className="font-mono text-[11px] text-muted-foreground">{lang || "code"}</span>
         <button
           type="button"
           onClick={handleCopy}
           aria-label="复制代码块"
-          className="inline-flex cursor-pointer items-center gap-1 rounded-md border-0 bg-transparent px-1.5 py-0.5 font-sans text-[11px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="inline-flex cursor-pointer items-center gap-1 rounded-md border border-solid border-transparent bg-transparent px-1.5 py-0.5 font-sans text-[11px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset"
         >
           {copied ? <Check className="size-3" /> : <Copy className="size-3" />}
           <span>{copied ? "已复制" : "复制"}</span>
@@ -115,7 +115,7 @@ const MarkdownTableBlock = ({
   rows: string[][];
   index: number;
 }) => (
-  <div className="my-3 overflow-x-auto rounded-xl border border-solid border-border/80">
+  <div className="my-3 overflow-x-auto rounded-xl border border-solid border-border/80 dark:border-white/10">
     <table className="w-full border-collapse text-left text-xs">
       <thead>
         <tr className="border-b border-solid border-border/80 bg-secondary/40">

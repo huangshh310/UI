@@ -2,11 +2,12 @@
 "use client";
 
 /**
- * PromptInput：器物级多模态 AI 输入器（融合 HextaUI Prompt Composer 与 shadcn AI Elements Prompt Input）。
+ * PromptInput：器物级多模态 AI 输入器（融合极简发丝质感与复合子部件自由拼装）。
  * 支持自适应多行、中文 IME 组合防误触、斜杠快捷指令、@ 上下文标签、流式待发入队与复合子部件自由拼装。
  */
 
 import { cn } from "@/lib/utils";
+import { cva } from "class-variance-authority";
 import {
   ArrowUp,
   AtSign,
@@ -34,6 +35,59 @@ import {
   useState,
 } from "react";
 
+export const PROMPT_FOCUS_RING =
+  "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
+
+export const promptShellVariants = cva(
+  "flex flex-col border border-solid text-card-foreground transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) focus-within:border-ring focus-within:ring-1 focus-within:ring-ring focus-within:ring-inset",
+  {
+    variants: {
+      variant: {
+        default:
+          "border-input/55 bg-background shadow-[0_2px_10px_-3px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.04)] hover:border-foreground/22 hover:bg-card dark:border-white/12 dark:bg-card/85 dark:hover:border-white/22 dark:hover:bg-card",
+        filled:
+          "border-transparent bg-secondary/75 hover:bg-secondary focus-within:bg-card dark:bg-white/7 dark:hover:bg-white/11",
+        elevated:
+          "border-border/80 bg-card shadow-[0_12px_32px_-10px_rgba(0,0,0,0.12),0_2px_6px_-1px_rgba(0,0,0,0.04)] hover:border-foreground/20 dark:border-white/12 dark:shadow-[0_18px_40px_-10px_rgba(0,0,0,0.65)]",
+      },
+      size: {
+        sm: "p-2",
+        md: "p-2.5",
+        lg: "p-3",
+      },
+      radius: {
+        lg: "rounded-2xl",
+        xl: "rounded-3xl",
+      },
+      invalid: {
+        true: "border-destructive hover:border-destructive focus-within:border-destructive focus-within:ring-destructive dark:border-destructive dark:hover:border-destructive",
+        false: "",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "md",
+      radius: "xl",
+      invalid: false,
+    },
+  },
+);
+
+export const promptTextareaVariants = cva(
+  "max-h-[196px] w-full resize-none appearance-none border-0 bg-transparent font-sans leading-6 text-foreground outline-none placeholder:text-muted-foreground/70 disabled:cursor-not-allowed disabled:opacity-50",
+  {
+    variants: {
+      size: {
+        sm: "min-h-[36px] px-2 py-1.5 text-xs",
+        md: "min-h-[42px] px-2.5 py-2 text-sm",
+        lg: "min-h-[48px] px-3 py-2.5 text-sm",
+      },
+    },
+    defaultVariants: {
+      size: "md",
+    },
+  },
+);
 export interface PromptAttachment {
   id: string;
   name: string;
@@ -64,6 +118,9 @@ export interface PromptModelOption {
 }
 
 export type PromptInputStatus = "idle" | "submitting" | "streaming" | "disabled";
+export type PromptInputVariant = "default" | "filled" | "elevated";
+export type PromptInputSize = "sm" | "md" | "lg";
+export type PromptInputRadius = "lg" | "xl";
 
 export interface PromptInputProps {
   /** 受控输入值 */
@@ -80,6 +137,14 @@ export interface PromptInputProps {
   onStop?: () => void;
   /** 当前运行状态 */
   status?: PromptInputStatus;
+  /** 输入器外壳视觉风格 */
+  variant?: PromptInputVariant;
+  /** 内边距与输入区尺寸密度 */
+  size?: PromptInputSize;
+  /** 外壳圆角等级 */
+  radius?: PromptInputRadius;
+  /** 校验或请求失败错误提示 */
+  error?: string;
   /** 输入框占位提示 */
   placeholder?: string;
   /** 最大字符数，传入时在工具栏显示字数统计 */
@@ -104,8 +169,10 @@ export interface PromptInputProps {
   selectedModel?: string;
   /** 模型切换回调 */
   onModelChange?: (id: string) => void;
-  /** 输入器下方的快捷提示词建议 */
+  /** 快捷提示词建议 */
   suggestions?: string[];
+  /** 快捷提示词位置：底部或顶部 */
+  suggestionsPosition?: "bottom" | "top";
   /** 点击快捷提示词时的回调 */
   onSelectSuggestion?: (text: string) => void;
   /** 底部工具栏左侧自定义插槽（可嵌入 ModelSelector、Context 等紧凑组件） */
@@ -141,7 +208,7 @@ const ContextChipItem = ({
   item: PromptContextRef;
   onRemove?: (id: string) => void;
 }) => (
-  <span className="inline-flex h-6.5 items-center gap-1 rounded-lg border border-solid border-signal/25 bg-signal/8 px-2 font-mono text-[11px] font-medium text-foreground">
+  <span className="inline-flex h-6.5 items-center gap-1 rounded-lg border border-solid border-signal/25 bg-signal/8 px-2 font-mono text-[11px] font-medium text-foreground dark:border-signal/35 dark:bg-signal/12">
     <AtSign aria-hidden="true" className="size-3 text-signal" />
     <span className="max-w-32 truncate">{item.label}</span>
     {onRemove && (
@@ -149,7 +216,10 @@ const ContextChipItem = ({
         type="button"
         aria-label={`移除上下文 ${item.label}`}
         onClick={() => onRemove(item.id)}
-        className="inline-flex size-4 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        className={cn(
+          "inline-flex size-4 cursor-pointer items-center justify-center rounded-full border border-solid border-transparent bg-transparent text-muted-foreground hover:text-foreground",
+          PROMPT_FOCUS_RING,
+        )}
       >
         <X aria-hidden="true" className="size-2.5" />
       </button>
@@ -166,7 +236,7 @@ const AttachmentChipItem = ({
 }) => {
   const Icon = ATTACHMENT_ICON[item.kind ?? "file"] ?? Paperclip;
   return (
-    <span className="inline-flex h-7 items-center gap-1.5 rounded-xl border border-solid border-border bg-secondary/65 px-2.5 text-xs text-foreground">
+    <span className="inline-flex h-7 items-center gap-1.5 rounded-xl border border-solid border-border/80 bg-secondary/65 px-2.5 text-xs text-foreground dark:border-white/10 dark:bg-white/7">
       <Icon aria-hidden="true" className="size-3.5 shrink-0 text-signal" />
       <span className="max-w-36 truncate font-medium">{item.name}</span>
       {item.size && (
@@ -179,7 +249,10 @@ const AttachmentChipItem = ({
           type="button"
           aria-label={`移除附件 ${item.name}`}
           onClick={() => onRemove(item.id)}
-          className="inline-flex size-4 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+          className={cn(
+            "inline-flex size-4 cursor-pointer items-center justify-center rounded-full border border-solid border-transparent bg-transparent text-muted-foreground hover:bg-accent hover:text-foreground",
+            PROMPT_FOCUS_RING,
+          )}
         >
           <X aria-hidden="true" className="size-3" />
         </button>
@@ -220,7 +293,7 @@ const SlashMenu = ({
 }) => (
   <ul
     aria-label="快捷指令菜单"
-    className="m-0 mb-1.5 flex list-none flex-col gap-0.5 rounded-2xl border border-solid border-border bg-popover p-1.5 text-popover-foreground shadow-md"
+    className="m-0 mb-1 flex list-none flex-col gap-0.5 rounded-2xl border border-solid border-border/80 bg-popover/96 p-1.5 text-popover-foreground backdrop-blur-xl shadow-[0_10px_30px_-8px_rgba(0,0,0,0.12),0_2px_6px_-1px_rgba(0,0,0,0.04)] dark:border-white/10 dark:bg-popover/95 dark:shadow-[0_18px_40px_-10px_rgba(0,0,0,0.65)]"
   >
     {commands.map((cmd, idx) => {
       const active = idx === activeIdx;
@@ -231,7 +304,8 @@ const SlashMenu = ({
             aria-pressed={active}
             onClick={() => onPick(cmd)}
             className={cn(
-              "flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl border-0 px-2.5 py-1.5 text-left transition-colors duration-(--ui-duration-fast) focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+              "flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl border border-solid border-transparent px-2.5 py-1.5 text-left transition-colors duration-(--ui-duration-fast)",
+              PROMPT_FOCUS_RING,
               active ? "bg-accent text-foreground" : "bg-transparent hover:bg-accent/60",
             )}
           >
@@ -262,7 +336,10 @@ const SuggestionChips = ({
         key={text}
         type="button"
         onClick={() => onPick(text)}
-        className="cursor-pointer rounded-full border border-solid border-border/85 bg-card px-3 py-1 font-sans text-xs font-medium text-muted-foreground shadow-xs transition-all duration-(--ui-duration-fast) hover:-translate-y-0.5 hover:border-foreground/20 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        className={cn(
+          "cursor-pointer rounded-full border border-solid border-border/80 bg-background px-3 py-1 font-sans text-xs font-medium text-muted-foreground shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-[border-color,color,background-color,transform] duration-(--ui-duration-fast) hover:-translate-y-0.5 hover:border-foreground/22 hover:bg-card hover:text-foreground dark:border-white/12 dark:bg-card/75 dark:hover:border-white/22",
+          PROMPT_FOCUS_RING,
+        )}
       >
         {text}
       </button>
@@ -272,6 +349,7 @@ const SuggestionChips = ({
 interface PromptContextValue {
   text: string;
   status: PromptInputStatus;
+  size: PromptInputSize;
   canSubmit: boolean;
   canQueue: boolean;
   maxLength?: number;
@@ -287,6 +365,7 @@ interface PromptContextValue {
 const PromptCtx = createContext<PromptContextValue>({
   text: "",
   status: "idle",
+  size: "md",
   canSubmit: false,
   canQueue: false,
   placeholder: "输入你的问题…",
@@ -306,7 +385,7 @@ const ModelPills = ({
   selectedModel?: string;
   onSelect?: (id: string) => void;
 }) => (
-  <div className="inline-flex items-center gap-0.5 rounded-full border border-solid border-border/80 bg-secondary p-0.5">
+  <div className="inline-flex items-center gap-0.5 rounded-full border border-solid border-border/75 bg-secondary/75 p-0.5 dark:border-white/10 dark:bg-white/7">
     {models.map(({ id, label }) => {
       const active = id === selectedModel;
       return (
@@ -316,9 +395,10 @@ const ModelPills = ({
           aria-pressed={active}
           onClick={() => onSelect?.(id)}
           className={cn(
-            "h-7 cursor-pointer rounded-full border-0 px-2.5 font-sans text-xs font-medium transition-all duration-(--ui-duration-fast) outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            "h-7 cursor-pointer rounded-full border border-solid border-transparent px-2.5 font-sans text-xs font-medium transition-all duration-(--ui-duration-fast)",
+            PROMPT_FOCUS_RING,
             active
-              ? "bg-card text-foreground shadow-xs"
+              ? "bg-card text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.05)] dark:bg-card"
               : "bg-transparent text-muted-foreground hover:text-foreground",
           )}
         >
@@ -385,7 +465,8 @@ const PromptInputSubmit = ({ className, onClick, ...props }: PromptInputSubmitPr
           onClick?.(e);
         }}
         className={cn(
-          "inline-flex size-8.5 cursor-pointer items-center justify-center rounded-full border-0 bg-primary text-primary-foreground shadow-xs transition-transform duration-(--ui-duration-fast) hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none active:scale-95",
+          "inline-flex size-8 cursor-pointer items-center justify-center rounded-full border border-solid border-transparent bg-primary text-primary-foreground shadow-xs transition-transform duration-(--ui-duration-fast) hover:opacity-90 active:scale-95",
+          PROMPT_FOCUS_RING,
           className,
         )}
         {...props}
@@ -409,9 +490,10 @@ const PromptInputSubmit = ({ className, onClick, ...props }: PromptInputSubmitPr
         onClick?.(e);
       }}
       className={cn(
-        "inline-flex size-8.5 cursor-pointer items-center justify-center rounded-full border-0 transition-all duration-(--ui-duration-fast) outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        "inline-flex size-8 cursor-pointer items-center justify-center rounded-full border border-solid border-transparent transition-all duration-(--ui-duration-fast)",
+        PROMPT_FOCUS_RING,
         meta.enabled
-          ? "bg-primary text-primary-foreground shadow-sm hover:opacity-90 active:scale-95"
+          ? "bg-primary text-primary-foreground shadow-xs hover:opacity-90 active:scale-95"
           : "cursor-not-allowed bg-secondary text-muted-foreground/50",
         className,
       )}
@@ -420,6 +502,12 @@ const PromptInputSubmit = ({ className, onClick, ...props }: PromptInputSubmitPr
       <SubmitGlyph isSubmitting={meta.isSubmitting} isQueue={meta.isQueue} />
     </button>
   );
+};
+
+const counterToneClass = (length: number, maxLength: number) => {
+  if (length >= maxLength) return "text-destructive";
+  if (length >= maxLength * 0.9) return "text-amber-500";
+  return "text-muted-foreground";
 };
 
 const DefaultToolbar = (p: {
@@ -441,7 +529,10 @@ const DefaultToolbar = (p: {
           aria-label="添加附件"
           disabled={p.disabled}
           onClick={p.onAttach}
-          className="inline-flex size-8 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-40"
+          className={cn(
+            "inline-flex size-8 cursor-pointer items-center justify-center rounded-full border border-solid border-transparent bg-transparent text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:opacity-40",
+            PROMPT_FOCUS_RING,
+          )}
         >
           <Paperclip aria-hidden="true" className="size-4" />
         </button>
@@ -453,7 +544,12 @@ const DefaultToolbar = (p: {
     </PromptInputTools>
     <div className="flex shrink-0 items-center gap-2">
       {p.maxLength !== undefined && (
-        <span className="font-mono text-[11px] text-muted-foreground tabular-nums">
+        <span
+          className={cn(
+            "font-mono text-[11px] tabular-nums",
+            counterToneClass(p.length, p.maxLength),
+          )}
+        >
           {p.length}/{p.maxLength}
         </span>
       )}
@@ -462,20 +558,22 @@ const DefaultToolbar = (p: {
     </div>
   </PromptInputFooter>
 );
-const COMPOSER_SHELL_CLASSES = cn(
-  "flex flex-col rounded-3xl border border-solid border-border bg-card p-2.5 text-card-foreground shadow-xs",
-  "transition-[border-color,box-shadow] duration-(--ui-duration-fast)",
-  "hover:border-foreground/20 focus-within:border-ring focus-within:ring-1 focus-within:ring-ring focus-within:ring-inset",
-);
+const MIN_HEIGHT_BY_SIZE: Record<PromptInputSize, number> = {
+  sm: 36,
+  md: 42,
+  lg: 48,
+};
 
-const TEXTAREA_CLASSES =
-  "min-h-[42px] max-h-[196px] w-full resize-none appearance-none border-0 bg-transparent px-2.5 py-2 font-sans text-sm leading-6 text-foreground outline-none placeholder:text-muted-foreground/80 disabled:cursor-not-allowed disabled:opacity-50";
-
-const syncTextareaHeight = (el: HTMLTextAreaElement | null, value: string) => {
+const syncTextareaHeight = (
+  el: HTMLTextAreaElement | null,
+  value: string,
+  size: PromptInputSize,
+) => {
   if (!el) return;
+  const minHeight = MIN_HEIGHT_BY_SIZE[size];
   el.style.height = "auto";
-  const nextHeight = value.length > 0 ? Math.min(el.scrollHeight, 196) : 42;
-  el.style.height = `${Math.max(42, nextHeight)}px`;
+  const nextHeight = value.length > 0 ? Math.min(el.scrollHeight, 196) : minHeight;
+  el.style.height = `${Math.max(minHeight, nextHeight)}px`;
 };
 
 export const PromptInputTextarea = ({
@@ -490,8 +588,8 @@ export const PromptInputTextarea = ({
   const localRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
-    syncTextareaHeight(localRef.current, ctx.text);
-  }, [ctx.text]);
+    syncTextareaHeight(localRef.current, ctx.text, ctx.size);
+  }, [ctx.text, ctx.size]);
 
   const setRefs = useCallback(
     (node: HTMLTextAreaElement | null) => {
@@ -513,7 +611,7 @@ export const PromptInputTextarea = ({
       data-slot="prompt-input-textarea"
       onChange={(event) => ctx.updateText(event.target.value)}
       onKeyDown={ctx.onKeyDown}
-      className={cn(TEXTAREA_CLASSES, className)}
+      className={cn(promptTextareaVariants({ size: ctx.size }), className)}
       {...props}
     />
   );
@@ -669,10 +767,48 @@ const DefaultComposerBody = ({
   );
 };
 
+const PromptFeedback = ({ error, hint }: { error?: string; hint?: string }) => {
+  if (error) {
+    return (
+      <p role="alert" className="m-0 px-1.5 text-xs font-medium text-destructive">
+        {error}
+      </p>
+    );
+  }
+  return hint ? <p className="m-0 px-1.5 text-[11px] text-muted-foreground">{hint}</p> : null;
+};
+
+const buildPromptContext = (
+  props: PromptInputProps,
+  c: ReturnType<typeof usePromptController>,
+  size: PromptInputSize,
+) => ({
+  text: c.text,
+  status: c.status,
+  size,
+  canSubmit: c.canSubmit,
+  canQueue: c.canQueue,
+  maxLength: props.maxLength,
+  placeholder: props.placeholder ?? "输入你的问题，或键入 / 呼出快捷指令…",
+  ariaLabel: props["aria-label"] ?? "指令输入框",
+  registerTextarea: c.registerTextarea,
+  updateText: c.updateText,
+  submitOrQueue: c.submitOrQueue,
+  onStop: props.onStop,
+  onKeyDown: c.onKeyDown,
+});
+
+const resolvePromptOptions = (props: PromptInputProps) => ({
+  suggestions: props.suggestions ?? [],
+  suggestionsPos: props.suggestionsPosition ?? ("bottom" as const),
+  variant: props.variant ?? ("default" as const),
+  size: props.size ?? ("md" as const),
+  radius: props.radius ?? ("xl" as const),
+});
+
 export const PromptInput = (props: PromptInputProps) => {
   const c = usePromptController(props);
-  const suggestions = props.suggestions ?? [];
-
+  const opts = resolvePromptOptions(props);
   const pickSuggestion = (item: string) => {
     c.updateText(item);
     props.onSelectSuggestion?.(item);
@@ -680,31 +816,27 @@ export const PromptInput = (props: PromptInputProps) => {
   };
 
   return (
-    <PromptCtx.Provider
-      value={{
-        text: c.text,
-        status: c.status,
-        canSubmit: c.canSubmit,
-        canQueue: c.canQueue,
-        maxLength: props.maxLength,
-        placeholder: props.placeholder ?? "输入你的问题，或键入 / 呼出快捷指令…",
-        ariaLabel: props["aria-label"] ?? "指令输入框",
-        registerTextarea: c.registerTextarea,
-        updateText: c.updateText,
-        submitOrQueue: c.submitOrQueue,
-        onStop: props.onStop,
-        onKeyDown: c.onKeyDown,
-      }}
-    >
+    <PromptCtx.Provider value={buildPromptContext(props, c, opts.size)}>
       <div
         data-slot="prompt-input"
         data-status={c.status}
+        data-variant={opts.variant}
         className={cn("flex w-full max-w-2xl flex-col gap-2 font-sans", props.className)}
       >
+        {opts.suggestions.length > 0 && opts.suggestionsPos === "top" && (
+          <SuggestionChips suggestions={opts.suggestions} onPick={pickSuggestion} />
+        )}
         {c.matchedSlash.length > 0 && (
           <SlashMenu commands={c.matchedSlash} activeIdx={c.safeSlashIdx} onPick={c.applySlash} />
         )}
-        <div className={COMPOSER_SHELL_CLASSES}>
+        <div
+          className={promptShellVariants({
+            variant: opts.variant,
+            size: opts.size,
+            radius: opts.radius,
+            invalid: Boolean(props.error),
+          })}
+        >
           {props.children ?? (
             <DefaultComposerBody
               props={props}
@@ -713,10 +845,10 @@ export const PromptInput = (props: PromptInputProps) => {
             />
           )}
         </div>
-        {suggestions.length > 0 && (
-          <SuggestionChips suggestions={suggestions} onPick={pickSuggestion} />
+        {opts.suggestions.length > 0 && opts.suggestionsPos === "bottom" && (
+          <SuggestionChips suggestions={opts.suggestions} onPick={pickSuggestion} />
         )}
-        {props.hint && <p className="m-0 px-1.5 text-[11px] text-muted-foreground">{props.hint}</p>}
+        <PromptFeedback error={props.error} hint={props.hint} />
       </div>
     </PromptCtx.Provider>
   );

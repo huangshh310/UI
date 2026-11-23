@@ -14,15 +14,19 @@ export default function AiOrbBasicDemo() {
   const [state, setState] = useState<AiOrbState>("thinking");
 
   return (
-    <div className="flex w-full max-w-sm flex-col items-center gap-5 rounded-[22px] border border-solid border-border/85 bg-card p-5 shadow-md">
-      <div className="flex items-center justify-center gap-7 py-1">
-        <div className="flex flex-col items-center gap-2">
+    <div className="flex w-full max-w-md flex-col items-center gap-5 rounded-2xl border border-solid border-border/85 bg-card p-6 shadow-xs">
+      <div className="flex items-center justify-center gap-7 py-2">
+        <div className="flex flex-col items-center gap-2.5">
           <AiOrb state={state} variant="aurora" size="lg" />
-          <span className="font-mono text-[10px] text-muted-foreground">Aurora</span>
+          <span className="font-mono text-[11px] text-muted-foreground">Aurora</span>
         </div>
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-2.5">
           <AiOrb state={state} variant="lattice" size="lg" />
-          <span className="font-mono text-[10px] text-muted-foreground">Lattice</span>
+          <span className="font-mono text-[11px] text-muted-foreground">Lattice</span>
+        </div>
+        <div className="flex flex-col items-center gap-2.5">
+          <AiOrb state={state} variant="ring" size="lg" />
+          <span className="font-mono text-[11px] text-muted-foreground">Ring</span>
         </div>
       </div>
       <div className="inline-flex flex-wrap items-center justify-center gap-1 rounded-full border border-solid border-border/80 bg-secondary/70 p-1">
@@ -32,9 +36,9 @@ export default function AiOrbBasicDemo() {
             type="button"
             aria-pressed={state === item.id}
             onClick={() => setState(item.id)}
-            className={`cursor-pointer rounded-full border-0 px-3 py-1 font-sans text-xs font-medium transition-all ${
+            className={`cursor-pointer rounded-full border-0 px-3 py-1 font-sans text-xs font-medium transition-all outline-none focus-visible:ring-2 focus-visible:ring-ring ${
               state === item.id
-                ? "bg-card text-foreground shadow-sm"
+                ? "bg-card text-foreground shadow-xs"
                 : "bg-transparent text-muted-foreground hover:text-foreground"
             }`}
           >

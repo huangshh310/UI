@@ -2,7 +2,7 @@
 
 /**
  * DataTable：基于 TanStack Table v9 的声明式数据表格。
- * 支持点击排序（aria-sort）、全局搜索、客户端分页、行选择（复用 DrawCheckbox）、骨架加载与空状态。
+ * 支持点击排序（aria-sort）、全局搜索、客户端分页、行选择（复用 DrawCheckbox）、外观与密度变体、斑马纹、骨架加载与空状态。
  */
 import { cn } from "@matt-ui/utils";
 import {
@@ -20,6 +20,7 @@ import {
 } from "./data-table-body.js";
 import { TablePagination, TableToolbar } from "./data-table-parts.js";
 import type { DataTableColumn, DataTableProps } from "./data-table.types.js";
+import { dataTableShellVariants } from "./data-table.variants.js";
 
 const toColumnDefs = <TData extends object>(
   columns: DataTableColumn<TData>[],
@@ -68,46 +69,55 @@ const ScrollableTable = <TData extends object>({
 }: {
   props: DataTableProps<TData>;
   table: ReturnType<typeof useTableState<TData>>["table"];
-}) => (
-  <div
-    // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-    tabIndex={0}
-    aria-label={props.title ?? "数据表格"}
-    className="w-full overflow-x-auto outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
-  >
-    <table className="w-full border-collapse">
-      <DataTableHead
-        headers={table.getFlatHeaders()}
-        columns={props.columns}
-        selectable={Boolean(props.selectable)}
-        allSelected={table.getIsAllPageRowsSelected()}
-        someSelected={table.getIsSomePageRowsSelected()}
-        onToggleAll={(checked) => table.toggleAllPageRowsSelected(checked)}
-      />
-      <tbody>
-        <DataTableBody
-          rows={table.getRowModel().rows}
+}) => {
+  const density = props.density ?? "normal";
+  return (
+    <div
+      // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+      tabIndex={0}
+      aria-label={props.title ?? "数据表格"}
+      className="w-full overflow-x-auto outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset"
+    >
+      <table className="w-full border-collapse">
+        <DataTableHead
+          headers={table.getFlatHeaders()}
           columns={props.columns}
+          density={density}
+          stickyHeader={Boolean(props.stickyHeader)}
           selectable={Boolean(props.selectable)}
-          loading={Boolean(props.loading)}
-          emptyMessage={props.emptyMessage ?? "暂无数据"}
+          allSelected={table.getIsAllPageRowsSelected()}
+          someSelected={table.getIsSomePageRowsSelected()}
+          onToggleAll={(checked) => table.toggleAllPageRowsSelected(checked)}
         />
-      </tbody>
-    </table>
-  </div>
-);
+        <tbody>
+          <DataTableBody
+            rows={table.getRowModel().rows}
+            columns={props.columns}
+            density={density}
+            striped={Boolean(props.striped)}
+            selectable={Boolean(props.selectable)}
+            loading={Boolean(props.loading)}
+            emptyMessage={props.emptyMessage ?? "暂无数据"}
+            onRowClick={props.onRowClick}
+          />
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 export const DataTable = <TData extends object>(props: DataTableProps<TData>) => {
   const { table, globalFilter, setGlobalFilter } = useTableState(props);
   const totalCount = table.getFilteredRowModel().rows.length;
+  const variant = props.variant ?? "default";
+  const density = props.density ?? "normal";
 
   return (
     <div
       data-slot="data-table"
-      className={cn(
-        "w-full overflow-hidden rounded-[22px] border border-solid border-border/85 bg-card font-sans text-card-foreground shadow-md",
-        props.className,
-      )}
+      data-variant={variant}
+      data-density={density}
+      className={cn(dataTableShellVariants({ variant }), props.className)}
     >
       <TableToolbar
         title={props.title}
@@ -117,6 +127,7 @@ export const DataTable = <TData extends object>(props: DataTableProps<TData>) =>
         query={globalFilter}
         onQueryChange={setGlobalFilter}
         totalCount={totalCount}
+        toolbarActions={props.toolbarActions}
       />
       <ScrollableTable props={props} table={table} />
       <TablePagination

@@ -1,17 +1,19 @@
 import ProgressBasicDemo from "@/demos/progress/basic";
 import ProgressInteractiveDemo from "@/demos/progress/interactive";
+import ProgressTonesDemo from "@/demos/progress/tones";
 import type { ComponentDoc } from "./registry.types";
 
 export const PROGRESS_DOC: ComponentDoc = {
   slug: "progress",
   name: "Progress",
-  description: "基于 Base UI Progress 的极细线性进度条，支持确定进度与不确定态。",
+  description:
+    "基于 Base UI Progress 的圆润线性进度条，支持三种轨道尺寸、六种语义色调、等宽百分比读数与不确定流光态。",
   category: "display",
   registryName: "progress",
   dependencies: ["@base-ui/react"],
   usage: `import { Progress } from "@/components/ui/progress";
 
-<Progress value={64} label="上传中" showValue />`,
+<Progress value={64} label="上传中" showValue tone="signal" size="md" />`,
   createdAt: "2026-11-22",
   specimens: [
     {
@@ -24,9 +26,18 @@ export const PROGRESS_DOC: ComponentDoc = {
     {
       slug: "interactive",
       name: "步进可控与不确定加载态",
-      description: "演示动态增减百分比读数，以及 value={null} 时的脉冲不确定加载轨道。",
+      description: "演示动态增减百分比读数，以及 value={null} 时的流光不确定加载轨道。",
       file: "progress/interactive.tsx",
       Demo: ProgressInteractiveDemo,
+      directory: false,
+    },
+    {
+      slug: "tones",
+      name: "全尺寸、语义色调与流光态",
+      description:
+        "展示 sm / md / lg 轨道高度，default / signal / success / warning / destructive 色调及 indeterminate 流光态。",
+      file: "progress/tones.tsx",
+      Demo: ProgressTonesDemo,
       directory: false,
     },
   ],
@@ -34,16 +45,29 @@ export const PROGRESS_DOC: ComponentDoc = {
     {
       name: "value",
       type: "number | null",
-      defaultValue: "必填",
-      description: "当前进度，null 表示不确定态",
+      defaultValue: "null",
+      description: "当前进度，传 null 表示不确定态",
     },
     { name: "max", type: "number", defaultValue: "100", description: "最大值" },
     {
-      name: "tone",
-      type: '"signal" | "primary" | "success"',
-      defaultValue: '"signal"',
-      description: "进度条色调",
+      name: "indeterminate",
+      type: "boolean",
+      defaultValue: "false",
+      description: "启用不确定流光加载态",
     },
+    {
+      name: "size",
+      type: '"sm" | "md" | "lg"',
+      defaultValue: '"sm"',
+      description: "进度轨道高度",
+    },
+    {
+      name: "tone",
+      type: '"default" | "primary" | "signal" | "success" | "warning" | "destructive"',
+      defaultValue: '"signal"',
+      description: "进度条语义色调",
+    },
+    { name: "label", type: "string", defaultValue: "—", description: "顶部左侧标签文案" },
     { name: "showValue", type: "boolean", defaultValue: "false", description: "展示百分比数字" },
   ],
   accessibility: ['提供标准 role="progressbar"、aria-valuenow 与关联标签，读屏器可准确朗读进度。'],

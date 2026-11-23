@@ -21,7 +21,7 @@ const UserEditableTurn = () => {
   const [editing, setEditing] = useState(false);
 
   return (
-    <Message from="user">
+    <Message from="user" timestamp="14:20">
       {editing ? (
         <MessageEditForm
           defaultValue={userText}
@@ -51,7 +51,7 @@ export default function MessageBasicDemo() {
   return (
     <div className="flex w-full max-w-xl flex-col gap-5">
       <UserEditableTurn />
-      <Message from="assistant">
+      <Message from="assistant" author="Matt AI" model="Claude 4.5" timestamp="14:20">
         <MessageBranch>
           <MessageBranchContent>
             <MessageContent key="v1">

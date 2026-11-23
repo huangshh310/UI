@@ -1,124 +1,19 @@
 "use client";
 
+/**
+ * FileManagerBlock：由 AnimatedFileUpload 与 SelectionBasket 组合的文件资产管理区块。
+ */
 import { cn } from "@matt-ui/utils";
-import { FileCode2, Folder, Trash2, UploadCloud } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { AnimatedFileUpload } from "../animated-file-upload/index.js";
 import { SelectionBasket } from "../selection-basket/index.js";
+import { buildFolderSummaries, FileRows, FolderCards, UploadHeader } from "./file-manager-parts.js";
 import type { FileManagerBlockProps, ManagedFileEntry } from "./file-manager-block.types.js";
-
-const DEFAULT_FILES: ManagedFileEntry[] = [
-  {
-    id: "1",
-    name: "design-tokens.css",
-    folder: "Token",
-    sizeLabel: "18 KB",
-    updatedAt: "2 分钟前",
-  },
-  {
-    id: "2",
-    name: "registry.json",
-    folder: "分发清单",
-    sizeLabel: "42 KB",
-    updatedAt: "15 分钟前",
-  },
-  {
-    id: "3",
-    name: "component-roadmap.md",
-    folder: "文档",
-    sizeLabel: "11 KB",
-    updatedAt: "1 小时前",
-  },
-];
-
-const FOLDERS = [
-  {
-    name: "Token 主题",
-    count: "6 项",
-  },
-  {
-    name: "Registry 清单",
-    count: "89 项",
-  },
-  {
-    name: "架构文档",
-    count: "12 项",
-  },
-];
-
-const FolderCards = () => (
-  <div className="grid grid-cols-1 gap-3 @xl:grid-cols-3">
-    {FOLDERS.map((folder) => (
-      <div
-        key={folder.name}
-        className="flex items-center gap-3 rounded-2xl border border-solid border-border/80 bg-secondary/40 p-3.5 transition-colors hover:bg-secondary/65"
-      >
-        <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl border border-solid border-border bg-background text-foreground shadow-xs dark:bg-card">
-          <Folder aria-hidden="true" className="size-4.5" />
-        </span>
-        <div className="min-w-0">
-          <p className="m-0 truncate text-xs font-semibold text-foreground">{folder.name}</p>
-          <p className="m-0 mt-0.5 font-mono text-[11px] text-muted-foreground">{folder.count}</p>
-        </div>
-      </div>
-    ))}
-  </div>
-);
-
-const FileRows = ({
-  files,
-  selectedIds,
-  onToggle,
-}: {
-  files: ManagedFileEntry[];
-  selectedIds: string[];
-  onToggle: (id: string) => void;
-}) => (
-  <div className="overflow-hidden rounded-xl border border-solid border-border">
-    {files.map((file) => {
-      const checked = selectedIds.includes(file.id);
-      return (
-        <label
-          key={file.id}
-          className={cn(
-            "flex cursor-pointer items-center gap-3 border-b border-solid border-border/70 px-3.5 py-2.5 text-xs transition-colors last:border-b-0",
-            checked ? "bg-signal/8" : "hover:bg-accent/45",
-          )}
-        >
-          <input
-            type="checkbox"
-            aria-label={`选择 ${file.name}`}
-            checked={checked}
-            onChange={() => onToggle(file.id)}
-            className="size-4 accent-signal"
-          />
-          <FileCode2 aria-hidden="true" className="size-4 shrink-0 text-muted-foreground" />
-          <span className="min-w-0 flex-1 truncate font-medium text-foreground">{file.name}</span>
-          <span className="hidden text-muted-foreground sm:inline">{file.folder}</span>
-          <span className="font-mono text-muted-foreground tabular-nums">{file.sizeLabel}</span>
-          <span className="text-muted-foreground">{file.updatedAt}</span>
-        </label>
-      );
-    })}
-  </div>
-);
-
-const UploadHeader = ({ open, onToggle }: { open: boolean; onToggle: () => void }) => (
-  <div className="flex flex-wrap items-center justify-between gap-2">
-    <div>
-      <p className="m-0 text-sm font-semibold text-foreground">组件资产库</p>
-      <p className="m-0 text-xs text-muted-foreground">管理样式源码、清单与静态资源。</p>
-    </div>
-    <button
-      type="button"
-      onClick={onToggle}
-      className="inline-flex h-8.5 cursor-pointer items-center gap-1.5 rounded-full border border-solid border-primary bg-primary px-3.5 font-sans text-xs font-medium text-primary-foreground transition-opacity hover:opacity-90 outline-none focus-visible:ring-2 focus-visible:ring-ring"
-    >
-      <UploadCloud aria-hidden="true" className="size-3.5" />
-      <span>{open ? "收起上传" : "上传文件"}</span>
-    </button>
-  </div>
-);
+import {
+  DEFAULT_MANAGED_FILES,
+  FILE_MANAGER_CONTAINER_STYLES,
+} from "./file-manager-block.variants.js";
 
 const mapUploaded = (uploaded: { id: string; name: string; size: number }[]): ManagedFileEntry[] =>
   uploaded.map((item) => ({
@@ -137,55 +32,113 @@ const mergeUploaded = (
   return [...added.filter((a) => !prev.some((p) => p.id === a.id)), ...prev];
 };
 
-export const FileManagerBlock = (props: FileManagerBlockProps) => {
-  const [files, setFiles] = useState(props.initialFiles ?? DEFAULT_FILES);
+const createDeleteAction = (onDelete: () => void) => [
+  {
+    id: "delete",
+    label: "删除",
+    tone: "destructive" as const,
+    icon: <Trash2 className="size-3.5" />,
+    onClick: onDelete,
+  },
+];
+
+const useFileManagerState = (props: FileManagerBlockProps) => {
+  const [files, setFiles] = useState(props.initialFiles ?? DEFAULT_MANAGED_FILES);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [activeFolder, setActiveFolder] = useState<string | null>(null);
   const [showUpload, setShowUpload] = useState(false);
 
+  const visibleFiles = activeFolder ? files.filter((f) => f.folder === activeFolder) : files;
   const toggle = (id: string) =>
     setSelectedIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+  const handleDelete = () => {
+    const removed = [...selectedIds];
+    setFiles((prev) => prev.filter((f) => !removed.includes(f.id)));
+    setSelectedIds([]);
+    props.onDeleteFiles?.(removed);
+  };
 
-  const actions = [
-    {
-      id: "delete",
-      label: "删除",
-      tone: "destructive" as const,
-      icon: <Trash2 className="size-3.5" />,
-      onClick: () => {
-        setFiles((prev) => prev.filter((f) => !selectedIds.includes(f.id)));
-        setSelectedIds([]);
-      },
-    },
-  ];
+  return {
+    files,
+    visibleFiles,
+    selectedIds,
+    activeFolder,
+    showUpload,
+    setFiles,
+    setSelectedIds,
+    setActiveFolder,
+    setShowUpload,
+    toggle,
+    handleDelete,
+  };
+};
+
+const FileManagerBasket = ({
+  state,
+  basketVariant,
+}: {
+  state: ReturnType<typeof useFileManagerState>;
+  basketVariant: FileManagerBlockProps["basketVariant"];
+}) => (
+  <div className="flex justify-center">
+    <SelectionBasket
+      count={state.selectedIds.length}
+      totalCount={state.visibleFiles.length}
+      variant={basketVariant ?? "default"}
+      floating={false}
+      onSelectAll={() => state.setSelectedIds(state.visibleFiles.map((f) => f.id))}
+      onClear={() => state.setSelectedIds([])}
+      actions={createDeleteAction(state.handleDelete)}
+    />
+  </div>
+);
+
+export const FileManagerBlock = (props: FileManagerBlockProps) => {
+  const variant = props.variant ?? "default";
+  const compact = props.compact ?? false;
+  const state = useFileManagerState(props);
 
   return (
     <div
       data-slot="file-manager-block"
+      data-variant={variant}
       className={cn(
-        "@container flex w-full max-w-4xl flex-col gap-4 rounded-[24px] border border-solid border-border bg-card p-6 shadow-xs",
+        "@container flex w-full max-w-4xl flex-col rounded-[24px] border border-solid",
+        compact ? "gap-3.5 p-4 sm:p-5" : "gap-4 p-5 sm:p-6",
+        FILE_MANAGER_CONTAINER_STYLES[variant],
         props.className,
       )}
     >
-      <UploadHeader open={showUpload} onToggle={() => setShowUpload((open) => !open)} />
-      {showUpload && (
+      <UploadHeader
+        title={props.title ?? "组件资产库"}
+        description={props.description ?? "管理样式源码、清单与静态资源。"}
+        fileCount={state.files.length}
+        open={state.showUpload}
+        onToggle={() => state.setShowUpload((open) => !open)}
+      />
+      {state.showUpload && (
         <AnimatedFileUpload
           label="拖拽资源文件到这里上传"
+          compact={compact}
           maxFiles={4}
-          onFilesChange={(uploaded) => setFiles((prev) => mergeUploaded(prev, uploaded))}
+          onFilesChange={(uploaded) => state.setFiles((prev) => mergeUploaded(prev, uploaded))}
         />
       )}
-      <FolderCards />
-      <FileRows files={files} selectedIds={selectedIds} onToggle={toggle} />
-      <div className="flex justify-center">
-        <SelectionBasket
-          count={selectedIds.length}
-          totalCount={files.length}
-          floating={false}
-          onSelectAll={() => setSelectedIds(files.map((f) => f.id))}
-          onClear={() => setSelectedIds([])}
-          actions={actions}
-        />
-      </div>
+      <FolderCards
+        folders={buildFolderSummaries(state.files)}
+        activeFolder={state.activeFolder}
+        compact={compact}
+        onSelectFolder={state.setActiveFolder}
+      />
+      <FileRows
+        files={state.visibleFiles}
+        selectedIds={state.selectedIds}
+        activeFolder={state.activeFolder}
+        compact={compact}
+        onToggle={state.toggle}
+        onClearFolder={() => state.setActiveFolder(null)}
+      />
+      <FileManagerBasket state={state} basketVariant={props.basketVariant} />
     </div>
   );
 };

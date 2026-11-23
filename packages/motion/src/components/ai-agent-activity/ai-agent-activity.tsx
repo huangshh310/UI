@@ -1,17 +1,19 @@
 "use client";
 
 /**
- * AiAgentActivity：极简克制的 AI 智能体工具调用轨迹与推理时间线，支持复合子部件拼装、单步明细抽屉与一键全部展开/收起。
+ * AiAgentActivity：极简克制的 AI 智能体工具调用轨迹与推理时间线，支持卡片/无框/毛玻璃变体、整板折叠与单步明细抽屉。
  */
 import { cn } from "@matt-ui/utils";
 import { ChevronDown } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { createContext, useContext, useState } from "react";
 import {
-  ACTIVITY_SPRING,
   ActivityDetailsDrawer,
+  ActivityHeaderControls,
+  ActivityHeaderProgressLine,
+  ActivityHeaderStatus,
+  ActivityHeaderTitle,
   ActivityStatusGlyph,
-  statusCircleClass,
 } from "./ai-agent-activity-parts.js";
 import type {
   AiAgentActivityHeaderProps,
@@ -19,11 +21,25 @@ import type {
   AiAgentActivityItemProps,
   AiAgentActivityProps,
   AiAgentActivityTimelineProps,
+  AiAgentActivityVariant,
 } from "./ai-agent-activity.types.js";
+import {
+  ACTIVITY_FOCUS_RING,
+  ACTIVITY_SHELL_VARIANT,
+  ACTIVITY_SPRING,
+  ACTIVITY_STATUS_CIRCLE,
+  ACTIVITY_TYPE_LABELS,
+} from "./ai-agent-activity.variants.js";
 
 interface ActivityContextValue {
   activities: AiAgentActivityItemData[];
   isRunning: boolean;
+  variant: AiAgentActivityVariant;
+  compact: boolean;
+  showTypeBadge: boolean;
+  collapsible: boolean;
+  collapsed: boolean;
+  toggleCollapsed: () => void;
   expandedIds: Set<string>;
   toggleExpand: (id: string) => void;
   expandAll: () => void;
@@ -38,71 +54,50 @@ export const useAiAgentActivity = () => {
   return ctx;
 };
 
-const HeaderControls = ({
-  onExpandAll,
-  onCollapseAll,
-}: {
-  onExpandAll: () => void;
-  onCollapseAll: () => void;
-}) => (
-  <div className="flex shrink-0 items-center gap-2 text-xs text-muted-foreground">
-    <button
-      type="button"
-      onClick={onExpandAll}
-      className="cursor-pointer border-0 bg-transparent p-0 font-sans text-xs text-muted-foreground transition-colors hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
-    >
-      全部展开
-    </button>
-    <span aria-hidden="true" className="text-border">
-      /
-    </span>
-    <button
-      type="button"
-      onClick={onCollapseAll}
-      className="cursor-pointer border-0 bg-transparent p-0 font-sans text-xs text-muted-foreground transition-colors hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
-    >
-      全部收起
-    </button>
-  </div>
-);
+const calcCompletionPct = (activities: AiAgentActivityItemData[]) => {
+  if (activities.length === 0) return 0;
+  const done = activities.filter((a) => a.status === "success").length;
+  return Math.round((done / activities.length) * 100);
+};
 
-export const AiAgentActivityHeader = ({
-  title = "执行轨迹",
-  agentName,
-  showControls = true,
-  className,
-}: AiAgentActivityHeaderProps) => {
-  const { activities, isRunning, expandAll, collapseAll } = useAiAgentActivity();
-  const completedCount = activities.filter((a) => a.status === "success").length;
+export const AiAgentActivityHeader = (props: AiAgentActivityHeaderProps) => {
+  const ctx = useAiAgentActivity();
+  const completedCount = ctx.activities.filter((a) => a.status === "success").length;
+  const pct = calcCompletionPct(ctx.activities);
+  const showDivider = ctx.variant !== "ghost" && !ctx.collapsed;
+  const showCtrl = (props.showControls ?? true) && !ctx.collapsed;
 
   return (
     <div
       className={cn(
-        "flex flex-wrap items-center justify-between gap-2.5 border-b border-solid border-border/75 px-5 py-3.5 select-none",
-        className,
+        "relative flex flex-wrap items-center justify-between gap-2.5 select-none",
+        showDivider && "border-b border-solid border-border/75 dark:border-white/10",
+        ctx.compact ? "px-3.5 py-2.5" : "px-5 py-3.5",
+        props.className,
       )}
     >
       <div className="flex min-w-0 flex-wrap items-center gap-2">
-        <span className="truncate text-sm font-medium tracking-tight text-foreground">{title}</span>
-        {agentName && <span className="truncate text-xs text-muted-foreground">— {agentName}</span>}
-        <span aria-hidden="true" className="hidden size-1 rounded-full bg-border sm:inline-block" />
-        <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-          {isRunning ? (
-            <>
-              <span
-                aria-hidden="true"
-                className="size-1.5 animate-pulse rounded-full bg-emerald-500"
-              />
-              <span className="text-foreground">运行中</span>
-            </>
-          ) : (
-            <span className="tabular-nums">
-              已完成 {completedCount} / {activities.length}
-            </span>
-          )}
-        </span>
+        <ActivityHeaderTitle
+          title={props.title ?? "执行轨迹"}
+          collapsible={ctx.collapsible}
+          collapsed={ctx.collapsed}
+          onToggle={ctx.toggleCollapsed}
+        />
+        {props.agentName && (
+          <span className="truncate rounded-md border border-solid border-border/70 bg-secondary/65 px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground dark:border-white/10 dark:bg-white/7">
+            {props.agentName}
+          </span>
+        )}
+        <ActivityHeaderStatus
+          isRunning={ctx.isRunning}
+          completedCount={completedCount}
+          total={ctx.activities.length}
+        />
       </div>
-      {showControls && <HeaderControls onExpandAll={expandAll} onCollapseAll={collapseAll} />}
+      {showCtrl && (
+        <ActivityHeaderControls onExpandAll={ctx.expandAll} onCollapseAll={ctx.collapseAll} />
+      )}
+      <ActivityHeaderProgressLine visible={showDivider} pct={pct} />
     </div>
   );
 };
@@ -111,23 +106,32 @@ const ItemTitleRow = ({
   activity,
   hasDetails,
   expanded,
+  showTypeBadge,
   reduced,
 }: {
   activity: AiAgentActivityItemData;
   hasDetails: boolean;
   expanded: boolean;
+  showTypeBadge: boolean;
   reduced: boolean | null;
 }) => (
   <>
     <div className="flex w-full items-center justify-between gap-3">
-      <span
-        className={cn(
-          "truncate text-[13px] tracking-tight",
-          activity.status === "running" ? "font-medium text-foreground" : "text-foreground/90",
+      <div className="flex min-w-0 items-center gap-1.5">
+        <span
+          className={cn(
+            "truncate text-[13px] tracking-tight",
+            activity.status === "running" ? "font-medium text-foreground" : "text-foreground/90",
+          )}
+        >
+          {activity.title}
+        </span>
+        {showTypeBadge && (
+          <span className="shrink-0 rounded bg-secondary/85 px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground dark:bg-white/8">
+            {ACTIVITY_TYPE_LABELS[activity.type]}
+          </span>
         )}
-      >
-        {activity.title}
-      </span>
+      </div>
       <span className="flex shrink-0 items-center gap-1.5 font-mono text-[11px] text-muted-foreground tabular-nums">
         {activity.duration && <span>{activity.duration}</span>}
         {hasDetails && (
@@ -153,12 +157,14 @@ const ItemContentShell = ({
   activity,
   hasDetails,
   expanded,
+  showTypeBadge,
   reduced,
   onToggle,
 }: {
   activity: AiAgentActivityItemData;
   hasDetails: boolean;
   expanded: boolean;
+  showTypeBadge: boolean;
   reduced: boolean | null;
   onToggle: () => void;
 }) => {
@@ -167,6 +173,7 @@ const ItemContentShell = ({
       activity={activity}
       hasDetails={hasDetails}
       expanded={expanded}
+      showTypeBadge={showTypeBadge}
       reduced={reduced}
     />
   );
@@ -176,7 +183,10 @@ const ItemContentShell = ({
       type="button"
       aria-expanded={expanded}
       onClick={onToggle}
-      className="flex w-full cursor-pointer flex-col border-0 bg-transparent p-0 text-left font-sans outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className={cn(
+        "flex w-full cursor-pointer flex-col rounded-lg border border-solid border-transparent bg-transparent p-0 text-left font-sans",
+        ACTIVITY_FOCUS_RING,
+      )}
     >
       {row}
     </button>
@@ -188,32 +198,33 @@ export const AiAgentActivityItem = ({
   isLast = false,
   className,
 }: AiAgentActivityItemProps) => {
-  const { expandedIds, toggleExpand } = useAiAgentActivity();
+  const { expandedIds, toggleExpand, compact, showTypeBadge } = useAiAgentActivity();
   const expanded = expandedIds.has(activity.id);
   const hasDetails = Boolean(activity.details || activity.metadata);
   const reduced = useReducedMotion();
 
   return (
-    <div className={cn("relative flex items-start gap-3.5", className)}>
+    <div className={cn("relative flex items-start gap-3", className)}>
       {!isLast && (
         <span
           aria-hidden="true"
-          className="absolute top-6 bottom-[-14px] left-[9.5px] w-px bg-border/75"
+          className="absolute top-6 bottom-[-14px] left-[9.5px] w-px bg-border/75 dark:bg-white/10"
         />
       )}
       <span
         className={cn(
           "relative z-10 mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full",
-          statusCircleClass(activity.status),
+          ACTIVITY_STATUS_CIRCLE[activity.status],
         )}
       >
         <ActivityStatusGlyph status={activity.status} />
       </span>
-      <div className="min-w-0 flex-1 pb-4 last:pb-0">
+      <div className={cn("min-w-0 flex-1 last:pb-0", compact ? "pb-3" : "pb-4")}>
         <ItemContentShell
           activity={activity}
           hasDetails={hasDetails}
           expanded={expanded}
+          showTypeBadge={showTypeBadge}
           reduced={reduced}
           onToggle={() => toggleExpand(activity.id)}
         />
@@ -229,12 +240,13 @@ export const AiAgentActivityItem = ({
 };
 
 export const AiAgentActivityTimeline = ({ className }: AiAgentActivityTimelineProps) => {
-  const { activities } = useAiAgentActivity();
+  const { activities, compact, collapsed } = useAiAgentActivity();
+  if (collapsed) return null;
   if (activities.length === 0) {
     return <p className="m-0 py-10 text-center text-xs text-muted-foreground">暂无执行轨迹</p>;
   }
   return (
-    <div className={cn("flex flex-col gap-1 px-5 py-4", className)}>
+    <div className={cn("flex flex-col gap-1", compact ? "px-3.5 py-3" : "px-5 py-4", className)}>
       {activities.map((item, idx) => (
         <AiAgentActivityItem key={item.id} activity={item} isLast={idx === activities.length - 1} />
       ))}
@@ -242,16 +254,15 @@ export const AiAgentActivityTimeline = ({ className }: AiAgentActivityTimelinePr
   );
 };
 
-export const AiAgentActivity = ({
-  activities = [],
-  isRunning = false,
-  title,
-  agentName,
-  defaultExpandedIds = [],
-  className,
-  children,
-}: AiAgentActivityProps) => {
-  const [expandedIds, setExpandedIds] = useState<Set<string>>(() => new Set(defaultExpandedIds));
+const useActivityController = (props: AiAgentActivityProps) => {
+  const activities = props.activities ?? [];
+  const collapsible = props.collapsible ?? false;
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(
+    () => new Set(props.defaultExpandedIds ?? []),
+  );
+  const [collapsed, setCollapsed] = useState(
+    collapsible ? (props.defaultCollapsed ?? false) : false,
+  );
 
   const toggleExpand = (id: string) =>
     setExpandedIds((prev) => {
@@ -261,27 +272,39 @@ export const AiAgentActivity = ({
       return next;
     });
 
+  return {
+    activities,
+    isRunning: props.isRunning ?? false,
+    variant: props.variant ?? "card",
+    compact: props.compact ?? false,
+    showTypeBadge: props.showTypeBadge ?? false,
+    collapsible,
+    collapsed,
+    toggleCollapsed: () => setCollapsed((c) => !c),
+    expandedIds,
+    toggleExpand,
+    expandAll: () => setExpandedIds(new Set(activities.map((a) => a.id))),
+    collapseAll: () => setExpandedIds(new Set()),
+  };
+};
+
+export const AiAgentActivity = (props: AiAgentActivityProps) => {
+  const value = useActivityController(props);
+
   return (
-    <ActivityCtx.Provider
-      value={{
-        activities,
-        isRunning,
-        expandedIds,
-        toggleExpand,
-        expandAll: () => setExpandedIds(new Set(activities.map((a) => a.id))),
-        collapseAll: () => setExpandedIds(new Set()),
-      }}
-    >
+    <ActivityCtx.Provider value={value}>
       <div
         data-slot="ai-agent-activity"
+        data-variant={value.variant}
         className={cn(
-          "w-full max-w-xl overflow-hidden rounded-[22px] border border-solid border-border bg-card font-sans text-card-foreground shadow-xs",
-          className,
+          "w-full max-w-xl overflow-hidden font-sans text-card-foreground",
+          ACTIVITY_SHELL_VARIANT[value.variant],
+          props.className,
         )}
       >
-        {children ?? (
+        {props.children ?? (
           <>
-            <AiAgentActivityHeader title={title} agentName={agentName} />
+            <AiAgentActivityHeader title={props.title} agentName={props.agentName} />
             <AiAgentActivityTimeline />
           </>
         )}

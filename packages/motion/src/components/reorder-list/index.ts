@@ -1,2 +1,7 @@
 export { ReorderList } from "./reorder-list.js";
-export type { ReorderListItem, ReorderListProps } from "./reorder-list.types.js";
+export type {
+  ReorderListDensity,
+  ReorderListItem,
+  ReorderListProps,
+  ReorderListVariant,
+} from "./reorder-list.types.js";

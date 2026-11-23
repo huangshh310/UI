@@ -49,10 +49,16 @@ export function Demo() {
       description: "撑满父容器的宽度。",
     },
     {
+      name: "elevation",
+      type: '"raised" | "flat"',
+      defaultValue: '"raised"',
+      description: "按键立体层级，raised 在静置与按下时提供键帽般微浮压感。",
+    },
+    {
       name: "...ButtonProps",
       type: "ButtonProps",
       defaultValue: "-",
-      description: "Button 的全部属性：variant、size、loading 等。",
+      description: "Button 的全部属性：variant、size、radius、loading 等。",
     },
   ],
   accessibility: ["沿用 Button 的全部键盘与焦点行为。", "用户要求减少动态效果时不做缩放。"],

@@ -33,4 +33,20 @@ describe("ReorderList", () => {
 
     expect(onValueChange).toHaveBeenCalledWith(["b", "a", "c"]);
   });
+
+  it("支持 divided 发丝列表变体、compact 密度与序号展示", () => {
+    const { container } = render(
+      <ReorderList
+        ariaLabel="模型回退队列"
+        items={ITEMS}
+        variant="divided"
+        density="compact"
+        showIndex
+      />,
+    );
+    const root = container.querySelector('[data-slot="reorder-list"]');
+    expect(root?.getAttribute("data-variant")).toBe("divided");
+    expect(root?.getAttribute("data-density")).toBe("compact");
+    expect(screen.getByText("01")).toBeTruthy();
+  });
 });

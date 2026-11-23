@@ -20,4 +20,29 @@ describe("HeroBentoBlock", () => {
     expect(onPrimary).toHaveBeenCalledTimes(1);
     expect(onSecondary).toHaveBeenCalledTimes(1);
   });
+
+  it("支持居中对齐、spotlight 变体与自定义按钮及背书文案", async () => {
+    const user = userEvent.setup();
+    const onPrimary = vi.fn<() => void>();
+
+    const { container } = render(
+      <HeroBentoBlock
+        variant="spotlight"
+        align="center"
+        primaryLabel="立即体验"
+        secondaryLabel="查看架构文档"
+        socialProof="已服务 500+ 工程团队"
+        compact
+        onPrimaryClick={onPrimary}
+      />,
+    );
+
+    const root = container.querySelector('[data-slot="hero-bento-block"]');
+    expect(root?.getAttribute("data-variant")).toBe("spotlight");
+    expect(root?.getAttribute("data-align")).toBe("center");
+    expect(screen.getByText("已服务 500+ 工程团队")).toBeTruthy();
+
+    await user.click(screen.getByRole("button", { name: "立即体验" }));
+    expect(onPrimary).toHaveBeenCalledTimes(1);
+  });
 });

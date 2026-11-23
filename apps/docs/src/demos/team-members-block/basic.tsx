@@ -8,6 +8,7 @@ export default function TeamMembersBlockBasicDemo() {
   return (
     <div className="flex w-full flex-col gap-2">
       <TeamMembersBlock
+        maxSeats={10}
         onInvite={({ name, role }) => setNotice(`已向 ${name}（${role}）发送邀请`)}
       />
       {notice && <p className="m-0 px-1 font-mono text-xs text-muted-foreground">{notice}</p>}

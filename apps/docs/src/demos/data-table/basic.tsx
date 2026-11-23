@@ -35,7 +35,7 @@ const COLUMNS: DataTableColumn<Deployment>[] = [
           aria-hidden="true"
           className={
             r.status === "运行中"
-              ? "size-1.5 rounded-full bg-success"
+              ? "size-1.5 rounded-full bg-emerald-500"
               : r.status === "构建中"
                 ? "size-1.5 rounded-full bg-signal"
                 : "size-1.5 rounded-full bg-muted-foreground"

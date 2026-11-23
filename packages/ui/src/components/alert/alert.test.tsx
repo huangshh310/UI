@@ -26,4 +26,25 @@ describe("Alert", () => {
     expect(onDismiss).toHaveBeenCalledTimes(1);
     expect(screen.queryByRole("alert")).toBeNull();
   });
+
+  it("支持 accent / solid / banner 外观形态并传入 onDismiss 自动启用关闭按钮", async () => {
+    const user = userEvent.setup();
+    const onDismiss = vi.fn<() => void>();
+
+    const { container } = render(
+      <div>
+        <Alert appearance="accent" variant="success" title="同步完成" />
+        <Alert appearance="solid" variant="info" title="新版本已发布" />
+        <Alert appearance="banner" variant="neutral" title="维护公告" onDismiss={onDismiss} />
+      </div>,
+    );
+
+    const alerts = container.querySelectorAll('[data-slot="alert"]');
+    expect(alerts[0]?.getAttribute("data-appearance")).toBe("accent");
+    expect(alerts[1]?.getAttribute("data-appearance")).toBe("solid");
+    expect(alerts[2]?.getAttribute("data-appearance")).toBe("banner");
+
+    await user.click(screen.getByRole("button", { name: "关闭提示" }));
+    expect(onDismiss).toHaveBeenCalledTimes(1);
+  });
 });

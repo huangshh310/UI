@@ -10,6 +10,7 @@ export default function PeekCardReleaseDemo() {
         triggerLabel="v2.4.0-stable"
         href="#release"
         title="@matt-ui/ui v2.4.0"
+        badge="LATEST"
         subtitle="悬浮留白 Sheet 与 12 个页面区块模板"
         value="PASS"
         metrics={[
@@ -18,6 +19,7 @@ export default function PeekCardReleaseDemo() {
         ]}
         footerLeft="Node 22 · React 19"
         status="已通过全量构建"
+        statusTone="success"
       />
       ，悬停或聚焦可快速查看发布指标。
     </p>

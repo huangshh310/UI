@@ -4,4 +4,11 @@ export type {
   DirectionalTooltipProviderProps,
   TooltipAlign,
   TooltipSide,
+  TooltipSize,
+  TooltipVariant,
 } from "./directional-tooltip.types.js";
+export {
+  directionalTooltipArrowVariants,
+  directionalTooltipKbdVariants,
+  directionalTooltipPopupVariants,
+} from "./directional-tooltip.variants.js";

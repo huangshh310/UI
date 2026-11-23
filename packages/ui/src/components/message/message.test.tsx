@@ -1,5 +1,5 @@
 /**
- * Message 行为规约：验证角色对齐语义、分支版本切换、复制与反馈动作、原位编辑重发以及异常重试态。
+ * Message 行为规约：验证角色对齐语义、元信息头、分支版本切换、复制与反馈动作、原位编辑重发以及异常重试态。
  */
 import { cleanup, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -23,7 +23,7 @@ describe("Message", () => {
     const onBranchChange = vi.fn<(branch: number) => void>();
 
     render(
-      <Message from="assistant">
+      <Message from="assistant" author="Matt AI" model="Claude 4.5" timestamp="14:22">
         <MessageBranch onBranchChange={onBranchChange}>
           <MessageBranchContent>
             <div key="v1">候选版本一：极简无框画布</div>
@@ -36,6 +36,8 @@ describe("Message", () => {
       </Message>,
     );
 
+    expect(screen.getByText("Matt AI")).toBeTruthy();
+    expect(screen.getByText("Claude 4.5")).toBeTruthy();
     expect(screen.getByText("候选版本一：极简无框画布")).toBeTruthy();
     expect(screen.queryByText("候选版本二：统一轨迹线语法")).toBeNull();
     expect(screen.getByText("1 / 2")).toBeTruthy();
@@ -61,11 +63,14 @@ describe("Message", () => {
     expect(onRetry).toHaveBeenCalledTimes(1);
 
     rerender(
-      <Message from="assistant" status="stopped">
+      <Message from="assistant" status="stopped" variant="compact">
         <MessageContent>用户主动中断的段落</MessageContent>
       </Message>,
     );
     expect(screen.getByText("已停止生成")).toBeTruthy();
+    expect(document.querySelector('[data-slot="message"]')?.getAttribute("data-variant")).toBe(
+      "compact",
+    );
   });
 
   it("MessageAction 支持复制状态切换与点赞 aria-pressed，MessageEditForm 支持修改保存与 Esc 取消", async () => {

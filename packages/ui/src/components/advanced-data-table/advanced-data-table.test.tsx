@@ -1,5 +1,5 @@
 /**
- * AdvancedDataTable 单元测试：验证分面筛选、列显隐、行密度切换、批量操作栏与 CSV 导出。
+ * AdvancedDataTable 单元测试：验证分面筛选、列显隐、行密度切换、搜索清空、行点击、批量操作栏与 CSV 导出。
  */
 import { cleanup, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -72,21 +72,30 @@ describe("AdvancedDataTable", () => {
     expect(screen.queryByRole("columnheader", { name: "体积" })).toBeNull();
   });
 
-  it("支持密度切换与多选批量操作", async () => {
+  it("支持密度切换、多选批量操作、行点击与外观变体", async () => {
     const user = userEvent.setup();
     const onArchive = vi.fn<(rows: Pkg[]) => void>();
+    const onRowClick = vi.fn<(row: Pkg) => void>();
 
     render(
       <AdvancedDataTable
+        variant="minimal"
+        striped
         data={DATA}
         columns={COLS}
         getRowId={(r) => r.id}
-        batchActions={[{ id: "archive", label: "归档所选", onAction: onArchive }]}
+        onRowClick={onRowClick}
+        batchActions={[
+          { id: "archive", label: "归档所选", tone: "destructive", onAction: onArchive },
+        ]}
       />,
     );
 
     await user.click(screen.getByRole("button", { name: "紧凑" }));
     expect(screen.getByRole("button", { name: "紧凑" }).getAttribute("aria-pressed")).toBe("true");
+
+    await user.click(screen.getByText("@matt-ui/tokens"));
+    expect(onRowClick).toHaveBeenCalledWith(DATA[0]);
 
     await user.click(screen.getByRole("checkbox", { name: "选择第 1 行" }));
     await user.click(screen.getByRole("button", { name: "归档所选" }));

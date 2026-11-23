@@ -11,12 +11,14 @@ export const TYPEWRITER_BUTTON_DOC: ComponentDoc = {
   description: "点击后把文字逐字重新打出来的按钮。",
   category: "buttons",
   registryName: "typewriter-button",
-  dependencies: ["clsx", "tailwind-merge"],
+  dependencies: ["class-variance-authority", "clsx", "tailwind-merge"],
   usage: `import { TypewriterButton } from "@/components/ui/typewriter-button";
 
 export function Demo() {
   return (
     <TypewriterButton
+      variant="terminal"
+      prefix="$"
       label="Deploy to production"
       charDuration={60}
       onComplete={() => console.log("done")}
@@ -35,7 +37,8 @@ export function Demo() {
     {
       slug: "silent",
       name: "信号色与静音打字机模式",
-      description: "支持切换视觉变体，并通过 sound={false} 关闭机械键盘音效。",
+      description:
+        "支持信号色、终端命令行变体与方块光标，并可通过 sound={false} 关闭机械按键音效。",
       file: "typewriter-button/silent.tsx",
       Demo: TypewriterButtonSilentDemo,
       directory: false,
@@ -47,6 +50,36 @@ export function Demo() {
       type: "string",
       defaultValue: "-",
       description: "按钮上的文字，必填。",
+    },
+    {
+      name: "variant",
+      type: '"outline" | "primary" | "signal" | "terminal"',
+      defaultValue: '"outline"',
+      description: "视觉变体，terminal 提供深色终端命令行外观。",
+    },
+    {
+      name: "size",
+      type: '"sm" | "md" | "lg"',
+      defaultValue: '"md"',
+      description: "按钮尺寸。",
+    },
+    {
+      name: "radius",
+      type: '"pill" | "default"',
+      defaultValue: '"pill"',
+      description: "圆角风格：胶囊圆角或标准圆角。",
+    },
+    {
+      name: "prefix",
+      type: "string",
+      defaultValue: "-",
+      description: "可选命令提示符前缀（如 $ 或 >），纯视觉装饰。",
+    },
+    {
+      name: "cursorStyle",
+      type: '"line" | "block"',
+      defaultValue: '"line"',
+      description: "打字过程中显示的光标样式：竖线或终端方块。",
     },
     {
       name: "charDuration",

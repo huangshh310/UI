@@ -25,5 +25,13 @@ const SECURITY_EVENTS = [
 ];
 
 export default function ActivityFeedBlockSecurityDemo() {
-  return <ActivityFeedBlock initialItems={SECURITY_EVENTS} />;
+  return (
+    <ActivityFeedBlock
+      initialItems={SECURITY_EVENTS}
+      title="安全合规审计流"
+      description="聚焦身份证书轮换、依赖锁校验与发布门禁日志。"
+      variant="list"
+      compact
+    />
+  );
 }

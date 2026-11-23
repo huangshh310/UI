@@ -41,4 +41,21 @@ describe("SelectionBasket", () => {
 
     expect(screen.queryByRole("button", { name: "归档" })).toBeNull();
   });
+
+  it("支持 inverted 反色浮舱、sm 尺寸与禁用按钮态", () => {
+    render(
+      <SelectionBasket
+        count={2}
+        variant="inverted"
+        size="sm"
+        floating={false}
+        actions={[{ id: "export", label: "导出", disabled: true, onClick: vi.fn<() => void>() }]}
+        onClear={vi.fn<() => void>()}
+      />,
+    );
+
+    const toolbar = screen.getByRole("toolbar", { name: "批量操作栏" });
+    expect(toolbar.getAttribute("data-variant")).toBe("inverted");
+    expect((screen.getByRole("button", { name: "导出" }) as HTMLButtonElement).disabled).toBe(true);
+  });
 });

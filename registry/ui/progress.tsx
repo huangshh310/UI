@@ -4,18 +4,21 @@
 import { cn } from "@/lib/utils";
 import { Progress as BaseProgress } from "@base-ui/react/progress";
 
-export type ProgressTone = "signal" | "primary" | "success";
-export type ProgressSize = "sm" | "md";
+export type ProgressTone = "default" | "primary" | "signal" | "success" | "warning" | "destructive";
+
+export type ProgressSize = "sm" | "md" | "lg";
 
 export interface ProgressProps {
-  /** 当前进度值；传 null 表示不确定加载状态 */
-  value: number | null;
+  /** 当前进度值；传 null 或配合 indeterminate 表示不确定加载状态 */
+  value?: number | null;
   /** 最大值，默认 100 */
   max?: number;
   /** 顶部左侧标签 */
   label?: string;
   /** 是否在右侧展示等宽百分比读数 */
   showValue?: boolean;
+  /** 是否强制切换为不确定流光加载态 */
+  indeterminate?: boolean;
   /** 指示条色调 */
   tone?: ProgressTone;
   /** 轨道高度 */
@@ -24,14 +27,31 @@ export interface ProgressProps {
   className?: string;
 }
 const TONE_CLASS: Record<ProgressTone, string> = {
-  signal: "bg-signal",
+  default: "bg-primary",
   primary: "bg-primary",
+  signal: "bg-signal",
   success: "bg-emerald-600 dark:bg-emerald-400",
+  warning: "bg-amber-500 dark:bg-amber-400",
+  destructive: "bg-destructive",
 };
 
 const SIZE_CLASS: Record<ProgressSize, string> = {
   sm: "h-1.5",
-  md: "h-2",
+  md: "h-2.5",
+  lg: "h-3.5",
+};
+
+const INDETERMINATE_CLASS =
+  "relative w-2/5 overflow-hidden animate-pulse motion-reduce:animate-none after:pointer-events-none after:absolute after:inset-0 after:bg-gradient-to-r after:from-transparent after:via-white/35 after:to-transparent";
+
+const resolveProgress = (props: ProgressProps) => {
+  const max = props.max ?? 100;
+  const isIndeterminate =
+    Boolean(props.indeterminate) || props.value === null || props.value === undefined;
+  if (isIndeterminate) return { max, isIndeterminate: true, clamped: null, pct: null };
+  const clamped = Math.min(Math.max(props.value as number, 0), max);
+  const pct = props.showValue ? Math.round((clamped / max) * 100) : null;
+  return { max, isIndeterminate: false, clamped, pct };
 };
 
 const ProgressHeader = ({ label, pct }: { label?: string; pct: number | null }) => {
@@ -48,39 +68,36 @@ const ProgressHeader = ({ label, pct }: { label?: string; pct: number | null }) 
   );
 };
 
-export const Progress = ({
-  value,
-  max = 100,
-  label,
-  showValue = false,
-  tone = "signal",
-  size = "sm",
-  className,
-}: ProgressProps) => {
-  const pct =
-    showValue && value !== null
-      ? Math.round((Math.min(Math.max(value, 0), max) / max) * 100)
-      : null;
+export const Progress = (props: ProgressProps) => {
+  const tone = props.tone ?? "signal";
+  const size = props.size ?? "sm";
+  const { max, isIndeterminate, clamped, pct } = resolveProgress(props);
 
   return (
     <BaseProgress.Root
-      value={value}
+      value={clamped}
       max={max}
+      aria-label={props.label ? undefined : "进度"}
       data-slot="progress"
-      className={cn("flex w-full flex-col gap-1.5", className)}
+      data-tone={tone}
+      data-size={size}
+      data-indeterminate={isIndeterminate ? "true" : undefined}
+      className={cn("flex w-full flex-col gap-1.5", props.className)}
     >
-      <ProgressHeader label={label} pct={pct} />
+      <ProgressHeader label={props.label} pct={pct} />
       <BaseProgress.Track
+        data-slot="progress-track"
         className={cn(
-          "relative w-full overflow-hidden rounded-full bg-foreground/[0.09] dark:bg-foreground/[0.12]",
+          "relative w-full overflow-hidden rounded-full bg-foreground/[0.08] shadow-[inset_0_1px_1px_rgba(0,0,0,0.06)] dark:bg-foreground/[0.12] dark:shadow-[inset_0_1px_1px_rgba(0,0,0,0.28)]",
           SIZE_CLASS[size],
         )}
       >
         <BaseProgress.Indicator
+          data-slot="progress-indicator"
           className={cn(
             "h-full rounded-full transition-[width] duration-(--ui-duration-normal) ease-(--ui-ease-out) motion-reduce:transition-none",
             TONE_CLASS[tone],
-            value === null && "w-1/3 animate-pulse motion-reduce:animate-none",
+            isIndeterminate && INDETERMINATE_CLASS,
           )}
         />
       </BaseProgress.Track>

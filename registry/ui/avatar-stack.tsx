@@ -11,8 +11,100 @@ import {
 } from "@/components/ui/directional-tooltip";
 import { cn } from "@/lib/utils";
 import { Avatar } from "@base-ui/react/avatar";
+import { cva } from "class-variance-authority";
 
-export type AvatarStackSize = "sm" | "md" | "lg";
+export const avatarStackGroupVariants = cva("inline-flex items-center", {
+  variants: {
+    size: {
+      xs: "",
+      sm: "",
+      md: "",
+      lg: "",
+    },
+    spacing: {
+      tight: "",
+      normal: "",
+      loose: "",
+    },
+  },
+  compoundVariants: [
+    { size: "xs", spacing: "tight", class: "-space-x-2" },
+    { size: "xs", spacing: "normal", class: "-space-x-1.5" },
+    { size: "xs", spacing: "loose", class: "-space-x-0.5" },
+    { size: "sm", spacing: "tight", class: "-space-x-2.5" },
+    { size: "sm", spacing: "normal", class: "-space-x-2" },
+    { size: "sm", spacing: "loose", class: "-space-x-1" },
+    { size: "md", spacing: "tight", class: "-space-x-3.5" },
+    { size: "md", spacing: "normal", class: "-space-x-2.5" },
+    { size: "md", spacing: "loose", class: "-space-x-1.5" },
+    { size: "lg", spacing: "tight", class: "-space-x-4" },
+    { size: "lg", spacing: "normal", class: "-space-x-3" },
+    { size: "lg", spacing: "loose", class: "-space-x-1.5" },
+  ],
+  defaultVariants: {
+    size: "md",
+    spacing: "normal",
+  },
+});
+
+export const avatarStackItemVariants = cva(
+  "relative inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full border-0 p-0 shadow-[0_1px_3px_rgba(0,0,0,0.08)] outline-none transition-[transform,box-shadow] duration-(--ui-duration-fast) ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:z-20 focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none",
+  {
+    variants: {
+      size: {
+        xs: "size-6 text-[10px]",
+        sm: "size-8 text-[11px]",
+        md: "size-10 text-xs",
+        lg: "size-12 text-sm",
+      },
+      ring: {
+        card: "bg-card ring-2 ring-card",
+        background: "bg-background ring-2 ring-background",
+        none: "bg-card ring-0",
+      },
+      interactive: {
+        true: "hover:z-20 hover:-translate-y-1 hover:scale-108 hover:shadow-[0_6px_14px_-4px_rgba(0,0,0,0.18)]",
+        false: "",
+      },
+    },
+    defaultVariants: {
+      size: "md",
+      ring: "card",
+      interactive: true,
+    },
+  },
+);
+
+export const avatarStackStatusVariants = cva("absolute z-10 rounded-full", {
+  variants: {
+    status: {
+      online: "bg-emerald-500",
+      busy: "bg-rose-500",
+      away: "bg-amber-500",
+      offline: "bg-muted-foreground/60",
+    },
+    size: {
+      xs: "right-0 bottom-0 size-1.5 ring-[1.5px]",
+      sm: "right-0 bottom-0 size-2 ring-2",
+      md: "right-0.5 bottom-0.5 size-2.5 ring-2",
+      lg: "right-0.5 bottom-0.5 size-3 ring-2",
+    },
+    ring: {
+      card: "ring-card",
+      background: "ring-background",
+      none: "ring-card",
+    },
+  },
+  defaultVariants: {
+    status: "online",
+    size: "md",
+    ring: "card",
+  },
+});
+export type AvatarStackSize = "xs" | "sm" | "md" | "lg";
+export type AvatarStackRing = "card" | "background" | "none";
+export type AvatarStackSpacing = "tight" | "normal" | "loose";
+export type AvatarStackStatus = "online" | "busy" | "away" | "offline";
 
 export interface AvatarStackItem {
   id: string;
@@ -20,7 +112,7 @@ export interface AvatarStackItem {
   role?: string;
   src?: string;
   initials?: string;
-  status?: "online" | "busy" | "offline";
+  status?: AvatarStackStatus;
 }
 
 export interface AvatarStackProps {
@@ -30,48 +122,37 @@ export interface AvatarStackProps {
   max?: number;
   /** 尺寸预设 */
   size?: AvatarStackSize;
+  /** 描边圆环底色（匹配所在容器背景） */
+  ring?: AvatarStackRing;
+  /** 头像叠放紧密度 */
+  spacing?: AvatarStackSpacing;
+  /** 是否启用悬停浮起交互 */
+  interactive?: boolean;
+  /** 点击单个头像时的回调 */
+  onItemClick?: (item: AvatarStackItem) => void;
+  /** 点击 +N 溢出计数徽章时的回调 */
+  onOverflowClick?: () => void;
   /** 提示浮层触发延迟（毫秒） */
   tooltipDelay?: number;
   /** 自定义容器类名 */
   className?: string;
 }
-const SIZE_MAP: Record<AvatarStackSize, { avatar: string; overlap: string; text: string }> = {
-  sm: { avatar: "size-8", overlap: "-space-x-2", text: "text-[11px]" },
-  md: { avatar: "size-10", overlap: "-space-x-2.5", text: "text-xs" },
-  lg: { avatar: "size-12", overlap: "-space-x-3", text: "text-sm" },
-};
-
 const AVATAR_TONES = [
   "bg-zinc-900/10 text-zinc-900 dark:bg-zinc-100/15 dark:text-zinc-100",
   "bg-blue-500/14 text-blue-900 dark:bg-blue-400/20 dark:text-blue-100",
   "bg-emerald-500/14 text-emerald-900 dark:bg-emerald-400/20 dark:text-emerald-100",
-  "bg-amber-500/14 text-amber-900 dark:bg-amber-400/20 dark:text-amber-100",
-  "bg-stone-500/16 text-stone-900 dark:bg-stone-400/20 dark:text-stone-100",
+  "bg-amber-500/15 text-amber-900 dark:bg-amber-400/20 dark:text-amber-100",
+  "bg-violet-500/14 text-violet-900 dark:bg-violet-400/20 dark:text-violet-100",
 ];
-
-const STATUS_DOT: Record<NonNullable<AvatarStackItem["status"]>, string> = {
-  online: "bg-emerald-500",
-  busy: "bg-rose-500",
-  offline: "bg-muted-foreground/60",
-};
 
 const getInitials = (item: AvatarStackItem) =>
   item.initials ?? item.name.trim().slice(0, 2).toUpperCase();
 
-const AvatarGraphic = ({
-  item,
-  tone,
-  textClass,
-}: {
-  item: AvatarStackItem;
-  tone?: string;
-  textClass: string;
-}) => (
+const AvatarGraphic = ({ item, tone }: { item: AvatarStackItem; tone?: string }) => (
   <Avatar.Root
     className={cn(
-      "inline-flex size-full items-center justify-center overflow-hidden rounded-full border border-solid border-foreground/10 font-semibold",
+      "inline-flex size-full items-center justify-center overflow-hidden rounded-full border border-solid border-foreground/10 font-semibold dark:border-white/15",
       tone,
-      textClass,
     )}
   >
     {item.src && <Avatar.Image src={item.src} alt={item.name} className="size-full object-cover" />}
@@ -85,14 +166,19 @@ const AvatarCell = ({
   item,
   index,
   size,
+  ring,
+  interactive,
   tooltipDelay,
+  onItemClick,
 }: {
   item: AvatarStackItem;
   index: number;
   size: AvatarStackSize;
+  ring: AvatarStackRing;
+  interactive: boolean;
   tooltipDelay: number;
+  onItemClick?: (item: AvatarStackItem) => void;
 }) => {
-  const styles = SIZE_MAP[size];
   const tone = AVATAR_TONES[index % AVATAR_TONES.length];
   const tip = item.role ? `${item.name} · ${item.role}` : item.name;
   return (
@@ -100,21 +186,49 @@ const AvatarCell = ({
       <button
         type="button"
         aria-label={item.name}
-        className={cn(
-          "relative inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-card p-0 ring-2 ring-card shadow-sm outline-none transition-transform duration-(--ui-duration-fast) ease-(--ui-ease-out) hover:z-20 hover:-translate-y-1 hover:scale-110 focus-visible:z-20 focus-visible:ring-ring motion-reduce:transition-none",
-          styles.avatar,
-        )}
+        onClick={() => onItemClick?.(item)}
+        className={avatarStackItemVariants({ size, ring, interactive })}
       >
-        <AvatarGraphic item={item} tone={tone} textClass={styles.text} />
+        <AvatarGraphic item={item} tone={tone} />
         {item.status && (
           <span
             aria-hidden="true"
-            className={cn(
-              "absolute right-0.5 bottom-0.5 z-10 size-2 rounded-full ring-2 ring-card",
-              STATUS_DOT[item.status],
-            )}
+            className={avatarStackStatusVariants({ status: item.status, size, ring })}
           />
         )}
+      </button>
+    </DirectionalTooltip>
+  );
+};
+
+const OverflowPill = ({
+  hiddenItems,
+  size,
+  ring,
+  interactive,
+  tooltipDelay,
+  onOverflowClick,
+}: {
+  hiddenItems: AvatarStackItem[];
+  size: AvatarStackSize;
+  ring: AvatarStackRing;
+  interactive: boolean;
+  tooltipDelay: number;
+  onOverflowClick?: () => void;
+}) => {
+  const names = hiddenItems.map((m) => m.name).join("、");
+  return (
+    <DirectionalTooltip content={names} side="top" delay={tooltipDelay}>
+      <button
+        type="button"
+        aria-label={`还有 ${hiddenItems.length} 位成员`}
+        onClick={onOverflowClick}
+        className={cn(
+          avatarStackItemVariants({ size, ring, interactive }),
+          "z-10 border border-solid border-border/85 bg-secondary font-mono font-semibold text-foreground tabular-nums dark:border-white/12 dark:bg-popover",
+        )}
+      >
+        +{hiddenItems.length}
       </button>
     </DirectionalTooltip>
   );
@@ -124,18 +238,23 @@ export const AvatarStack = ({
   items,
   max = 4,
   size = "md",
+  ring = "card",
+  spacing = "normal",
+  interactive = true,
+  onItemClick,
+  onOverflowClick,
   tooltipDelay = 160,
   className,
 }: AvatarStackProps) => {
   const visible = items.slice(0, max);
-  const overflow = Math.max(0, items.length - visible.length);
-  const styles = SIZE_MAP[size];
+  const hidden = items.slice(max);
 
   return (
     <DirectionalTooltipProvider delay={tooltipDelay}>
       <div
         data-slot="avatar-stack"
-        className={cn("inline-flex items-center", styles.overlap, className)}
+        data-size={size}
+        className={cn(avatarStackGroupVariants({ size, spacing }), className)}
       >
         {visible.map((item, index) => (
           <AvatarCell
@@ -143,20 +262,21 @@ export const AvatarStack = ({
             item={item}
             index={index}
             size={size}
+            ring={ring}
+            interactive={interactive}
             tooltipDelay={tooltipDelay}
+            onItemClick={onItemClick}
           />
         ))}
-        {overflow > 0 && (
-          <span
-            aria-label={`还有 ${overflow} 位成员`}
-            className={cn(
-              "relative z-10 inline-flex shrink-0 items-center justify-center rounded-full border border-solid border-border bg-card font-mono font-semibold text-foreground ring-2 ring-card shadow-sm tabular-nums",
-              styles.avatar,
-              styles.text,
-            )}
-          >
-            +{overflow}
-          </span>
+        {hidden.length > 0 && (
+          <OverflowPill
+            hiddenItems={hidden}
+            size={size}
+            ring={ring}
+            interactive={interactive}
+            tooltipDelay={tooltipDelay}
+            onOverflowClick={onOverflowClick}
+          />
         )}
       </div>
     </DirectionalTooltipProvider>

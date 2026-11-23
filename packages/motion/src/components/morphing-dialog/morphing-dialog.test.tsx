@@ -13,6 +13,9 @@ describe("MorphingDialog", () => {
         title="边缘节点监控"
         subtitle="东京 · ap-northeast-1"
         tag="运行中"
+        tagTone="success"
+        meta="P95 14ms"
+        size="lg"
         footer={<button type="button">关闭预览</button>}
       >
         <p>过去 24 小时平均延迟 14ms。</p>
@@ -20,9 +23,12 @@ describe("MorphingDialog", () => {
     );
 
     expect(screen.queryByRole("dialog")).toBeNull();
+    expect(screen.getByText("P95 14ms")).toBeTruthy();
     await user.click(screen.getByRole("button", { name: /边缘节点监控/ }));
 
-    expect(screen.getByRole("dialog", { name: "边缘节点监控" })).toBeTruthy();
+    const dialog = screen.getByRole("dialog", { name: "边缘节点监控" });
+    expect(dialog).toBeTruthy();
+    expect(dialog.getAttribute("data-size")).toBe("lg");
     expect(screen.getByText("过去 24 小时平均延迟 14ms。")).toBeTruthy();
 
     await user.keyboard("{Escape}");

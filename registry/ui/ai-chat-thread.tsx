@@ -2,11 +2,13 @@
 "use client";
 
 /**
- * AiChatThread：C 端 AI 对话消息流，支持用户/助手气泡、多版本回复分支切换、复制、反馈评分与快捷追问。
+ * AiChatThread：C 端 AI 对话消息流，支持用户/助手气泡、流式生成态、多版本分支切换、复制、反馈评分与快捷追问。
  */
 
 import { cn } from "@/lib/utils";
+import { cva } from "class-variance-authority";
 import {
+  ArrowUpRight,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -18,6 +20,47 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
+export const chatThreadVariants = cva("flex w-full max-w-xl flex-col text-card-foreground", {
+  variants: {
+    variant: {
+      card: "gap-4 rounded-2xl border border-solid border-border/85 bg-card p-5 shadow-xs",
+      seamless: "gap-4 bg-transparent p-1",
+      compact: "gap-3 rounded-xl border border-solid border-border/80 bg-card p-3.5 shadow-xs",
+    },
+  },
+  defaultVariants: {
+    variant: "card",
+  },
+});
+
+export const CHAT_ACTION_BTN =
+  "inline-flex size-6.5 cursor-pointer items-center justify-center rounded-lg border-0 bg-transparent text-muted-foreground transition-colors hover:bg-accent hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring";
+
+export const CHAT_DEFAULT_MESSAGES: AiChatMessage[] = [
+  {
+    id: "m1",
+    role: "user",
+    content: "周末想去京都待两天，帮我安排一条不赶路、偏咖啡馆和建筑散步的路线？",
+    timestamp: "09:41",
+  },
+  {
+    id: "m2",
+    role: "assistant",
+    model: "Claude Sonnet",
+    timestamp: "09:41",
+    meta: "1.2s · 164 tok",
+    content:
+      "第一天可以从南禅寺一带步行到哲学之道，上午逛完蓝瓶京都店后去冈崎公园看京都市京瓷美术馆；傍晚沿鸭川散步到木屋町吃晚餐，全程平缓好走。",
+    variants: [
+      "第一天可以从南禅寺一带步行到哲学之道，上午逛完蓝瓶京都店后去冈崎公园看京都市京瓷美术馆；傍晚沿鸭川散步到木屋町吃晚餐，全程平缓好走。",
+      "如果你偏爱小众空间，建议把上午留给大山崎山庄美术馆与安藤忠雄地下展厅，下午回到乌丸御池周边慢慢探几家烘焙咖啡馆。",
+    ],
+  },
+];
+
+export const CHAT_DEFAULT_FOLLOWUPS = ["加上第二天行程", "推荐 3 家手冲咖啡馆"];
+export type AiChatThreadVariant = "card" | "seamless" | "compact";
+
 export interface AiChatMessage {
   id: string;
   role: "user" | "assistant";
@@ -26,9 +69,17 @@ export interface AiChatMessage {
   variants?: string[];
   model?: string;
   timestamp?: string;
+  /** 可选回复耗时或 Token 元信息（如 "1.1s · 280 tok"） */
+  meta?: string;
+  /** 是否处于流式输出中 */
+  streaming?: boolean;
 }
 
 export interface AiChatThreadProps {
+  /** 容器视觉变体：标准卡片（card）、无框画布（seamless）或紧凑侧栏（compact） */
+  variant?: AiChatThreadVariant;
+  /** 是否显示消息时间戳 */
+  showTimestamps?: boolean;
   /** 初始对话消息流 */
   initialMessages?: AiChatMessage[];
   /** 底部快捷追问建议词 */
@@ -42,32 +93,6 @@ export interface AiChatThreadProps {
   /** 自定义类名 */
   className?: string;
 }
-const DEFAULT_MESSAGES: AiChatMessage[] = [
-  {
-    id: "m1",
-    role: "user",
-    content: "周末想去京都待两天，帮我安排一条不赶路、偏咖啡馆和建筑散步的路线？",
-    timestamp: "09:41",
-  },
-  {
-    id: "m2",
-    role: "assistant",
-    model: "Claude Sonnet",
-    timestamp: "09:41",
-    content:
-      "第一天可以从南禅寺一带步行到哲学之道，上午逛完蓝瓶京都店后去冈崎公园看京都市京瓷美术馆；傍晚沿鸭川散步到木屋町吃晚餐，全程平缓好走。",
-    variants: [
-      "第一天可以从南禅寺一带步行到哲学之道，上午逛完蓝瓶京都店后去冈崎公园看京都市京瓷美术馆；傍晚沿鸭川散步到木屋町吃晚餐，全程平缓好走。",
-      "如果你偏爱小众空间，建议把上午留给大山崎山庄美术馆与安藤忠雄地下展厅，下午回到乌丸御池周边慢慢探几家烘焙咖啡馆。",
-    ],
-  },
-];
-
-const DEFAULT_FOLLOWUPS = ["加上第二天行程", "推荐 3 家手冲咖啡馆"];
-
-const ACTION_BTN =
-  "inline-flex size-6.5 cursor-pointer items-center justify-center rounded-lg border-0 bg-transparent text-muted-foreground transition-colors hover:bg-accent hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring";
-
 const VariantPager = ({
   idx,
   count,
@@ -80,14 +105,14 @@ const VariantPager = ({
   onNext: () => void;
 }) =>
   count > 1 ? (
-    <div className="inline-flex items-center gap-1 font-mono text-[11px] text-muted-foreground tabular-nums">
-      <button type="button" aria-label="上一版本回复" onClick={onPrev} className={ACTION_BTN}>
+    <div className="inline-flex items-center gap-0.5 rounded-full border border-solid border-border/70 bg-secondary/50 px-1 py-0.5 font-mono text-[11px] text-muted-foreground tabular-nums">
+      <button type="button" aria-label="上一版本回复" onClick={onPrev} className={CHAT_ACTION_BTN}>
         <ChevronLeft className="size-3.5" />
       </button>
-      <span>
+      <span className="px-1">
         {idx + 1} / {count}
       </span>
-      <button type="button" aria-label="下一版本回复" onClick={onNext} className={ACTION_BTN}>
+      <button type="button" aria-label="下一版本回复" onClick={onNext} className={CHAT_ACTION_BTN}>
         <ChevronRight className="size-3.5" />
       </button>
     </div>
@@ -106,7 +131,10 @@ const VoteButtons = ({
       aria-label="赞同回复"
       aria-pressed={vote === "up"}
       onClick={() => onVote("up")}
-      className={cn(ACTION_BTN, vote === "up" && "bg-secondary text-foreground")}
+      className={cn(
+        CHAT_ACTION_BTN,
+        vote === "up" && "bg-emerald-500/12 text-emerald-700 dark:text-emerald-300",
+      )}
     >
       <ThumbsUp className="size-3.5" />
     </button>
@@ -116,7 +144,7 @@ const VoteButtons = ({
       aria-pressed={vote === "down"}
       onClick={() => onVote("down")}
       className={cn(
-        ACTION_BTN,
+        CHAT_ACTION_BTN,
         vote === "down" && "bg-rose-500/12 text-rose-700 dark:text-rose-300",
       )}
     >
@@ -147,7 +175,7 @@ const useCopyTimer = (text: string, onCopy: () => void) => {
   return { copied, handleCopy };
 };
 
-const MessageActions = (p: {
+interface MessageActionsProps {
   text: string;
   variantIdx: number;
   variantCount: number;
@@ -157,20 +185,31 @@ const MessageActions = (p: {
   onRegenerate: () => void;
   onCopy: () => void;
   onVote: (v: "up" | "down") => void;
-}) => {
+}
+
+const MessageActions = (p: MessageActionsProps) => {
   const { copied, handleCopy } = useCopyTimer(p.text, p.onCopy);
   return (
-    <div className="mt-2 flex flex-wrap items-center justify-between gap-2 border-t border-solid border-border/60 pt-2">
-      <div className="flex items-center gap-1">
+    <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 border-t border-solid border-border/60 pt-2">
+      <div className="flex items-center gap-0.5">
         <button
           type="button"
           aria-label={copied ? "已复制回复" : "复制回复"}
           onClick={handleCopy}
-          className={ACTION_BTN}
+          className={CHAT_ACTION_BTN}
         >
-          {copied ? <Check className="size-3.5 text-signal" /> : <Copy className="size-3.5" />}
+          {copied ? (
+            <Check className="size-3.5 text-emerald-600 dark:text-emerald-400" />
+          ) : (
+            <Copy className="size-3.5" />
+          )}
         </button>
-        <button type="button" aria-label="重新生成" onClick={p.onRegenerate} className={ACTION_BTN}>
+        <button
+          type="button"
+          aria-label="重新生成"
+          onClick={p.onRegenerate}
+          className={CHAT_ACTION_BTN}
+        >
           <RefreshCw className="size-3.5" />
         </button>
         <VoteButtons vote={p.vote} onVote={p.onVote} />
@@ -185,52 +224,31 @@ const MessageActions = (p: {
   );
 };
 
-const AssistantBubble = ({
+const AssistantMetaHeader = ({
   msg,
-  variantIdx,
-  vote,
-  onSetVariant,
-  onCopy,
-  onVote,
+  showTimestamps,
 }: {
   msg: AiChatMessage;
-  variantIdx: number;
-  vote: "up" | "down" | null;
-  onSetVariant: (next: number) => void;
-  onCopy: (text: string) => void;
-  onVote: (v: "up" | "down") => void;
-}) => {
-  const variants = msg.variants?.length ? msg.variants : [msg.content];
-  const idx = ((variantIdx % variants.length) + variants.length) % variants.length;
-  const activeText = variants[idx] ?? msg.content;
-  return (
-    <div className="flex items-start gap-3">
-      <span className="mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
-        <Sparkles aria-hidden="true" className="size-3.5" />
+  showTimestamps: boolean;
+}) => (
+  <div className="mb-1.5 flex flex-wrap items-center justify-between gap-2">
+    <div className="flex items-center gap-2">
+      <span className="text-xs font-semibold tracking-tight text-foreground">
+        {msg.model ?? "助手"}
       </span>
-      <div className="min-w-0 flex-1">
-        <div className="mb-1 flex items-center justify-between gap-2">
-          <span className="text-xs font-semibold text-foreground">{msg.model ?? "助手"}</span>
-          {msg.timestamp && (
-            <span className="font-mono text-[11px] text-muted-foreground">{msg.timestamp}</span>
-          )}
-        </div>
-        <p className="m-0 text-[13.5px] leading-relaxed text-foreground/90">{activeText}</p>
-        <MessageActions
-          text={activeText}
-          variantIdx={idx}
-          variantCount={variants.length}
-          vote={vote}
-          onPrevVariant={() => onSetVariant(idx - 1)}
-          onNextVariant={() => onSetVariant(idx + 1)}
-          onRegenerate={() => onSetVariant(idx + 1)}
-          onCopy={() => onCopy(activeText)}
-          onVote={onVote}
-        />
-      </div>
+      {msg.streaming && (
+        <span className="inline-flex items-center gap-1 rounded-full bg-signal/12 px-2 py-0.5 font-mono text-[10px] font-medium text-signal">
+          <span aria-hidden="true" className="size-1.5 animate-pulse rounded-full bg-signal" />
+          生成中
+        </span>
+      )}
     </div>
-  );
-};
+    <div className="flex items-center gap-2 font-mono text-[11px] text-muted-foreground tabular-nums">
+      {msg.meta && <span>{msg.meta}</span>}
+      {showTimestamps && msg.timestamp && <span>{msg.timestamp}</span>}
+    </div>
+  </div>
+);
 
 const FollowUpBar = ({ items, onPick }: { items: string[]; onPick: (p: string) => void }) =>
   items.length > 0 ? (
@@ -240,13 +258,80 @@ const FollowUpBar = ({ items, onPick }: { items: string[]; onPick: (p: string) =
           key={item}
           type="button"
           onClick={() => onPick(item)}
-          className="cursor-pointer rounded-full border border-solid border-border bg-background px-3 py-1 font-sans text-xs font-medium text-foreground transition-colors hover:border-foreground/20 hover:bg-secondary outline-none focus-visible:ring-2 focus-visible:ring-ring dark:bg-secondary/60"
+          className="inline-flex cursor-pointer items-center gap-1 rounded-full border border-solid border-border/85 bg-background px-3 py-1 font-sans text-xs font-medium text-foreground transition-colors hover:border-signal/40 hover:bg-secondary/80 outline-none focus-visible:ring-2 focus-visible:ring-ring dark:bg-secondary/50"
         >
-          {item}
+          <span>{item}</span>
+          <ArrowUpRight aria-hidden="true" className="size-3 text-muted-foreground" />
         </button>
       ))}
     </div>
   ) : null;
+
+const UserBubble = ({
+  content,
+  timestamp,
+  showTimestamps,
+}: {
+  content: string;
+  timestamp?: string;
+  showTimestamps: boolean;
+}) => (
+  <div className="flex flex-col items-end gap-1">
+    <div className="max-w-[82%] rounded-2xl rounded-br-sm border border-solid border-border/65 bg-secondary/85 px-4 py-2.5 text-[13.5px] leading-relaxed text-foreground">
+      {content}
+    </div>
+    {showTimestamps && timestamp && (
+      <span className="pr-1 font-mono text-[10px] text-muted-foreground tabular-nums">
+        {timestamp}
+      </span>
+    )}
+  </div>
+);
+interface AssistantBubbleProps {
+  msg: AiChatMessage;
+  variantIdx: number;
+  vote: "up" | "down" | null;
+  showTimestamps: boolean;
+  onSetVariant: (next: number) => void;
+  onCopy: (text: string) => void;
+  onVote: (v: "up" | "down") => void;
+}
+
+const AssistantBubble = (p: AssistantBubbleProps) => {
+  const variants = p.msg.variants?.length ? p.msg.variants : [p.msg.content];
+  const idx = ((p.variantIdx % variants.length) + variants.length) % variants.length;
+  const activeText = variants[idx] ?? p.msg.content;
+  return (
+    <div className="flex items-start gap-3">
+      <span className="mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full border border-solid border-border/80 bg-secondary/75 text-foreground shadow-2xs">
+        <Sparkles aria-hidden="true" className="size-3.5" />
+      </span>
+      <div className="min-w-0 flex-1">
+        <AssistantMetaHeader msg={p.msg} showTimestamps={p.showTimestamps} />
+        <p className="m-0 text-[13.5px] leading-[1.68] text-foreground/92">
+          {activeText}
+          {p.msg.streaming && (
+            <span
+              aria-hidden="true"
+              className="ml-1 inline-block h-3.5 w-1.5 translate-y-0.5 animate-pulse rounded-[2px] bg-signal align-baseline"
+            />
+          )}
+        </p>
+        <MessageActions
+          text={activeText}
+          variantIdx={idx}
+          variantCount={variants.length}
+          vote={p.vote}
+          onPrevVariant={() => p.onSetVariant(idx - 1)}
+          onNextVariant={() => p.onSetVariant(idx + 1)}
+          onRegenerate={() => p.onSetVariant(idx + 1)}
+          onCopy={() => p.onCopy(activeText)}
+          onVote={p.onVote}
+        />
+      </div>
+    </div>
+  );
+};
 
 const createFollowUpTurn = (prompt: string, seq: number): AiChatMessage[] => [
   { id: `u-${seq}`, role: "user", content: prompt, timestamp: "刚刚" },
@@ -259,61 +344,55 @@ const createFollowUpTurn = (prompt: string, seq: number): AiChatMessage[] => [
   },
 ];
 
-const UserBubble = ({ content }: { content: string }) => (
-  <div className="flex justify-end">
-    <div className="max-w-[82%] rounded-[20px] rounded-br-md bg-secondary px-4 py-2.5 text-[13.5px] leading-relaxed text-foreground">
-      {content}
-    </div>
-  </div>
-);
-
-export const AiChatThread = ({
-  initialMessages = DEFAULT_MESSAGES,
-  followUps = DEFAULT_FOLLOWUPS,
-  onCopy,
-  onFeedback,
-  onFollowUp,
-  className,
-}: AiChatThreadProps) => {
-  const [messages, setMessages] = useState<AiChatMessage[]>(initialMessages);
+export const AiChatThread = (props: AiChatThreadProps) => {
+  const variant = props.variant ?? "card";
+  const showTimestamps = props.showTimestamps ?? true;
+  const [messages, setMessages] = useState<AiChatMessage[]>(
+    props.initialMessages ?? CHAT_DEFAULT_MESSAGES,
+  );
   const [variants, setVariants] = useState<Record<string, number>>({});
   const [votes, setVotes] = useState<Record<string, "up" | "down">>({});
   const seqRef = useRef(0);
+
   const askFollowUp = (prompt: string) => {
     seqRef.current += 1;
     setMessages((prev) => [...prev, ...createFollowUpTurn(prompt, seqRef.current)]);
-    onFollowUp?.(prompt);
+    props.onFollowUp?.(prompt);
   };
 
   return (
     <div
       data-slot="ai-chat-thread"
-      className={cn(
-        "flex w-full max-w-xl flex-col gap-3.5 rounded-[22px] border border-solid border-border bg-card p-5 text-card-foreground shadow-xs",
-        className,
-      )}
+      data-variant={variant}
+      className={cn(chatThreadVariants({ variant }), props.className)}
     >
-      <div aria-live="polite" className="flex flex-col gap-3">
+      <div aria-live="polite" className="flex flex-col gap-3.5">
         {messages.map((msg) =>
           msg.role === "user" ? (
-            <UserBubble key={msg.id} content={msg.content} />
+            <UserBubble
+              key={msg.id}
+              content={msg.content}
+              timestamp={msg.timestamp}
+              showTimestamps={showTimestamps}
+            />
           ) : (
             <AssistantBubble
               key={msg.id}
               msg={msg}
               variantIdx={variants[msg.id] ?? 0}
               vote={votes[msg.id] ?? null}
+              showTimestamps={showTimestamps}
               onSetVariant={(next) => setVariants((prev) => ({ ...prev, [msg.id]: next }))}
-              onCopy={(text) => onCopy?.(text)}
-              onVote={(v) => (
-                setVotes((prev) => ({ ...prev, [msg.id]: v })),
-                onFeedback?.(msg.id, v)
-              )}
+              onCopy={(text) => props.onCopy?.(text)}
+              onVote={(v) => {
+                setVotes((prev) => ({ ...prev, [msg.id]: v }));
+                props.onFeedback?.(msg.id, v);
+              }}
             />
           ),
         )}
       </div>
-      <FollowUpBar items={followUps} onPick={askFollowUp} />
+      <FollowUpBar items={props.followUps ?? CHAT_DEFAULT_FOLLOWUPS} onPick={askFollowUp} />
     </div>
   );
 };

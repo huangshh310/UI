@@ -1,7 +1,14 @@
+import type { ReactNode } from "react";
+
+export type ReorderListVariant = "cards" | "divided";
+
+export type ReorderListDensity = "compact" | "comfortable";
+
 export interface ReorderListItem {
   id: string;
   title: string;
   subtitle?: string;
+  icon?: ReactNode;
   badge?: string;
 }
 
@@ -12,6 +19,12 @@ export interface ReorderListProps {
   value?: string[];
   /** 顺序提交回调 */
   onValueChange?: (nextIds: string[]) => void;
+  /** 容器外观：独立卡片组或发丝分隔列表 */
+  variant?: ReorderListVariant;
+  /** 条目间距密度 */
+  density?: ReorderListDensity;
+  /** 是否显示实时顺序编号（01 / 02 / ...） */
+  showIndex?: boolean;
   /** 列表无障碍名称 */
   ariaLabel?: string;
   /** 自定义类名 */

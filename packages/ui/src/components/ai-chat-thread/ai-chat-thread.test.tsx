@@ -38,4 +38,27 @@ describe("AiChatThread", () => {
     expect(errorSpy).not.toHaveBeenCalled();
     errorSpy.mockRestore();
   });
+
+  it("支持 seamless 变体、流式生成态标记与元信息读数", () => {
+    const { container } = render(
+      <AiChatThread
+        variant="seamless"
+        showTimestamps={false}
+        initialMessages={[
+          {
+            id: "s1",
+            role: "assistant",
+            model: "Claude Opus",
+            meta: "0.8s · 96 tok",
+            streaming: true,
+            content: "正在分析组件树的可访问性焦点路径…",
+          },
+        ]}
+        followUps={[]}
+      />,
+    );
+    expect(container.querySelector('[data-variant="seamless"]')).toBeTruthy();
+    expect(screen.getByText("生成中")).toBeTruthy();
+    expect(screen.getByText("0.8s · 96 tok")).toBeTruthy();
+  });
 });

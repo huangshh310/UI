@@ -1,8 +1,8 @@
 "use client";
 
 /**
- * AdvancedDataTable：在 TanStack Table v9 之上扩展分面筛选、列显隐（Base UI Popover）、
- * 行密度切换、批量操作栏与 CSV 导出钩子的高级数据表格。
+ * AdvancedDataTable：在 TanStack Table v9 之上扩展分面筛选、毛玻璃列显隐（Base UI Popover）、
+ * 行密度切换、斑马纹、骨架态、批量操作栏与 CSV 导出钩子的高级数据表格。
  */
 import { cn } from "@matt-ui/utils";
 import {
@@ -12,6 +12,17 @@ import {
   type SortingState,
 } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
+import type {
+  AdvancedDataTableProps,
+  AdvancedTableColumn,
+  AdvancedTableFacet,
+  TableDensity,
+} from "./advanced-data-table.types.js";
+import {
+  advancedTableShellVariants,
+  buildCsv,
+  DENSITY_CELL_PADDING,
+} from "./advanced-data-table.variants.js";
 import {
   ADV_TABLE_FEATURES,
   AdvFooter,
@@ -19,21 +30,9 @@ import {
   AdvRows,
   type AdvTableFeatures,
 } from "./advanced-table-body.js";
-import {
-  AdvancedTopToolbar,
-  BatchActionBar,
-  buildCsv,
-  DENSITY_CELL_PADDING,
-  FacetFilterBar,
-} from "./advanced-table-controls.js";
-import type {
-  AdvancedDataTableProps,
-  AdvancedTableColumn,
-  AdvancedTableFacet,
-  TableDensity,
-} from "./advanced-data-table.types.js";
+import { AdvancedTopToolbar, BatchActionBar, FacetFilterBar } from "./advanced-table-controls.js";
 
-const applyFacets = <TData,>(
+const applyFacets = <TData extends object>(
   data: TData[],
   facets: AdvancedTableFacet<TData>[] | undefined,
   active: Record<string, string | null>,
@@ -55,7 +54,7 @@ const buildDefs = <TData extends object>(
       col.cell ? col.cell(row.original) : String(col.accessor?.(row.original) ?? ""),
   }));
 
-const initHidden = <TData,>(columns: AdvancedTableColumn<TData>[]) =>
+const initHidden = <TData extends object>(columns: AdvancedTableColumn<TData>[]) =>
   Object.fromEntries(columns.filter((c) => c.defaultHidden).map((c) => [c.id, true]));
 
 const useAdvancedTable = <TData extends object>(props: AdvancedDataTableProps<TData>) => {
@@ -118,7 +117,7 @@ const AdvTableGrid = <TData extends object>({
     // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex
     tabIndex={0}
     aria-label={props.title ?? "高级数据表格"}
-    className="w-full overflow-x-auto outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
+    className="w-full overflow-x-auto outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset"
   >
     <table className="w-full border-collapse">
       <AdvHead
@@ -134,8 +133,11 @@ const AdvTableGrid = <TData extends object>({
           rows={state.table.getRowModel().rows}
           visibleCols={state.visibleCols}
           selectable={selectable}
+          striped={Boolean(props.striped)}
+          loading={Boolean(props.loading)}
           padClass={DENSITY_CELL_PADDING[state.density]}
           emptyMessage={props.emptyMessage ?? "暂无匹配记录"}
+          onRowClick={props.onRowClick}
         />
       </tbody>
     </table>
@@ -157,6 +159,10 @@ const AdvHeaderStack = <TData extends object>({
     <AdvancedTopToolbar
       title={props.title}
       description={props.description}
+      searchable={props.searchable ?? true}
+      searchPlaceholder={props.searchPlaceholder ?? "搜索关键字…"}
+      showDensityToggle={props.showDensityToggle ?? true}
+      toolbarActions={props.toolbarActions}
       query={state.query}
       onQueryChange={state.setQuery}
       density={state.density}
@@ -190,14 +196,13 @@ export const AdvancedDataTable = <TData extends object>(props: AdvancedDataTable
   const state = useAdvancedTable(props);
   const matchedRows = state.table.getFilteredRowModel().rows.map((r) => r.original);
   const selectedRows = state.table.getSelectedRowModel().rows.map((r) => r.original);
+  const variant = props.variant ?? "default";
 
   return (
     <div
       data-slot="advanced-data-table"
-      className={cn(
-        "w-full overflow-hidden rounded-[22px] border border-solid border-border/85 bg-card font-sans text-card-foreground shadow-md",
-        props.className,
-      )}
+      data-variant={variant}
+      className={cn(advancedTableShellVariants({ variant }), props.className)}
     >
       <AdvHeaderStack
         props={props}

@@ -19,4 +19,26 @@ describe("EmptyState", () => {
     expect(screen.getByRole("button", { name: "新建项目" })).toBeTruthy();
     expect(screen.getByRole("button", { name: "查看文档" })).toBeTruthy();
   });
+
+  it("支持 default / card / dashed / compact 四种视觉形态与自定义插画", () => {
+    const { container } = render(
+      <div>
+        <EmptyState variant="card" title="卡片空态" />
+        <EmptyState variant="dashed" title="虚线空态" />
+        <EmptyState compact title="紧凑空态" />
+        <EmptyState
+          variant="default"
+          title="插画空态"
+          illustration={<svg data-testid="custom-art" />}
+        />
+      </div>,
+    );
+
+    const items = container.querySelectorAll('[data-slot="empty-state"]');
+    expect(items[0]?.getAttribute("data-variant")).toBe("card");
+    expect(items[1]?.getAttribute("data-variant")).toBe("dashed");
+    expect(items[2]?.getAttribute("data-variant")).toBe("compact");
+    expect(items[3]?.getAttribute("data-variant")).toBe("default");
+    expect(screen.getByTestId("custom-art")).toBeTruthy();
+  });
 });

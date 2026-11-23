@@ -1,5 +1,5 @@
 /**
- * DatePicker 单元测试：从包公开入口验证弹层展开、选择回填、快捷预设与清空行为。
+ * DatePicker 单元测试：从包公开入口验证弹层展开、选择回填、快捷预设、校验态与清空行为。
  */
 import { cleanup, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -54,5 +54,19 @@ describe("DatePicker", () => {
     const clearBtn = screen.getByRole("button", { name: "清除日期" });
     await user.click(clearBtn);
     expect(onValueChange).toHaveBeenLastCalledWith(null);
+  });
+
+  it("传入 error 与 hint 时展示对应提示并标记 aria-invalid", () => {
+    const { rerender } = render(
+      <DatePicker label="交付日期" variant="filled" size="sm" radius="pill" hint="请选择工作日" />,
+    );
+
+    expect(screen.getByText("请选择工作日")).toBeTruthy();
+
+    rerender(<DatePicker label="交付日期" variant="elevated" error="交付日期不能早于今天" />);
+
+    const trigger = screen.getByRole("button", { name: /交付日期/ });
+    expect(trigger.getAttribute("aria-invalid")).toBe("true");
+    expect(screen.getByText("交付日期不能早于今天")).toBeTruthy();
   });
 });

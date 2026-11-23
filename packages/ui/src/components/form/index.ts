@@ -3,6 +3,7 @@
  */
 export {
   Form,
+  FormActions,
   FormDescription,
   FormError,
   FormField,
@@ -10,17 +11,28 @@ export {
   FormLabel,
   FormRadioGroup,
   FormRadioItem,
+  FormSection,
   FormTextarea,
 } from "./form.js";
 export type {
+  FormActionsProps,
+  FormControlRadius,
+  FormControlSize,
+  FormControlVariant,
+  FormDensity,
   FormDescriptionProps,
   FormErrorProps,
+  FormFieldLayout,
   FormFieldProps,
   FormInputProps,
   FormLabelProps,
   FormProps,
   FormRadioGroupProps,
   FormRadioItemProps,
+  FormRadioItemVariant,
+  FormRadioOrientation,
+  FormSectionProps,
   FormTextareaProps,
   FormValidationMode,
+  FormVariant,
 } from "./form.types.js";

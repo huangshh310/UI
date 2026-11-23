@@ -10,43 +10,62 @@
 import { cn } from "@matt-ui/utils";
 import { animate, motion, useReducedMotion } from "motion/react";
 import { useRef, useState, type MouseEvent } from "react";
+import {
+  TOGGLE_SIZE_CONFIG,
+  TOGGLE_TONE_CONFIG,
+  TOGGLE_TRACK_BASE,
+  TOGGLE_VARIANT_CLASSES,
+} from "./liquid-toggle.styles.js";
 import type { LiquidToggleProps } from "./liquid-toggle.types.js";
 
-/** 滑块从左到右移动的距离，等于轨道宽度减去滑块直径与两侧内边距 */
-const TRAVEL_PX = 24;
+const THUMB_SHADOW =
+  "block rounded-full shadow-[0_1px_3px_rgba(0,0,0,0.22),0_1px_1px_rgba(0,0,0,0.1)] transition-colors duration-(--ui-duration-normal)";
 
-const TRACK_CLASSES = cn(
-  "relative m-0 box-border inline-flex h-8 w-14 shrink-0 cursor-pointer appearance-none items-center rounded-full border-0 bg-input p-1",
-  "transition-colors duration-(--ui-duration-normal) data-[state=on]:bg-signal",
-  "outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid",
-  "disabled:pointer-events-none disabled:opacity-45",
-);
+/** 播放液滴形变：中途沿移动方向拉长、垂直压扁，到位后恢复 */
+const animateSquash = (element: HTMLSpanElement | null, reduceMotion: boolean | null) => {
+  if (reduceMotion || !element) return;
+  animate(element, { scaleX: [1, 1.45, 1], scaleY: [1, 0.78, 1] }, { duration: 0.38 });
+};
 
-export const LiquidToggle = ({
-  checked,
-  defaultChecked = false,
-  onCheckedChange,
-  className,
-  onClick,
-  ...props
-}: LiquidToggleProps) => {
+const DEFAULTS = {
+  defaultChecked: false,
+  size: "md",
+  tone: "signal",
+  variant: "filled",
+} as const;
+
+const useLiquidToggle = (p: LiquidToggleProps) => {
   const reduceMotion = useReducedMotion();
-  const [internal, setInternal] = useState(defaultChecked);
-  const on = checked ?? internal;
+  const [internal, setInternal] = useState(p.defaultChecked ?? false);
+  const on = p.checked ?? internal;
   const thumb = useRef<HTMLSpanElement>(null);
 
-  /** 液滴形变：中途沿移动方向拉长、垂直方向压扁，到位后恢复。与位移同时播放 */
-  const squash = () => {
-    if (reduceMotion || !thumb.current) return;
-    animate(thumb.current, { scaleX: [1, 1.45, 1], scaleY: [1, 0.78, 1] }, { duration: 0.38 });
+  const toggle = (event: MouseEvent<HTMLButtonElement>) => {
+    p.onClick?.(event);
+    animateSquash(thumb.current, reduceMotion);
+    if (p.checked === undefined) setInternal(!on);
+    p.onCheckedChange?.(!on);
   };
 
-  const toggle = (event: MouseEvent<HTMLButtonElement>) => {
-    onClick?.(event);
-    squash();
-    if (checked === undefined) setInternal(!on);
-    onCheckedChange?.(!on);
-  };
+  return { on, thumb, reduceMotion, toggle };
+};
+
+export const LiquidToggle = (inputProps: LiquidToggleProps) => {
+  const merged = { ...DEFAULTS, ...inputProps };
+  const { on, thumb, reduceMotion, toggle } = useLiquidToggle(merged);
+  const {
+    checked: _,
+    defaultChecked: _d,
+    onCheckedChange: _o,
+    size,
+    tone,
+    variant,
+    className,
+    onClick: _c,
+    ...rest
+  } = merged;
+  const sizeTokens = TOGGLE_SIZE_CONFIG[size];
+  const toneTokens = TOGGLE_TONE_CONFIG[tone];
 
   return (
     <button
@@ -55,17 +74,26 @@ export const LiquidToggle = ({
       aria-checked={on}
       data-slot="liquid-toggle"
       data-state={on ? "on" : "off"}
-      className={cn(TRACK_CLASSES, className)}
+      data-size={size}
+      data-tone={tone}
+      data-variant={variant}
+      className={cn(
+        TOGGLE_TRACK_BASE,
+        TOGGLE_VARIANT_CLASSES[variant],
+        sizeTokens.track,
+        toneTokens.trackOn,
+        className,
+      )}
       onClick={toggle}
-      {...props}
+      {...rest}
     >
       <motion.span
         aria-hidden="true"
         data-slot="liquid-toggle-thumb"
-        className="block size-6 rounded-full bg-signal-foreground shadow-sm"
+        className={cn(THUMB_SHADOW, sizeTokens.thumb, toneTokens.thumb)}
         ref={thumb}
         initial={false}
-        animate={{ x: on ? TRAVEL_PX : 0 }}
+        animate={{ x: on ? sizeTokens.travelPx : 0 }}
         transition={{ duration: reduceMotion ? 0 : 0.38, ease: [0.34, 1.56, 0.64, 1] }}
       />
     </button>

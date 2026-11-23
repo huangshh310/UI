@@ -19,15 +19,16 @@ export function Example() {
   specimens: [
     {
       slug: "basic",
-      name: "分类通知中心与一键全部已读",
-      description: "按全部/未读/部署/安全页签过滤动态，支持单条与批量标记已读并展示空态回退。",
+      name: "时间线通知中心与一键全部已读",
+      description:
+        "默认以垂直时间线串联全部/未读/部署/安全动态，支持单条与批量标记已读并展示空态回退。",
       file: "activity-feed-block/basic.tsx",
       Demo: ActivityFeedBlockBasicDemo,
     },
     {
       slug: "security",
-      name: "安全合规审计流",
-      description: "传入自定义 initialItems 聚焦身份证书轮换与依赖版本锁事件。",
+      name: "紧凑列表型安全合规审计流",
+      description: '组合 variant="list"、compact 与自定义 initialItems，聚焦证书轮换与依赖锁事件。',
       file: "activity-feed-block/security.tsx",
       Demo: ActivityFeedBlockSecurityDemo,
       directory: false,
@@ -39,6 +40,42 @@ export function Example() {
       type: "ActivityEntry[]",
       defaultValue: "内置示例",
       description: "初始动态条目",
+    },
+    {
+      name: "title",
+      type: "string",
+      defaultValue: '"通知中心与审计动态"',
+      description: "区块主标题",
+    },
+    {
+      name: "description",
+      type: "string",
+      defaultValue: '"集中追踪生产部署、安全审计与团队配置变更。"',
+      description: "区块副标题说明",
+    },
+    {
+      name: "variant",
+      type: '"timeline" | "list"',
+      defaultValue: '"timeline"',
+      description: "事件流视觉排布：时间线或平铺列表",
+    },
+    {
+      name: "compact",
+      type: "boolean",
+      defaultValue: "false",
+      description: "是否启用紧凑行间距",
+    },
+    {
+      name: "onMarkRead",
+      type: "(id: string) => void",
+      defaultValue: "—",
+      description: "单条标为已读时触发",
+    },
+    {
+      name: "onMarkAllRead",
+      type: "() => void",
+      defaultValue: "—",
+      description: "点击全部已读时触发",
     },
   ],
   accessibility: [

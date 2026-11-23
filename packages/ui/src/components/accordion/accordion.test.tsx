@@ -24,4 +24,28 @@ describe("Accordion", () => {
     expect(q2.getAttribute("aria-expanded")).toBe("true");
     expect(q1.getAttribute("aria-expanded")).toBe("false");
   });
+
+  it("支持 separated 独立分卡、plus 指示器与多开模式", async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <Accordion
+        items={ITEMS}
+        variant="separated"
+        indicator="plus"
+        multiple
+        defaultValue={["q1"]}
+      />,
+    );
+    const root = container.querySelector('[data-slot="accordion"]');
+    expect(root?.getAttribute("data-variant")).toBe("separated");
+    expect(root?.getAttribute("data-indicator")).toBe("plus");
+
+    await user.click(screen.getByRole("button", { name: "是否支持深色主题？" }));
+    expect(
+      screen.getByRole("button", { name: "如何安装组件？" }).getAttribute("aria-expanded"),
+    ).toBe("true");
+    expect(
+      screen.getByRole("button", { name: "是否支持深色主题？" }).getAttribute("aria-expanded"),
+    ).toBe("true");
+  });
 });

@@ -1,2 +1,6 @@
 export { HeroBentoBlock } from "./hero-bento-block.js";
-export type { HeroBentoBlockProps } from "./hero-bento-block.types.js";
+export type {
+  HeroBentoAlign,
+  HeroBentoBlockProps,
+  HeroBentoVariant,
+} from "./hero-bento-block.types.js";

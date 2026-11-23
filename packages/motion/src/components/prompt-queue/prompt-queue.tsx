@@ -1,17 +1,21 @@
 "use client";
 
 /**
- * PromptQueue：生成期间的待发送消息队列胶囊栈（参考 HextaUI Queue 与 Cursor/Claude 待发队列）。
- * 队列消息随物理弹簧平滑入栈与退栈，支持立即插队发送、取回编辑与单条移除。
+ * PromptQueue：生成期间的待发送消息队列胶囊栈（参考 Cursor / Claude Code 待发队列）。
+ * 队列消息随物理弹簧平滑入栈与退栈，支持毛玻璃停靠、暂停续发、立即插队发送、取回编辑与单条移除。
  */
 import { cn } from "@matt-ui/utils";
-import { ChevronDown, CornerDownRight, Pencil, Trash2, X, Zap } from "lucide-react";
+import { ChevronDown, CornerDownRight, Pause, Pencil, Play, Trash2, X, Zap } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
-import type { PromptQueueProps, QueuedPromptItem } from "./prompt-queue.types.js";
-
-const ITEM_ACTION_BTN =
-  "inline-flex size-6.5 cursor-pointer items-center justify-center rounded-lg border-0 bg-transparent text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none";
+import type { PromptQueueProps, PromptQueueSize, QueuedPromptItem } from "./prompt-queue.types.js";
+import {
+  PROMPT_QUEUE_ACTION_BTN,
+  PROMPT_QUEUE_FOCUS_RING,
+  PROMPT_QUEUE_HEADER_SIZE,
+  PROMPT_QUEUE_ROW_SIZE,
+  PROMPT_QUEUE_SHELL_VARIANT,
+} from "./prompt-queue.variants.js";
 
 const QueueRowActions = ({
   item,
@@ -31,7 +35,7 @@ const QueueRowActions = ({
         aria-label={`立即插队发送：${item.content}`}
         title="中断当前生成并立即发送"
         onClick={() => onSendNow(item)}
-        className={cn(ITEM_ACTION_BTN, "hover:text-foreground")}
+        className={cn(PROMPT_QUEUE_ACTION_BTN, "hover:text-signal")}
       >
         <Zap aria-hidden="true" className="size-3.5" />
       </button>
@@ -41,7 +45,7 @@ const QueueRowActions = ({
         type="button"
         aria-label={`编辑待发消息：${item.content}`}
         onClick={() => onEdit(item)}
-        className={ITEM_ACTION_BTN}
+        className={PROMPT_QUEUE_ACTION_BTN}
       >
         <Pencil aria-hidden="true" className="size-3" />
       </button>
@@ -51,7 +55,7 @@ const QueueRowActions = ({
         type="button"
         aria-label={`移除待发消息：${item.content}`}
         onClick={() => onRemove(item.id)}
-        className={ITEM_ACTION_BTN}
+        className={PROMPT_QUEUE_ACTION_BTN}
       >
         <X aria-hidden="true" className="size-3.5" />
       </button>
@@ -59,79 +63,96 @@ const QueueRowActions = ({
   </div>
 );
 
-const QueueRow = ({
-  item,
-  index,
-  reduced,
-  onSendNow,
-  onEdit,
-  onRemove,
-}: {
+interface QueueRowProps {
   item: QueuedPromptItem;
   index: number;
+  size: PromptQueueSize;
   reduced: boolean | null;
   onSendNow?: (item: QueuedPromptItem) => void;
   onEdit?: (item: QueuedPromptItem) => void;
   onRemove?: (id: string) => void;
-}) => (
-  <motion.li
-    layout={!reduced}
-    initial={reduced ? false : { opacity: 0, y: 6, scale: 0.98 }}
-    animate={{ opacity: 1, y: 0, scale: 1 }}
-    exit={reduced ? { opacity: 0 } : { opacity: 0, y: -4, scale: 0.98 }}
-    transition={{ type: "spring", stiffness: 460, damping: 32 }}
-    className="flex items-center justify-between gap-2.5 rounded-xl border border-solid border-border/75 bg-card px-3 py-2 shadow-xs"
-  >
-    <div className="flex min-w-0 flex-1 items-center gap-2">
-      <CornerDownRight aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
-      <span className="font-mono text-[10px] text-muted-foreground tabular-nums">#{index + 1}</span>
-      <span className="truncate font-sans text-xs text-foreground">{item.content}</span>
-      {item.meta && (
-        <span className="shrink-0 rounded-md bg-secondary px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
-          {item.meta}
-        </span>
-      )}
-    </div>
-    <QueueRowActions item={item} onSendNow={onSendNow} onEdit={onEdit} onRemove={onRemove} />
-  </motion.li>
-);
+}
 
-const QueueHeader = ({
+const QueueRow = (p: QueueRowProps) => {
+  const isHigh = p.item.priority === "high";
+  return (
+    <motion.li
+      layout={!p.reduced}
+      initial={p.reduced ? false : { opacity: 0, y: 6, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={p.reduced ? { opacity: 0 } : { opacity: 0, y: -4, scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 460, damping: 32 }}
+      className={cn(
+        "flex items-center justify-between gap-2.5 rounded-xl border border-solid bg-card/95 shadow-xs dark:bg-card/85",
+        isHigh ? "border-signal/40 dark:border-signal/45" : "border-border/75 dark:border-white/10",
+        PROMPT_QUEUE_ROW_SIZE[p.size],
+      )}
+    >
+      <div className="flex min-w-0 flex-1 items-center gap-2">
+        <CornerDownRight aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
+        <span className="font-mono text-[10px] text-muted-foreground tabular-nums">
+          #{p.index + 1}
+        </span>
+        {isHigh && (
+          <span className="shrink-0 rounded bg-signal/12 px-1.5 py-0.2 font-mono text-[10px] font-medium text-signal">
+            优先
+          </span>
+        )}
+        <span className="truncate font-sans text-xs text-foreground">{p.item.content}</span>
+        {p.item.meta && (
+          <span className="shrink-0 rounded-md border border-solid border-border/65 bg-secondary/75 px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground dark:border-white/8 dark:bg-white/8">
+            {p.item.meta}
+          </span>
+        )}
+      </div>
+      <QueueRowActions
+        item={p.item}
+        onSendNow={p.onSendNow}
+        onEdit={p.onEdit}
+        onRemove={p.onRemove}
+      />
+    </motion.li>
+  );
+};
+
+const QueueHeaderActions = ({
   count,
-  expanded,
-  onToggle,
+  paused,
+  onTogglePause,
   onClearAll,
 }: {
   count: number;
-  expanded: boolean;
-  onToggle: () => void;
+  paused: boolean;
+  onTogglePause?: () => void;
   onClearAll?: () => void;
 }) => (
-  <div className="flex items-center justify-between gap-2 px-3 py-2">
-    <button
-      type="button"
-      aria-expanded={expanded}
-      onClick={onToggle}
-      className="inline-flex cursor-pointer items-center gap-2 border-0 bg-transparent p-0 font-sans text-xs font-medium text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
-    >
-      <span className="inline-flex size-2 animate-pulse rounded-full bg-foreground motion-reduce:animate-none" />
-      <span>{count} 条待发送</span>
-      <span className="hidden text-[11px] font-normal text-muted-foreground @sm:inline">
-        当前回复完成后自动发出
-      </span>
-      <ChevronDown
-        aria-hidden="true"
+  <div className="flex items-center gap-1">
+    {onTogglePause && (
+      <button
+        type="button"
+        aria-pressed={paused}
+        onClick={onTogglePause}
         className={cn(
-          "size-3.5 text-muted-foreground transition-transform duration-(--ui-duration-fast)",
-          expanded && "rotate-180",
+          "inline-flex h-6 cursor-pointer items-center gap-1 rounded-md border border-solid border-transparent bg-transparent px-1.5 font-sans text-[11px] text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:bg-accent hover:text-foreground",
+          PROMPT_QUEUE_FOCUS_RING,
         )}
-      />
-    </button>
+      >
+        {paused ? (
+          <Play aria-hidden="true" className="size-3 text-signal" />
+        ) : (
+          <Pause aria-hidden="true" className="size-3" />
+        )}
+        <span>{paused ? "恢复" : "暂停"}</span>
+      </button>
+    )}
     {onClearAll && count > 1 && (
       <button
         type="button"
         onClick={onClearAll}
-        className="inline-flex h-6 cursor-pointer items-center gap-1 rounded-md border-0 bg-transparent px-1.5 font-sans text-[11px] text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        className={cn(
+          "inline-flex h-6 cursor-pointer items-center gap-1 rounded-md border border-solid border-transparent bg-transparent px-1.5 font-sans text-[11px] text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:bg-accent hover:text-foreground",
+          PROMPT_QUEUE_FOCUS_RING,
+        )}
       >
         <Trash2 aria-hidden="true" className="size-3" />
         <span>清空</span>
@@ -140,46 +161,101 @@ const QueueHeader = ({
   </div>
 );
 
-export const PromptQueue = ({
-  items,
-  onSendNow,
-  onEdit,
-  onRemove,
-  onClearAll,
-  defaultExpanded = true,
-  className,
-}: PromptQueueProps) => {
-  const reduced = useReducedMotion();
-  const [expanded, setExpanded] = useState(defaultExpanded);
+interface QueueHeaderProps {
+  count: number;
+  expanded: boolean;
+  size: PromptQueueSize;
+  paused: boolean;
+  statusLabel: string;
+  onToggle: () => void;
+  onTogglePause?: () => void;
+  onClearAll?: () => void;
+}
 
-  if (items.length === 0) return null;
+const QueueHeader = (p: QueueHeaderProps) => (
+  <div className={cn("flex items-center justify-between gap-2", PROMPT_QUEUE_HEADER_SIZE[p.size])}>
+    <button
+      type="button"
+      aria-expanded={p.expanded}
+      onClick={p.onToggle}
+      className={cn(
+        "inline-flex cursor-pointer items-center gap-2 rounded-lg border border-solid border-transparent bg-transparent px-1 py-0.5 font-sans text-xs font-medium text-foreground",
+        PROMPT_QUEUE_FOCUS_RING,
+      )}
+    >
+      <span
+        aria-hidden="true"
+        className={cn(
+          "inline-flex size-2 rounded-full",
+          p.paused
+            ? "bg-amber-500 dark:bg-amber-400"
+            : "animate-pulse bg-signal motion-reduce:animate-none",
+        )}
+      />
+      <span className="tabular-nums">{p.count} 条待发送</span>
+      <span className="hidden text-[11px] font-normal text-muted-foreground @sm:inline">
+        {p.paused ? "已暂停自动发送" : p.statusLabel}
+      </span>
+      <ChevronDown
+        aria-hidden="true"
+        className={cn(
+          "size-3.5 text-muted-foreground transition-transform duration-(--ui-duration-fast)",
+          p.expanded && "rotate-180",
+        )}
+      />
+    </button>
+    <QueueHeaderActions
+      count={p.count}
+      paused={p.paused}
+      onTogglePause={p.onTogglePause}
+      onClearAll={p.onClearAll}
+    />
+  </div>
+);
+
+export const PromptQueue = (props: PromptQueueProps) => {
+  const variant = props.variant ?? "default";
+  const size = props.size ?? "md";
+  const paused = props.paused ?? false;
+  const reduced = useReducedMotion();
+  const [expanded, setExpanded] = useState(props.defaultExpanded ?? true);
+
+  if (props.items.length === 0) return null;
 
   return (
     <div
       data-slot="prompt-queue"
+      data-variant={variant}
+      data-paused={paused ? "true" : "false"}
       className={cn(
-        "@container flex w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-solid border-border bg-secondary/75 font-sans text-foreground",
-        className,
+        "@container flex w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-solid font-sans text-foreground",
+        PROMPT_QUEUE_SHELL_VARIANT[variant],
+        props.className,
       )}
     >
       <QueueHeader
-        count={items.length}
+        count={props.items.length}
         expanded={expanded}
+        size={size}
+        paused={paused}
+        statusLabel={props.statusLabel ?? "当前回复完成后自动发出"}
         onToggle={() => setExpanded((prev) => !prev)}
-        onClearAll={onClearAll}
+        onTogglePause={props.onTogglePause}
+        onClearAll={props.onClearAll}
       />
       {expanded && (
         <ul className="m-0 flex list-none flex-col gap-1.5 px-2.5 pt-0.5 pb-2.5">
           <AnimatePresence initial={false}>
-            {items.map((item, idx) => (
+            {props.items.map((item, idx) => (
               <QueueRow
                 key={item.id}
                 item={item}
                 index={idx}
+                size={size}
                 reduced={reduced}
-                onSendNow={onSendNow}
-                onEdit={onEdit}
-                onRemove={onRemove}
+                onSendNow={props.onSendNow}
+                onEdit={props.onEdit}
+                onRemove={props.onRemove}
               />
             ))}
           </AnimatePresence>

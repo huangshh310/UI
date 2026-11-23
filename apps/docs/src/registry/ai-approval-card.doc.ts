@@ -5,15 +5,16 @@ import type { ComponentDoc } from "./registry.types";
 export const AI_APPROVAL_CARD_DOC: ComponentDoc = {
   slug: "ai-approval-card",
   name: "AI Approval Card",
-  description: "人机协同（Human-in-the-Loop）敏感动作审批与问卷确认卡片。",
+  description:
+    "人机协同（Human-in-the-Loop）敏感动作审批与护栏确认卡片，内置暗色终端命令预览、风险分级与审计回溯。",
   category: "ai",
   registryName: "ai-approval-card",
-  dependencies: ["lucide-react"],
+  dependencies: ["class-variance-authority", "lucide-react"],
   createdAt: "2026-11-22",
   usage: `import { AiApprovalCard } from "@/components/ui/ai-approval-card";
 
 export function Example() {
-  return <AiApprovalCard title="授权执行生产迁移脚本" />;
+  return <AiApprovalCard title="授权执行生产迁移脚本" workingDir="~/work/UI" />;
 }`,
   specimens: [
     {
@@ -26,7 +27,7 @@ export function Example() {
     {
       slug: "high-risk",
       name: "高危生产数据库变更审批",
-      description: '通过 riskLevel="high" 与自定义 options 呈现高危操作分级保护。',
+      description: '通过 riskLevel="high"、影响范围说明与自定义 options 呈现高危操作分级保护。',
       file: "ai-approval-card/high-risk.tsx",
       Demo: AiApprovalCardHighRiskDemo,
       directory: false,
@@ -40,12 +41,36 @@ export function Example() {
       defaultValue: "内置默认说明",
       description: "补充背景说明",
     },
+    {
+      name: "agentName",
+      type: "string",
+      defaultValue: "—",
+      description: "发起请求的智能体或工具来源标识",
+    },
+    {
+      name: "workingDir",
+      type: "string",
+      defaultValue: '"shell"',
+      description: "命令预览顶栏显示的工作目录",
+    },
+    {
+      name: "impact",
+      type: "string",
+      defaultValue: '"护栏保护 · 可回滚"',
+      description: "底部左侧的影响范围提示文案",
+    },
     { name: "command", type: "string", defaultValue: "内置示例", description: "待执行命令预览" },
     {
       name: "riskLevel",
       type: '"low" | "medium" | "high"',
       defaultValue: '"medium"',
-      description: "风险级别",
+      description: "风险级别（自动调整边框与徽章语义色）",
+    },
+    {
+      name: "variant",
+      type: '"card" | "compact"',
+      defaultValue: '"card"',
+      description: "密度与圆角规格",
     },
     {
       name: "options",

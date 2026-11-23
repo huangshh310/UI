@@ -9,7 +9,7 @@
       "title": "Accordion",
       "description": "基于 Base UI Accordion 的折叠面板，支持单开/多开、发丝分隔与盒装变体及平滑展开。",
       "categories": ["navigation"],
-      "dependencies": ["@base-ui/react", "lucide-react"],
+      "dependencies": ["class-variance-authority", "@base-ui/react", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -100,7 +100,12 @@
       "title": "Advanced Data Table",
       "description": "在 TanStack Table 之上扩展分面筛选、列显隐、行密度切换、批量操作栏与 CSV 导出的高级数据表格。",
       "categories": ["forms"],
-      "dependencies": ["@tanstack/react-table", "lucide-react", "@base-ui/react"],
+      "dependencies": [
+        "class-variance-authority",
+        "@tanstack/react-table",
+        "lucide-react",
+        "@base-ui/react"
+      ],
       "registryDependencies": [
         "utils",
         "huangshh310/UI/data-table",
@@ -278,8 +283,8 @@
       "title": "AI Approval Card",
       "description": "人机协同（Human-in-the-Loop）敏感动作审批与问卷确认卡片。",
       "categories": ["ai"],
-      "dependencies": ["lucide-react"],
-      "registryDependencies": ["utils", "huangshh310/UI/badge", "huangshh310/UI/button"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "registryDependencies": ["utils", "huangshh310/UI/button"],
       "files": [
         {
           "path": "registry/ui/ai-approval-card.tsx",
@@ -320,7 +325,7 @@
       "title": "AI Artifact",
       "description": "AI 生成代码与交互预览分栏产物卡片，支持版本标记、预览/源码切换与一键复制。",
       "categories": ["ai"],
-      "dependencies": ["lucide-react"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
       "registryDependencies": ["utils", "huangshh310/UI/badge"],
       "files": [
         {
@@ -361,7 +366,7 @@
       "type": "registry:ui",
       "title": "AI Chat Thread",
       "description": "C 端 AI 对话消息流，支持用户/助手气泡、多版本回复分支切换、复制反馈与快捷追问。",
-      "dependencies": ["lucide-react"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -403,7 +408,7 @@
       "title": "AI Citation",
       "description": "行内角标引用胶囊与 RAG 检索上下文卡片，支持点击切换知识片段与匹配度评分。",
       "categories": ["ai"],
-      "dependencies": ["lucide-react"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
       "registryDependencies": ["utils", "huangshh310/UI/badge"],
       "files": [
         {
@@ -445,8 +450,8 @@
       "title": "AI Diff Review",
       "description": "AI 代码与配置变更行级审阅卡片，支持单行勾选采纳与一键应用。",
       "categories": ["ai"],
-      "dependencies": ["lucide-react"],
-      "registryDependencies": ["utils", "huangshh310/UI/badge", "huangshh310/UI/button"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "registryDependencies": ["utils", "huangshh310/UI/button"],
       "files": [
         {
           "path": "registry/ui/ai-diff-review.tsx",
@@ -487,7 +492,7 @@
       "title": "AI Image Reveal",
       "description": "AI 图像生成显影组件，从呼吸粒子云聚拢为像素马赛克再柔焦解析至高清成图，支持重播与减弱动效降级。",
       "categories": ["ai", "motion"],
-      "dependencies": ["motion"],
+      "dependencies": ["lucide-react", "motion"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -655,8 +660,8 @@
       "title": "AI Tool Call",
       "description": "智能体工具调用与流水线步骤检查器卡片，支持展开查看入参与返回 JSON 载荷。",
       "categories": ["ai"],
-      "dependencies": ["lucide-react"],
-      "registryDependencies": ["utils", "huangshh310/UI/badge"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "registry/ui/ai-tool-call.tsx",
@@ -696,7 +701,7 @@
       "type": "registry:ui",
       "title": "AI Voice Stage",
       "description": "C 端全模态实时语音交互舞台，集成流体极光状态球、实时字幕与圆形通话控制栏。",
-      "dependencies": ["lucide-react"],
+      "dependencies": ["lucide-react", "motion"],
       "registryDependencies": ["utils", "huangshh310/UI/ai-orb"],
       "files": [
         {
@@ -953,7 +958,7 @@
       "title": "Auth Block",
       "description": "由 Card、LockInput、Separator 与 Button 组合而成的登录/注册认证区块。",
       "categories": ["blocks"],
-      "dependencies": ["lucide-react"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
       "registryDependencies": [
         "utils",
         "huangshh310/UI/button",
@@ -1001,7 +1006,7 @@
       "title": "Avatar Stack",
       "description": "叠放头像组，支持图片回退首字母、在线状态点、悬停抬起与方向提示以及 +N 溢出计数。",
       "categories": ["overlays"],
-      "dependencies": ["@base-ui/react"],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "registryDependencies": ["utils", "huangshh310/UI/directional-tooltip"],
       "files": [
         {
@@ -1136,7 +1141,7 @@
       "title": "Book Call Button",
       "description": "A pill whose accent capsule expands on hover to reveal a phone icon.",
       "categories": ["buttons"],
-      "dependencies": ["lucide-react"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -1178,7 +1183,7 @@
       "title": "Breadcrumb",
       "description": "语义化面包屑导航，支持深层级自动折叠省略号展开与末级当前页标记。",
       "categories": ["navigation"],
-      "dependencies": ["lucide-react"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -1262,7 +1267,7 @@
       "title": "Calendar",
       "description": "零外部日期库依赖的月历组件，支持单日/区间选择、双月并排、禁用约束与完整方向键导航。",
       "categories": ["forms"],
-      "dependencies": ["lucide-react"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -1430,7 +1435,7 @@
       "title": "Command Menu",
       "description": "基于 UI SDK 的全局命令面板，支持模糊匹配高亮、分组命令、键盘循环与子页面栈。",
       "categories": ["overlays"],
-      "dependencies": ["@ui-sdk/react@0.1.0-beta.13", "lucide-react"],
+      "dependencies": ["class-variance-authority", "@ui-sdk/react@0.1.0-beta.13", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -1472,7 +1477,7 @@
       "title": "Context",
       "description": "AI 上下文窗口环形微胶囊与分段 Token 占用浮层检查器，支持一键压缩上下文。",
       "categories": ["ai"],
-      "dependencies": ["@base-ui/react", "lucide-react"],
+      "dependencies": ["class-variance-authority", "lucide-react", "@base-ui/react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -1514,7 +1519,7 @@
       "title": "Conversation",
       "description": "流式对话滚动视口原语，支持智能贴底追踪、空态居中欢迎与未读回到底部悬浮胶囊。",
       "categories": ["ai"],
-      "dependencies": ["lucide-react"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -1556,7 +1561,7 @@
       "title": "Dashboard Shell Block",
       "description": "由 Breadcrumb、CommandMenu、Card、Badge 与 DataTable 拼装而成的可折叠控制台骨架。",
       "categories": ["blocks"],
-      "dependencies": ["lucide-react"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
       "registryDependencies": [
         "utils",
         "huangshh310/UI/badge",
@@ -1606,7 +1611,7 @@
       "title": "Data Table",
       "description": "基于 TanStack Table 的声明式数据表格，支持排序、全局搜索、分页、行选择、骨架加载与空状态。",
       "categories": ["forms"],
-      "dependencies": ["@tanstack/react-table", "lucide-react"],
+      "dependencies": ["class-variance-authority", "@tanstack/react-table", "lucide-react"],
       "registryDependencies": ["utils", "huangshh310/UI/draw-checkbox"],
       "files": [
         {
@@ -1648,7 +1653,7 @@
       "title": "Date Picker",
       "description": "基于 Base UI Popover 与 Calendar 组合的日期与区间选择器，支持快捷预设与一键清空。",
       "categories": ["forms"],
-      "dependencies": ["@base-ui/react", "lucide-react"],
+      "dependencies": ["class-variance-authority", "@base-ui/react", "lucide-react"],
       "registryDependencies": ["utils", "huangshh310/UI/calendar"],
       "files": [
         {
@@ -1690,7 +1695,7 @@
       "title": "Directional Tooltip",
       "description": "方向感知气泡提示，按放置轴线轻微滑入，支持箭头指示与共享延迟组。",
       "categories": ["overlays"],
-      "dependencies": ["@base-ui/react"],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -1816,7 +1821,7 @@
       "title": "Empty State",
       "description": "克制统一的空列表与无结果占位卡片，带圆角图标徽章、说明与主次操作槽。",
       "categories": ["display"],
-      "dependencies": ["lucide-react"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -1861,8 +1866,8 @@
       "dependencies": ["lucide-react"],
       "registryDependencies": [
         "utils",
-        "huangshh310/UI/animated-file-upload",
-        "huangshh310/UI/selection-basket"
+        "huangshh310/UI/selection-basket",
+        "huangshh310/UI/animated-file-upload"
       ],
       "files": [
         {
@@ -1946,7 +1951,7 @@
       "title": "Form",
       "description": "A composable form system built on Base UI Form, Field, and RadioGroup with accessible validation messages.",
       "categories": ["forms"],
-      "dependencies": ["@base-ui/react"],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -1988,7 +1993,7 @@
       "title": "Hero Bento Block",
       "description": "由 Badge、Button、AvatarStack、SpotlightCard 与 Progress 组合的落地页首屏与 Bento 特性网格区块。",
       "categories": ["blocks"],
-      "dependencies": ["lucide-react"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
       "registryDependencies": [
         "utils",
         "huangshh310/UI/avatar-stack",
@@ -2121,7 +2126,7 @@
       "title": "Liquid Ripple Button",
       "description": "A button whose ripple starts from the pointer position.",
       "categories": ["buttons"],
-      "dependencies": [],
+      "dependencies": ["class-variance-authority"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -2289,7 +2294,7 @@
       "title": "Message",
       "description": "单回合对话复合组件，涵盖无框助手流式排版、温润用户胶囊、多版本分支切换、原位编辑与异常重试。",
       "categories": ["ai"],
-      "dependencies": ["lucide-react"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -2331,7 +2336,7 @@
       "title": "Model Selector",
       "description": "紧凑型 AI 模型、思考强度与联网能力浮层选择器，可直接嵌入输入器工具栏。",
       "categories": ["ai"],
-      "dependencies": ["lucide-react", "@base-ui/react"],
+      "dependencies": ["class-variance-authority", "lucide-react", "@base-ui/react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -2457,7 +2462,7 @@
       "title": "Neon Edge Button",
       "description": "A button with a light travelling around its border.",
       "categories": ["buttons"],
-      "dependencies": [],
+      "dependencies": ["class-variance-authority"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -2541,7 +2546,7 @@
       "title": "Number Input",
       "description": "基于 Base UI NumberField 的数值步进输入框，支持加减步进、标签拖拽微调与货币/百分比格式化。",
       "categories": ["navigation"],
-      "dependencies": ["@base-ui/react", "lucide-react"],
+      "dependencies": ["class-variance-authority", "@base-ui/react", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -2630,7 +2635,7 @@
       "title": "Origin Dropdown",
       "description": "从触发锚点缩放展开的下拉菜单，支持副标题说明、快捷键提示、勾选项与危险操作。",
       "categories": ["overlays"],
-      "dependencies": ["@base-ui/react", "lucide-react"],
+      "dependencies": ["class-variance-authority", "@base-ui/react", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -2714,7 +2719,7 @@
       "title": "Pagination",
       "description": "语义化分页导航，自动生成省略号区间、当前页高亮与上下页边界禁用。",
       "categories": ["navigation"],
-      "dependencies": ["lucide-react"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -2756,7 +2761,7 @@
       "title": "Peek Card",
       "description": "悬停或聚焦链接时浮现的富内容预览卡片，内置身份信息块与等宽键值指标。",
       "categories": ["overlays"],
-      "dependencies": ["@base-ui/react"],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -2928,7 +2933,7 @@
       "title": "Prompt Input",
       "description": "面向 AI 对话的自适应多行指令输入器，支持附件标签、模型切换、中文输入法防误触与生成中停止。",
       "categories": ["forms"],
-      "dependencies": ["lucide-react"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -3059,7 +3064,7 @@
       "title": "Resizable Panels",
       "description": "基于精确锁版本 UI SDK 的可拖拽分栏面板，支持最小/最大约束与键盘方向键无障碍调整。",
       "categories": ["navigation"],
-      "dependencies": ["@ui-sdk/react@0.1.0-beta.13", "lucide-react"],
+      "dependencies": ["class-variance-authority", "@ui-sdk/react@0.1.0-beta.13", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -3227,15 +3232,16 @@
       "title": "Settings Block",
       "description": "由 Card、SpringSelect、DrawCheckbox、AvatarStack、Separator 与 Button 组合的工作区设置区块。",
       "categories": ["blocks"],
-      "dependencies": [],
+      "dependencies": ["class-variance-authority", "lucide-react"],
       "registryDependencies": [
         "utils",
+        "huangshh310/UI/spring-select",
         "huangshh310/UI/avatar-stack",
+        "huangshh310/UI/badge",
         "huangshh310/UI/button",
         "huangshh310/UI/card",
         "huangshh310/UI/draw-checkbox",
-        "huangshh310/UI/separator",
-        "huangshh310/UI/spring-select"
+        "huangshh310/UI/separator"
       ],
       "files": [
         {
@@ -3277,7 +3283,7 @@
       "title": "Settle Modal",
       "description": "居中模态对话框，带柔焦遮罩、阻尼落位动效与完整焦点陷阱。",
       "categories": ["overlays"],
-      "dependencies": ["@base-ui/react", "lucide-react"],
+      "dependencies": ["class-variance-authority", "@base-ui/react", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -3361,7 +3367,7 @@
       "title": "Shimmer",
       "description": "面向 AI 流式等待态的微光扫掠文字与多行生成骨架原语。",
       "categories": ["ai"],
-      "dependencies": [],
+      "dependencies": ["class-variance-authority"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -3445,7 +3451,7 @@
       "title": "Slider",
       "description": "基于 Base UI Slider 的单滑块与区间双滑块，带钴蓝激活轨道、刻度标记与键盘微调。",
       "categories": ["navigation"],
-      "dependencies": ["@base-ui/react"],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -3529,7 +3535,7 @@
       "title": "Split Button",
       "description": "A primary action fused with a trigger that opens a menu of related actions.",
       "categories": ["buttons"],
-      "dependencies": ["@base-ui/react", "lucide-react"],
+      "dependencies": ["class-variance-authority", "@base-ui/react", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -3571,7 +3577,7 @@
       "title": "Spotlight Card",
       "description": "零额外运行时依赖的纯 CSS 指针跟随径向高光与微光边框卡片。",
       "categories": ["motion"],
-      "dependencies": [],
+      "dependencies": ["class-variance-authority"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -3613,7 +3619,7 @@
       "title": "Spotlight Search",
       "description": "轻量聚焦搜索弹层，支持分类快速筛选、最近搜索记录、结果预览分栏与弹性进出场。",
       "categories": ["overlays"],
-      "dependencies": ["@base-ui/react", "lucide-react", "motion"],
+      "dependencies": ["lucide-react", "@base-ui/react", "motion"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -3823,7 +3829,7 @@
       "title": "Suggestion",
       "description": "无外框 AI 灵感启动卡与流式追问胶囊组，支持分类筛选与复合子部件拼装。",
       "categories": ["ai"],
-      "dependencies": ["lucide-react"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -3865,7 +3871,7 @@
       "title": "Tabs",
       "description": "基于 Base UI Tabs 的平滑滑动指示器页签，支持胶囊分段、下划线与卡片三种风格。",
       "categories": ["navigation"],
-      "dependencies": ["@base-ui/react"],
+      "dependencies": ["class-variance-authority", "@base-ui/react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -3958,7 +3964,7 @@
       "title": "Thinking Orb",
       "description": "极简单色 3D 球面粒子思考球，内置 9 种 AI 认知状态与明暗极性自适应，纯 Canvas 驱动零动画库依赖。",
       "categories": ["ai"],
-      "dependencies": [],
+      "dependencies": ["class-variance-authority"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -4042,7 +4048,7 @@
       "title": "Tree",
       "description": "基于精确锁版本 UI SDK 的层级树形视图，带缩进参考线、分支展开与完整 WAI-ARIA 键盘导航。",
       "categories": ["navigation"],
-      "dependencies": ["@ui-sdk/react@0.1.0-beta.13", "lucide-react"],
+      "dependencies": ["class-variance-authority", "@ui-sdk/react@0.1.0-beta.13", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
@@ -4084,7 +4090,7 @@
       "title": "Typewriter Button",
       "description": "A button that reveals its label character by character.",
       "categories": ["buttons"],
-      "dependencies": [],
+      "dependencies": ["class-variance-authority"],
       "registryDependencies": ["utils"],
       "files": [
         {

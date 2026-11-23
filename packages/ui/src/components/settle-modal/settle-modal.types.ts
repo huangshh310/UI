@@ -1,6 +1,9 @@
 import type { ReactElement, ReactNode } from "react";
 
-export type SettleModalSize = "sm" | "md" | "lg";
+export type SettleModalSize = "sm" | "md" | "lg" | "xl";
+export type SettleModalTone = "default" | "signal" | "destructive";
+export type SettleModalBackdrop = "blur" | "dim" | "transparent";
+export type SettleModalAlign = "center" | "top";
 
 export interface SettleModalProps {
   /** 受控打开状态 */
@@ -15,6 +18,14 @@ export interface SettleModalProps {
   title: string;
   /** 弹窗副标题说明 */
   description?: string;
+  /** 标题左侧徽章图标 */
+  icon?: ReactNode;
+  /** 视觉语义色调（默认中性，支持信号蓝与高危红） */
+  tone?: SettleModalTone;
+  /** 背景遮罩风格 */
+  backdrop?: SettleModalBackdrop;
+  /** 垂直对齐位置 */
+  align?: SettleModalAlign;
   /** 主体内容 */
   children?: ReactNode;
   /** 底部操作栏 */

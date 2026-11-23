@@ -1,66 +1,135 @@
 "use client";
 
 /**
- * SegmentedControl：内凹轨道配物理抬升弹簧滑块的分段控制器（参考 interior.dev Segmented Control 与 bencho.dev），
- * 支持方向键与 Home/End 键盘漫游聚焦同步。
+ * SegmentedControl：内凹轨道配物理抬升弹簧滑块的分段控制器，
+ * 支持 default / glass / signal 质感、三档尺寸、图标与方向键漫游聚焦。
  */
 import { cn } from "@matt-ui/utils";
 import { motion, useReducedMotion } from "motion/react";
 import { useId, useRef, useState, type KeyboardEvent } from "react";
-import type { SegmentedControlItem, SegmentedControlProps } from "./segmented-control.types.js";
+import type {
+  SegmentedControlItem,
+  SegmentedControlProps,
+  SegmentedControlSize,
+  SegmentedControlVariant,
+} from "./segmented-control.types.js";
+import {
+  SEGMENTED_ACTIVE_TEXT,
+  SEGMENTED_BADGE_ACTIVE,
+  SEGMENTED_BUTTON_BASE,
+  SEGMENTED_BUTTON_SIZES,
+  SEGMENTED_THUMB_VARIANTS,
+  SEGMENTED_TRACK_BASE,
+  SEGMENTED_TRACK_VARIANTS,
+} from "./segmented-control.variants.js";
+
+const SPRING_TRANSITION = { type: "spring", stiffness: 460, damping: 34, mass: 0.65 } as const;
+
+const SegmentLabel = ({
+  item,
+  active,
+  variant,
+}: {
+  item: SegmentedControlItem;
+  active: boolean;
+  variant: SegmentedControlVariant;
+}) => (
+  <>
+    {item.icon && (
+      <span aria-hidden="true" className="relative z-10 inline-flex shrink-0 items-center">
+        {item.icon}
+      </span>
+    )}
+    <span className="relative z-10">{item.label}</span>
+    {item.badge && (
+      <span
+        className={cn(
+          "relative z-10 rounded-full px-1.5 py-0.5 font-mono text-[10px] leading-none tabular-nums",
+          active ? SEGMENTED_BADGE_ACTIVE[variant] : "bg-primary text-primary-foreground",
+        )}
+      >
+        {item.badge}
+      </span>
+    )}
+  </>
+);
+
+interface SegmentButtonProps {
+  item: SegmentedControlItem;
+  active: boolean;
+  variant: SegmentedControlVariant;
+  size: SegmentedControlSize;
+  fullWidth: boolean;
+  trackId: string;
+  reduced: boolean | null;
+  registerButton: (el: HTMLButtonElement | null) => void;
+  onSelect: () => void;
+  onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) => void;
+}
 
 const SegmentButton = ({
   item,
   active,
+  variant,
+  size,
+  fullWidth,
   trackId,
   reduced,
-  buttonRef,
+  registerButton,
   onSelect,
   onKeyDown,
-}: {
-  item: SegmentedControlItem;
-  active: boolean;
-  trackId: string;
-  reduced: boolean | null;
-  buttonRef: (el: HTMLButtonElement | null) => void;
-  onSelect: () => void;
-  onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) => void;
-}) => (
+}: SegmentButtonProps) => (
   <button
-    ref={buttonRef}
+    ref={registerButton}
     type="button"
+    disabled={item.disabled}
     aria-pressed={active}
+    data-slot="segmented-item"
+    data-state={active ? "active" : "inactive"}
     onClick={onSelect}
     onKeyDown={onKeyDown}
     className={cn(
-      "relative inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-full border-0 bg-transparent px-3.5 font-sans text-xs font-medium whitespace-nowrap transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
-      active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
+      SEGMENTED_BUTTON_BASE,
+      SEGMENTED_BUTTON_SIZES[size],
+      fullWidth && "flex-1",
+      active ? SEGMENTED_ACTIVE_TEXT[variant] : "text-muted-foreground hover:text-foreground",
     )}
   >
     {active && (
       <motion.span
         layoutId={`seg-thumb-${trackId}`}
-        transition={
-          reduced ? { duration: 0 } : { type: "spring", stiffness: 460, damping: 34, mass: 0.65 }
-        }
-        className="pointer-events-none absolute inset-0 rounded-full bg-card shadow-sm ring-1 ring-black/5 dark:ring-white/10"
+        transition={reduced ? { duration: 0 } : SPRING_TRANSITION}
+        className={SEGMENTED_THUMB_VARIANTS[variant]}
       />
     )}
-    <span className="relative z-10">{item.label}</span>
-    {item.badge && (
-      <span className="relative z-10 rounded-full bg-primary px-1.5 py-0.5 font-mono text-[10px] leading-none text-primary-foreground">
-        {item.badge}
-      </span>
-    )}
+    <SegmentLabel item={item} active={active} variant={variant} />
   </button>
 );
 
-const resolveNextIndex = (key: string, currentIndex: number, length: number): number | null => {
-  if (length === 0) return null;
-  if (key === "ArrowRight") return (currentIndex + 1 + length) % length;
-  if (key === "ArrowLeft") return (currentIndex - 1 + length) % length;
-  if (key === "Home") return 0;
-  if (key === "End") return length - 1;
+const findEnabledStep = (items: SegmentedControlItem[], start: number, step: 1 | -1): number => {
+  const count = items.length;
+  for (let offset = 1; offset <= count; offset += 1) {
+    const candidate = (start + offset * step + count) % count;
+    if (!items[candidate]?.disabled) return candidate;
+  }
+  return start;
+};
+
+const resolveNextIndex = (
+  key: string,
+  currentIndex: number,
+  items: SegmentedControlItem[],
+): number | null => {
+  if (items.length === 0) return null;
+  if (key === "ArrowRight") return findEnabledStep(items, currentIndex, 1);
+  if (key === "ArrowLeft") return findEnabledStep(items, currentIndex, -1);
+  if (key === "Home") return items.findIndex((i) => !i.disabled);
+  if (key === "End") {
+    for (let i = items.length - 1; i >= 0; i -= 1) {
+      if (!items[i]?.disabled) return i;
+    }
+    return null;
+  }
   return null;
 };
 
@@ -75,28 +144,30 @@ const useSegmentedFocus = (
   };
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     const idx = items.findIndex((i) => i.value === current);
-    const nextIdx = resolveNextIndex(event.key, idx === -1 ? 0 : idx, items.length);
-    if (nextIdx === null) return;
+    const nextIdx = resolveNextIndex(event.key, idx === -1 ? 0 : idx, items);
+    if (nextIdx === null || nextIdx < 0) return;
     event.preventDefault();
     const nextItem = items[nextIdx];
-    if (!nextItem) return;
+    if (!nextItem || nextItem.disabled) return;
     select(nextItem.value);
     buttonRefs.current[nextIdx]?.focus();
   };
   return { setButtonRef, handleKeyDown };
 };
 
-export const SegmentedControl = ({
-  items,
-  value: controlledValue,
-  defaultValue,
-  onValueChange,
-  ariaLabel = "分段切换器",
-  className,
-}: SegmentedControlProps) => {
+const resolveInitialValue = (items: SegmentedControlItem[], defaultValue?: string) =>
+  defaultValue ?? items.find((item) => !item.disabled)?.value ?? items[0]?.value ?? "";
+
+export const SegmentedControl = (props: SegmentedControlProps) => {
+  const { items, value: controlledValue, onValueChange, className } = props;
+  const variant = props.variant ?? "default";
+  const size = props.size ?? "md";
+  const fullWidth = props.fullWidth ?? false;
   const trackId = useId();
   const reduced = useReducedMotion();
-  const [internalValue, setInternalValue] = useState(defaultValue ?? items[0]?.value ?? "");
+  const [internalValue, setInternalValue] = useState(() =>
+    resolveInitialValue(items, props.defaultValue),
+  );
   const current = controlledValue ?? internalValue;
   const select = (next: string) => {
     if (controlledValue === undefined) setInternalValue(next);
@@ -106,10 +177,14 @@ export const SegmentedControl = ({
 
   return (
     <fieldset
-      aria-label={ariaLabel}
+      aria-label={props.ariaLabel ?? "分段切换器"}
       data-slot="segmented-control"
+      data-variant={variant}
+      data-size={size}
       className={cn(
-        "m-0 inline-flex flex-wrap items-center gap-0.5 rounded-full border-0 bg-secondary p-1 ring-1 ring-border/70",
+        SEGMENTED_TRACK_BASE,
+        SEGMENTED_TRACK_VARIANTS[variant],
+        fullWidth && "flex w-full",
         className,
       )}
     >
@@ -118,9 +193,12 @@ export const SegmentedControl = ({
           key={item.value}
           item={item}
           active={item.value === current}
+          variant={variant}
+          size={size}
+          fullWidth={fullWidth}
           trackId={trackId}
           reduced={reduced}
-          buttonRef={setButtonRef(idx)}
+          registerButton={setButtonRef(idx)}
           onSelect={() => select(item.value)}
           onKeyDown={handleKeyDown}
         />

@@ -1,5 +1,5 @@
 /**
- * Calendar 单元测试：从包公开入口验证单选、区间选、月份切换、禁用约束与键盘导航。
+ * Calendar 单元测试：从包公开入口验证单选、区间选、月份切换、回到今天、禁用约束与键盘导航。
  */
 import { cleanup, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -93,5 +93,27 @@ describe("Calendar", () => {
 
     expect(onValueChange).toHaveBeenCalledTimes(1);
     expect(onValueChange.mock.calls[0]?.[0]?.getDate()).toBe(11);
+  });
+
+  it("支持回到今天按钮、自定义页脚与视觉变体属性", async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn<(date: Date | null) => void>();
+
+    render(
+      <Calendar
+        variant="elevated"
+        size="sm"
+        radius="full"
+        showTodayButton
+        highlightDates={[new Date(2026, 10, 14)]}
+        footer={<span>共 1 个里程碑</span>}
+        defaultMonth={new Date(2026, 0, 1)}
+        onValueChange={onValueChange}
+      />,
+    );
+
+    expect(screen.getByText("共 1 个里程碑")).toBeTruthy();
+    await user.click(screen.getByRole("button", { name: "回到今天" }));
+    expect(onValueChange).toHaveBeenCalledTimes(1);
   });
 });

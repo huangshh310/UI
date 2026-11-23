@@ -28,28 +28,41 @@ describe("AiArtifact", () => {
     expect(onCopy).toHaveBeenCalledWith("export const Price = () => <div>¥199</div>;");
   });
 
-  it("支持多版本胶囊切换并将源码写入系统剪贴板", async () => {
+  it("支持多版本胶囊切换、分栏对照布局与下载源码回调", async () => {
     const user = userEvent.setup();
     const writeText = vi.fn<(text: string) => Promise<void>>().mockResolvedValue(undefined);
+    const onDownload = vi.fn<(code: string) => void>();
+    const onVersionChange = vi.fn<(ver: string) => void>();
     Object.defineProperty(navigator, "clipboard", {
       value: { writeText },
       configurable: true,
     });
 
-    render(
+    const { container } = render(
       <AiArtifact
         title="ReleaseCard.tsx"
+        variant="split"
         versions={["v1", "v2"]}
         code="export const ReleaseCard = () => null;"
         preview={<div>预览内容</div>}
+        onVersionChange={onVersionChange}
+        onDownload={onDownload}
       />,
     );
+
+    expect(container.querySelector('[data-variant="split"]')).toBeTruthy();
+    expect(screen.getByText("预览内容")).toBeTruthy();
+    expect(screen.getByText(/export const ReleaseCard/)).toBeTruthy();
 
     const v2Btn = screen.getByRole("button", { name: "v2" });
     await user.click(v2Btn);
     expect(v2Btn.getAttribute("aria-pressed")).toBe("true");
+    expect(onVersionChange).toHaveBeenCalledWith("v2");
 
     await user.click(screen.getByRole("button", { name: "复制源码" }));
     expect(writeText).toHaveBeenCalledWith("export const ReleaseCard = () => null;");
+
+    await user.click(screen.getByRole("button", { name: "下载源码" }));
+    expect(onDownload).toHaveBeenCalledWith("export const ReleaseCard = () => null;");
   });
 });

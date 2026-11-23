@@ -4,49 +4,20 @@
  * AiImageReveal：AI 图像生成显影组件，呈现粒子云呼吸等待、聚拢降噪马赛克到高清柔焦显影的完整过程。
  */
 import { cn } from "@matt-ui/utils";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { forwardRef, useImperativeHandle, useRef } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { forwardRef, useImperativeHandle, useRef, type ReactNode } from "react";
+import { RevealOverlays } from "./ai-image-reveal-overlays.js";
 import { useImageRevealController } from "./ai-image-reveal-state.js";
 import type {
   AiImageRevealHandle,
   AiImageRevealPhase,
   AiImageRevealProps,
 } from "./ai-image-reveal.types.js";
-
-const EASE_OUT = [0.22, 1, 0.36, 1] as const;
-
-const RevealStatusPill = ({ label }: { label: string }) => (
-  <motion.div
-    key="reveal-status"
-    initial={{ opacity: 0, y: 6 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: 4, transition: { duration: 0.2 } }}
-    transition={{ duration: 0.28, ease: EASE_OUT }}
-    className="absolute bottom-3 left-3 inline-flex h-8 items-center gap-2 rounded-full border border-solid border-border/80 bg-card/85 px-3 text-xs font-medium text-foreground shadow-xs backdrop-blur-md"
-  >
-    <span className="relative flex size-2">
-      <span className="absolute inset-0 animate-ping rounded-full bg-foreground/45 motion-reduce:hidden" />
-      <span className="relative size-2 rounded-full bg-foreground" />
-    </span>
-    <span>{label}</span>
-  </motion.div>
-);
-
-const RevealErrorOverlay = ({ onRetry }: { onRetry: () => void }) => (
-  <div
-    role="alert"
-    className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6 text-center"
-  >
-    <p className="m-0 text-xs text-muted-foreground">图像加载失败，请重试。</p>
-    <button
-      type="button"
-      onClick={onRetry}
-      className="h-8.5 cursor-pointer rounded-full border-0 bg-primary px-4 font-sans text-xs font-medium text-primary-foreground transition-transform active:scale-[0.97] outline-none focus-visible:ring-2 focus-visible:ring-ring"
-    >
-      重新生成
-    </button>
-  </div>
-);
+import {
+  REVEAL_EASE_OUT,
+  REVEAL_SHELL_VARIANT,
+  REVEAL_STAGE_RADIUS,
+} from "./ai-image-reveal.variants.js";
 
 const RevealImageLayer = ({
   loadedSrc,
@@ -75,80 +46,56 @@ const RevealImageLayer = ({
       className="absolute inset-0 size-full object-cover"
       initial={false}
       animate={shown ? { opacity: 1, filter: "blur(0px)", scale: 1 } : hidden}
-      transition={{ duration: shown ? refineSec : 0.25, ease: EASE_OUT }}
+      transition={{ duration: shown ? refineSec : 0.25, ease: REVEAL_EASE_OUT }}
     />
   );
 };
 
-const RevealOverlays = ({
-  phase,
-  reduce,
-  generatingLabel,
-  onRetry,
-}: {
-  phase: AiImageRevealPhase;
-  reduce: boolean;
-  generatingLabel: string;
-  onRetry: () => void;
-}) => {
-  const pending = phase === "idle" || phase === "gather";
-  return (
-    <>
-      {reduce && pending && (
-        <div aria-hidden="true" className="absolute inset-0 animate-pulse bg-foreground/[0.06]" />
-      )}
-      <AnimatePresence>{pending && <RevealStatusPill label={generatingLabel} />}</AnimatePresence>
-      {phase === "error" && <RevealErrorOverlay onRetry={onRetry} />}
-    </>
-  );
-};
-
-const RevealStageBody = ({
-  loadedSrc,
-  alt,
-  phase,
-  reduce,
-  refineSec,
-  generatingLabel,
-  canvasRef,
-  onRetry,
-}: {
+interface RevealStageBodyProps {
   loadedSrc: string | null;
   alt: string;
   phase: AiImageRevealPhase;
   reduce: boolean;
   refineSec: number;
   generatingLabel: string;
+  badge?: string;
+  showReplayButton: boolean;
+  actions?: ReactNode;
   canvasRef: React.RefObject<HTMLCanvasElement | null>;
   onRetry: () => void;
-}) => {
-  const shown = phase === "refine" || phase === "done";
+}
+
+const RevealStageBody = ({ canvasRef, ...p }: RevealStageBodyProps) => {
+  const shown = p.phase === "refine" || p.phase === "done";
   return (
     <>
       <RevealImageLayer
-        loadedSrc={loadedSrc}
-        alt={alt}
+        loadedSrc={p.loadedSrc}
+        alt={p.alt}
         shown={shown}
-        reduce={reduce}
-        refineSec={refineSec}
+        reduce={p.reduce}
+        refineSec={p.refineSec}
       />
       <motion.canvas
         ref={canvasRef}
         aria-hidden="true"
         style={{
           imageRendering: "pixelated",
-          visibility: phase === "done" || reduce ? "hidden" : "visible",
+          visibility: p.phase === "done" || p.reduce ? "hidden" : "visible",
         }}
         initial={false}
         animate={{ opacity: shown ? 0 : 1 }}
-        transition={{ duration: shown ? refineSec * 0.85 : 0.25, ease: "easeOut" }}
+        transition={{ duration: shown ? p.refineSec * 0.85 : 0.25, ease: "easeOut" }}
         className="absolute inset-0 size-full"
       />
       <RevealOverlays
-        phase={phase}
-        reduce={reduce}
-        generatingLabel={generatingLabel}
-        onRetry={onRetry}
+        phase={p.phase}
+        reduce={p.reduce}
+        generatingLabel={p.generatingLabel}
+        badge={p.badge}
+        showReplayButton={p.showReplayButton}
+        actions={p.actions}
+        onRetry={p.onRetry}
       />
     </>
   );
@@ -159,6 +106,11 @@ const extractRevealOptions = (props: AiImageRevealProps) => {
     src,
     alt,
     generating,
+    variant = "default",
+    radius = "lg",
+    badge,
+    showReplayButton = false,
+    actions,
     aspectRatio = 1,
     prompt,
     generatingLabel = "正在生成图像…",
@@ -173,9 +125,53 @@ const extractRevealOptions = (props: AiImageRevealProps) => {
   } = props;
   return {
     ctrlInput: { src, generating, colors, density, duration, crossOrigin, onReveal, onImageError },
-    view: { alt, aspectRatio, prompt, generatingLabel, duration, className, rest },
+    view: {
+      alt,
+      variant,
+      radius,
+      badge,
+      showReplayButton,
+      actions,
+      aspectRatio,
+      prompt,
+      generatingLabel,
+      duration,
+      className,
+      rest,
+    },
   };
 };
+
+type RevealViewOptions = ReturnType<typeof extractRevealOptions>["view"];
+
+const RevealCaption = ({
+  prompt,
+  phase,
+  alt,
+  generatingLabel,
+}: {
+  prompt?: string;
+  phase: AiImageRevealPhase;
+  alt: string;
+  generatingLabel: string;
+}) => (
+  <>
+    {prompt && (
+      <figcaption className="mt-2.5 px-1.5 pb-0.5 text-xs leading-snug text-muted-foreground">
+        {prompt}
+      </figcaption>
+    )}
+    <output className="sr-only" aria-live="polite">
+      {phase === "done" ? `图像已生成：${alt}` : generatingLabel}
+    </output>
+  </>
+);
+
+const buildStageClass = (radius: RevealViewOptions["radius"]) =>
+  cn(
+    "relative w-full overflow-hidden border border-solid border-border/75 bg-secondary/45 dark:border-white/10",
+    REVEAL_STAGE_RADIUS[radius],
+  );
 
 export const AiImageReveal = forwardRef<AiImageRevealHandle, AiImageRevealProps>(
   function AiImageReveal(props, ref) {
@@ -194,13 +190,14 @@ export const AiImageReveal = forwardRef<AiImageRevealHandle, AiImageRevealProps>
         {...view.rest}
         data-slot="ai-image-reveal"
         data-phase={phase}
+        data-variant={view.variant}
         aria-busy={phase === "idle" || phase === "gather"}
-        className={cn("m-0 w-full", view.className)}
+        className={cn("m-0 w-full", REVEAL_SHELL_VARIANT[view.variant], view.className)}
       >
         <div
           ref={boxRef}
           style={{ aspectRatio: String(view.aspectRatio) }}
-          className="relative w-full overflow-hidden rounded-[20px] border border-solid border-border/75 bg-secondary/45"
+          className={buildStageClass(view.radius)}
         >
           <RevealStageBody
             loadedSrc={loadedSrc}
@@ -209,18 +206,19 @@ export const AiImageReveal = forwardRef<AiImageRevealHandle, AiImageRevealProps>
             reduce={reduce}
             refineSec={reduce ? 0.3 : view.duration * 0.4}
             generatingLabel={view.generatingLabel}
+            badge={view.badge}
+            showReplayButton={view.showReplayButton}
+            actions={view.actions}
             canvasRef={canvasRef}
             onRetry={replay}
           />
         </div>
-        {view.prompt && (
-          <figcaption className="mt-2.5 px-1 text-xs leading-snug text-muted-foreground">
-            {view.prompt}
-          </figcaption>
-        )}
-        <output className="sr-only" aria-live="polite">
-          {phase === "done" ? `图像已生成：${view.alt}` : view.generatingLabel}
-        </output>
+        <RevealCaption
+          prompt={view.prompt}
+          phase={phase}
+          alt={view.alt}
+          generatingLabel={view.generatingLabel}
+        />
       </figure>
     );
   },

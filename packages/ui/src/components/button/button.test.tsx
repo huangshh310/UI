@@ -28,6 +28,19 @@ describe("Button", () => {
     expect(onSubmit).not.toHaveBeenCalled();
   });
 
+  it("透传 variant、size 与 radius 对应的 data 属性", () => {
+    render(
+      <Button variant="signal" size="lg" radius="pill">
+        立即体验
+      </Button>,
+    );
+    const button = screen.getByRole("button", { name: "立即体验" });
+
+    expect(button.getAttribute("data-variant")).toBe("signal");
+    expect(button.getAttribute("data-size")).toBe("lg");
+    expect(button.getAttribute("data-radius")).toBe("pill");
+  });
+
   describe("loading", () => {
     it("鼠标点击与键盘激活都不会触发 onClick", async () => {
       const onClick = vi.fn<() => void>();

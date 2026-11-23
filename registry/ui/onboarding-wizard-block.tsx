@@ -9,9 +9,39 @@ import { NumberFlow } from "@/components/ui/number-flow";
 import { OtpInput } from "@/components/ui/otp-input";
 import { StretchSwitch } from "@/components/ui/stretch-switch";
 import { cn } from "@/lib/utils";
-import { Check, CheckCircle2, ShieldCheck } from "lucide-react";
+import { Check, CheckCircle2, Globe, ShieldCheck } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useId, useState } from "react";
+
+export interface WizardStepMeta {
+  id: number;
+  title: string;
+  hint: string;
+}
+
+export interface WizardRegionOption {
+  label: string;
+  latency: string;
+}
+
+export const WIZARD_STEPS: WizardStepMeta[] = [
+  { id: 0, title: "基础信息", hint: "命名与默认区域" },
+  { id: 1, title: "安全策略", hint: "SSO 与动态口令" },
+  { id: 2, title: "确认启动", hint: "核对配置并完成" },
+];
+
+export const WIZARD_REGIONS: WizardRegionOption[] = [
+  { label: "东京（ap-northeast-1）", latency: "18ms" },
+  { label: "新加坡（ap-southeast-1）", latency: "32ms" },
+  { label: "法兰克福（eu-central-1）", latency: "96ms" },
+];
+
+export const WIZARD_SURFACE_CLASS: Record<OnboardingWizardVariant, string> = {
+  card: "rounded-[24px] border-border/80 bg-card p-6 shadow-xs dark:border-white/10",
+  embedded: "rounded-2xl border-border/75 bg-card/85 p-5 shadow-none dark:border-white/10",
+  elevated: "rounded-[24px] border-border/80 bg-card p-6 shadow-md dark:border-white/12",
+};
+export type OnboardingWizardVariant = "card" | "embedded" | "elevated";
 
 export interface OnboardingResult {
   workspace: string;
@@ -20,44 +50,57 @@ export interface OnboardingResult {
 }
 
 export interface OnboardingWizardBlockProps {
+  /** 向导主标题 */
+  title?: string;
+  /** 向导副标题 */
+  description?: string;
+  /** 容器视觉变体 */
+  variant?: OnboardingWizardVariant;
+  /** 默认工作区名称 */
+  defaultWorkspace?: string;
+  /** 是否允许点击已完成步骤直接回跳 */
+  allowStepJump?: boolean;
   /** 完成全部引导步骤后的回调 */
   onComplete?: (result: OnboardingResult) => void;
   /** 自定义类名 */
   className?: string;
 }
-const STEPS = [
-  { id: 0, title: "基础信息", hint: "命名与默认区域" },
-  { id: 1, title: "安全策略", hint: "SSO 与动态口令" },
-  { id: 2, title: "确认启动", hint: "核对配置并完成" },
-];
-
-const REGIONS = ["东京（ap-northeast-1）", "新加坡（ap-southeast-1）", "法兰克福（eu-central-1）"];
-
 const StepBadgeItem = ({
   item,
   done,
   active,
+  canJump,
+  onSelect,
 }: {
-  item: (typeof STEPS)[number];
+  item: WizardStepMeta;
   done: boolean;
   active: boolean;
+  canJump: boolean;
+  onSelect: () => void;
 }) => (
-  <div
+  <button
+    type="button"
+    disabled={!canJump}
+    aria-current={active ? "step" : undefined}
+    onClick={onSelect}
     className={cn(
-      "flex items-center gap-2.5 rounded-xl border border-solid px-3 py-2.5 text-xs transition-colors",
+      "flex items-center gap-2.5 rounded-xl border border-solid px-3 py-2.5 text-left text-xs transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default",
+      canJump && "cursor-pointer hover:border-foreground/25 dark:hover:border-white/25",
       active
-        ? "border-foreground/25 bg-secondary/75 text-foreground"
+        ? "border-foreground/25 bg-secondary/75 text-foreground shadow-xs dark:border-white/20 dark:bg-secondary/50"
         : done
-          ? "border-border bg-secondary/35 text-foreground"
-          : "border-border/70 bg-transparent text-muted-foreground",
+          ? "border-border/80 bg-secondary/35 text-foreground dark:border-white/10"
+          : "border-border/65 bg-transparent text-muted-foreground dark:border-white/10",
     )}
   >
     <span
       className={cn(
         "inline-flex size-6 shrink-0 items-center justify-center rounded-full font-mono text-[11px] font-semibold",
-        active || done
-          ? "bg-primary text-primary-foreground"
-          : "bg-secondary text-muted-foreground",
+        done
+          ? "bg-emerald-600 text-white dark:bg-emerald-500 dark:text-zinc-950"
+          : active
+            ? "bg-primary text-primary-foreground"
+            : "bg-secondary text-muted-foreground",
       )}
     >
       {done ? <Check aria-hidden="true" className="size-3.5" /> : item.id + 1}
@@ -66,31 +109,90 @@ const StepBadgeItem = ({
       <p className="m-0 truncate font-medium">{item.title}</p>
       <p className="m-0 hidden truncate text-[11px] text-muted-foreground sm:block">{item.hint}</p>
     </div>
+  </button>
+);
+
+const StepProgressTrack = ({ pct, reduced }: { pct: number; reduced: boolean | null }) => (
+  <div className="h-1 w-full overflow-hidden rounded-full bg-secondary">
+    <motion.div
+      className="h-full rounded-full bg-primary"
+      initial={false}
+      animate={{ width: `${pct}%` }}
+      transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 320, damping: 32 }}
+    />
   </div>
 );
 
-const StepHeader = ({ step, pct }: { step: number; pct: number }) => (
-  <div className="flex flex-col gap-4 border-b border-solid border-border/80 pb-5">
+interface StepHeaderProps {
+  title: string;
+  description: string;
+  step: number;
+  pct: number;
+  reduced: boolean | null;
+  allowStepJump: boolean;
+  completed: boolean;
+  onSelectStep: (idx: number) => void;
+}
+
+const StepHeader = (p: StepHeaderProps) => (
+  <div className="flex flex-col gap-4 border-b border-solid border-border/75 pb-5 dark:border-white/10">
     <div className="flex flex-wrap items-center justify-between gap-2">
       <div>
-        <p className="m-0 text-base font-semibold tracking-tight text-foreground">
-          初始化你的团队工作区
-        </p>
-        <p className="m-0 mt-0.5 text-xs text-muted-foreground">
-          按步骤完成基础信息、访问安全与 Registry 同步配置。
-        </p>
+        <p className="m-0 text-base font-semibold tracking-tight text-foreground">{p.title}</p>
+        <p className="m-0 mt-0.5 text-xs text-muted-foreground">{p.description}</p>
       </div>
-      <div className="flex items-center gap-1.5 rounded-full border border-solid border-border bg-secondary/50 px-3 py-1">
+      <div className="flex items-center gap-1.5 rounded-full border border-solid border-border/80 bg-secondary/50 px-3 py-1 dark:border-white/10 dark:bg-secondary/35">
         <span className="text-xs text-muted-foreground">完成度</span>
-        <NumberFlow value={pct} suffix="%" className="text-xs font-semibold text-foreground" />
+        <NumberFlow value={p.pct} suffix="%" className="text-xs font-semibold text-foreground" />
       </div>
     </div>
+    <StepProgressTrack pct={p.pct} reduced={p.reduced} />
     <div className="grid grid-cols-3 gap-2">
-      {STEPS.map((item) => (
-        <StepBadgeItem key={item.id} item={item} done={step > item.id} active={step === item.id} />
-      ))}
+      {WIZARD_STEPS.map((item) => {
+        const done = p.step > item.id;
+        return (
+          <StepBadgeItem
+            key={item.id}
+            item={item}
+            done={done}
+            active={p.step === item.id}
+            canJump={p.allowStepJump && done && !p.completed}
+            onSelect={() => p.onSelectStep(item.id)}
+          />
+        );
+      })}
     </div>
   </div>
+);
+
+const RegionCard = ({
+  item,
+  selected,
+  onSelect,
+}: {
+  item: WizardRegionOption;
+  selected: boolean;
+  onSelect: () => void;
+}) => (
+  <button
+    type="button"
+    aria-pressed={selected}
+    onClick={onSelect}
+    className={cn(
+      "flex cursor-pointer flex-col gap-1.5 rounded-xl border border-solid px-3.5 py-2.5 text-left text-xs font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
+      selected
+        ? "border-primary bg-secondary/75 text-foreground shadow-xs dark:bg-secondary/50"
+        : "border-border/80 bg-background text-muted-foreground hover:border-foreground/20 hover:text-foreground dark:border-white/10 dark:bg-card",
+    )}
+  >
+    <span className="flex items-center justify-between gap-2">
+      <Globe aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
+      <span className="font-mono text-[10px] text-emerald-700 tabular-nums dark:text-emerald-300">
+        {item.latency}
+      </span>
+    </span>
+    <span className="truncate">{item.label}</span>
+  </button>
 );
 
 const StepProfile = ({
@@ -117,26 +219,19 @@ const StepProfile = ({
           value={workspace}
           onChange={(event) => onWorkspaceChange(event.target.value)}
           placeholder="例如：matt-ui Studio"
-          className="h-9 max-w-md rounded-lg border border-solid border-border bg-background px-3 text-sm text-foreground outline-none focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset dark:bg-card"
+          className="h-9.5 max-w-md rounded-xl border border-solid border-border/80 bg-background px-3 text-sm text-foreground outline-none transition-[border-color,box-shadow] focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset dark:border-white/12 dark:bg-card"
         />
       </div>
       <div className="flex flex-col gap-2">
         <span className="text-xs font-medium text-foreground">默认边缘部署节点</span>
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-          {REGIONS.map((item) => (
-            <button
-              key={item}
-              type="button"
-              onClick={() => onRegionChange(item)}
-              className={cn(
-                "cursor-pointer rounded-xl border border-solid px-3 py-2.5 text-left text-xs font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                region === item
-                  ? "border-primary bg-secondary/75 text-foreground"
-                  : "border-border bg-background text-muted-foreground hover:text-foreground dark:bg-card",
-              )}
-            >
-              {item}
-            </button>
+          {WIZARD_REGIONS.map((item) => (
+            <RegionCard
+              key={item.label}
+              item={item}
+              selected={region === item.label}
+              onSelect={() => onRegionChange(item.label)}
+            />
           ))}
         </div>
       </div>
@@ -161,7 +256,7 @@ const StepSecurity = ({
 }) => (
   <div className="flex flex-col gap-4">
     <p className="m-0 text-sm font-semibold text-foreground">安全与发布策略</p>
-    <div className="flex flex-col gap-3 rounded-xl border border-solid border-border bg-secondary/35 p-4">
+    <div className="flex flex-col gap-3 rounded-2xl border border-solid border-border/80 bg-secondary/25 p-4 dark:border-white/10 dark:bg-secondary/20">
       <div className="flex items-center justify-between gap-3">
         <div>
           <p className="m-0 text-xs font-medium text-foreground">强制企业单点登录（SSO）</p>
@@ -171,7 +266,7 @@ const StepSecurity = ({
         </div>
         <StretchSwitch aria-label="强制企业单点登录" checked={sso} onCheckedChange={onSsoChange} />
       </div>
-      <div className="flex items-center justify-between gap-3 border-t border-solid border-border/70 pt-3">
+      <div className="flex items-center justify-between gap-3 border-t border-solid border-border/75 pt-3 dark:border-white/10">
         <div>
           <p className="m-0 text-xs font-medium text-foreground">自动无障碍巡检门禁</p>
           <p className="m-0 text-[11px] text-muted-foreground">
@@ -196,20 +291,22 @@ const StepSummary = ({
   workspace,
   region,
   sso,
+  audit,
   completed,
 }: {
   workspace: string;
   region: string;
   sso: boolean;
+  audit: boolean;
   completed: boolean;
 }) =>
   completed ? (
-    <div className="flex flex-col items-center gap-2 py-6 text-center">
-      <span className="inline-flex size-11 items-center justify-center rounded-full bg-primary text-primary-foreground">
-        <CheckCircle2 aria-hidden="true" className="size-5" />
+    <div className="flex flex-col items-center gap-2.5 py-6 text-center">
+      <span className="inline-flex size-12 items-center justify-center rounded-full border border-solid border-emerald-600/25 bg-emerald-500/12 text-emerald-700 dark:border-emerald-400/25 dark:bg-emerald-500/16 dark:text-emerald-300">
+        <CheckCircle2 aria-hidden="true" className="size-6" />
       </span>
-      <p className="m-0 text-base font-semibold text-foreground">工作区已就绪</p>
-      <p className="m-0 text-xs text-muted-foreground">
+      <p className="m-0 text-base font-semibold tracking-tight text-foreground">工作区已就绪</p>
+      <p className="m-0 max-w-md text-xs leading-relaxed text-muted-foreground">
         「{workspace}」已部署至 {region}，可立即通过 shadcn CLI 安装组件。
       </p>
     </div>
@@ -219,7 +316,7 @@ const StepSummary = ({
         <ShieldCheck aria-hidden="true" className="size-4 text-foreground" />
         <p className="m-0 text-sm font-semibold text-foreground">确认并启动工作区</p>
       </div>
-      <div className="grid grid-cols-1 gap-3 rounded-xl border border-solid border-border bg-secondary/35 p-4 text-xs sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 rounded-2xl border border-solid border-border/80 bg-secondary/25 p-4 text-xs sm:grid-cols-3 dark:border-white/10 dark:bg-secondary/20">
         <div>
           <p className="m-0 text-muted-foreground">工作区名称</p>
           <p className="m-0 mt-1 font-medium text-foreground">{workspace || "matt-ui Studio"}</p>
@@ -229,9 +326,10 @@ const StepSummary = ({
           <p className="m-0 mt-1 font-medium text-foreground">{region}</p>
         </div>
         <div>
-          <p className="m-0 text-muted-foreground">安全模式</p>
+          <p className="m-0 text-muted-foreground">安全与门禁</p>
           <p className="m-0 mt-1 font-medium text-foreground">
             {sso ? "已开启 SSO 强制校验" : "标准邮箱登录"}
+            {audit ? " · A11y 巡检" : ""}
           </p>
         </div>
       </div>
@@ -248,24 +346,31 @@ const WizardFooter = ({
   onBack: () => void;
   onNext: () => void;
 }) => (
-  <div className="flex items-center justify-between gap-2 border-t border-solid border-border/80 pt-4">
+  <div className="flex flex-wrap items-center justify-between gap-2 border-t border-solid border-border/75 pt-4 dark:border-white/10">
     <button
       type="button"
       disabled={step === 0 && !completed}
       onClick={onBack}
-      className="inline-flex h-8 cursor-pointer items-center rounded-lg border border-solid border-border bg-background px-3 font-sans text-xs font-medium text-foreground transition-colors hover:bg-accent disabled:pointer-events-none disabled:opacity-40 dark:bg-card"
+      className="inline-flex h-8.5 cursor-pointer items-center rounded-xl border border-solid border-border/80 bg-background px-3.5 font-sans text-xs font-medium text-foreground transition-colors hover:bg-accent outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-40 dark:border-white/12 dark:bg-card"
     >
       {completed ? "重新配置" : "上一步"}
     </button>
-    {!completed && (
-      <button
-        type="button"
-        onClick={onNext}
-        className="inline-flex h-9 cursor-pointer items-center rounded-full border border-solid border-primary bg-primary px-4 font-sans text-xs font-medium text-primary-foreground transition-opacity hover:opacity-90"
-      >
-        {step === STEPS.length - 1 ? "完成初始化" : "下一步"}
-      </button>
-    )}
+    <div className="flex items-center gap-3">
+      {!completed && (
+        <span className="font-mono text-[11px] text-muted-foreground tabular-nums">
+          第 {step + 1} / {WIZARD_STEPS.length} 步
+        </span>
+      )}
+      {!completed && (
+        <button
+          type="button"
+          onClick={onNext}
+          className="inline-flex h-9 cursor-pointer items-center rounded-full border border-solid border-primary bg-primary px-4 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-[opacity,transform] hover:opacity-92 active:scale-[0.98] outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+        >
+          {step === WIZARD_STEPS.length - 1 ? "完成初始化" : "下一步"}
+        </button>
+      )}
+    </div>
   </div>
 );
 
@@ -296,13 +401,13 @@ interface WizardFormState {
   otp: string;
 }
 
-const INITIAL_FORM: WizardFormState = {
-  workspace: "matt-ui Studio",
-  region: REGIONS[0] ?? "东京（ap-northeast-1）",
+const createInitialForm = (defaultWorkspace: string): WizardFormState => ({
+  workspace: defaultWorkspace,
+  region: WIZARD_REGIONS[0]?.label ?? "东京（ap-northeast-1）",
   sso: true,
   audit: true,
   otp: "",
-};
+});
 
 const StepBody = ({
   step,
@@ -342,21 +447,30 @@ const StepBody = ({
       workspace={form.workspace}
       region={form.region}
       sso={form.sso}
+      audit={form.audit}
       completed={completed}
     />
   );
 };
 
-export const OnboardingWizardBlock = ({ onComplete, className }: OnboardingWizardBlockProps) => {
+export const OnboardingWizardBlock = ({
+  title = "初始化你的团队工作区",
+  description = "按步骤完成基础信息、访问安全与 Registry 同步配置。",
+  variant = "card",
+  defaultWorkspace = "matt-ui Studio",
+  allowStepJump = true,
+  onComplete,
+  className,
+}: OnboardingWizardBlockProps) => {
   const reduced = useReducedMotion();
   const [step, setStep] = useState(0);
   const [completed, setCompleted] = useState(false);
-  const [form, setForm] = useState<WizardFormState>(INITIAL_FORM);
+  const [form, setForm] = useState<WizardFormState>(() => createInitialForm(defaultWorkspace));
 
   const patch = (next: Partial<WizardFormState>) => setForm((prev) => ({ ...prev, ...next }));
-  const pct = completed ? 100 : Math.round(((step + 1) / STEPS.length) * 100);
+  const pct = completed ? 100 : Math.round(((step + 1) / WIZARD_STEPS.length) * 100);
   const handleNext = () => {
-    if (step < STEPS.length - 1) return setStep((s) => s + 1);
+    if (step < WIZARD_STEPS.length - 1) return setStep((s) => s + 1);
     setCompleted(true);
     onComplete?.({ workspace: form.workspace, region: form.region, sso: form.sso });
   };
@@ -365,12 +479,23 @@ export const OnboardingWizardBlock = ({ onComplete, className }: OnboardingWizar
   return (
     <div
       data-slot="onboarding-wizard-block"
+      data-variant={variant}
       className={cn(
-        "flex w-full max-w-4xl flex-col gap-5 rounded-2xl border border-solid border-border bg-card p-6 shadow-sm",
+        "flex w-full max-w-4xl flex-col gap-5 border border-solid",
+        WIZARD_SURFACE_CLASS[variant],
         className,
       )}
     >
-      <StepHeader step={completed ? STEPS.length : step} pct={pct} />
+      <StepHeader
+        title={title}
+        description={description}
+        step={completed ? WIZARD_STEPS.length : step}
+        pct={pct}
+        reduced={reduced}
+        allowStepJump={allowStepJump}
+        completed={completed}
+        onSelectStep={setStep}
+      />
       <StepMotionPanel panelKey={completed ? "done" : step} reduced={reduced}>
         <StepBody step={step} form={form} completed={completed} patch={patch} />
       </StepMotionPanel>

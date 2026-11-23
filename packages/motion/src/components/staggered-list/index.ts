@@ -1,2 +1,2 @@
 export { StaggeredList } from "./staggered-list.js";
-export type { StaggeredListProps } from "./staggered-list.types.js";
+export type { StaggeredListProps, StaggeredListVariant } from "./staggered-list.types.js";

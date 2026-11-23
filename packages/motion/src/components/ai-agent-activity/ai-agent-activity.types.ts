@@ -15,6 +15,8 @@ export type AiAgentActivityType =
 
 export type AiAgentActivityStatus = "pending" | "running" | "success" | "error" | "cancelled";
 
+export type AiAgentActivityVariant = "card" | "ghost" | "glass";
+
 export interface AiAgentActivityDetails {
   input?: string | Record<string, unknown>;
   output?: string | Record<string, unknown>;
@@ -37,8 +39,18 @@ export interface AiAgentActivityItemData {
 export interface AiAgentActivityProps {
   /** 智能体执行步骤列表 */
   activities: AiAgentActivityItemData[];
-  /** 是否正处于运行中（页头展示绿色脉动状态） */
+  /** 是否正处于运行中（页头展示脉动状态） */
   isRunning?: boolean;
+  /** 外观变体：card 发丝卡片、ghost 无框内联轨迹、glass 毛玻璃面板，默认 card */
+  variant?: AiAgentActivityVariant;
+  /** 紧凑排版密度，默认 false */
+  compact?: boolean;
+  /** 是否在步骤标题旁显示动作类型等宽微徽章，默认 false */
+  showTypeBadge?: boolean;
+  /** 是否允许折叠整条时间线为单行摘要，默认 false */
+  collapsible?: boolean;
+  /** collapsible=true 时的初始折叠状态，默认 false */
+  defaultCollapsed?: boolean;
   /** 面板标题，默认「执行轨迹」 */
   title?: string;
   /** 可选智能体名称标识 */

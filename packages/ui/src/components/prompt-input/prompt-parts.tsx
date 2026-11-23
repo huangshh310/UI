@@ -9,15 +9,18 @@ import { createContext, useContext, type ReactNode } from "react";
 import type {
   PromptInputFooterProps,
   PromptInputHeaderProps,
+  PromptInputSize,
   PromptInputStatus,
   PromptInputSubmitProps,
   PromptInputToolsProps,
   PromptModelOption,
 } from "./prompt-input.types.js";
+import { PROMPT_FOCUS_RING } from "./prompt-input.variants.js";
 
 export interface PromptContextValue {
   text: string;
   status: PromptInputStatus;
+  size: PromptInputSize;
   canSubmit: boolean;
   canQueue: boolean;
   maxLength?: number;
@@ -33,6 +36,7 @@ export interface PromptContextValue {
 export const PromptCtx = createContext<PromptContextValue>({
   text: "",
   status: "idle",
+  size: "md",
   canSubmit: false,
   canQueue: false,
   placeholder: "输入你的问题…",
@@ -52,7 +56,7 @@ const ModelPills = ({
   selectedModel?: string;
   onSelect?: (id: string) => void;
 }) => (
-  <div className="inline-flex items-center gap-0.5 rounded-full border border-solid border-border/80 bg-secondary p-0.5">
+  <div className="inline-flex items-center gap-0.5 rounded-full border border-solid border-border/75 bg-secondary/75 p-0.5 dark:border-white/10 dark:bg-white/7">
     {models.map(({ id, label }) => {
       const active = id === selectedModel;
       return (
@@ -62,9 +66,10 @@ const ModelPills = ({
           aria-pressed={active}
           onClick={() => onSelect?.(id)}
           className={cn(
-            "h-7 cursor-pointer rounded-full border-0 px-2.5 font-sans text-xs font-medium transition-all duration-(--ui-duration-fast) outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            "h-7 cursor-pointer rounded-full border border-solid border-transparent px-2.5 font-sans text-xs font-medium transition-all duration-(--ui-duration-fast)",
+            PROMPT_FOCUS_RING,
             active
-              ? "bg-card text-foreground shadow-xs"
+              ? "bg-card text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.05)] dark:bg-card"
               : "bg-transparent text-muted-foreground hover:text-foreground",
           )}
         >
@@ -131,7 +136,8 @@ export const PromptInputSubmit = ({ className, onClick, ...props }: PromptInputS
           onClick?.(e);
         }}
         className={cn(
-          "inline-flex size-8.5 cursor-pointer items-center justify-center rounded-full border-0 bg-primary text-primary-foreground shadow-xs transition-transform duration-(--ui-duration-fast) hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none active:scale-95",
+          "inline-flex size-8 cursor-pointer items-center justify-center rounded-full border border-solid border-transparent bg-primary text-primary-foreground shadow-xs transition-transform duration-(--ui-duration-fast) hover:opacity-90 active:scale-95",
+          PROMPT_FOCUS_RING,
           className,
         )}
         {...props}
@@ -155,9 +161,10 @@ export const PromptInputSubmit = ({ className, onClick, ...props }: PromptInputS
         onClick?.(e);
       }}
       className={cn(
-        "inline-flex size-8.5 cursor-pointer items-center justify-center rounded-full border-0 transition-all duration-(--ui-duration-fast) outline-none focus-visible:ring-2 focus-visible:ring-ring",
+        "inline-flex size-8 cursor-pointer items-center justify-center rounded-full border border-solid border-transparent transition-all duration-(--ui-duration-fast)",
+        PROMPT_FOCUS_RING,
         meta.enabled
-          ? "bg-primary text-primary-foreground shadow-sm hover:opacity-90 active:scale-95"
+          ? "bg-primary text-primary-foreground shadow-xs hover:opacity-90 active:scale-95"
           : "cursor-not-allowed bg-secondary text-muted-foreground/50",
         className,
       )}
@@ -166,6 +173,12 @@ export const PromptInputSubmit = ({ className, onClick, ...props }: PromptInputS
       <SubmitGlyph isSubmitting={meta.isSubmitting} isQueue={meta.isQueue} />
     </button>
   );
+};
+
+const counterToneClass = (length: number, maxLength: number) => {
+  if (length >= maxLength) return "text-destructive";
+  if (length >= maxLength * 0.9) return "text-amber-500";
+  return "text-muted-foreground";
 };
 
 export const DefaultToolbar = (p: {
@@ -187,7 +200,10 @@ export const DefaultToolbar = (p: {
           aria-label="添加附件"
           disabled={p.disabled}
           onClick={p.onAttach}
-          className="inline-flex size-8 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-40"
+          className={cn(
+            "inline-flex size-8 cursor-pointer items-center justify-center rounded-full border border-solid border-transparent bg-transparent text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:bg-accent hover:text-foreground disabled:pointer-events-none disabled:opacity-40",
+            PROMPT_FOCUS_RING,
+          )}
         >
           <Paperclip aria-hidden="true" className="size-4" />
         </button>
@@ -199,7 +215,12 @@ export const DefaultToolbar = (p: {
     </PromptInputTools>
     <div className="flex shrink-0 items-center gap-2">
       {p.maxLength !== undefined && (
-        <span className="font-mono text-[11px] text-muted-foreground tabular-nums">
+        <span
+          className={cn(
+            "font-mono text-[11px] tabular-nums",
+            counterToneClass(p.length, p.maxLength),
+          )}
+        >
           {p.length}/{p.maxLength}
         </span>
       )}

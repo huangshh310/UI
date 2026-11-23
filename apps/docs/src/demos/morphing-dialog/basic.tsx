@@ -2,6 +2,7 @@
 
 import { MorphingDialog } from "@matt-ui/motion";
 import { Button } from "@matt-ui/ui";
+import { Activity } from "lucide-react";
 import { useState } from "react";
 
 export default function MorphingDialogBasicDemo() {
@@ -14,6 +15,9 @@ export default function MorphingDialogBasicDemo() {
       title="边缘发布管线"
       subtitle="东京 · ap-northeast-1"
       tag="运行中"
+      tagTone="success"
+      icon={<Activity className="size-3.5" />}
+      meta="18 次增量构建 · 冷启动 42ms"
       footer={
         <Button size="sm" variant="signal" onClick={() => setOpen(false)}>
           知道了

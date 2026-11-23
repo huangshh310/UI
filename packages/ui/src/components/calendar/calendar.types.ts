@@ -1,12 +1,17 @@
 /**
  * Calendar 组件的类型定义。
  */
+import type { ReactNode } from "react";
 
 /** 日期区间值 */
 export interface DateRange {
   start: Date | null;
   end: Date | null;
 }
+
+export type CalendarVariant = "default" | "elevated" | "ghost";
+export type CalendarSize = "sm" | "md" | "lg";
+export type CalendarRadius = "md" | "lg" | "full";
 
 export interface CalendarProps {
   /** 选择模式：单日或区间 */
@@ -43,6 +48,18 @@ export interface CalendarProps {
   isDateDisabled?: (date: Date) => boolean;
   /** 是否显示前后月份补位日期 */
   showOutsideDays?: boolean;
+  /** 日历面板视觉风格 */
+  variant?: CalendarVariant;
+  /** 日期网格尺寸密度 */
+  size?: CalendarSize;
+  /** 日期单元格圆角风格 */
+  radius?: CalendarRadius;
+  /** 需要打点标注的日程或高亮日期 */
+  highlightDates?: Date[];
+  /** 是否在底部展示“回到今天”快捷栏 */
+  showTodayButton?: boolean;
+  /** 自定义底部插槽 */
+  footer?: ReactNode;
   className?: string;
   "aria-label"?: string;
 }

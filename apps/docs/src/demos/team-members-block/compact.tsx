@@ -17,10 +17,19 @@ const DESIGN_TEAM = [
     email: "su@studio.dev",
     role: "设计" as const,
     initials: "苏",
-    status: "online" as const,
+    status: "busy" as const,
   },
 ];
 
 export default function TeamMembersBlockCompactDemo() {
-  return <TeamMembersBlock initialMembers={DESIGN_TEAM} />;
+  return (
+    <TeamMembersBlock
+      initialMembers={DESIGN_TEAM}
+      title="设计系统核心小组"
+      description="紧凑行高模式，适合内嵌在项目侧栏或子空间权限页。"
+      variant="subtle"
+      compact
+      maxSeats={6}
+    />
+  );
 }

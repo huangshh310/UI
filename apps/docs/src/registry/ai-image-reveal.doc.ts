@@ -1,4 +1,5 @@
 import AiImageRevealBasicDemo from "@/demos/ai-image-reveal/basic";
+import AiImageRevealGalleryDemo from "@/demos/ai-image-reveal/gallery";
 import AiImageRevealGeneratingDemo from "@/demos/ai-image-reveal/generating";
 import type { ComponentDoc } from "./registry.types";
 
@@ -6,66 +7,79 @@ export const AI_IMAGE_REVEAL_DOC: ComponentDoc = {
   slug: "ai-image-reveal",
   name: "AiImageReveal",
   description:
-    "AI 图像生成显影组件，模拟粒子云呼吸等待、像素采样聚拢降噪马赛克到高清柔焦显影的完整过程。",
+    "AI 图像生成显影组件，模拟粒子云呼吸等待、像素采样聚拢降噪马赛克到高清柔焦显影，支持画廊相框、毛玻璃角标与内联重播。",
   category: "ai",
   registryName: "ai-image-reveal",
-  dependencies: ["motion"],
+  dependencies: ["motion", "lucide-react", "clsx", "tailwind-merge"],
   createdAt: "2026-11-23",
   usage: `import { AiImageReveal } from "@/components/ui/ai-image-reveal";
 
 export function Example() {
-  return <AiImageReveal src="/artwork.png" alt="生成的艺术画面" aspectRatio={1} />;
+  return (
+    <AiImageReveal
+      src="/artwork.png"
+      alt="生成的艺术画面"
+      variant="framed"
+      badge="1024×1024"
+      showReplayButton
+    />
+  );
 }`,
   specimens: [
     {
       slug: "basic",
       name: "粒子聚拢与高清显影",
-      description: "自动采样目标图像色块并驱动粒子马赛克聚拢，支持重播与切换图像。",
+      description: "自动采样目标图像色块并驱动粒子马赛克聚拢，支持画廊相框、角标与内联重播。",
       file: "ai-image-reveal/basic.tsx",
       Demo: AiImageRevealBasicDemo,
     },
     {
       slug: "generating",
       name: "异步等待态到显影完成",
-      description: "传入 generating 控制粒子呼吸态，图像就绪后无缝进入聚拢降噪流程。",
+      description: "传入 generating 控制毛玻璃粒子呼吸态，图像就绪后无缝进入聚拢降噪流程。",
       file: "ai-image-reveal/generating.tsx",
       Demo: AiImageRevealGeneratingDemo,
+      directory: false,
+    },
+    {
+      slug: "gallery",
+      name: "画廊卡片与自定义操作槽",
+      description: "结合 variant='framed'、radius='xl' 与 actions 槽提供下载/操作悬浮胶囊。",
+      file: "ai-image-reveal/gallery.tsx",
+      Demo: AiImageRevealGalleryDemo,
       directory: false,
     },
   ],
   api: [
     {
-      name: "src",
-      type: "string | null",
-      defaultValue: "—",
-      description: "目标图像地址；留空时停留粒子云等待态",
-    },
-    { name: "alt", type: "string", defaultValue: "必填", description: "图像无障碍替代文本" },
-    {
-      name: "generating",
-      type: "boolean",
-      defaultValue: "!src",
-      description: "强制停留在生成等待态",
+      name: "src / alt / generating",
+      type: "string | null / string / boolean",
+      defaultValue: "— / 必填 / !src",
+      description: "目标图像地址、无障碍替代文本与是否强制停留于粒子等待态。",
     },
     {
-      name: "aspectRatio",
-      type: "number",
-      defaultValue: "1",
-      description: "画布宽高比（如 1、16/10）",
-    },
-    { name: "duration", type: "number", defaultValue: "2.8", description: "显影总时长（秒）" },
-    { name: "density", type: "number", defaultValue: "1", description: "粒子采样密度倍率" },
-    {
-      name: "prompt",
-      type: "string",
-      defaultValue: "—",
-      description: "底部提示词说明（figcaption）",
+      name: "variant / radius",
+      type: '"default" | "framed" | "glass" / "md" | "lg" | "xl"',
+      defaultValue: '"default" / "lg"',
+      description: "外框展示风格与画幅圆角等级。",
     },
     {
-      name: "onReveal",
-      type: "() => void",
-      defaultValue: "—",
-      description: "显影全部完成后的回调",
+      name: "badge / showReplayButton / actions",
+      type: "string / boolean / ReactNode",
+      defaultValue: "— / false / —",
+      description: "左上角毛玻璃参数角标、右上角内联重播按钮以及显影完成后的右下角操作槽。",
+    },
+    {
+      name: "aspectRatio / duration / density",
+      type: "number / number / number",
+      defaultValue: "1 / 2.8 / 1",
+      description: "画布宽高比、显影总时长（秒）与粒子采样密度倍率。",
+    },
+    {
+      name: "prompt / generatingLabel / onReveal",
+      type: "string / string / () => void",
+      defaultValue: '— / "正在生成图像…" / —',
+      description: "底部提示词说明（figcaption）、等待胶囊文案与显影完成回调。",
     },
   ],
   accessibility: [

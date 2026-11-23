@@ -13,9 +13,11 @@ export type {
   AiResponseContentProps,
   AiResponseHeaderProps,
   AiResponseProps,
+  AiResponseSize,
   AiResponseSource,
   AiResponseSourcesProps,
   AiResponseStatus,
   AiResponseTool,
   AiResponseToolsSummaryProps,
+  AiResponseVariant,
 } from "./ai-response.types.js";

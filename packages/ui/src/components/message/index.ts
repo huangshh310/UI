@@ -10,6 +10,7 @@ export {
 } from "./message.js";
 export type {
   MessageActionProps,
+  MessageActionTone,
   MessageActionsProps,
   MessageBranchContentProps,
   MessageBranchProps,
@@ -20,4 +21,5 @@ export type {
   MessageProps,
   MessageRole,
   MessageStatus,
+  MessageVariant,
 } from "./message.types.js";

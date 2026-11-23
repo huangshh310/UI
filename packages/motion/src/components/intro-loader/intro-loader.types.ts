@@ -1,3 +1,6 @@
+export type IntroLoaderVariant = "default" | "minimal" | "spotlight";
+export type IntroLoaderTone = "neutral" | "signal";
+
 export interface IntroGreeting {
   text: string;
   lang?: string;
@@ -16,6 +19,14 @@ export interface IntroLoaderProps {
   fullscreen?: boolean;
   /** 是否允许用户手动跳过或按 Esc 退出 */
   skippable?: boolean;
+  /** 视觉风格：default 磨砂幕布 / minimal 极简文字 / spotlight 柔光光晕 */
+  variant?: IntroLoaderVariant;
+  /** 进度条与强调色调 */
+  tone?: IntroLoaderTone;
+  /** 底部展示的品牌或版本说明 */
+  subtitle?: string;
+  /** 跳过按钮文案 */
+  skipLabel?: string;
   /** 自定义类名 */
   className?: string;
 }

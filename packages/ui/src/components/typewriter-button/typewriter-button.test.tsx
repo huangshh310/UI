@@ -128,4 +128,26 @@ describe("TypewriterButton", () => {
       vi.unstubAllGlobals();
     }
   });
+
+  it("支持 variant、size、radius、prefix 与 cursorStyle，同时不改变可访问名称", () => {
+    render(
+      <TypewriterButton
+        label="pnpm deploy"
+        variant="terminal"
+        size="sm"
+        radius="default"
+        prefix="$"
+        cursorStyle="block"
+        sound={false}
+      />,
+    );
+    const button = screen.getByRole("button", { name: "pnpm deploy" });
+    const prefixNode = button.querySelector('[data-slot="typewriter-prefix"]');
+
+    expect(button.getAttribute("data-variant")).toBe("terminal");
+    expect(button.getAttribute("data-size")).toBe("sm");
+    expect(button.getAttribute("data-radius")).toBe("default");
+    expect(prefixNode?.textContent).toBe("$");
+    expect(prefixNode?.getAttribute("aria-hidden")).toBe("true");
+  });
 });

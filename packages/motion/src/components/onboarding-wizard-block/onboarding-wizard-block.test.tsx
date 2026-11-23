@@ -31,4 +31,20 @@ describe("OnboardingWizardBlock", () => {
     });
     expect(screen.getByText("工作区已就绪")).toBeTruthy();
   });
+
+  it("支持 embedded 变体并允许点击已完成步骤直接回跳", async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <OnboardingWizardBlock variant="embedded" defaultWorkspace="Design Lab" />,
+    );
+
+    const root = container.querySelector('[data-slot="onboarding-wizard-block"]');
+    expect(root?.getAttribute("data-variant")).toBe("embedded");
+
+    await user.click(screen.getByRole("button", { name: "下一步" }));
+    expect(screen.getByText("安全与发布策略")).toBeTruthy();
+
+    await user.click(screen.getByRole("button", { name: /基础信息/ }));
+    expect(screen.getByText("工作区基础信息")).toBeTruthy();
+  });
 });

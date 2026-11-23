@@ -29,37 +29,47 @@ const BASE_CLASSES = [
 export const buttonVariants = cva(BASE_CLASSES, {
   variants: {
     variant: {
-      // 主要操作：高对比纯黑/纯白实底，极轻接地微影
-      primary: "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
-      // 次要操作：柔和纯中性浅灰
-      secondary: "bg-secondary text-secondary-foreground hover:bg-accent",
-      // 描边：纯白/黑曜石底配 1px 丝滑发丝线
+      // 主要操作：高对比纯黑/纯白实底，极微顶边高光与轻盈接地微影
+      primary:
+        "bg-primary text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.08)] hover:bg-primary/90 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_1px_2px_rgba(0,0,0,0.3)]",
+      // 次要操作：柔和纯中性浅灰配极细发丝描边
+      secondary:
+        "border-border/60 bg-secondary text-secondary-foreground shadow-xs hover:border-border hover:bg-accent",
+      // 描边：纯白/黑曜石卡片底配 1px 丝滑发丝线
       outline:
-        "border-border bg-card text-foreground shadow-xs hover:border-foreground/20 hover:bg-accent",
-      // 幽灵：静置态无底色，悬停切入弱反馈面
-      ghost: "bg-transparent text-foreground hover:bg-accent",
-      // 破坏性操作
-      destructive: "bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90",
+        "border-border bg-card text-foreground shadow-xs hover:border-foreground/22 hover:bg-accent/70 dark:bg-card/85 dark:hover:bg-accent",
+      // 幽灵：静置态无底色，悬停切入柔和反馈面
+      ghost: "bg-transparent text-foreground hover:bg-accent/80",
+      // 破坏性操作：浅深主题均保证高对比前景
+      destructive:
+        "bg-destructive text-destructive-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_1px_2px_rgba(0,0,0,0.08)] hover:bg-destructive/90",
       // 链接外观：下划线在悬停时加粗
       link: "bg-transparent text-foreground underline decoration-border decoration-1 underline-offset-4 hover:decoration-foreground",
-      // 信号：克制纯粹的 BoardUI 品牌蓝，带极微顶边高光
+      // 信号：克制纯粹的 BoardUI 品牌蓝，带微光顶边与轻盈投影
       signal:
-        "bg-signal text-signal-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_1px_2px_rgba(0,0,0,0.08)] hover:bg-signal/92",
+        "bg-signal text-signal-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.24),0_1px_2px_rgba(21,93,252,0.28)] hover:bg-signal/92",
     },
     size: {
       sm: "h-8 px-3 text-xs",
       md: "h-9.5 px-4 text-sm",
-      lg: "h-11 rounded-xl px-6 text-[15px]",
+      lg: "h-11 px-6 text-[15px]",
       // 只含图标的方形按钮
       icon: "size-9.5 p-0",
     },
+    radius: {
+      default: "rounded-lg",
+      pill: "rounded-full",
+    },
   },
   compoundVariants: [
+    // 默认大号按钮配更舒展的 12px 圆角
+    { size: "lg", radius: "default", class: "rounded-xl" },
     // 链接外观不占据按钮的高度与内边距，随文字流排布
     { variant: "link", class: "h-auto rounded-none px-0 active:scale-100" },
   ],
   defaultVariants: {
     variant: "primary",
     size: "md",
+    radius: "default",
   },
 });

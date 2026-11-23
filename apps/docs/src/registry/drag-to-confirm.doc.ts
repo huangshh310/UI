@@ -3,6 +3,7 @@
  */
 import { DragToConfirmBasic } from "@/demos/drag-to-confirm/basic";
 import DragToConfirmReleaseDemo from "@/demos/drag-to-confirm/release";
+import DragToConfirmVariantsDemo from "@/demos/drag-to-confirm/variants";
 import type { ComponentDoc } from "./registry.types";
 
 export const DRAG_TO_CONFIRM_DOC: ComponentDoc = {
@@ -15,7 +16,14 @@ export const DRAG_TO_CONFIRM_DOC: ComponentDoc = {
   usage: `import { DragToConfirm } from "@/components/ui/drag-to-confirm";
 
 export function Demo() {
-  return <DragToConfirm label="滑动以删除项目" onConfirm={remove} />;
+  return (
+    <DragToConfirm
+      tone="destructive"
+      label="滑动以删除项目"
+      confirmedLabel="已删除"
+      onConfirm={remove}
+    />
+  );
 }`,
   createdAt: "2026-11-22",
   specimens: [
@@ -29,9 +37,17 @@ export function Demo() {
     {
       slug: "release",
       name: "生产回滚滑动确认与回调",
-      description: "演示高危回滚场景的拖拽确认、完成回调与纯键盘 Enter 等效操作。",
+      description: "演示高危回滚场景的警示色调拖拽确认、完成回调与纯键盘 Enter 等效操作。",
       file: "drag-to-confirm/release.tsx",
       Demo: DragToConfirmReleaseDemo,
+      directory: false,
+    },
+    {
+      slug: "variants",
+      name: "语义色调、毛玻璃材质与尺寸",
+      description: "对比 emerald 支付场景与 destructive 高危注销场景的材质与尺寸组合。",
+      file: "drag-to-confirm/variants.tsx",
+      Demo: DragToConfirmVariantsDemo,
       directory: false,
     },
   ],
@@ -48,7 +64,32 @@ export function Demo() {
       defaultValue: `"Confirmed"`,
       description: "确认后的文字。",
     },
+    {
+      name: "tone",
+      type: '"signal" | "destructive" | "emerald"',
+      defaultValue: '"signal"',
+      description: "语义色调，决定拖尾填充与确认后滑块的高亮色。",
+    },
+    {
+      name: "variant",
+      type: '"subtle" | "glass"',
+      defaultValue: '"subtle"',
+      description: "滑轨材质：内凹柔和轨道或毛玻璃浮层轨道。",
+    },
+    {
+      name: "size",
+      type: '"sm" | "md" | "lg"',
+      defaultValue: '"md"',
+      description: "滑轨与滑块尺寸。",
+    },
+    {
+      name: "icon",
+      type: "ReactNode",
+      defaultValue: "ArrowRight",
+      description: "自定义滑块未确认时的图标。",
+    },
     { name: "onConfirm", type: "() => void", defaultValue: "-", description: "确认时调用。" },
+    { name: "onReset", type: "() => void", defaultValue: "-", description: "自动复位时调用。" },
     {
       name: "autoResetDelay",
       type: "number",

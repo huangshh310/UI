@@ -34,4 +34,28 @@ describe("SpotlightCard", () => {
     expect(screen.getByText("左侧标题").parentElement).toBe(card);
     expect(screen.getByText("右侧指标").parentElement).toBe(card);
   });
+
+  it("支持 variant、tone、padding 数据属性并按 glowBorder 控制镜面边框层", () => {
+    const { container, rerender } = render(
+      <SpotlightCard variant="dark" tone="emerald" padding="lg" glowBorder>
+        <p>暗面高光卡</p>
+      </SpotlightCard>,
+    );
+
+    const card = container.querySelector('[data-slot="spotlight-card"]');
+    expect(card?.getAttribute("data-variant")).toBe("dark");
+    expect(card?.getAttribute("data-tone")).toBe("emerald");
+    expect(card?.getAttribute("data-padding")).toBe("lg");
+    expect(container.querySelector('[data-slot="spotlight-border"]')).toBeTruthy();
+
+    rerender(
+      <SpotlightCard variant="glass" tone="violet" padding="sm" glowBorder={false}>
+        <p>无边框高光</p>
+      </SpotlightCard>,
+    );
+    expect(card?.getAttribute("data-variant")).toBe("glass");
+    expect(card?.getAttribute("data-tone")).toBe("violet");
+    expect(card?.getAttribute("data-padding")).toBe("sm");
+    expect(container.querySelector('[data-slot="spotlight-border"]')).toBeNull();
+  });
 });

@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * ThinkingOrb：极简纯单色 3D 球面粒子思考球，支持 9 种 AI 认知状态、明暗极性自动适配、离屏暂停与减弱动效降级。
+ * ThinkingOrb：极简纯单色 3D 球面粒子思考球，支持 9 种 AI 认知状态、玻璃表圈/光晕变体、状态胶囊与离屏暂停。
  */
 import { cn } from "@matt-ui/utils";
 import { useEffect, useRef, useState } from "react";
@@ -12,18 +12,12 @@ import {
   type OrbParticle,
 } from "./thinking-orb-engine.js";
 import type { ThinkingOrbProps, ThinkingOrbState } from "./thinking-orb.types.js";
-
-const STATE_LABELS: Record<ThinkingOrbState, string> = {
-  working: "处理中",
-  searching: "检索中",
-  solving: "求解中",
-  listening: "聆听中",
-  connecting: "连接中",
-  weaving: "编织上下文",
-  composing: "组织回答",
-  breathing: "静候待命",
-  shaping: "构思塑形",
-};
+import {
+  THINKING_ORB_STATE_LABELS,
+  thinkingOrbFrameVariants,
+  thinkingOrbLabelVariants,
+  thinkingOrbRootVariants,
+} from "./thinking-orb.variants.js";
 
 const readDarkTheme = (): boolean => {
   if (typeof document === "undefined") return false;
@@ -144,40 +138,124 @@ const useOrbCanvasLoop = (
   }, [canvasRef, particlesRef, opts, reducedRef]);
 };
 
-export const ThinkingOrb = ({
-  state = "working",
-  size = 64,
-  speed = 1,
-  dark,
-  paused = false,
-  className,
-  style,
-  "aria-label": ariaLabel,
-}: ThinkingOrbProps) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const particlesRef = useRef<OrbParticle[]>(createOrbParticles(orbParticleCountForSize(size)));
-  const isDark = useAutoDarkTheme(dark);
+const ThinkingOrbCaption = ({ label, paused }: { label: string; paused: boolean }) => (
+  <span data-slot="thinking-orb-label" className={thinkingOrbLabelVariants()}>
+    <span
+      aria-hidden="true"
+      className={cn(
+        "size-1.5 rounded-full bg-signal",
+        !paused && "animate-pulse motion-reduce:animate-none",
+      )}
+    />
+    <span>{label}</span>
+  </span>
+);
 
-  useEffect(() => {
-    particlesRef.current = createOrbParticles(orbParticleCountForSize(size));
-  }, [size]);
+const resolveOrbDefaults = (props: ThinkingOrbProps) => ({
+  state: props.state ?? "working",
+  variant: props.variant ?? "minimal",
+  size: props.size ?? 64,
+  speed: props.speed ?? 1,
+  paused: props.paused ?? false,
+  showLabel: props.showLabel ?? false,
+  labelPlacement: props.labelPlacement ?? "bottom",
+  interactive: props.interactive ?? false,
+});
 
-  useOrbCanvasLoop(canvasRef, particlesRef, { state, size, speed, isDark, paused });
+interface ThinkingOrbViewProps {
+  opts: ReturnType<typeof resolveOrbDefaults>;
+  frameClass: string;
+  frameSize: number;
+  aria: string;
+  resolvedLabel: string;
+  hasVisibleLabel: boolean;
+  className?: string;
+  style?: ThinkingOrbProps["style"];
+  canvasNode: React.ReactNode;
+}
 
+const ThinkingOrbView = (p: ThinkingOrbViewProps) => {
+  if (!p.hasVisibleLabel) {
+    return (
+      <output
+        data-slot="thinking-orb"
+        data-state={p.opts.state}
+        data-variant={p.opts.variant}
+        aria-label={p.aria}
+        className={cn(p.frameClass, p.className)}
+        style={{ width: p.frameSize, height: p.frameSize, ...p.style }}
+      >
+        {p.canvasNode}
+      </output>
+    );
+  }
   return (
     <output
       data-slot="thinking-orb"
-      data-state={state}
-      aria-label={ariaLabel ?? `智能体状态球：${STATE_LABELS[state]}`}
-      className={cn("relative inline-flex shrink-0 items-center justify-center", className)}
-      style={{ width: size, height: size, ...style }}
+      data-state={p.opts.state}
+      data-variant={p.opts.variant}
+      aria-label={p.aria}
+      className={cn(
+        thinkingOrbRootVariants({ hasLabel: true, placement: p.opts.labelPlacement }),
+        p.className,
+      )}
+      style={p.style}
     >
-      <canvas
-        ref={canvasRef}
-        aria-hidden="true"
-        className="block"
-        style={{ width: size, height: size }}
-      />
+      <span
+        data-slot="thinking-orb-frame"
+        className={p.frameClass}
+        style={{ width: p.frameSize, height: p.frameSize }}
+      >
+        {p.canvasNode}
+      </span>
+      <ThinkingOrbCaption label={p.resolvedLabel} paused={p.opts.paused} />
     </output>
+  );
+};
+
+export const ThinkingOrb = (props: ThinkingOrbProps) => {
+  const opts = resolveOrbDefaults(props);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const particlesRef = useRef<OrbParticle[]>(
+    createOrbParticles(orbParticleCountForSize(opts.size)),
+  );
+  const isDark = useAutoDarkTheme(props.dark);
+
+  useEffect(() => {
+    particlesRef.current = createOrbParticles(orbParticleCountForSize(opts.size));
+  }, [opts.size]);
+
+  useOrbCanvasLoop(canvasRef, particlesRef, {
+    state: opts.state,
+    size: opts.size,
+    speed: opts.speed,
+    isDark,
+    paused: opts.paused,
+  });
+
+  const resolvedLabel = props.label ?? THINKING_ORB_STATE_LABELS[opts.state];
+  const frameSize = opts.variant === "minimal" ? opts.size : opts.size + 12;
+  return (
+    <ThinkingOrbView
+      opts={opts}
+      frameClass={thinkingOrbFrameVariants({
+        variant: opts.variant,
+        interactive: opts.interactive,
+      })}
+      frameSize={frameSize}
+      aria={props["aria-label"] ?? `智能体状态球：${resolvedLabel}`}
+      resolvedLabel={resolvedLabel}
+      hasVisibleLabel={Boolean(props.label) || opts.showLabel}
+      className={props.className}
+      style={props.style}
+      canvasNode={
+        <canvas
+          ref={canvasRef}
+          aria-hidden="true"
+          className="block"
+          style={{ width: opts.size, height: opts.size }}
+        />
+      }
+    />
   );
 };

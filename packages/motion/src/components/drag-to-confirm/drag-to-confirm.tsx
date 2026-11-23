@@ -10,15 +10,27 @@
 import { cn } from "@matt-ui/utils";
 import { ArrowRight, Check } from "lucide-react";
 import { motion, useTransform, type MotionValue } from "motion/react";
-import type { KeyboardEvent, RefObject } from "react";
-import type { DragToConfirmProps } from "./drag-to-confirm.types.js";
+import type { KeyboardEvent, ReactNode, RefObject } from "react";
+import {
+  DRAG_SIZE_CONFIG,
+  DRAG_TONE_CONFIG,
+  HANDLE_BASE_CLASSES,
+  TRACK_BASE_CLASSES,
+  TRACK_VARIANT_CLASSES,
+  type DragSizeTokens,
+  type DragToneTokens,
+} from "./drag-to-confirm.styles.js";
+import type { DragToConfirmProps, DragToConfirmVariant } from "./drag-to-confirm.types.js";
 import { useDragConfirm } from "./use-drag-confirm.js";
 
-const TRACK_CLASSES =
-  "relative flex h-14 w-72 max-w-full items-center overflow-hidden rounded-full border border-solid border-border bg-background p-1 font-sans text-sm shadow-sm select-none dark:bg-card";
-
-const HANDLE_CLASSES =
-  "relative z-10 flex size-12 shrink-0 cursor-grab touch-none items-center justify-center rounded-full border-0 bg-primary text-primary-foreground shadow-md outline-none active:cursor-grabbing focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid";
+const DEFAULTS = {
+  label: "Slide to confirm",
+  confirmedLabel: "Confirmed",
+  tone: "signal",
+  variant: "subtle",
+  size: "md",
+  disabled: false,
+} as const;
 
 interface TrackLayersProps {
   x: MotionValue<number>;
@@ -26,31 +38,47 @@ interface TrackLayersProps {
   label: string;
   confirmedLabel: string;
   confirmed: boolean;
+  sizeTokens: DragSizeTokens;
+  toneTokens: DragToneTokens;
 }
 
 /** 轨道上的装饰层：随拖动增长的填充、逐渐淡出的提示，以及确认后的文字 */
-const TrackLayers = ({ x, maxTravel, label, confirmedLabel, confirmed }: TrackLayersProps) => {
+const TrackLayers = ({
+  x,
+  maxTravel,
+  label,
+  confirmedLabel,
+  confirmed,
+  sizeTokens,
+  toneTokens,
+}: TrackLayersProps) => {
   const hintOpacity = useTransform(x, (value) => 1 - value / Math.max(maxTravel(), 1));
-  const fillWidth = useTransform(x, (value) => value + 48);
+  const fillWidth = useTransform(x, (value) => value + sizeTokens.handlePx);
 
   return (
     <>
       <motion.span
         aria-hidden="true"
         style={{ width: fillWidth }}
-        className="absolute inset-y-1 left-1 rounded-full bg-signal/16"
+        className={cn("absolute inset-y-1 left-1 rounded-full", toneTokens.fill)}
       />
       <motion.span
         aria-hidden="true"
         style={{ opacity: hintOpacity }}
-        className="pointer-events-none absolute inset-0 flex items-center justify-center pl-10 text-muted-foreground"
+        className={cn(
+          "pointer-events-none absolute inset-0 flex items-center justify-center text-muted-foreground",
+          sizeTokens.hintPad,
+        )}
       >
         {confirmed ? "" : label}
       </motion.span>
       {confirmed && (
         <span
           aria-hidden="true"
-          className="absolute inset-0 flex items-center justify-center pr-10 font-medium"
+          className={cn(
+            "absolute inset-0 flex items-center justify-center font-medium text-foreground",
+            sizeTokens.confirmedPad,
+          )}
         >
           {confirmedLabel}
         </span>
@@ -64,8 +92,11 @@ interface HandleProps {
   handle: RefObject<HTMLButtonElement | null>;
   track: RefObject<HTMLDivElement | null>;
   label: string;
+  icon?: ReactNode;
   locked: boolean;
   confirmed: boolean;
+  sizeTokens: DragSizeTokens;
+  toneTokens: DragToneTokens;
   onRelease: () => void;
   onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) => void;
 }
@@ -76,8 +107,11 @@ const Handle = ({
   handle,
   track,
   label,
+  icon,
   locked,
   confirmed,
+  sizeTokens,
+  toneTokens,
   onRelease,
   onKeyDown,
 }: HandleProps) => (
@@ -94,56 +128,82 @@ const Handle = ({
     onKeyDown={onKeyDown}
     style={{ x }}
     data-slot="drag-to-confirm-handle"
-    className={HANDLE_CLASSES}
+    className={cn(
+      HANDLE_BASE_CLASSES,
+      sizeTokens.handle,
+      confirmed ? toneTokens.handleConfirmed : toneTokens.handleIdle,
+    )}
   >
     {confirmed ? (
-      <Check aria-hidden="true" className="size-5" />
+      <Check aria-hidden="true" className={sizeTokens.icon} />
     ) : (
-      <ArrowRight aria-hidden="true" className="size-5" />
+      (icon ?? <ArrowRight aria-hidden="true" className={sizeTokens.icon} />)
     )}
   </motion.button>
 );
 
-export const DragToConfirm = ({
-  label = "Slide to confirm",
-  confirmedLabel = "Confirmed",
-  disabled = false,
-  className,
-  ...options
-}: DragToConfirmProps) => {
-  const { x, confirmed, track, handle, confirm, release, maxTravel } = useDragConfirm(options);
-  const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+const createConfirmKeyHandler =
+  (disabled: boolean, confirm: () => void) => (event: KeyboardEvent<HTMLButtonElement>) => {
     if (disabled || (event.key !== "Enter" && event.key !== " ")) return;
     event.preventDefault();
     confirm();
   };
 
+const buildTrackClasses = (
+  p: { variant: DragToConfirmVariant; disabled: boolean; className?: string | undefined },
+  sizeTokens: DragSizeTokens,
+  toneTokens: DragToneTokens,
+  confirmed: boolean,
+) =>
+  cn(
+    TRACK_BASE_CLASSES,
+    TRACK_VARIANT_CLASSES[p.variant],
+    sizeTokens.track,
+    confirmed && toneTokens.confirmedBorder,
+    p.disabled && "opacity-45",
+    p.className,
+  );
+
+export const DragToConfirm = (inputProps: DragToConfirmProps) => {
+  const p = { ...DEFAULTS, ...inputProps };
+  const { x, confirmed, track, handle, confirm, release, maxTravel } = useDragConfirm(p);
+  const sizeTokens = DRAG_SIZE_CONFIG[p.size];
+  const toneTokens = DRAG_TONE_CONFIG[p.tone];
+
   return (
     <div
       ref={track}
       data-slot="drag-to-confirm"
+      data-tone={p.tone}
+      data-variant={p.variant}
+      data-size={p.size}
       data-confirmed={confirmed ? "" : undefined}
-      className={cn(TRACK_CLASSES, disabled && "opacity-50", className)}
+      className={buildTrackClasses(p, sizeTokens, toneTokens, confirmed)}
     >
       <TrackLayers
         x={x}
         maxTravel={maxTravel}
-        label={label}
-        confirmedLabel={confirmedLabel}
+        label={p.label}
+        confirmedLabel={p.confirmedLabel}
         confirmed={confirmed}
+        sizeTokens={sizeTokens}
+        toneTokens={toneTokens}
       />
       <Handle
         x={x}
         handle={handle}
         track={track}
-        label={label}
-        locked={disabled || confirmed}
+        label={p.label}
+        icon={p.icon}
+        locked={p.disabled || confirmed}
         confirmed={confirmed}
+        sizeTokens={sizeTokens}
+        toneTokens={toneTokens}
         onRelease={release}
-        onKeyDown={onKeyDown}
+        onKeyDown={createConfirmKeyHandler(p.disabled, confirm)}
       />
       <span aria-live="polite" className="sr-only">
-        {confirmed ? confirmedLabel : ""}
+        {confirmed ? p.confirmedLabel : ""}
       </span>
     </div>
   );

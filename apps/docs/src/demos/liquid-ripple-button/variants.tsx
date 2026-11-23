@@ -5,21 +5,26 @@ import { useState } from "react";
 
 export default function LiquidRippleButtonVariantsDemo() {
   const [clicks, setClicks] = useState(0);
+  const bump = () => setClicks((c) => c + 1);
 
   return (
-    <div className="flex flex-col items-center gap-2.5">
-      <div className="flex flex-wrap items-center justify-center gap-3">
-        <LiquidRippleButton onClick={() => setClicks((c) => c + 1)}>
-          点击扩散波纹
+    <div className="flex flex-col items-center gap-3">
+      <div className="flex flex-wrap items-center justify-center gap-2.5">
+        <LiquidRippleButton onClick={bump}>主要操作</LiquidRippleButton>
+        <LiquidRippleButton variant="signal" onClick={bump}>
+          信号波纹
         </LiquidRippleButton>
-        <LiquidRippleButton
-          className="bg-signal text-signal-foreground"
-          onClick={() => setClicks((c) => c + 1)}
-        >
-          信号色波纹
+        <LiquidRippleButton variant="outline" onClick={bump}>
+          发丝描边
+        </LiquidRippleButton>
+        <LiquidRippleButton variant="secondary" radius="default" size="sm" onClick={bump}>
+          紧凑圆角
+        </LiquidRippleButton>
+        <LiquidRippleButton variant="destructive" size="sm" onClick={bump}>
+          销毁环境
         </LiquidRippleButton>
       </div>
-      <span className="font-mono text-xs text-muted-foreground">已触发 {clicks} 次点击</span>
+      <span className="font-mono text-xs text-muted-foreground">已触发 {clicks} 次波纹</span>
     </div>
   );
 }

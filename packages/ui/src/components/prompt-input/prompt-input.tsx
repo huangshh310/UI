@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * PromptInput：器物级多模态 AI 输入器（融合 HextaUI Prompt Composer 与 shadcn AI Elements Prompt Input）。
+ * PromptInput：器物级多模态 AI 输入器（融合极简发丝质感与复合子部件自由拼装）。
  * 支持自适应多行、中文 IME 组合防误触、斜杠快捷指令、@ 上下文标签、流式待发入队与复合子部件自由拼装。
  */
 import { cn } from "@matt-ui/utils";
@@ -9,9 +9,11 @@ import { useCallback, useContext, useEffect, useRef, useState, type KeyboardEven
 import { HeaderChips, SlashMenu, SuggestionChips } from "./prompt-chips.js";
 import type {
   PromptInputProps,
+  PromptInputSize,
   PromptInputTextareaProps,
   PromptSlashCommand,
 } from "./prompt-input.types.js";
+import { promptShellVariants, promptTextareaVariants } from "./prompt-input.variants.js";
 import {
   DefaultToolbar,
   PromptCtx,
@@ -21,20 +23,22 @@ import {
   PromptInputTools,
 } from "./prompt-parts.js";
 
-const COMPOSER_SHELL_CLASSES = cn(
-  "flex flex-col rounded-3xl border border-solid border-border bg-card p-2.5 text-card-foreground shadow-xs",
-  "transition-[border-color,box-shadow] duration-(--ui-duration-fast)",
-  "hover:border-foreground/20 focus-within:border-ring focus-within:ring-1 focus-within:ring-ring focus-within:ring-inset",
-);
+const MIN_HEIGHT_BY_SIZE: Record<PromptInputSize, number> = {
+  sm: 36,
+  md: 42,
+  lg: 48,
+};
 
-const TEXTAREA_CLASSES =
-  "min-h-[42px] max-h-[196px] w-full resize-none appearance-none border-0 bg-transparent px-2.5 py-2 font-sans text-sm leading-6 text-foreground outline-none placeholder:text-muted-foreground/80 disabled:cursor-not-allowed disabled:opacity-50";
-
-const syncTextareaHeight = (el: HTMLTextAreaElement | null, value: string) => {
+const syncTextareaHeight = (
+  el: HTMLTextAreaElement | null,
+  value: string,
+  size: PromptInputSize,
+) => {
   if (!el) return;
+  const minHeight = MIN_HEIGHT_BY_SIZE[size];
   el.style.height = "auto";
-  const nextHeight = value.length > 0 ? Math.min(el.scrollHeight, 196) : 42;
-  el.style.height = `${Math.max(42, nextHeight)}px`;
+  const nextHeight = value.length > 0 ? Math.min(el.scrollHeight, 196) : minHeight;
+  el.style.height = `${Math.max(minHeight, nextHeight)}px`;
 };
 
 export const PromptInputTextarea = ({
@@ -49,8 +53,8 @@ export const PromptInputTextarea = ({
   const localRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
-    syncTextareaHeight(localRef.current, ctx.text);
-  }, [ctx.text]);
+    syncTextareaHeight(localRef.current, ctx.text, ctx.size);
+  }, [ctx.text, ctx.size]);
 
   const setRefs = useCallback(
     (node: HTMLTextAreaElement | null) => {
@@ -72,7 +76,7 @@ export const PromptInputTextarea = ({
       data-slot="prompt-input-textarea"
       onChange={(event) => ctx.updateText(event.target.value)}
       onKeyDown={ctx.onKeyDown}
-      className={cn(TEXTAREA_CLASSES, className)}
+      className={cn(promptTextareaVariants({ size: ctx.size }), className)}
       {...props}
     />
   );
@@ -228,10 +232,48 @@ const DefaultComposerBody = ({
   );
 };
 
+const PromptFeedback = ({ error, hint }: { error?: string; hint?: string }) => {
+  if (error) {
+    return (
+      <p role="alert" className="m-0 px-1.5 text-xs font-medium text-destructive">
+        {error}
+      </p>
+    );
+  }
+  return hint ? <p className="m-0 px-1.5 text-[11px] text-muted-foreground">{hint}</p> : null;
+};
+
+const buildPromptContext = (
+  props: PromptInputProps,
+  c: ReturnType<typeof usePromptController>,
+  size: PromptInputSize,
+) => ({
+  text: c.text,
+  status: c.status,
+  size,
+  canSubmit: c.canSubmit,
+  canQueue: c.canQueue,
+  maxLength: props.maxLength,
+  placeholder: props.placeholder ?? "输入你的问题，或键入 / 呼出快捷指令…",
+  ariaLabel: props["aria-label"] ?? "指令输入框",
+  registerTextarea: c.registerTextarea,
+  updateText: c.updateText,
+  submitOrQueue: c.submitOrQueue,
+  onStop: props.onStop,
+  onKeyDown: c.onKeyDown,
+});
+
+const resolvePromptOptions = (props: PromptInputProps) => ({
+  suggestions: props.suggestions ?? [],
+  suggestionsPos: props.suggestionsPosition ?? ("bottom" as const),
+  variant: props.variant ?? ("default" as const),
+  size: props.size ?? ("md" as const),
+  radius: props.radius ?? ("xl" as const),
+});
+
 export const PromptInput = (props: PromptInputProps) => {
   const c = usePromptController(props);
-  const suggestions = props.suggestions ?? [];
-
+  const opts = resolvePromptOptions(props);
   const pickSuggestion = (item: string) => {
     c.updateText(item);
     props.onSelectSuggestion?.(item);
@@ -239,31 +281,27 @@ export const PromptInput = (props: PromptInputProps) => {
   };
 
   return (
-    <PromptCtx.Provider
-      value={{
-        text: c.text,
-        status: c.status,
-        canSubmit: c.canSubmit,
-        canQueue: c.canQueue,
-        maxLength: props.maxLength,
-        placeholder: props.placeholder ?? "输入你的问题，或键入 / 呼出快捷指令…",
-        ariaLabel: props["aria-label"] ?? "指令输入框",
-        registerTextarea: c.registerTextarea,
-        updateText: c.updateText,
-        submitOrQueue: c.submitOrQueue,
-        onStop: props.onStop,
-        onKeyDown: c.onKeyDown,
-      }}
-    >
+    <PromptCtx.Provider value={buildPromptContext(props, c, opts.size)}>
       <div
         data-slot="prompt-input"
         data-status={c.status}
+        data-variant={opts.variant}
         className={cn("flex w-full max-w-2xl flex-col gap-2 font-sans", props.className)}
       >
+        {opts.suggestions.length > 0 && opts.suggestionsPos === "top" && (
+          <SuggestionChips suggestions={opts.suggestions} onPick={pickSuggestion} />
+        )}
         {c.matchedSlash.length > 0 && (
           <SlashMenu commands={c.matchedSlash} activeIdx={c.safeSlashIdx} onPick={c.applySlash} />
         )}
-        <div className={COMPOSER_SHELL_CLASSES}>
+        <div
+          className={promptShellVariants({
+            variant: opts.variant,
+            size: opts.size,
+            radius: opts.radius,
+            invalid: Boolean(props.error),
+          })}
+        >
           {props.children ?? (
             <DefaultComposerBody
               props={props}
@@ -272,10 +310,10 @@ export const PromptInput = (props: PromptInputProps) => {
             />
           )}
         </div>
-        {suggestions.length > 0 && (
-          <SuggestionChips suggestions={suggestions} onPick={pickSuggestion} />
+        {opts.suggestions.length > 0 && opts.suggestionsPos === "bottom" && (
+          <SuggestionChips suggestions={opts.suggestions} onPick={pickSuggestion} />
         )}
-        {props.hint && <p className="m-0 px-1.5 text-[11px] text-muted-foreground">{props.hint}</p>}
+        <PromptFeedback error={props.error} hint={props.hint} />
       </div>
     </PromptCtx.Provider>
   );

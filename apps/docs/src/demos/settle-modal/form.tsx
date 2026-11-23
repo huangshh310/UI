@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, SettleModal, SpringSelect } from "@matt-ui/ui";
+import { Globe } from "lucide-react";
 import { useId, useState } from "react";
 
 const REGIONS = [
@@ -18,6 +19,7 @@ export default function SettleModalFormDemo() {
       open={open}
       onOpenChange={setOpen}
       size="md"
+      icon={<Globe className="size-4" />}
       trigger={<Button variant="signal">新建边缘项目</Button>}
       title="创建边缘站点"
       description="配置项目名称与默认分发节点，创建后即可关联 Git 仓库。"
@@ -40,7 +42,7 @@ export default function SettleModalFormDemo() {
           <input
             id={nameId}
             placeholder="matt-ui-docs"
-            className="h-9 rounded-lg border border-solid border-border bg-background px-3 text-sm text-foreground outline-none focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset dark:bg-card"
+            className="h-9 rounded-lg border border-solid border-input/50 bg-background px-3 text-sm text-foreground outline-none transition-colors focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset dark:border-white/12 dark:bg-card"
           />
         </div>
         <SpringSelect

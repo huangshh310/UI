@@ -31,4 +31,27 @@ describe("IntroLoader", () => {
     render(<IntroLoader active={false} fullscreen={false} />);
     expect(screen.queryByRole("status")).toBeNull();
   });
+
+  it("支持 spotlight 变体、subtitle 副标题与 Escape 快捷键跳过", async () => {
+    const user = userEvent.setup();
+    const onComplete = vi.fn<() => void>();
+
+    render(
+      <IntroLoader
+        active
+        fullscreen={false}
+        variant="spotlight"
+        tone="signal"
+        subtitle="Design System · v2.4"
+        onComplete={onComplete}
+      />,
+    );
+
+    const status = screen.getByRole("status", { name: "页面加载中" });
+    expect(status.getAttribute("data-variant")).toBe("spotlight");
+    expect(screen.getByText("Design System · v2.4")).toBeTruthy();
+
+    await user.keyboard("{Escape}");
+    expect(onComplete).toHaveBeenCalledTimes(1);
+  });
 });

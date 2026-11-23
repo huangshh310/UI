@@ -15,7 +15,14 @@ const GROUPS = [
   {
     heading: "导航",
     items: [
-      { id: "docs", label: "查看文档", keywords: ["docs", "guide"], shortcut: "G D" },
+      {
+        id: "docs",
+        label: "查看文档",
+        description: "浏览全部组件指南",
+        badge: "DOC",
+        keywords: ["docs", "guide"],
+        shortcut: "G D",
+      },
       { id: "tokens", label: "设计 Token", keywords: ["color", "theme"] },
     ],
   },
@@ -38,13 +45,16 @@ const GROUPS = [
 ];
 
 describe("CommandMenu", () => {
-  it("打开命令面板后可过滤命令、执行选择并支持全局快捷键", async () => {
+  it("打开命令面板后可过滤命令、执行选择并渲染多键帽与页脚提示", async () => {
     const user = userEvent.setup();
     const onSelect = vi.fn<(id: string) => void>();
 
-    render(<CommandMenu triggerLabel="命令面板" groups={GROUPS} onSelect={onSelect} />);
+    render(<CommandMenu triggerLabel="命令面板" size="lg" groups={GROUPS} onSelect={onSelect} />);
 
     await user.click(screen.getByRole("button", { name: /命令面板/ }));
+    expect(screen.getByText("DOC")).toBeTruthy();
+    expect(screen.getByText("选择")).toBeTruthy();
+
     const input = await screen.findByPlaceholderText("输入命令或关键词…");
     await user.type(input, "Token");
 

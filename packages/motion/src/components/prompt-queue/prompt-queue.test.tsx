@@ -1,5 +1,5 @@
 /**
- * PromptQueue 行为规约：验证空队列隐藏、折叠切换、立即插队发送、编辑取回与单条移除。
+ * PromptQueue 行为规约：验证空队列隐藏、折叠切换、暂停续发、立即插队发送、编辑取回与单条移除。
  */
 import { cleanup, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -9,7 +9,7 @@ import { PromptQueue, type QueuedPromptItem } from "../../index.js";
 afterEach(cleanup);
 
 const ITEMS: QueuedPromptItem[] = [
-  { id: "q1", content: "顺便补充深色主题下的边框对比度数据" },
+  { id: "q1", content: "顺便补充深色主题下的边框对比度数据", priority: "high" },
   { id: "q2", content: "导出对应的 Vitest 测试用例", meta: "1 个附件" },
 ];
 
@@ -25,9 +25,21 @@ describe("PromptQueue", () => {
     const onEdit = vi.fn<(item: QueuedPromptItem) => void>();
     const onRemove = vi.fn<(id: string) => void>();
 
-    render(<PromptQueue items={ITEMS} onSendNow={onSendNow} onEdit={onEdit} onRemove={onRemove} />);
+    render(
+      <PromptQueue
+        items={ITEMS}
+        variant="glass"
+        onSendNow={onSendNow}
+        onEdit={onEdit}
+        onRemove={onRemove}
+      />,
+    );
 
     expect(screen.getByText(/2 条待发送/)).toBeTruthy();
+    expect(screen.getByText("优先")).toBeTruthy();
+    expect(document.querySelector('[data-slot="prompt-queue"]')?.getAttribute("data-variant")).toBe(
+      "glass",
+    );
 
     await user.click(screen.getAllByRole("button", { name: /立即插队发送/ })[0]!);
     expect(onSendNow).toHaveBeenCalledWith(ITEMS[0]);
@@ -40,5 +52,24 @@ describe("PromptQueue", () => {
 
     await user.click(screen.getByRole("button", { name: /条待发送/ }));
     expect(screen.queryByText("顺便补充深色主题下的边框对比度数据")).toBeNull();
+  });
+
+  it("支持暂停/恢复自动发出回调与清空队列操作", async () => {
+    const user = userEvent.setup();
+    const onTogglePause = vi.fn<() => void>();
+    const onClearAll = vi.fn<() => void>();
+
+    render(
+      <PromptQueue items={ITEMS} paused onTogglePause={onTogglePause} onClearAll={onClearAll} />,
+    );
+
+    expect(document.querySelector('[data-slot="prompt-queue"]')?.getAttribute("data-paused")).toBe(
+      "true",
+    );
+    await user.click(screen.getByRole("button", { name: "恢复" }));
+    expect(onTogglePause).toHaveBeenCalledTimes(1);
+
+    await user.click(screen.getByRole("button", { name: "清空" }));
+    expect(onClearAll).toHaveBeenCalledTimes(1);
   });
 });

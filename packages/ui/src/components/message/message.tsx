@@ -1,8 +1,8 @@
 "use client";
 
 /**
- * Message：单回合对话复合组件（对标 shadcn AI Elements Message + HextaUI 版本分支与状态反馈）。
- * 用户提问采用温润次级表面胶囊，助手响应采用无外框流式画布排版，支持分支切换、原位编辑与异常重试。
+ * Message：单回合对话复合组件（对标 shadcn AI Elements Message + ChatGPT/Claude 无框流式排版）。
+ * 支持元信息头（作者/模型徽章/时间戳）、多版本分支切换、原位编辑与异常重试。
  */
 import { cn } from "@matt-ui/utils";
 import { AlertCircle, Check, RotateCcw } from "lucide-react";
@@ -20,24 +20,57 @@ import type {
   MessageContextValue,
   MessageProps,
 } from "./message.types.js";
+import {
+  MESSAGE_FOCUS_RING,
+  messageActionVariants,
+  messageContentVariants,
+} from "./message.variants.js";
 
 const MessageCtx = createContext<MessageContextValue>({
   from: "assistant",
   status: "ready",
+  variant: "default",
 });
 
-const ACTION_BTN_CLASSES =
-  "inline-flex h-7 min-w-7 cursor-pointer items-center justify-center gap-1 rounded-lg border-0 bg-transparent px-1.5 font-sans text-xs text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none";
+const hasMessageMeta = (p: Pick<MessageProps, "author" | "model" | "timestamp" | "avatar">) =>
+  Boolean(p.author || p.model || p.timestamp || p.avatar);
 
-const StatusFeedback = ({
+const MessageMetaHeader = (
+  p: Pick<MessageProps, "from" | "author" | "model" | "timestamp" | "avatar"> & {
+    variant: MessageContextValue["variant"];
+  },
+) => {
+  if (!hasMessageMeta(p)) return null;
+  const alignRight = p.from === "user" && p.variant !== "flat";
+  return (
+    <div
+      data-slot="message-meta"
+      className={cn(
+        "flex items-center gap-2 text-[11px] text-muted-foreground",
+        alignRight && "flex-row-reverse",
+      )}
+    >
+      {p.avatar && <span className="shrink-0">{p.avatar}</span>}
+      {p.author && <span className="font-medium text-foreground">{p.author}</span>}
+      {p.model && (
+        <span className="rounded-md border border-solid border-border/75 bg-secondary/70 px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground dark:border-white/10 dark:bg-white/8">
+          {p.model}
+        </span>
+      )}
+      {p.timestamp && <span className="font-mono text-[10px] tabular-nums">{p.timestamp}</span>}
+    </div>
+  );
+};
+
+const MessageStatusFeedback = ({
   status,
   errorMessage,
   onRetry,
 }: Pick<MessageContextValue, "status" | "errorMessage" | "onRetry">) => {
   if (status === "stopped") {
     return (
-      <div className="mt-1 inline-flex w-fit items-center gap-1.5 rounded-full bg-secondary/75 px-2.5 py-0.5 font-sans text-[11px] text-muted-foreground">
-        <span aria-hidden="true" className="size-1.5 rounded-full bg-muted-foreground/70" />
+      <div className="mt-1 inline-flex w-fit items-center gap-1.5 rounded-full border border-solid border-border/75 bg-secondary/70 px-2.5 py-0.5 font-sans text-[11px] text-muted-foreground dark:border-white/10 dark:bg-white/8">
+        <span aria-hidden="true" className="size-1.5 rounded-full bg-muted-foreground/75" />
         <span>已停止生成</span>
       </div>
     );
@@ -46,7 +79,7 @@ const StatusFeedback = ({
     return (
       <div
         role="alert"
-        className="mt-1.5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-solid border-destructive/30 bg-destructive/8 px-3.5 py-2 text-xs text-foreground"
+        className="mt-1.5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-solid border-destructive/35 bg-destructive/8 px-3.5 py-2 text-xs text-foreground dark:border-destructive dark:bg-destructive/14"
       >
         <span className="inline-flex items-center gap-2">
           <AlertCircle aria-hidden="true" className="size-3.5 shrink-0 text-destructive" />
@@ -56,7 +89,10 @@ const StatusFeedback = ({
           <button
             type="button"
             onClick={onRetry}
-            className="inline-flex h-6.5 cursor-pointer items-center gap-1 rounded-lg border border-solid border-border bg-card px-2.5 font-sans text-xs font-medium text-foreground shadow-xs transition-colors duration-(--ui-duration-fast) hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            className={cn(
+              "inline-flex h-6.5 cursor-pointer items-center gap-1 rounded-lg border border-solid border-border/80 bg-card px-2.5 font-sans text-xs font-medium text-foreground shadow-xs transition-colors duration-(--ui-duration-fast) hover:bg-accent dark:border-white/12",
+              MESSAGE_FOCUS_RING,
+            )}
           >
             <RotateCcw aria-hidden="true" className="size-3" />
             <span>重试生成</span>
@@ -71,47 +107,54 @@ const StatusFeedback = ({
 export const Message = ({
   from,
   status = "ready",
+  variant = "default",
+  author,
+  model,
+  timestamp,
+  avatar,
   errorMessage,
   onRetry,
   className,
   children,
   ...props
 }: MessageProps) => (
-  <MessageCtx.Provider value={{ from, status, errorMessage, onRetry }}>
+  <MessageCtx.Provider value={{ from, status, variant, errorMessage, onRetry }}>
     <article
       data-slot="message"
       data-from={from}
       data-status={status}
+      data-variant={variant}
       className={cn(
         "group/message flex w-full flex-col gap-1.5 font-sans",
-        from === "user" && "items-end",
+        from === "user" && variant !== "flat" && "items-end",
         from === "system" && "items-center",
         className,
       )}
       {...props}
     >
+      <MessageMetaHeader
+        from={from}
+        variant={variant}
+        author={author}
+        model={model}
+        timestamp={timestamp}
+        avatar={avatar}
+      />
       {children}
       {from === "assistant" && (
-        <StatusFeedback status={status} errorMessage={errorMessage} onRetry={onRetry} />
+        <MessageStatusFeedback status={status} errorMessage={errorMessage} onRetry={onRetry} />
       )}
     </article>
   </MessageCtx.Provider>
 );
 
 export const MessageContent = ({ className, children, ...props }: MessageContentProps) => {
-  const { from, status } = useContext(MessageCtx);
+  const { from, status, variant } = useContext(MessageCtx);
 
   return (
     <div
       data-slot="message-content"
-      className={cn(
-        from === "user" &&
-          "max-w-[82%] rounded-2xl rounded-br-md bg-secondary px-4 py-2.5 text-sm leading-relaxed text-secondary-foreground",
-        from === "assistant" && "w-full text-sm leading-7 text-foreground",
-        from === "system" &&
-          "rounded-full border border-solid border-border/80 bg-secondary/45 px-3 py-1 text-xs text-muted-foreground",
-        className,
-      )}
+      className={cn(messageContentVariants({ from, variant }), className)}
       {...props}
     >
       {children}
@@ -131,13 +174,13 @@ export const MessageActions = ({
   children,
   ...props
 }: MessageActionsProps) => {
-  const { from } = useContext(MessageCtx);
+  const { from, variant } = useContext(MessageCtx);
   return (
     <div
       data-slot="message-actions"
       className={cn(
         "flex flex-wrap items-center gap-1",
-        from === "user" && "justify-end",
+        from === "user" && variant !== "flat" && "justify-end",
         revealOnHover &&
           "opacity-100 transition-opacity duration-(--ui-duration-fast) sm:opacity-0 sm:group-focus-within/message:opacity-100 sm:group-hover/message:opacity-100",
         className,
@@ -152,6 +195,7 @@ export const MessageActions = ({
 export const MessageAction = ({
   label,
   active,
+  tone = "default",
   copyText,
   className,
   onClick,
@@ -188,11 +232,7 @@ export const MessageAction = ({
       aria-pressed={active}
       data-slot="message-action"
       onClick={handleClick}
-      className={cn(
-        ACTION_BTN_CLASSES,
-        active && "bg-secondary text-foreground hover:bg-secondary/90",
-        className,
-      )}
+      className={cn(messageActionVariants({ tone, active: Boolean(active) }), className)}
       {...props}
     >
       {copied ? <Check aria-hidden="true" className="size-3.5 text-foreground" /> : children}

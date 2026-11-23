@@ -5,23 +5,26 @@ import { AiChatThread } from "@matt-ui/ui";
 export default function AiChatThreadStreamingDemo() {
   return (
     <AiChatThread
+      variant="compact"
       initialMessages={[
         {
           id: "c1",
           role: "user",
-          content: "帮我检查当前 shadcn Registry 清单里新增了哪些 AI 组件。",
+          content: "帮我检查本次 AI 组件升级里有哪些交互细节需要注意。",
           timestamp: "10:15",
         },
         {
           id: "c2",
           role: "assistant",
-          model: "Matt Flash · 128K",
+          model: "Claude Sonnet · 200K",
+          meta: "0.9s · 184 tok",
           timestamp: "10:15",
+          streaming: true,
           content:
-            "本次共收录 15 款 AI 与智能体组件及 2 套全宽 AI 区块，覆盖对话线程、极光状态球、语音舞台、任务规划、护栏审批、代码 Diff 审阅与视觉生成画布。",
+            "正在核对 11 个 AI 组件的发丝边框层级、深色曜石代码舞台对比度以及单焦点环规范，审批按钮与分支切换均已保持 100% 向后兼容…",
         },
       ]}
-      followUps={["导出 Registry 依赖图", "运行双主题 axe 审计"]}
+      followUps={["导出变更清单", "运行双主题 axe 审计"]}
     />
   );
 }

@@ -3,4 +3,6 @@ export type {
   AiImageRevealHandle,
   AiImageRevealPhase,
   AiImageRevealProps,
+  AiImageRevealRadius,
+  AiImageRevealVariant,
 } from "./ai-image-reveal.types.js";

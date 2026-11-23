@@ -53,4 +53,29 @@ describe("AiAgentActivity", () => {
       screen.getByRole("button", { name: /生成行程时间表/ }).getAttribute("aria-expanded"),
     ).toBe("false");
   });
+
+  it("支持 ghost 变体、类型徽章与整板折叠切换", async () => {
+    const user = userEvent.setup();
+    render(
+      <AiAgentActivity
+        activities={ITEMS}
+        variant="ghost"
+        compact
+        showTypeBadge
+        collapsible
+        title="工具轨迹"
+      />,
+    );
+
+    expect(
+      document.querySelector('[data-slot="ai-agent-activity"]')?.getAttribute("data-variant"),
+    ).toBe("ghost");
+    expect(screen.getByText("检索")).toBeTruthy();
+
+    const toggle = screen.getByRole("button", { name: "工具轨迹" });
+    expect(toggle.getAttribute("aria-expanded")).toBe("true");
+    await user.click(toggle);
+    expect(toggle.getAttribute("aria-expanded")).toBe("false");
+    expect(screen.queryByText("检索京都东山区路线")).toBeNull();
+  });
 });

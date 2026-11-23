@@ -17,4 +17,26 @@ describe("AiCitation", () => {
     expect(onSelect).toHaveBeenCalled();
     expect(screen.getByText(/所有前景与表面对比度不低于 4\.5:1/)).toBeTruthy();
   });
+
+  it("支持 popover 磨砂浮层变体与带外链 URL 的文档来源", () => {
+    const { container } = render(
+      <AiCitation
+        variant="popover"
+        sources={[
+          {
+            id: "doc",
+            index: 1,
+            title: "Design Token Contrast Guide",
+            domain: "w3.org/WCAG22",
+            url: "https://www.w3.org/TR/WCAG22/",
+            publishedAt: "2026-10",
+            snippet: "文本与背景保持 4.5:1 以上对比度。",
+          },
+        ]}
+      />,
+    );
+    expect(container.querySelector('[data-variant="popover"]')).toBeTruthy();
+    const link = screen.getByRole("link", { name: /w3\.org\/WCAG22/ });
+    expect(link.getAttribute("href")).toBe("https://www.w3.org/TR/WCAG22/");
+  });
 });

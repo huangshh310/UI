@@ -23,4 +23,18 @@ describe("AiWorkspaceBlock", () => {
     expect(onSend).toHaveBeenCalledWith("生成 Sheet 悬浮样式代码", "claude-sonnet");
     expect(screen.getByText("生成 Sheet 悬浮样式代码")).toBeTruthy();
   });
+
+  it("支持 compact 变体、自定义默认模型与新建对话", async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <AiWorkspaceBlock variant="compact" defaultModel="gemini-pro" title="代码审查助手" />,
+    );
+
+    const root = container.querySelector('[data-slot="ai-workspace-block"]');
+    expect(root?.getAttribute("data-variant")).toBe("compact");
+    expect(screen.getByText("代码审查助手")).toBeTruthy();
+
+    await user.click(screen.getByRole("button", { name: "新建对话" }));
+    expect(screen.getAllByText("新对话 3").length).toBeGreaterThan(0);
+  });
 });

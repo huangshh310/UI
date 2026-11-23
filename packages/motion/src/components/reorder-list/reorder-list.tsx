@@ -1,7 +1,8 @@
 "use client";
 
 /**
- * ReorderList：结合精确锁版本 @ui-sdk/core 重排状态机与 motion 弹簧布局过渡的可排序列表。
+ * ReorderList：结合精确锁版本 @ui-sdk/core 重排状态机与 motion 弹簧布局过渡的可排序列表，
+ * 支持 cards / divided 变体、compact / comfortable 密度、实时序号与键鼠双通道重排。
  */
 import {
   createChange,
@@ -16,7 +17,18 @@ import { cn } from "@matt-ui/utils";
 import { GripVertical } from "lucide-react";
 import { MotionConfig, motion } from "motion/react";
 import { useId, useMemo, useState } from "react";
-import type { ReorderListItem, ReorderListProps } from "./reorder-list.types.js";
+import type {
+  ReorderListDensity,
+  ReorderListItem,
+  ReorderListProps,
+  ReorderListVariant,
+} from "./reorder-list.types.js";
+import {
+  REORDER_LIST_CONTAINER,
+  REORDER_ROW_BASE,
+  REORDER_ROW_DENSITY,
+  REORDER_ROW_VARIANT,
+} from "./reorder-list.variants.js";
 
 interface SortableOptions {
   value?: string[];
@@ -81,22 +93,51 @@ const { Root: SortableRoot, Item: SortableRow } = createParts(sortablePrimitive,
   item: "li",
 });
 
-const ROW_CLASS = cn(
-  "flex cursor-grab items-center gap-3 rounded-xl border border-solid border-border bg-card px-3.5 py-2.5 shadow-sm outline-none select-none",
-  "transition-[border-color,box-shadow] duration-(--ui-duration-fast) hover:border-foreground/22 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/20",
-  "data-[grabbed]:z-10 data-[grabbed]:cursor-grabbing data-[grabbed]:border-signal data-[grabbed]:shadow-md data-[grabbed]:ring-3 data-[grabbed]:ring-ring/25",
-);
+interface ReorderItemCardProps {
+  item: ReorderListItem;
+  index: number;
+  variant: ReorderListVariant;
+  density: ReorderListDensity;
+  showIndex: boolean;
+  helpId: string;
+}
 
-const ReorderItemCard = ({ item, helpId }: { item: ReorderListItem; helpId: string }) => (
+const ReorderItemCard = ({
+  item,
+  index,
+  variant,
+  density,
+  showIndex,
+  helpId,
+}: ReorderItemCardProps) => (
   <SortableRow
     value={item.id}
     aria-describedby={helpId}
+    data-slot="reorder-item"
     render={
       <motion.li layout="position" transition={{ type: "spring", stiffness: 420, damping: 32 }} />
     }
-    className={ROW_CLASS}
+    className={cn(REORDER_ROW_BASE, REORDER_ROW_VARIANT[variant], REORDER_ROW_DENSITY[density])}
   >
-    <GripVertical aria-hidden="true" className="size-4 shrink-0 text-muted-foreground" />
+    <span
+      aria-hidden="true"
+      className="inline-flex size-5 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors duration-(--ui-duration-fast) group-hover:text-foreground group-data-[grabbed]:text-signal"
+    >
+      <GripVertical className="size-4" />
+    </span>
+    {showIndex && (
+      <span
+        aria-hidden="true"
+        className="w-5 shrink-0 font-mono text-[11px] font-medium text-muted-foreground tabular-nums"
+      >
+        {String(index + 1).padStart(2, "0")}
+      </span>
+    )}
+    {item.icon && (
+      <span aria-hidden="true" className="inline-flex shrink-0 items-center text-muted-foreground">
+        {item.icon}
+      </span>
+    )}
     <div className="min-w-0 flex-1">
       <p className="m-0 truncate font-sans text-sm font-medium text-foreground">{item.title}</p>
       {item.subtitle && (
@@ -104,17 +145,35 @@ const ReorderItemCard = ({ item, helpId }: { item: ReorderListItem; helpId: stri
       )}
     </div>
     {item.badge && (
-      <span className="shrink-0 rounded-md border border-solid border-border bg-secondary/60 px-2 py-0.5 font-mono text-[11px] text-muted-foreground">
+      <span className="shrink-0 rounded-md border border-solid border-border/80 bg-secondary/70 px-2 py-0.5 font-mono text-[11px] text-muted-foreground dark:border-white/12 dark:bg-white/[0.06]">
         {item.badge}
       </span>
     )}
   </SortableRow>
 );
 
+const renderRows = (
+  visibleOrder: string[],
+  itemMap: Map<string, ReorderListItem>,
+  opts: {
+    variant: ReorderListVariant;
+    density: ReorderListDensity;
+    showIndex: boolean;
+    helpId: string;
+  },
+) =>
+  visibleOrder.map((id, idx) => {
+    const item = itemMap.get(id);
+    return item ? <ReorderItemCard key={id} item={item} index={idx} {...opts} /> : null;
+  });
+
 export const ReorderList = ({
   items,
   value,
   onValueChange,
+  variant = "cards",
+  density = "comfortable",
+  showIndex = false,
   ariaLabel = "可重排列表",
   className,
 }: ReorderListProps) => {
@@ -132,7 +191,12 @@ export const ReorderList = ({
 
   return (
     <MotionConfig reducedMotion="user">
-      <div data-slot="reorder-list" className={cn("w-full", className)}>
+      <div
+        data-slot="reorder-list"
+        data-variant={variant}
+        data-density={density}
+        className={cn("w-full", className)}
+      >
         <p id={helpId} className="sr-only">
           按空格键拿起条目，方向键移动位置，再次按空格放下，按 Escape 取消。
         </p>
@@ -143,13 +207,10 @@ export const ReorderList = ({
           aria-label={ariaLabel}
           value={order}
           onValueChange={handleOrderChange}
-          className="m-0 flex list-none flex-col gap-2 p-0"
+          className={REORDER_LIST_CONTAINER[variant]}
         >
           {({ order: visibleOrder }) =>
-            visibleOrder.map((id) => {
-              const item = itemMap.get(id);
-              return item ? <ReorderItemCard key={id} item={item} helpId={helpId} /> : null;
-            })
+            renderRows(visibleOrder, itemMap, { variant, density, showIndex, helpId })
           }
         </SortableRoot>
       </div>

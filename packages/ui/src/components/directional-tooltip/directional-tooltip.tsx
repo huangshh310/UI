@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * DirectionalTooltip：基于 Base UI Tooltip 的方向感知提示气泡。
+ * DirectionalTooltip：基于 Base UI Tooltip 的方向感知磨砂提示气泡，支持快捷键键帽与反色变体。
  */
 import { Tooltip } from "@base-ui/react/tooltip";
 import { cn } from "@matt-ui/utils";
@@ -9,24 +9,11 @@ import type {
   DirectionalTooltipProps,
   DirectionalTooltipProviderProps,
 } from "./directional-tooltip.types.js";
-
-const POPUP_CLASS = cn(
-  "z-50 max-w-xs rounded-md border border-solid border-border bg-popover px-2.5 py-1.5 font-sans text-xs font-medium leading-snug text-popover-foreground shadow-md",
-  "transition-[opacity,transform] duration-(--ui-duration-fast) ease-(--ui-ease-out) motion-reduce:transition-none",
-  "data-starting-style:opacity-0 data-ending-style:opacity-0",
-  "data-[side=top]:data-starting-style:translate-y-1.5 data-[side=top]:data-ending-style:translate-y-1",
-  "data-[side=bottom]:data-starting-style:-translate-y-1.5 data-[side=bottom]:data-ending-style:-translate-y-1",
-  "data-[side=left]:data-starting-style:translate-x-1.5 data-[side=left]:data-ending-style:translate-x-1",
-  "data-[side=right]:data-starting-style:-translate-x-1.5 data-[side=right]:data-ending-style:-translate-x-1",
-);
-
-const ARROW_CLASS = cn(
-  "size-2 rotate-45 border-solid border-border bg-popover",
-  "data-[side=top]:-bottom-1 data-[side=top]:border-r data-[side=top]:border-b",
-  "data-[side=bottom]:-top-1 data-[side=bottom]:border-t data-[side=bottom]:border-l",
-  "data-[side=left]:-right-1 data-[side=left]:border-t data-[side=left]:border-r",
-  "data-[side=right]:-left-1 data-[side=right]:border-b data-[side=right]:border-l",
-);
+import {
+  directionalTooltipArrowVariants,
+  directionalTooltipKbdVariants,
+  directionalTooltipPopupVariants,
+} from "./directional-tooltip.variants.js";
 
 export const DirectionalTooltipProvider = ({
   children,
@@ -41,9 +28,12 @@ export const DirectionalTooltipProvider = ({
 
 export const DirectionalTooltip = ({
   content,
+  shortcut,
   children,
   side = "top",
   align = "center",
+  variant = "default",
+  size = "sm",
   sideOffset = 8,
   delay = 220,
   open,
@@ -55,9 +45,14 @@ export const DirectionalTooltip = ({
     <Tooltip.Trigger delay={delay} render={children} />
     <Tooltip.Portal>
       <Tooltip.Positioner side={side} align={align} sideOffset={sideOffset} className="z-50">
-        <Tooltip.Popup data-slot="directional-tooltip" className={cn(POPUP_CLASS, className)}>
-          {showArrow && <Tooltip.Arrow className={ARROW_CLASS} />}
-          {content}
+        <Tooltip.Popup
+          data-slot="directional-tooltip"
+          data-variant={variant}
+          className={cn(directionalTooltipPopupVariants({ variant, size }), className)}
+        >
+          {showArrow && <Tooltip.Arrow className={directionalTooltipArrowVariants({ variant })} />}
+          <span>{content}</span>
+          {shortcut && <kbd className={directionalTooltipKbdVariants({ variant })}>{shortcut}</kbd>}
         </Tooltip.Popup>
       </Tooltip.Positioner>
     </Tooltip.Portal>

@@ -5,7 +5,7 @@ import { Sparkles } from "lucide-react";
 
 const CODE = `export function UpgradeCard() {
   return (
-    <div className="rounded-2xl border bg-card p-4 shadow-md">
+    <div className="rounded-2xl border bg-card p-4 shadow-sm">
       <Badge variant="signal">Pro · 200K Context</Badge>
       <p className="mt-2 text-sm font-semibold">多模态智能体工作台</p>
       <Button variant="signal" size="sm">立即体验</Button>
@@ -18,9 +18,10 @@ export default function AiArtifactBasicDemo() {
     <AiArtifact
       title="UpgradeCard.tsx"
       versions={["v1", "v2", "v3"]}
+      previewSurface="grid"
       code={CODE}
       preview={
-        <div className="flex w-full max-w-xs flex-col gap-3 rounded-2xl border border-solid border-border/90 bg-card p-4 shadow-md">
+        <div className="flex w-full max-w-xs flex-col gap-3 rounded-2xl border border-solid border-border/85 bg-card p-4 shadow-sm">
           <div className="flex items-center justify-between gap-2">
             <Badge variant="signal" shape="tag">
               Pro · 200K

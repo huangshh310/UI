@@ -38,4 +38,32 @@ describe("SegmentedControl", () => {
     expect(onValueChange).toHaveBeenCalledWith("deep");
     expect(document.activeElement).toBe(screen.getByRole("button", { name: "深度研究" }));
   });
+
+  it("支持 glass / signal 变体、三档尺寸并跳过禁用项", async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn<(val: string) => void>();
+
+    const { container } = render(
+      <SegmentedControl
+        variant="signal"
+        size="lg"
+        fullWidth
+        defaultValue="day"
+        onValueChange={onValueChange}
+        items={[
+          { value: "day", label: "按日" },
+          { value: "week", label: "按周", disabled: true },
+          { value: "month", label: "按月" },
+        ]}
+      />,
+    );
+
+    const root = container.querySelector('[data-slot="segmented-control"]');
+    expect(root?.getAttribute("data-variant")).toBe("signal");
+    expect(root?.getAttribute("data-size")).toBe("lg");
+
+    screen.getByRole("button", { name: "按日" }).focus();
+    await user.keyboard("{ArrowRight}");
+    expect(onValueChange).toHaveBeenCalledWith("month");
+  });
 });

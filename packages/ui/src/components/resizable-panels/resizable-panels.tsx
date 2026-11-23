@@ -1,73 +1,103 @@
 "use client";
 
+/**
+ * ResizablePanels：基于精确锁版本 @ui-sdk/react/resizable 的精密分栏面板，
+ * 支持 card / flush 容器、pill / line / dots 三种手柄风格与方向键比例调节。
+ */
 import { Resizable, ResizableHandle, ResizablePanel } from "@ui-sdk/react/resizable";
 import { cn } from "@matt-ui/utils";
 import { GripHorizontal, GripVertical } from "lucide-react";
 import { Fragment } from "react";
-import type { ResizablePanelsProps } from "./resizable-panels.types.js";
+import type { ResizableHandleStyle, ResizablePanelsProps } from "./resizable-panels.types.js";
+import {
+  resizableDotsGripVariants,
+  resizableHandleVariants,
+  resizableLineGripVariants,
+  resizablePillGripVariants,
+  resizableRootVariants,
+} from "./resizable-panels.variants.js";
 
-const PanelDivider = ({ isHorizontal }: { isHorizontal: boolean }) => (
-  <ResizableHandle
-    aria-label="调整面板比例"
-    className={cn(
-      "group relative flex shrink-0 items-center justify-center bg-border transition-colors duration-(--ui-duration-fast) hover:bg-signal/50 focus-visible:bg-signal focus-visible:outline-none data-[dragging]:bg-signal",
-      isHorizontal
-        ? "w-px cursor-col-resize px-1 bg-clip-content"
-        : "h-px cursor-row-resize py-1 bg-clip-content",
-    )}
-  >
-    <span
-      aria-hidden="true"
-      className={cn(
-        "inline-flex items-center justify-center rounded-full border border-solid border-border bg-card text-muted-foreground shadow-sm transition-all group-hover:scale-110 group-hover:border-signal/60 group-hover:bg-signal group-hover:text-signal-foreground",
-        isHorizontal ? "h-8 w-3.5" : "h-3.5 w-8",
-      )}
-    >
-      {isHorizontal ? (
+const HandleGrip = ({
+  orientation,
+  handleStyle,
+}: {
+  orientation: "horizontal" | "vertical";
+  handleStyle: ResizableHandleStyle;
+}) => {
+  if (handleStyle === "line") {
+    return <span aria-hidden="true" className={resizableLineGripVariants({ orientation })} />;
+  }
+  if (handleStyle === "dots") {
+    return (
+      <span aria-hidden="true" className={resizableDotsGripVariants({ orientation })}>
+        <span className="size-1 rounded-full bg-current" />
+        <span className="size-1 rounded-full bg-current" />
+        <span className="size-1 rounded-full bg-current" />
+      </span>
+    );
+  }
+  return (
+    <span aria-hidden="true" className={resizablePillGripVariants({ orientation })}>
+      {orientation === "horizontal" ? (
         <GripVertical className="size-2.5" />
       ) : (
         <GripHorizontal className="size-2.5" />
       )}
     </span>
+  );
+};
+
+const PanelDivider = ({
+  orientation,
+  handleStyle,
+}: {
+  orientation: "horizontal" | "vertical";
+  handleStyle: ResizableHandleStyle;
+}) => (
+  <ResizableHandle
+    aria-label="调整面板比例"
+    data-slot="resizable-handle"
+    className={resizableHandleVariants({ orientation })}
+  >
+    <HandleGrip orientation={orientation} handleStyle={handleStyle} />
   </ResizableHandle>
 );
 
 export const ResizablePanels = ({
   orientation = "horizontal",
+  variant = "card",
+  handleStyle = "pill",
   panels,
   step = 5,
   onLayoutChange,
   className,
-}: ResizablePanelsProps) => {
-  const isHorizontal = orientation === "horizontal";
-
-  return (
-    <Resizable
-      orientation={orientation}
-      step={step}
-      onLayoutChange={(layout) => onLayoutChange?.(layout)}
-      data-slot="resizable-panels"
-      className={cn(
-        "flex h-56 w-full overflow-hidden rounded-2xl border border-solid border-border bg-card shadow-sm",
-        isHorizontal ? "flex-row" : "flex-col",
-        className,
-      )}
-    >
-      {panels.map((panel, idx) => (
-        <Fragment key={panel.id}>
-          <ResizablePanel
-            id={panel.id}
-            defaultSize={panel.defaultSize}
-            minSize={panel.minSize}
-            maxSize={panel.maxSize}
-            style={{ flexBasis: "var(--resizable-panel-size)" }}
-            className="min-h-0 min-w-0 shrink grow overflow-auto"
-          >
-            {panel.content}
-          </ResizablePanel>
-          {idx < panels.length - 1 && <PanelDivider isHorizontal={isHorizontal} />}
-        </Fragment>
-      ))}
-    </Resizable>
-  );
-};
+}: ResizablePanelsProps) => (
+  <Resizable
+    orientation={orientation}
+    step={step}
+    onLayoutChange={(layout) => onLayoutChange?.(layout)}
+    data-slot="resizable-panels"
+    data-variant={variant}
+    data-handle-style={handleStyle}
+    className={cn(resizableRootVariants({ variant, orientation }), className)}
+  >
+    {panels.map((panel, idx) => (
+      <Fragment key={panel.id}>
+        <ResizablePanel
+          id={panel.id}
+          defaultSize={panel.defaultSize}
+          minSize={panel.minSize}
+          maxSize={panel.maxSize}
+          data-slot="resizable-panel"
+          style={{ flexBasis: "var(--resizable-panel-size)" }}
+          className="min-h-0 min-w-0 shrink grow overflow-auto"
+        >
+          {panel.content}
+        </ResizablePanel>
+        {idx < panels.length - 1 && (
+          <PanelDivider orientation={orientation} handleStyle={handleStyle} />
+        )}
+      </Fragment>
+    ))}
+  </Resizable>
+);

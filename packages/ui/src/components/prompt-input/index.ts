@@ -12,10 +12,13 @@ export type {
   PromptInputFooterProps,
   PromptInputHeaderProps,
   PromptInputProps,
+  PromptInputRadius,
+  PromptInputSize,
   PromptInputStatus,
   PromptInputSubmitProps,
   PromptInputTextareaProps,
   PromptInputToolsProps,
+  PromptInputVariant,
   PromptModelOption,
   PromptSlashCommand,
 } from "./prompt-input.types.js";

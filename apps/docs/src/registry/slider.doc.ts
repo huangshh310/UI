@@ -1,17 +1,19 @@
 import SliderBasicDemo from "@/demos/slider/basic";
 import SliderRangeDemo from "@/demos/slider/range";
+import SliderTonesDemo from "@/demos/slider/tones";
 import type { ComponentDoc } from "./registry.types";
 
 export const SLIDER_DOC: ComponentDoc = {
   slug: "slider",
   name: "Slider",
-  description: "基于 Base UI Slider 的单滑块与区间双滑块，带钴蓝激活轨道、刻度与读数。",
+  description:
+    "基于 Base UI Slider 的精密滑块与区间双滑块，支持 sm / md / lg 尺寸、default / signal / emerald 色调、浮动数值气泡与刻度标记。",
   category: "navigation",
   registryName: "slider",
-  dependencies: ["@base-ui/react"],
+  dependencies: ["@base-ui/react", "class-variance-authority"],
   usage: `import { Slider } from "@/components/ui/slider";
 
-<Slider label="音量" defaultValue={60} showValue />`,
+<Slider label="音量" tone="signal" defaultValue={60} showValue showTooltip />`,
   createdAt: "2026-11-22",
   specimens: [
     {
@@ -20,6 +22,14 @@ export const SLIDER_DOC: ComponentDoc = {
       description: "支持格式化等宽读数、自定义步长与底部刻度标记。",
       file: "slider/basic.tsx",
       Demo: SliderBasicDemo,
+    },
+    {
+      slug: "tones",
+      name: "多尺寸、色调与浮动读数气泡",
+      description: "展示 sm / md / lg 轨道粗细、signal 与 emerald 激活色调及拖拽实时数值气泡。",
+      file: "slider/tones.tsx",
+      Demo: SliderTonesDemo,
+      directory: false,
     },
     {
       slug: "range",
@@ -36,6 +46,18 @@ export const SLIDER_DOC: ComponentDoc = {
       type: "number | [number, number]",
       defaultValue: "—",
       description: "受控单值或区间",
+    },
+    {
+      name: "size / tone",
+      type: '"sm" | "md" | "lg" / "default" | "signal" | "emerald"',
+      defaultValue: '"md" / "default"',
+      description: "轨道粗细与激活轨道色调",
+    },
+    {
+      name: "showValue / showTooltip",
+      type: "boolean",
+      defaultValue: "false / false",
+      description: "是否在顶部显示读数徽章或在滑块上方显示悬浮气泡",
     },
     {
       name: "min / max / step",

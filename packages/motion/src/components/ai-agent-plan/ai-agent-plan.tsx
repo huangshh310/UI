@@ -1,51 +1,43 @@
 "use client";
 
 /**
- * AiAgentPlan：自主智能体多步任务规划与执行进度追踪器（参考 Devin / Manus / Deep Research）。
+ * AiAgentPlan：自主智能体多步任务规划与执行进度追踪器（参考 Linear Agent / Cursor / Devin）。
  */
 import { cn } from "@matt-ui/utils";
-import { Check, Circle, Loader2, Play, RotateCcw } from "lucide-react";
+import { AlertCircle, Check, Circle, Loader2, Minus, Play, RotateCcw } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import { useState } from "react";
-import type { AiAgentPlanProps, AiPlanStep, AiPlanStepStatus } from "./ai-agent-plan.types.js";
-
-const DEFAULT_STEPS: AiPlanStep[] = [
-  {
-    id: "p1",
-    title: "检索 11 月京都天气与红叶实况",
-    tool: "weather_search",
-    duration: "0.4s",
-    status: "completed",
-  },
-  {
-    id: "p2",
-    title: "筛选东山区步行可达的小众咖啡馆",
-    tool: "places_rank",
-    duration: "1.2s",
-    status: "running",
-  },
-  { id: "p3", title: "按步行距离排布三天慢逛动线", tool: "route_plan", status: "pending" },
-  { id: "p4", title: "生成可离线查看的行程手账卡片", tool: "export_card", status: "pending" },
-];
+import { useState, type ReactNode } from "react";
+import type {
+  AiAgentPlanProps,
+  AiAgentPlanVariant,
+  AiPlanStep,
+  AiPlanStepStatus,
+} from "./ai-agent-plan.types.js";
+import {
+  PLAN_DEFAULT_STEPS,
+  PLAN_GLYPH_TONE,
+  PLAN_ROW_TONE,
+  PLAN_SHELL_CLASS,
+} from "./ai-agent-plan.variants.js";
 
 const StepGlyph = ({ status }: { status: AiPlanStepStatus }) => {
-  if (status === "completed") {
-    return (
-      <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-secondary text-foreground">
-        <Check aria-hidden="true" className="size-3" />
-      </span>
-    );
-  }
-  if (status === "running") {
-    return (
-      <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
-        <Loader2 aria-hidden="true" className="size-3 animate-spin motion-reduce:animate-none" />
-      </span>
-    );
-  }
+  const iconMap: Record<AiPlanStepStatus, ReactNode> = {
+    completed: <Check aria-hidden="true" className="size-3" />,
+    running: (
+      <Loader2 aria-hidden="true" className="size-3 animate-spin motion-reduce:animate-none" />
+    ),
+    pending: <Circle aria-hidden="true" className="size-2" />,
+    failed: <AlertCircle aria-hidden="true" className="size-3" />,
+    skipped: <Minus aria-hidden="true" className="size-3" />,
+  };
   return (
-    <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-secondary/70 text-muted-foreground">
-      <Circle aria-hidden="true" className="size-2.5" />
+    <span
+      className={cn(
+        "relative z-10 inline-flex size-5 shrink-0 items-center justify-center rounded-full",
+        PLAN_GLYPH_TONE[status],
+      )}
+    >
+      {iconMap[status]}
     </span>
   );
 };
@@ -61,23 +53,39 @@ const advancePlan = (steps: AiPlanStep[]): AiPlanStep[] => {
   });
 };
 
-const PlanHeader = ({
-  title,
-  done,
-  total,
-  pct,
-  reduced,
-}: {
+interface HeaderProps {
   title: string;
+  subtitle?: string;
   done: number;
   total: number;
   pct: number;
+  finished: boolean;
   reduced: boolean | null;
-}) => (
+}
+
+const PlanHeader = ({ title, subtitle, done, total, pct, finished, reduced }: HeaderProps) => (
   <div className="flex flex-col gap-2.5">
-    <div className="flex items-center justify-between gap-2">
-      <span className="text-xs font-semibold text-foreground">{title}</span>
-      <span className="rounded-full border border-solid border-border/80 bg-secondary/75 px-2.5 py-0.5 font-mono text-[11px] font-medium text-foreground tabular-nums">
+    <div className="flex items-start justify-between gap-3">
+      <div className="flex min-w-0 flex-col gap-0.5">
+        <span className="truncate text-[13px] font-semibold tracking-tight text-foreground">
+          {title}
+        </span>
+        {subtitle && (
+          <span className="truncate font-mono text-[11px] text-muted-foreground">{subtitle}</span>
+        )}
+      </div>
+      <span
+        className={cn(
+          "inline-flex shrink-0 items-center gap-1.5 rounded-full border border-solid px-2.5 py-0.5 font-mono text-[11px] font-medium tabular-nums",
+          finished
+            ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"
+            : "border-border/80 bg-secondary/75 text-foreground",
+        )}
+      >
+        <span
+          aria-hidden="true"
+          className={cn("size-1.5 rounded-full", finished ? "bg-emerald-500" : "bg-signal")}
+        />
         {done} / {total} 步 · {pct}%
       </span>
     </div>
@@ -86,51 +94,80 @@ const PlanHeader = ({
         initial={false}
         animate={{ width: `${pct}%` }}
         transition={{ duration: reduced ? 0 : 0.35, ease: "easeOut" }}
-        className="h-full rounded-full bg-foreground"
+        className={cn(
+          "h-full rounded-full transition-colors",
+          finished ? "bg-emerald-500" : "bg-signal",
+        )}
       />
     </div>
   </div>
 );
 
-const PlanStepList = ({ steps }: { steps: AiPlanStep[] }) => (
-  <ol className="m-0 flex list-none flex-col gap-1.5 p-0">
-    {steps.map((step) => (
-      <li
-        key={step.id}
-        className={cn(
-          "flex items-center justify-between gap-2.5 rounded-xl border border-solid px-3 py-2.5 text-xs transition-colors",
-          step.status === "running"
-            ? "border-foreground/20 bg-secondary/75"
-            : "border-border/60 bg-background/60 dark:bg-secondary/20",
-        )}
-      >
-        <div className="flex min-w-0 items-center gap-2.5">
-          <StepGlyph status={step.status} />
-          <span
-            className={cn(
-              "truncate font-medium",
-              step.status === "pending" ? "text-muted-foreground" : "text-foreground",
-            )}
-          >
-            {step.title}
-          </span>
-        </div>
-        <div className="flex shrink-0 items-center gap-1.5">
-          {step.tool && (
-            <span className="rounded-md bg-secondary px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
-              {step.tool}
-            </span>
-          )}
-          {step.duration && (
-            <span className="font-mono text-[10px] text-muted-foreground tabular-nums">
-              {step.duration}
-            </span>
-          )}
-        </div>
-      </li>
-    ))}
-  </ol>
+const StepMetaTags = ({ tool, duration }: { tool?: string; duration?: string }) => (
+  <div className="flex shrink-0 items-center gap-1.5 pt-0.5">
+    {tool && (
+      <span className="rounded-md border border-solid border-border/60 bg-secondary/80 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
+        {tool}
+      </span>
+    )}
+    {duration && (
+      <span className="font-mono text-[10px] text-muted-foreground tabular-nums">{duration}</span>
+    )}
+  </div>
 );
+
+const stepTitleClass = (status: AiPlanStepStatus) =>
+  cn(
+    "truncate font-medium leading-snug",
+    status === "pending" || status === "skipped" ? "text-muted-foreground" : "text-foreground",
+    status === "skipped" && "line-through",
+  );
+
+const PlanStepRow = ({
+  step,
+  variant,
+  isLast,
+}: {
+  step: AiPlanStep;
+  variant: AiAgentPlanVariant;
+  isLast: boolean;
+}) => {
+  const isTimeline = variant === "timeline";
+  const boxClass = isTimeline
+    ? "py-2 pl-0"
+    : cn(
+        "rounded-xl border border-solid",
+        variant === "compact" ? "px-2.5 py-2" : "px-3 py-2.5",
+        PLAN_ROW_TONE[step.status],
+      );
+
+  return (
+    <li
+      data-status={step.status}
+      className={cn(
+        "relative flex items-start justify-between gap-2.5 text-xs transition-colors",
+        boxClass,
+      )}
+    >
+      {isTimeline && !isLast && (
+        <span
+          aria-hidden="true"
+          className="absolute top-7 bottom-[-8px] left-[9.5px] w-px bg-border/80"
+        />
+      )}
+      <div className="flex min-w-0 items-start gap-2.5">
+        <StepGlyph status={step.status} />
+        <div className="flex min-w-0 flex-col gap-0.5 pt-0.5">
+          <span className={stepTitleClass(step.status)}>{step.title}</span>
+          {step.detail && variant !== "compact" && (
+            <span className="text-[11px] leading-relaxed text-muted-foreground">{step.detail}</span>
+          )}
+        </div>
+      </div>
+      <StepMetaTags tool={step.tool} duration={step.duration} />
+    </li>
+  );
+};
 
 const PlanFooter = ({
   finished,
@@ -141,7 +178,7 @@ const PlanFooter = ({
   onReset: () => void;
   onAdvance: () => void;
 }) => (
-  <div className="flex items-center justify-between gap-2 border-t border-solid border-border/70 pt-2.5">
+  <div className="flex items-center justify-between gap-2 border-t border-solid border-border/70 pt-3">
     <span className="text-[11px] text-muted-foreground">
       {finished ? "所有步骤已自动验收完成" : "实时追踪工具调用与状态跃迁"}
     </span>
@@ -158,7 +195,7 @@ const PlanFooter = ({
       <button
         type="button"
         onClick={onAdvance}
-        className="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-full border border-solid border-primary bg-primary px-3.5 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-opacity hover:opacity-90 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+        className="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-full border border-solid border-primary bg-primary px-3.5 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-opacity hover:opacity-90 active:scale-[0.98] outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         <Play aria-hidden="true" className="size-3" />
         <span>推进下一步</span>
@@ -167,37 +204,61 @@ const PlanFooter = ({
   </div>
 );
 
-export const AiAgentPlan = ({
-  title = "智能体执行计划",
-  initialSteps = DEFAULT_STEPS,
-  onStepAdvance,
-  className,
-}: AiAgentPlanProps) => {
+const PlanStepList = ({ steps, variant }: { steps: AiPlanStep[]; variant: AiAgentPlanVariant }) => (
+  <ol
+    className={cn(
+      "m-0 flex list-none flex-col p-0",
+      variant === "timeline" ? "gap-0.5" : "gap-1.5",
+    )}
+  >
+    {steps.map((step, idx) => (
+      <PlanStepRow key={step.id} step={step} variant={variant} isLast={idx === steps.length - 1} />
+    ))}
+  </ol>
+);
+
+export const AiAgentPlan = (props: AiAgentPlanProps) => {
+  const variant = props.variant ?? "card";
+  const initialSteps = props.initialSteps ?? PLAN_DEFAULT_STEPS;
   const reduced = useReducedMotion();
   const [steps, setSteps] = useState<AiPlanStep[]>(initialSteps);
   const done = steps.filter((s) => s.status === "completed").length;
   const pct = Math.round((done / Math.max(1, steps.length)) * 100);
+  const finished = done === steps.length;
+
   const handleAdvance = () => {
     const next = advancePlan(steps);
     setSteps(next);
-    onStepAdvance?.(next.filter((s) => s.status === "completed").length, next.length);
+    props.onStepAdvance?.(next.filter((s) => s.status === "completed").length, next.length);
   };
 
   return (
     <div
       data-slot="ai-agent-plan"
+      data-variant={variant}
       className={cn(
-        "flex w-full max-w-xl flex-col gap-4 rounded-[22px] border border-solid border-border bg-card p-5 text-card-foreground shadow-xs",
-        className,
+        "flex w-full max-w-xl flex-col border border-solid text-card-foreground",
+        PLAN_SHELL_CLASS[variant],
+        props.className,
       )}
     >
-      <PlanHeader title={title} done={done} total={steps.length} pct={pct} reduced={reduced} />
-      <PlanStepList steps={steps} />
-      <PlanFooter
-        finished={done === steps.length}
-        onReset={() => setSteps(initialSteps)}
-        onAdvance={handleAdvance}
+      <PlanHeader
+        title={props.title ?? "智能体执行计划"}
+        subtitle={props.subtitle}
+        done={done}
+        total={steps.length}
+        pct={pct}
+        finished={finished}
+        reduced={reduced}
       />
+      <PlanStepList steps={steps} variant={variant} />
+      {(props.showControls ?? true) && (
+        <PlanFooter
+          finished={finished}
+          onReset={() => setSteps(initialSteps)}
+          onAdvance={handleAdvance}
+        />
+      )}
     </div>
   );
 };

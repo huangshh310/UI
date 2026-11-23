@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from "react";
 
-export type CardVariant = "default" | "elevated" | "interactive";
+export type CardVariant = "default" | "elevated" | "interactive" | "glass" | "subtle";
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   /** 视觉层级变体 */

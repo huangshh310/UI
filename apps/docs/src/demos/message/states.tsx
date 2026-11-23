@@ -11,11 +11,15 @@ export default function MessageStatesDemo() {
 
   return (
     <div className="flex w-full max-w-xl flex-col gap-5">
-      <Message from="assistant" status="stopped">
-        <MessageContent>已根据你的要求梳理出第一阶段 8 个核心原语的导出契约——</MessageContent>
+      <Message from="system">
+        <MessageContent>已切换至深度推理模式 · 上下文上限 200K</MessageContent>
+      </Message>
+      <Message from="assistant" status="stopped" model="o4 Reasoning">
+        <MessageContent>已根据你的要求梳理出第一阶段核心原语的导出契约——</MessageContent>
       </Message>
       <Message
         from="assistant"
+        model="Claude 4.5"
         status={retried ? "streaming" : "error"}
         errorMessage="上游推理服务响应超时（504）"
         onRetry={() => setRetried(true)}

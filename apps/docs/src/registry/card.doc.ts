@@ -1,19 +1,24 @@
 import CardBasicDemo from "@/demos/card/basic";
-import CardMetricsDemo from "@/demos/card/metrics";
 import CardElevatedDemo from "@/demos/card/elevated";
+import CardMetricsDemo from "@/demos/card/metrics";
+import CardVariantsDemo from "@/demos/card/variants";
 import type { ComponentDoc } from "./registry.types";
 
 export const CARD_DOC: ComponentDoc = {
   slug: "card",
   name: "Card",
-  description: "圆角发丝边线卡片容器，提供页头、标题、说明、主体与托盘页脚组合插槽。",
+  description:
+    "圆角发丝边线卡片容器，提供 default / elevated / interactive / glass / subtle 五种材质层级与页头操作插槽。",
   category: "display",
   registryName: "card",
   dependencies: ["class-variance-authority"],
-  usage: `import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+  usage: `import { Card, CardAction, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
-<Card>
-  <CardHeader><CardTitle>标题</CardTitle></CardHeader>
+<Card variant="elevated">
+  <CardHeader>
+    <CardTitle>标题</CardTitle>
+    <CardAction>状态</CardAction>
+  </CardHeader>
   <CardContent>正文</CardContent>
 </Card>`,
   createdAt: "2026-11-22",
@@ -21,7 +26,7 @@ export const CARD_DOC: ComponentDoc = {
     {
       slug: "basic",
       name: "指标卡片与托盘页脚",
-      description: "支持 default / elevated / interactive 三种视觉层级与浅灰底部操作托盘。",
+      description: "支持五种视觉材质层级与浅灰底部操作托盘。",
       file: "card/basic.tsx",
       Demo: CardBasicDemo,
     },
@@ -41,13 +46,27 @@ export const CARD_DOC: ComponentDoc = {
       Demo: CardElevatedDemo,
       directory: false,
     },
+    {
+      slug: "variants",
+      name: "五种表面层级与 CardAction 插槽",
+      description: "对比 default / elevated / subtle / glass 材质并展示右上角操作位对齐。",
+      file: "card/variants.tsx",
+      Demo: CardVariantsDemo,
+      directory: false,
+    },
   ],
   api: [
     {
       name: "variant",
-      type: '"default" | "elevated" | "interactive"',
+      type: '"default" | "elevated" | "interactive" | "glass" | "subtle"',
       defaultValue: '"default"',
-      description: "视觉层级与悬停反馈",
+      description: "卡片表面材质与悬停反馈层级",
+    },
+    {
+      name: "CardAction",
+      type: "HTMLDivElement",
+      defaultValue: "—",
+      description: "置于 CardHeader 右上角的徽章或快捷操作槽",
     },
     {
       name: "CardFooter.muted",

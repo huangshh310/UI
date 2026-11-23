@@ -24,6 +24,8 @@ export default function AiImageRevealGeneratingDemo() {
       <AiImageReveal
         src={generating ? undefined : SAMPLE_SRC}
         generating={generating}
+        variant="glass"
+        badge="16:10 · HD"
         alt="静谧海湾夜色"
         aspectRatio={16 / 10}
         generatingLabel="扩散采样中…"
@@ -33,7 +35,7 @@ export default function AiImageRevealGeneratingDemo() {
         <button
           type="button"
           onClick={() => setGenerating((prev) => !prev)}
-          className="h-8 cursor-pointer rounded-full border-0 bg-primary px-4 font-sans text-xs font-medium text-primary-foreground transition-transform active:scale-[0.98] outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="h-8 cursor-pointer rounded-full border-0 bg-primary px-4 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-transform active:scale-[0.98] outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset"
         >
           {generating ? "完成生成并显影" : "重新进入粒子等待态"}
         </button>

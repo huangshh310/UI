@@ -20,6 +20,7 @@ import { buttonVariants } from "./button.variants.js";
 export const Button = ({
   variant = "primary",
   size = "md",
+  radius = "default",
   type = "button",
   loading = false,
   className,
@@ -43,10 +44,11 @@ export const Button = ({
       data-slot="button"
       data-variant={variant}
       data-size={size}
+      data-radius={radius}
       data-loading={loading ? "" : undefined}
       aria-busy={loading || undefined}
       aria-disabled={loading || undefined}
-      className={cn(buttonVariants({ variant, size }), className)}
+      className={cn(buttonVariants({ variant, size, radius }), className)}
       onClick={handleClick}
       {...props}
     >

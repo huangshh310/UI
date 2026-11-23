@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, LockInput, Sheet, SpringSelect } from "@matt-ui/ui";
+import { KeyRound } from "lucide-react";
 import { useId, useState } from "react";
 
 const ROLES = [
@@ -19,7 +20,7 @@ const MemberNameField = () => {
       <input
         id={nameId}
         defaultValue="林知远"
-        className="h-9 rounded-lg border border-solid border-border bg-background px-3 text-sm text-foreground outline-none focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset dark:bg-card"
+        className="h-9 rounded-lg border border-solid border-input/50 bg-background px-3 text-sm text-foreground outline-none transition-colors focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset dark:border-white/12 dark:bg-card"
       />
     </div>
   );
@@ -36,6 +37,8 @@ export default function SheetFormDemo() {
       onOpenChange={setOpen}
       side="right"
       size="md"
+      icon={<KeyRound className="size-4" />}
+      badge="RBAC"
       trigger={<Button variant="signal">编辑成员凭证</Button>}
       title="成员权限与访问令牌"
       description="修改角色与私有 Registry 访问密钥，保存后立即同步。"

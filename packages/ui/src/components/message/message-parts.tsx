@@ -19,6 +19,7 @@ import type {
   MessageBranchSelectorProps,
   MessageEditFormProps,
 } from "./message.types.js";
+import { MESSAGE_FOCUS_RING, MESSAGE_PAGER_BTN } from "./message.variants.js";
 
 interface BranchContextValue {
   branch: number;
@@ -33,9 +34,6 @@ const BranchCtx = createContext<BranchContextValue>({
   setTotal: () => {},
   setBranch: () => {},
 });
-
-const PAGER_BTN_CLASSES =
-  "inline-flex size-6 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-40";
 
 export const MessageBranch = ({
   defaultBranch = 0,
@@ -96,7 +94,7 @@ export const MessageBranchSelector = ({ className, ...props }: MessageBranchSele
     <div
       data-slot="message-branch-selector"
       className={cn(
-        "inline-flex items-center gap-0.5 font-mono text-[11px] text-muted-foreground tabular-nums",
+        "inline-flex items-center gap-0.5 rounded-lg border border-solid border-border/70 bg-secondary/45 px-0.5 font-mono text-[11px] text-muted-foreground tabular-nums dark:border-white/10 dark:bg-white/5",
         className,
       )}
       {...props}
@@ -105,7 +103,7 @@ export const MessageBranchSelector = ({ className, ...props }: MessageBranchSele
         type="button"
         aria-label="上一分支版本"
         onClick={() => setBranch(branch - 1)}
-        className={PAGER_BTN_CLASSES}
+        className={MESSAGE_PAGER_BTN}
       >
         <ChevronLeft aria-hidden="true" className="size-3.5" />
       </button>
@@ -116,7 +114,7 @@ export const MessageBranchSelector = ({ className, ...props }: MessageBranchSele
         type="button"
         aria-label="下一分支版本"
         onClick={() => setBranch(branch + 1)}
-        className={PAGER_BTN_CLASSES}
+        className={MESSAGE_PAGER_BTN}
       >
         <ChevronRight aria-hidden="true" className="size-3.5" />
       </button>
@@ -124,7 +122,7 @@ export const MessageBranchSelector = ({ className, ...props }: MessageBranchSele
   );
 };
 
-const EditFormButtons = ({
+const EditFormFooter = ({
   canSave,
   submitLabel,
   onCancel,
@@ -135,22 +133,31 @@ const EditFormButtons = ({
   onCancel: () => void;
   onSave: () => void;
 }) => (
-  <div className="flex items-center justify-end gap-2">
-    <button
-      type="button"
-      onClick={onCancel}
-      className="inline-flex h-7 cursor-pointer items-center rounded-full border border-solid border-border bg-secondary/60 px-3 font-sans text-xs font-medium text-foreground transition-colors duration-(--ui-duration-fast) hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-    >
-      取消
-    </button>
-    <button
-      type="button"
-      disabled={!canSave}
-      onClick={onSave}
-      className="inline-flex h-7 cursor-pointer items-center rounded-full border-0 bg-primary px-3 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-opacity duration-(--ui-duration-fast) hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-45"
-    >
-      {submitLabel}
-    </button>
+  <div className="flex items-center justify-between gap-2">
+    <span className="font-mono text-[10px] text-muted-foreground">⌘↵ 保存 · Esc 取消</span>
+    <div className="flex items-center gap-1.5">
+      <button
+        type="button"
+        onClick={onCancel}
+        className={cn(
+          "inline-flex h-7 cursor-pointer items-center rounded-full border border-solid border-border/80 bg-secondary/65 px-3 font-sans text-xs font-medium text-foreground transition-colors duration-(--ui-duration-fast) hover:bg-accent dark:border-white/10",
+          MESSAGE_FOCUS_RING,
+        )}
+      >
+        取消
+      </button>
+      <button
+        type="button"
+        disabled={!canSave}
+        onClick={onSave}
+        className={cn(
+          "inline-flex h-7 cursor-pointer items-center rounded-full border border-solid border-transparent bg-primary px-3 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-opacity duration-(--ui-duration-fast) hover:opacity-90 disabled:pointer-events-none disabled:opacity-45",
+          MESSAGE_FOCUS_RING,
+        )}
+      >
+        {submitLabel}
+      </button>
+    </div>
   </div>
 );
 
@@ -180,7 +187,7 @@ export const MessageEditForm = ({
     <div
       data-slot="message-edit-form"
       className={cn(
-        "ml-auto flex w-full max-w-[88%] flex-col gap-2.5 rounded-2xl border border-solid border-border bg-card p-3 shadow-sm focus-within:border-ring focus-within:ring-1 focus-within:ring-ring focus-within:ring-inset",
+        "ml-auto flex w-full max-w-[88%] flex-col gap-2.5 rounded-2xl border border-solid border-border/80 bg-card/95 p-3 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.12)] focus-within:border-ring focus-within:ring-1 focus-within:ring-ring focus-within:ring-inset dark:border-white/12 dark:shadow-[0_14px_32px_-10px_rgba(0,0,0,0.65)]",
         className,
       )}
     >
@@ -192,7 +199,7 @@ export const MessageEditForm = ({
         onKeyDown={handleKeyDown}
         className="w-full resize-none border-0 bg-transparent font-sans text-sm leading-relaxed text-foreground outline-none"
       />
-      <EditFormButtons
+      <EditFormFooter
         canSave={canSave}
         submitLabel={submitLabel}
         onCancel={onCancel}

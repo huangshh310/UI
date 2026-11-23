@@ -2,6 +2,7 @@
 
 import { MorphingButton, type MorphingButtonStatus } from "@matt-ui/motion";
 import { Button } from "@matt-ui/ui";
+import { ShieldCheck } from "lucide-react";
 import { useState } from "react";
 
 export default function MorphingButtonErrorDemo() {
@@ -11,6 +12,9 @@ export default function MorphingButtonErrorDemo() {
     <div className="flex flex-col items-center gap-3">
       <MorphingButton
         status={status}
+        variant="outline"
+        radius="default"
+        idleIcon={<ShieldCheck />}
         labels={{
           idle: "提交生产审核",
           loading: "校验中…",

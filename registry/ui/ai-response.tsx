@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * AiResponse：流式 AI 回复容器，内置零 innerHTML 的安全 Markdown 渲染、生成状态头、工具调用折叠摘要、参考来源与反馈操作栏。
+ * AiResponse：流式 AI 回复容器，内置零 innerHTML 的安全 Markdown 渲染、卡片/无框/毛玻璃变体、工具摘要、参考来源与反馈操作栏。
  */
 
 import { cn } from "@/lib/utils";
@@ -21,7 +21,34 @@ import {
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { createContext, type ReactNode, useContext, useState } from "react";
 
+export const AI_RESPONSE_FOCUS_RING =
+  "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
+
+export const AI_RESPONSE_SPRING = {
+  type: "spring" as const,
+  stiffness: 420,
+  damping: 32,
+  mass: 0.8,
+};
+
+export const AI_RESPONSE_ACTION_BTN = `inline-flex size-7 cursor-pointer items-center justify-center rounded-lg border border-solid border-transparent bg-transparent text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:bg-secondary/90 hover:text-foreground dark:hover:bg-white/10 ${AI_RESPONSE_FOCUS_RING}`;
+
+export const AI_RESPONSE_SHELL_VARIANT: Record<AiResponseVariant, string> = {
+  card: "rounded-[22px] border border-solid border-border/80 bg-card/95 shadow-xs dark:border-white/10 dark:bg-card/85",
+  ghost: "border-0 bg-transparent",
+  glass:
+    "rounded-[22px] border border-solid border-border/75 bg-popover/92 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-popover/82",
+};
+
+export const AI_RESPONSE_SHELL_PADDING: Record<AiResponseSize, string> = {
+  sm: "p-4",
+  md: "p-5",
+};
 export type AiResponseStatus = "idle" | "generating" | "streaming" | "complete" | "error";
+
+export type AiResponseVariant = "card" | "ghost" | "glass";
+
+export type AiResponseSize = "sm" | "md";
 
 export interface AiResponseSource {
   id: string;
@@ -43,14 +70,26 @@ export interface AiResponseProps {
   content: string;
   /** 当前生成状态 */
   status?: AiResponseStatus;
+  /** 外观变体：card 发丝卡片、ghost 无框流式画布、glass 毛玻璃卡片，默认 card */
+  variant?: AiResponseVariant;
+  /** 容器内边距密度，默认 md */
+  size?: AiResponseSize;
   /** 显示在顶部的模型或助手名称 */
   model?: string;
+  /** 可选模型等宽微徽章（如 "200K" / "深度推理"） */
+  modelBadge?: string;
+  /** 可选耗时或时间戳（如 "1.4s" / "14:25"） */
+  timestamp?: string;
   /** 生成过程中的状态提示文案 */
   statusLabel?: string;
   /** 本次回复用到的工具列表 */
   tools?: AiResponseTool[];
+  /** 是否默认展开工具调用明细，默认 false */
+  defaultToolsOpen?: boolean;
   /** 本次回复引用的参考来源 */
   sources?: AiResponseSource[];
+  /** 是否默认展开参考来源卡片，默认 false */
+  defaultSourcesOpen?: boolean;
   /** 错误态时的报错文案 */
   errorMessage?: string;
   /** 触发重新生成 */
@@ -68,6 +107,10 @@ export interface AiResponseProps {
 export interface AiResponseHeaderProps {
   /** 覆盖模型名称 */
   model?: string;
+  /** 覆盖模型等宽微徽章 */
+  modelBadge?: string;
+  /** 覆盖时间戳 */
+  timestamp?: string;
   /** 自定义状态提示 */
   statusLabel?: string;
   className?: string;
@@ -88,6 +131,96 @@ export interface AiResponseSourcesProps {
 export interface AiResponseActionsProps {
   className?: string;
 }
+const FeedbackButtons = ({
+  vote,
+  onVote,
+}: {
+  vote: "up" | "down" | null;
+  onVote: (next: "up" | "down") => void;
+}) => (
+  <>
+    <button
+      type="button"
+      onClick={() => onVote("up")}
+      aria-label="有帮助"
+      aria-pressed={vote === "up"}
+      className={cn(
+        AI_RESPONSE_ACTION_BTN,
+        vote === "up" &&
+          "border-border/70 bg-secondary text-foreground dark:border-white/10 dark:bg-white/12",
+      )}
+    >
+      <ThumbsUp className="size-3.5" />
+    </button>
+    <button
+      type="button"
+      onClick={() => onVote("down")}
+      aria-label="需改进"
+      aria-pressed={vote === "down"}
+      className={cn(
+        AI_RESPONSE_ACTION_BTN,
+        vote === "down" &&
+          "border-border/70 bg-secondary text-foreground dark:border-white/10 dark:bg-white/12",
+      )}
+    >
+      <ThumbsDown className="size-3.5" />
+    </button>
+  </>
+);
+
+const ResponseActionBar = ({
+  content,
+  onRegenerate,
+  onFeedback,
+  onCopy,
+  className,
+}: {
+  content: string;
+  onRegenerate?: () => void;
+  onFeedback?: (type: "up" | "down") => void;
+  onCopy?: (content: string) => void;
+  className?: string;
+}) => {
+  const [copied, setCopied] = useState(false);
+  const [vote, setVote] = useState<"up" | "down" | null>(null);
+
+  const handleCopy = async () => {
+    const ok = await copyTextToClipboard(content);
+    if (!ok) return;
+    setCopied(true);
+    onCopy?.(content);
+    window.setTimeout(() => setCopied(false), 1600);
+  };
+
+  const handleVote = (next: "up" | "down") => {
+    setVote(next);
+    onFeedback?.(next);
+  };
+
+  return (
+    <div className={cn("mt-3 flex items-center gap-1", className)}>
+      <button
+        type="button"
+        onClick={handleCopy}
+        aria-label="复制回复内容"
+        className={AI_RESPONSE_ACTION_BTN}
+      >
+        {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+      </button>
+      {onRegenerate && (
+        <button
+          type="button"
+          onClick={onRegenerate}
+          aria-label="重新生成"
+          className={AI_RESPONSE_ACTION_BTN}
+        >
+          <RotateCcw className="size-3.5" />
+        </button>
+      )}
+      {onFeedback && <FeedbackButtons vote={vote} onVote={handleVote} />}
+    </div>
+  );
+};
 const INLINE_RE = /(`[^`]+`|\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\)|\*[^*\n]+\*)/g;
 
 const HEADING_CLASSES = [
@@ -166,14 +299,14 @@ const MarkdownCodeBlock = ({ lang, code }: { lang: string; code: string }) => {
   };
 
   return (
-    <div className="my-3 overflow-hidden rounded-xl border border-solid border-border/80 bg-secondary/40">
-      <div className="flex items-center justify-between border-b border-solid border-border/70 px-3.5 py-2">
+    <div className="my-3 overflow-hidden rounded-xl border border-solid border-border/80 bg-secondary/40 dark:border-white/10 dark:bg-white/5">
+      <div className="flex items-center justify-between border-b border-solid border-border/70 px-3.5 py-2 dark:border-white/10">
         <span className="font-mono text-[11px] text-muted-foreground">{lang || "code"}</span>
         <button
           type="button"
           onClick={handleCopy}
           aria-label="复制代码块"
-          className="inline-flex cursor-pointer items-center gap-1 rounded-md border-0 bg-transparent px-1.5 py-0.5 font-sans text-[11px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="inline-flex cursor-pointer items-center gap-1 rounded-md border border-solid border-transparent bg-transparent px-1.5 py-0.5 font-sans text-[11px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset"
         >
           {copied ? <Check className="size-3" /> : <Copy className="size-3" />}
           <span>{copied ? "已复制" : "复制"}</span>
@@ -195,7 +328,7 @@ const MarkdownTableBlock = ({
   rows: string[][];
   index: number;
 }) => (
-  <div className="my-3 overflow-x-auto rounded-xl border border-solid border-border/80">
+  <div className="my-3 overflow-x-auto rounded-xl border border-solid border-border/80 dark:border-white/10">
     <table className="w-full border-collapse text-left text-xs">
       <thead>
         <tr className="border-b border-solid border-border/80 bg-secondary/40">
@@ -428,15 +561,10 @@ const parseMarkdownBlocks = (content: string): MarkdownBlock[] => {
   }
   return blocks;
 };
-const RESPONSE_SPRING = { type: "spring", stiffness: 420, damping: 32, mass: 0.8 } as const;
-const ACTION_BTN_CLASS =
-  "inline-flex size-7 cursor-pointer items-center justify-center rounded-lg border-0 bg-transparent text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring";
-
 const ResponseStatusDot = ({ status }: { status: AiResponseStatus }) => {
   const active = status === "generating" || status === "streaming";
-  if (status === "error") {
+  if (status === "error")
     return <AlertCircle aria-hidden="true" className="size-3.5 text-destructive" />;
-  }
   return (
     <span className="relative flex size-2.5 items-center justify-center">
       {active && (
@@ -451,21 +579,31 @@ const ResponseStatusDot = ({ status }: { status: AiResponseStatus }) => {
 
 const ResponseGeneratingSkeleton = ({ label }: { label: string }) => (
   <div className="space-y-2.5 py-1" aria-busy="true">
-    <div className="h-3 w-3/4 animate-pulse rounded-full bg-secondary" />
-    <div className="h-3 w-1/2 animate-pulse rounded-full bg-secondary" />
+    <div className="h-3 w-3/4 animate-pulse rounded-full bg-secondary/95 dark:bg-white/10" />
+    <div className="h-3 w-1/2 animate-pulse rounded-full bg-secondary/95 dark:bg-white/10" />
     <p className="m-0 pt-1 text-xs text-muted-foreground">{label}</p>
   </div>
 );
 
 const ToolStatusGlyph = ({ status }: { status: AiResponseTool["status"] }) => {
-  if (status === "running")
-    return <Loader2 className="size-3.5 shrink-0 animate-spin text-foreground" />;
+  if (status === "running") {
+    return (
+      <Loader2 className="size-3.5 shrink-0 animate-spin text-signal motion-reduce:animate-none" />
+    );
+  }
   if (status === "error") return <AlertCircle className="size-3.5 shrink-0 text-destructive" />;
-  return <Check className="size-3.5 shrink-0 text-foreground" />;
+  return <Check className="size-3.5 shrink-0 text-emerald-600 dark:text-emerald-400" />;
 };
 
 const ToolListRow = ({ tool }: { tool: AiResponseTool }) => (
-  <li className="flex items-center justify-between gap-3 rounded-xl border border-solid border-border/75 bg-secondary/35 px-3 py-2 text-xs">
+  <li
+    className={cn(
+      "flex items-center justify-between gap-3 rounded-xl border border-solid px-3 py-2 text-xs",
+      tool.status === "error"
+        ? "border-destructive/35 bg-destructive/6 dark:border-destructive dark:bg-destructive/12"
+        : "border-border/75 bg-secondary/35 dark:border-white/10 dark:bg-white/5",
+    )}
+  >
     <div className="flex min-w-0 items-center gap-2">
       <ToolStatusGlyph status={tool.status} />
       <span className="truncate font-mono text-[12px] text-foreground">{tool.name}</span>
@@ -481,12 +619,14 @@ const ToolListRow = ({ tool }: { tool: AiResponseTool }) => (
 
 const ResponseToolsPanel = ({
   tools,
+  defaultOpen = false,
   className,
 }: {
   tools: AiResponseTool[];
+  defaultOpen?: boolean;
   className?: string;
 }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
   const reduced = useReducedMotion();
   if (tools.length === 0) return null;
 
@@ -496,7 +636,10 @@ const ResponseToolsPanel = ({
         type="button"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-solid border-border/80 bg-secondary/50 px-2.5 py-1 font-sans text-xs text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className={cn(
+          "inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-solid border-border/80 bg-secondary/55 px-2.5 py-1 font-sans text-xs text-muted-foreground transition-colors hover:border-foreground/22 hover:text-foreground dark:border-white/10 dark:bg-white/6 dark:hover:border-white/22",
+          AI_RESPONSE_FOCUS_RING,
+        )}
       >
         <Wrench aria-hidden="true" className="size-3" />
         <span className="tabular-nums">已调用 {tools.length} 项工具</span>
@@ -511,7 +654,7 @@ const ResponseToolsPanel = ({
             initial={reduced ? { opacity: 1 } : { opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={reduced ? { opacity: 0 } : { opacity: 0, height: 0 }}
-            transition={reduced ? { duration: 0 } : RESPONSE_SPRING}
+            transition={reduced ? { duration: 0 } : AI_RESPONSE_SPRING}
             className="m-0 mt-2 list-none space-y-1.5 overflow-hidden p-0"
           >
             {tools.map((tool) => (
@@ -540,11 +683,14 @@ const SourceCardRow = ({
         href={cleaned}
         target={external ? "_blank" : undefined}
         rel={external ? "noopener noreferrer" : undefined}
-        className="group flex flex-col gap-1 rounded-xl border border-solid border-border/75 bg-secondary/35 p-2.5 text-left no-underline transition-colors hover:border-foreground/20 hover:bg-secondary/60 outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className={cn(
+          "group flex flex-col gap-1 rounded-xl border border-solid border-border/75 bg-secondary/35 p-2.5 text-left no-underline transition-colors hover:border-foreground/22 hover:bg-secondary/65 dark:border-white/10 dark:bg-white/5 dark:hover:border-white/22 dark:hover:bg-white/9",
+          AI_RESPONSE_FOCUS_RING,
+        )}
       >
         <div className="flex items-center justify-between gap-2">
           <span className="flex min-w-0 items-center gap-1.5 text-xs font-medium text-foreground">
-            <span className="inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-secondary font-mono text-[10px] text-muted-foreground">
+            <span className="inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-secondary font-mono text-[10px] text-muted-foreground dark:bg-white/12">
               {index + 1}
             </span>
             <span className="truncate">{source.title}</span>
@@ -554,7 +700,10 @@ const SourceCardRow = ({
             className="size-3 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground"
           />
         </div>
-        <span className="truncate font-mono text-[11px] text-muted-foreground">
+        {source.snippet && (
+          <p className="m-0 line-clamp-1 text-[11px] text-muted-foreground">{source.snippet}</p>
+        )}
+        <span className="truncate font-mono text-[10px] text-muted-foreground">
           {hostOf(cleaned)}
         </span>
       </a>
@@ -562,14 +711,47 @@ const SourceCardRow = ({
   );
 };
 
+const SourcesAnimatedList = ({
+  open,
+  reduced,
+  items,
+}: {
+  open: boolean;
+  reduced: boolean | null;
+  items: { source: AiResponseSource; cleaned: string }[];
+}) => (
+  <AnimatePresence initial={false}>
+    {open && (
+      <motion.ol
+        initial={reduced ? { opacity: 1 } : { opacity: 0, height: 0 }}
+        animate={{ opacity: 1, height: "auto" }}
+        exit={reduced ? { opacity: 0 } : { opacity: 0, height: 0 }}
+        transition={reduced ? { duration: 0 } : AI_RESPONSE_SPRING}
+        className="m-0 mt-2.5 grid list-none gap-2 overflow-hidden p-0 sm:grid-cols-2"
+      >
+        {items.map((item, index) => (
+          <SourceCardRow
+            key={item.source.id}
+            source={item.source}
+            cleaned={item.cleaned}
+            index={index}
+          />
+        ))}
+      </motion.ol>
+    )}
+  </AnimatePresence>
+);
+
 const ResponseSourcesPanel = ({
   sources,
+  defaultOpen = false,
   className,
 }: {
   sources: AiResponseSource[];
+  defaultOpen?: boolean;
   className?: string;
 }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
   const reduced = useReducedMotion();
   const validSources = sources
     .map((src) => ({ source: src, cleaned: safeHref(src.url) }))
@@ -578,12 +760,20 @@ const ResponseSourcesPanel = ({
   if (validSources.length === 0) return null;
 
   return (
-    <div className={cn("mt-3 border-t border-solid border-border/70 pt-3", className)}>
+    <div
+      className={cn(
+        "mt-3 border-t border-solid border-border/70 pt-3 dark:border-white/10",
+        className,
+      )}
+    >
       <button
         type="button"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 font-sans text-xs font-medium text-muted-foreground transition-colors hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className={cn(
+          "inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-solid border-transparent bg-transparent px-1 py-0.5 font-sans text-xs font-medium text-muted-foreground transition-colors hover:text-foreground",
+          AI_RESPONSE_FOCUS_RING,
+        )}
       >
         <span className="tabular-nums">参考来源（{validSources.length}）</span>
         <ChevronDown
@@ -591,109 +781,7 @@ const ResponseSourcesPanel = ({
           className={cn("size-3.5 transition-transform", open && "rotate-180")}
         />
       </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.ol
-            initial={reduced ? { opacity: 1 } : { opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={reduced ? { opacity: 0 } : { opacity: 0, height: 0 }}
-            transition={reduced ? { duration: 0 } : RESPONSE_SPRING}
-            className="m-0 mt-2.5 grid list-none gap-2 overflow-hidden p-0 sm:grid-cols-2"
-          >
-            {validSources.map((item, index) => (
-              <SourceCardRow
-                key={item.source.id}
-                source={item.source}
-                cleaned={item.cleaned}
-                index={index}
-              />
-            ))}
-          </motion.ol>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
-
-const FeedbackButtons = ({
-  vote,
-  onVote,
-}: {
-  vote: "up" | "down" | null;
-  onVote: (next: "up" | "down") => void;
-}) => (
-  <>
-    <button
-      type="button"
-      onClick={() => onVote("up")}
-      aria-label="有帮助"
-      aria-pressed={vote === "up"}
-      className={cn(ACTION_BTN_CLASS, vote === "up" && "bg-secondary text-foreground")}
-    >
-      <ThumbsUp className="size-3.5" />
-    </button>
-    <button
-      type="button"
-      onClick={() => onVote("down")}
-      aria-label="需改进"
-      aria-pressed={vote === "down"}
-      className={cn(ACTION_BTN_CLASS, vote === "down" && "bg-secondary text-foreground")}
-    >
-      <ThumbsDown className="size-3.5" />
-    </button>
-  </>
-);
-
-const ResponseActionBar = ({
-  content,
-  onRegenerate,
-  onFeedback,
-  onCopy,
-  className,
-}: {
-  content: string;
-  onRegenerate?: () => void;
-  onFeedback?: (type: "up" | "down") => void;
-  onCopy?: (content: string) => void;
-  className?: string;
-}) => {
-  const [copied, setCopied] = useState(false);
-  const [vote, setVote] = useState<"up" | "down" | null>(null);
-
-  const handleCopy = async () => {
-    const ok = await copyTextToClipboard(content);
-    if (!ok) return;
-    setCopied(true);
-    onCopy?.(content);
-    window.setTimeout(() => setCopied(false), 1600);
-  };
-
-  const handleVote = (next: "up" | "down") => {
-    setVote(next);
-    onFeedback?.(next);
-  };
-
-  return (
-    <div className={cn("mt-3 flex items-center gap-1", className)}>
-      <button
-        type="button"
-        onClick={handleCopy}
-        aria-label="复制回复内容"
-        className={ACTION_BTN_CLASS}
-      >
-        {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
-      </button>
-      {onRegenerate && (
-        <button
-          type="button"
-          onClick={onRegenerate}
-          aria-label="重新生成"
-          className={ACTION_BTN_CLASS}
-        >
-          <RotateCcw className="size-3.5" />
-        </button>
-      )}
-      {onFeedback && <FeedbackButtons vote={vote} onVote={handleVote} />}
+      <SourcesAnimatedList open={open} reduced={reduced} items={validSources} />
     </div>
   );
 };
@@ -768,9 +856,13 @@ interface AiResponseContextValue {
   content: string;
   status: AiResponseStatus;
   model: string;
+  modelBadge?: string;
+  timestamp?: string;
   statusLabel?: string;
   tools: AiResponseTool[];
+  defaultToolsOpen: boolean;
   sources: AiResponseSource[];
+  defaultSourcesOpen: boolean;
   errorMessage?: string;
   onRegenerate?: () => void;
   onFeedback?: (type: "up" | "down") => void;
@@ -792,19 +884,35 @@ const defaultStatusLabel = (status: AiResponseStatus) => {
   return "";
 };
 
-export const AiResponseHeader = ({ model, statusLabel, className }: AiResponseHeaderProps) => {
+export const AiResponseHeader = ({
+  model,
+  modelBadge,
+  timestamp,
+  statusLabel,
+  className,
+}: AiResponseHeaderProps) => {
   const ctx = useAiResponse();
   const label = statusLabel ?? ctx.statusLabel ?? defaultStatusLabel(ctx.status);
+  const badge = modelBadge ?? ctx.modelBadge;
+  const time = timestamp ?? ctx.timestamp;
 
   return (
     <div className={cn("mb-3 flex items-center justify-between gap-2 select-none", className)}>
-      <div className="flex items-center gap-2">
+      <div className="flex min-w-0 items-center gap-2">
         <ResponseStatusDot status={ctx.status} />
-        <span className="text-xs font-medium tracking-tight text-foreground">
+        <span className="truncate text-xs font-medium tracking-tight text-foreground">
           {model ?? ctx.model}
         </span>
+        {badge && (
+          <span className="shrink-0 rounded-md border border-solid border-border/70 bg-secondary/70 px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground dark:border-white/10 dark:bg-white/8">
+            {badge}
+          </span>
+        )}
       </div>
-      {label && <span className="text-xs text-muted-foreground">{label}</span>}
+      <div className="flex shrink-0 items-center gap-2 text-xs text-muted-foreground">
+        {label && <span>{label}</span>}
+        {time && <span className="font-mono text-[11px] tabular-nums">{time}</span>}
+      </div>
     </div>
   );
 };
@@ -817,16 +925,19 @@ export const AiResponseContent = ({ className }: AiResponseContentProps) => {
       <div
         role="alert"
         className={cn(
-          "flex flex-wrap items-center justify-between gap-3 rounded-xl border border-solid border-destructive/30 bg-destructive/5 px-3.5 py-2.5 text-xs text-destructive",
+          "flex flex-wrap items-center justify-between gap-3 rounded-xl border border-solid border-destructive/35 bg-destructive/8 px-3.5 py-2.5 text-xs text-foreground dark:border-destructive dark:bg-destructive/14",
           className,
         )}
       >
-        <span>{errorMessage ?? "回复生成失败，请稍后重试。"}</span>
+        <span className="text-destructive">{errorMessage ?? "回复生成失败，请稍后重试。"}</span>
         {onRegenerate && (
           <button
             type="button"
             onClick={onRegenerate}
-            className="cursor-pointer rounded-full border border-solid border-destructive/30 bg-transparent px-2.5 py-1 font-sans text-xs font-medium text-destructive transition-colors hover:bg-destructive/10 outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className={cn(
+              "cursor-pointer rounded-full border border-solid border-destructive/40 bg-transparent px-2.5 py-1 font-sans text-xs font-medium text-destructive transition-colors hover:bg-destructive/10 dark:border-destructive",
+              AI_RESPONSE_FOCUS_RING,
+            )}
           >
             重试
           </button>
@@ -847,13 +958,19 @@ export const AiResponseContent = ({ className }: AiResponseContentProps) => {
 };
 
 export const AiResponseToolsSummary = ({ className }: AiResponseToolsSummaryProps) => {
-  const { tools } = useAiResponse();
-  return <ResponseToolsPanel tools={tools} className={className} />;
+  const { tools, defaultToolsOpen } = useAiResponse();
+  return <ResponseToolsPanel tools={tools} defaultOpen={defaultToolsOpen} className={className} />;
 };
 
 export const AiResponseSources = ({ className }: AiResponseSourcesProps) => {
-  const { sources } = useAiResponse();
-  return <ResponseSourcesPanel sources={sources} className={className} />;
+  const { sources, defaultSourcesOpen } = useAiResponse();
+  return (
+    <ResponseSourcesPanel
+      sources={sources}
+      defaultOpen={defaultSourcesOpen}
+      className={className}
+    />
+  );
 };
 
 export const AiResponseActions = ({ className }: AiResponseActionsProps) => {
@@ -870,53 +987,53 @@ export const AiResponseActions = ({ className }: AiResponseActionsProps) => {
   );
 };
 
-export const AiResponse = ({
-  content,
-  status = "complete",
-  model = "Assistant",
-  statusLabel,
-  tools = [],
-  sources = [],
-  errorMessage,
-  onRegenerate,
-  onFeedback,
-  onCopy,
-  className,
-  children,
-}: AiResponseProps) => (
-  <ResponseCtx.Provider
-    value={{
-      content,
-      status,
-      model,
-      statusLabel,
-      tools,
-      sources,
-      errorMessage,
-      onRegenerate,
-      onFeedback,
-      onCopy,
-    }}
-  >
-    <article
-      data-slot="ai-response"
-      data-status={status}
-      className={cn(
-        "w-full max-w-2xl rounded-[22px] border border-solid border-border bg-card p-5 font-sans text-card-foreground shadow-xs",
-        className,
-      )}
-    >
-      {children ?? (
-        <>
-          <AiResponseHeader />
-          <AiResponseContent />
-          <AiResponseToolsSummary />
-          <AiResponseSources />
-          <AiResponseActions />
-        </>
-      )}
-    </article>
-  </ResponseCtx.Provider>
-);
+const buildResponseContext = (props: AiResponseProps): AiResponseContextValue => ({
+  content: props.content,
+  status: props.status ?? "complete",
+  model: props.model ?? "Assistant",
+  modelBadge: props.modelBadge,
+  timestamp: props.timestamp,
+  statusLabel: props.statusLabel,
+  tools: props.tools ?? [],
+  defaultToolsOpen: props.defaultToolsOpen ?? false,
+  sources: props.sources ?? [],
+  defaultSourcesOpen: props.defaultSourcesOpen ?? false,
+  errorMessage: props.errorMessage,
+  onRegenerate: props.onRegenerate,
+  onFeedback: props.onFeedback,
+  onCopy: props.onCopy,
+});
+
+export const AiResponse = (props: AiResponseProps) => {
+  const variant = props.variant ?? "card";
+  const size = props.size ?? "md";
+  const ctxValue = buildResponseContext(props);
+
+  return (
+    <ResponseCtx.Provider value={ctxValue}>
+      <article
+        data-slot="ai-response"
+        data-status={ctxValue.status}
+        data-variant={variant}
+        className={cn(
+          "w-full max-w-2xl font-sans text-card-foreground",
+          AI_RESPONSE_SHELL_VARIANT[variant],
+          variant !== "ghost" && AI_RESPONSE_SHELL_PADDING[size],
+          props.className,
+        )}
+      >
+        {props.children ?? (
+          <>
+            <AiResponseHeader />
+            <AiResponseContent />
+            <AiResponseToolsSummary />
+            <AiResponseSources />
+            <AiResponseActions />
+          </>
+        )}
+      </article>
+    </ResponseCtx.Provider>
+  );
+};
 
 export { safeHref };

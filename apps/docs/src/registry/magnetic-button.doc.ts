@@ -15,7 +15,11 @@ export const MAGNETIC_BUTTON_DOC: ComponentDoc = {
   usage: `import { MagneticButton } from "@/components/ui/magnetic-button";
 
 export function Demo() {
-  return <MagneticButton strength={0.4}>启动控制台</MagneticButton>;
+  return (
+    <MagneticButton variant="signal" strength={0.4}>
+      启动控制台
+    </MagneticButton>
+  );
 }`,
   createdAt: "2026-11-22",
   specimens: [
@@ -29,13 +33,31 @@ export function Demo() {
     {
       slug: "variants",
       name: "信号色与描边磁吸按钮",
-      description: "指针靠近时呈现柔和弹性吸附，松开后自然回弹归位。",
+      description: "支持多种视觉变体、尺寸、圆角与吸附强度，松开后自然弹性回位。",
       file: "magnetic-button/variants.tsx",
       Demo: MagneticButtonVariantsDemo,
       directory: false,
     },
   ],
   api: [
+    {
+      name: "variant",
+      type: '"primary" | "signal" | "secondary" | "outline" | "ghost"',
+      defaultValue: '"primary"',
+      description: "视觉变体。",
+    },
+    {
+      name: "size",
+      type: '"sm" | "md" | "lg"',
+      defaultValue: '"md"',
+      description: "按钮尺寸。",
+    },
+    {
+      name: "radius",
+      type: '"pill" | "default"',
+      defaultValue: '"pill"',
+      description: "圆角风格：胶囊圆角或标准大圆角。",
+    },
     {
       name: "strength",
       type: "number",

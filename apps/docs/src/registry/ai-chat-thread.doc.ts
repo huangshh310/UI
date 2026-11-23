@@ -5,10 +5,11 @@ import type { ComponentDoc } from "./registry.types";
 export const AI_CHAT_THREAD_DOC: ComponentDoc = {
   slug: "ai-chat-thread",
   name: "AI Chat Thread",
-  description: "C 端 AI 对话消息流，支持用户/助手气泡、多版本回复分支切换、复制反馈与快捷追问。",
+  description:
+    "C 端 AI 对话消息流，支持用户/助手气泡、流式生成态、多版本回复分支切换、复制反馈与快捷追问。",
   category: "ai",
   registryName: "ai-chat-thread",
-  dependencies: ["lucide-react"],
+  dependencies: ["class-variance-authority", "lucide-react"],
   createdAt: "2026-11-23",
   usage: `import { AiChatThread } from "@/components/ui/ai-chat-thread";
 
@@ -26,8 +27,8 @@ export function Example() {
     },
     {
       slug: "custom",
-      name: "自定义对话与追问建议",
-      description: "注入业务消息历史与定制追问胶囊，点击后自动追加一轮新的用户与助手回复。",
+      name: "紧凑侧栏与流式输出态（compact）",
+      description: '使用 variant="compact" 与消息 streaming 标记呈现实时流式输出与追问胶囊。',
       file: "ai-chat-thread/streaming.tsx",
       Demo: AiChatThreadStreamingDemo,
       directory: false,
@@ -35,10 +36,22 @@ export function Example() {
   ],
   api: [
     {
+      name: "variant",
+      type: '"card" | "seamless" | "compact"',
+      defaultValue: '"card"',
+      description: "容器视觉变体（标准卡片、无框画布或紧凑侧栏）",
+    },
+    {
+      name: "showTimestamps",
+      type: "boolean",
+      defaultValue: "true",
+      description: "是否显示消息时间戳",
+    },
+    {
       name: "initialMessages",
       type: "AiChatMessage[]",
       defaultValue: "内置示例对话",
-      description: "初始消息列表",
+      description: "初始消息列表（支持 variants / meta / streaming 字段）",
     },
     {
       name: "followUps",

@@ -1,5 +1,5 @@
 /**
- * Shimmer 行为规约：验证语义标签切换、静态退化态与多行流式骨架的无障碍状态声明。
+ * Shimmer 行为规约：验证语义标签切换、静态退化态、变体属性与多行流式骨架的无障碍状态声明。
  */
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
@@ -32,11 +32,23 @@ describe("Shimmer", () => {
     expect(root?.querySelector('[aria-hidden="true"]')).toBeNull();
   });
 
-  it("ShimmerLines 按指定行数渲染流式段落占位并声明无障碍忙碌状态", () => {
-    render(<ShimmerLines lines={4} label="正在组织回答…" />);
+  it("支持 pill 变体、色调与 ShimmerLines 卡片密度控制", () => {
+    render(
+      <>
+        <Shimmer variant="pill" tone="signal" size="sm">
+          正在执行工具调用…
+        </Shimmer>
+        <ShimmerLines lines={4} variant="card" size="sm" label="正在组织回答…" />
+      </>,
+    );
+
+    const shimmer = document.querySelector('[data-slot="shimmer"]');
+    expect(shimmer?.getAttribute("data-variant")).toBe("pill");
+    expect(shimmer?.getAttribute("data-tone")).toBe("signal");
 
     const status = screen.getByRole("status", { name: "正在组织回答…" });
     expect(status.getAttribute("aria-busy")).toBe("true");
+    expect(status.getAttribute("data-variant")).toBe("card");
     expect(status.querySelectorAll('[data-slot="shimmer-line"]')).toHaveLength(4);
   });
 });

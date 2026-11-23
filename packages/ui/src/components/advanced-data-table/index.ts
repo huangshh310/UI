@@ -1,6 +1,7 @@
 export { AdvancedDataTable } from "./advanced-data-table.js";
 export type {
   AdvancedDataTableProps,
+  AdvancedDataTableVariant,
   AdvancedTableBatchAction,
   AdvancedTableColumn,
   AdvancedTableFacet,

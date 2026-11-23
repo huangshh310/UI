@@ -19,10 +19,19 @@ const ToneTriggers = () => {
         size="sm"
         variant="outline"
         onClick={() =>
-          toast({ title: "配额提醒", description: "本月调用量已达 85%", tone: "signal" })
+          toast({ title: "版本已更新", description: "工作区已同步至 v2.4", tone: "signal" })
         }
       >
         信号通知
+      </Button>
+      <Button
+        size="sm"
+        variant="outline"
+        onClick={() =>
+          toast({ title: "配额提醒", description: "本月调用量已达 85%", tone: "warning" })
+        }
+      >
+        警告通知
       </Button>
       <Button
         size="sm"
@@ -32,6 +41,7 @@ const ToneTriggers = () => {
             title: "同步失败",
             description: "请检查私有仓库访问令牌",
             tone: "destructive",
+            actionLabel: "重试",
           })
         }
       >

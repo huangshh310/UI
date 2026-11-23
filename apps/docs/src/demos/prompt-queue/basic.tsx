@@ -1,20 +1,21 @@
 "use client";
 
 /**
- * 示例：PromptQueue 流式生成期间与 PromptInput 联动的弹簧待发消息队列。
+ * 示例：PromptQueue 流式生成期间与 PromptInput 联动的毛玻璃弹簧待发消息队列。
  */
 import { PromptQueue, type QueuedPromptItem } from "@matt-ui/motion";
 import { PromptInput } from "@matt-ui/ui";
 import { useState } from "react";
 
 const INITIAL_QUEUE: QueuedPromptItem[] = [
-  { id: "q1", content: "补充一份移动端 390px 宽度下的响应式停靠策略" },
+  { id: "q1", content: "补充一份移动端 390px 宽度下的响应式停靠策略", priority: "high" },
   { id: "q2", content: "为检查点回滚动作加上撤销 Toast 提示", meta: "@checkpoint" },
 ];
 
 export default function PromptQueueBasicDemo() {
   const [queue, setQueue] = useState<QueuedPromptItem[]>(INITIAL_QUEUE);
   const [draft, setDraft] = useState("");
+  const [paused, setPaused] = useState(false);
   const [statusLog, setStatusLog] = useState(
     "AI 正在流式输出当前回合，新发送的指令将进入上方队列…",
   );
@@ -23,6 +24,9 @@ export default function PromptQueueBasicDemo() {
     <div className="flex w-full max-w-xl flex-col gap-2">
       <PromptQueue
         items={queue}
+        variant="glass"
+        paused={paused}
+        onTogglePause={() => setPaused((p) => !p)}
         onSendNow={(item) => {
           setQueue((prev) => prev.filter((q) => q.id !== item.id));
           setStatusLog(`已中断当前流并立即插队发送：「${item.content}」`);
@@ -35,6 +39,7 @@ export default function PromptQueueBasicDemo() {
         onClearAll={() => setQueue([])}
       />
       <PromptInput
+        variant="elevated"
         status="streaming"
         value={draft}
         onValueChange={setDraft}

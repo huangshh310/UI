@@ -36,7 +36,7 @@ const COMPLETED_STEPS: AiAgentActivityItemData[] = [
 
 export default function AiAgentActivityCompletedDemo() {
   return (
-    <AiAgentActivity activities={COMPLETED_STEPS} isRunning={false}>
+    <AiAgentActivity variant="glass" collapsible activities={COMPLETED_STEPS} isRunning={false}>
       <AiAgentActivityHeader title="发布检查" agentName="Release Bot" />
       <AiAgentActivityTimeline />
     </AiAgentActivity>

@@ -3,4 +3,5 @@ export type {
   ActivityCategory,
   ActivityEntry,
   ActivityFeedBlockProps,
+  ActivityFeedVariant,
 } from "./activity-feed-block.types.js";

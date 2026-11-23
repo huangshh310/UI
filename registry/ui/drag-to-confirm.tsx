@@ -19,13 +19,37 @@ import {
   useReducedMotion,
   useTransform,
 } from "motion/react";
-import { type KeyboardEvent, type RefObject, useEffect, useRef, useState } from "react";
+import {
+  type KeyboardEvent,
+  type ReactNode,
+  type RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+
+/** 语义色调 */
+export type DragToConfirmTone = "signal" | "destructive" | "emerald";
+
+/** 滑轨材质变体 */
+export type DragToConfirmVariant = "subtle" | "glass";
+
+/** 滑轨尺寸 */
+export type DragToConfirmSize = "sm" | "md" | "lg";
 
 export interface DragToConfirmProps {
   /** 轨道上的提示文字，也是滑块的可访问名称，默认「Slide to confirm」 */
   label?: string;
   /** 确认后显示的文字，默认「Confirmed」 */
   confirmedLabel?: string;
+  /** 语义色调，默认 signal */
+  tone?: DragToConfirmTone;
+  /** 滑轨材质变体，默认 subtle */
+  variant?: DragToConfirmVariant;
+  /** 滑轨尺寸，默认 md */
+  size?: DragToConfirmSize;
+  /** 自定义滑块未确认时的图标，默认为右箭头 */
+  icon?: ReactNode;
   /** 确认时调用 */
   onConfirm?: () => void;
   /** 自动复位时调用 */
@@ -37,6 +61,87 @@ export interface DragToConfirmProps {
   disabled?: boolean;
   className?: string;
 }
+const TRACK_BASE_CLASSES =
+  "relative flex max-w-full items-center overflow-hidden rounded-full border border-solid p-1 font-sans font-medium tracking-[-0.01em] select-none transition-colors duration-(--ui-duration-normal)";
+
+const TRACK_VARIANT_CLASSES: Record<DragToConfirmVariant, string> = {
+  subtle:
+    "border-border bg-secondary/75 shadow-[inset_0_1px_2px_rgba(0,0,0,0.06)] dark:bg-card dark:shadow-[inset_0_1px_3px_rgba(0,0,0,0.4)]",
+  glass: "border-border/90 bg-card/90 shadow-sm backdrop-blur-md dark:bg-card/85",
+};
+
+const HANDLE_BASE_CLASSES =
+  "relative z-10 flex shrink-0 cursor-grab touch-none items-center justify-center rounded-full border-0 outline-none transition-colors duration-(--ui-duration-normal) active:cursor-grabbing focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid";
+
+interface DragSizeTokens {
+  track: string;
+  handle: string;
+  handlePx: number;
+  hintPad: string;
+  confirmedPad: string;
+  icon: string;
+}
+
+const DRAG_SIZE_CONFIG: Record<DragToConfirmSize, DragSizeTokens> = {
+  sm: {
+    track: "h-12 w-64 text-xs",
+    handle: "size-10",
+    handlePx: 40,
+    hintPad: "pl-10",
+    confirmedPad: "pr-10",
+    icon: "size-4",
+  },
+  md: {
+    track: "h-14 w-72 text-sm",
+    handle: "size-12",
+    handlePx: 48,
+    hintPad: "pl-12",
+    confirmedPad: "pr-12",
+    icon: "size-5",
+  },
+  lg: {
+    track: "h-16 w-80 text-[15px]",
+    handle: "size-14",
+    handlePx: 56,
+    hintPad: "pl-14",
+    confirmedPad: "pr-14",
+    icon: "size-5",
+  },
+};
+
+interface DragToneTokens {
+  fill: string;
+  handleIdle: string;
+  handleConfirmed: string;
+  confirmedBorder: string;
+}
+
+const DRAG_TONE_CONFIG: Record<DragToConfirmTone, DragToneTokens> = {
+  signal: {
+    fill: "bg-signal/16 dark:bg-signal/22",
+    handleIdle:
+      "bg-primary text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_2px_8px_rgba(0,0,0,0.16)]",
+    handleConfirmed:
+      "bg-signal text-signal-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.24),0_2px_10px_color-mix(in_oklab,var(--ui-signal)_40%,transparent)]",
+    confirmedBorder: "border-signal/45",
+  },
+  destructive: {
+    fill: "bg-destructive/16 dark:bg-destructive/22",
+    handleIdle:
+      "bg-destructive text-destructive-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_2px_8px_rgba(220,38,38,0.28)]",
+    handleConfirmed:
+      "bg-destructive text-destructive-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_2px_10px_rgba(220,38,38,0.34)]",
+    confirmedBorder: "border-destructive/50",
+  },
+  emerald: {
+    fill: "bg-emerald-600/16 dark:bg-emerald-500/22",
+    handleIdle:
+      "bg-primary text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_2px_8px_rgba(0,0,0,0.16)]",
+    handleConfirmed:
+      "bg-emerald-700 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_2px_10px_rgba(4,120,87,0.34)] dark:bg-emerald-500 dark:text-neutral-950",
+    confirmedBorder: "border-emerald-600/45 dark:border-emerald-500/50",
+  },
+};
 /** 拖过轨道可用长度的这个比例即视为确认 */
 const CONFIRM_RATIO = 0.9;
 
@@ -137,11 +242,14 @@ const useDragConfirm = ({
 
   return { x, confirmed, track, handle, confirm, release, maxTravel };
 };
-const TRACK_CLASSES =
-  "relative flex h-14 w-72 max-w-full items-center overflow-hidden rounded-full border border-solid border-border bg-background p-1 font-sans text-sm shadow-sm select-none dark:bg-card";
-
-const HANDLE_CLASSES =
-  "relative z-10 flex size-12 shrink-0 cursor-grab touch-none items-center justify-center rounded-full border-0 bg-primary text-primary-foreground shadow-md outline-none active:cursor-grabbing focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid";
+const DEFAULTS = {
+  label: "Slide to confirm",
+  confirmedLabel: "Confirmed",
+  tone: "signal",
+  variant: "subtle",
+  size: "md",
+  disabled: false,
+} as const;
 
 interface TrackLayersProps {
   x: MotionValue<number>;
@@ -149,31 +257,47 @@ interface TrackLayersProps {
   label: string;
   confirmedLabel: string;
   confirmed: boolean;
+  sizeTokens: DragSizeTokens;
+  toneTokens: DragToneTokens;
 }
 
 /** 轨道上的装饰层：随拖动增长的填充、逐渐淡出的提示，以及确认后的文字 */
-const TrackLayers = ({ x, maxTravel, label, confirmedLabel, confirmed }: TrackLayersProps) => {
+const TrackLayers = ({
+  x,
+  maxTravel,
+  label,
+  confirmedLabel,
+  confirmed,
+  sizeTokens,
+  toneTokens,
+}: TrackLayersProps) => {
   const hintOpacity = useTransform(x, (value) => 1 - value / Math.max(maxTravel(), 1));
-  const fillWidth = useTransform(x, (value) => value + 48);
+  const fillWidth = useTransform(x, (value) => value + sizeTokens.handlePx);
 
   return (
     <>
       <motion.span
         aria-hidden="true"
         style={{ width: fillWidth }}
-        className="absolute inset-y-1 left-1 rounded-full bg-signal/16"
+        className={cn("absolute inset-y-1 left-1 rounded-full", toneTokens.fill)}
       />
       <motion.span
         aria-hidden="true"
         style={{ opacity: hintOpacity }}
-        className="pointer-events-none absolute inset-0 flex items-center justify-center pl-10 text-muted-foreground"
+        className={cn(
+          "pointer-events-none absolute inset-0 flex items-center justify-center text-muted-foreground",
+          sizeTokens.hintPad,
+        )}
       >
         {confirmed ? "" : label}
       </motion.span>
       {confirmed && (
         <span
           aria-hidden="true"
-          className="absolute inset-0 flex items-center justify-center pr-10 font-medium"
+          className={cn(
+            "absolute inset-0 flex items-center justify-center font-medium text-foreground",
+            sizeTokens.confirmedPad,
+          )}
         >
           {confirmedLabel}
         </span>
@@ -187,8 +311,11 @@ interface HandleProps {
   handle: RefObject<HTMLButtonElement | null>;
   track: RefObject<HTMLDivElement | null>;
   label: string;
+  icon?: ReactNode;
   locked: boolean;
   confirmed: boolean;
+  sizeTokens: DragSizeTokens;
+  toneTokens: DragToneTokens;
   onRelease: () => void;
   onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) => void;
 }
@@ -199,8 +326,11 @@ const Handle = ({
   handle,
   track,
   label,
+  icon,
   locked,
   confirmed,
+  sizeTokens,
+  toneTokens,
   onRelease,
   onKeyDown,
 }: HandleProps) => (
@@ -217,56 +347,82 @@ const Handle = ({
     onKeyDown={onKeyDown}
     style={{ x }}
     data-slot="drag-to-confirm-handle"
-    className={HANDLE_CLASSES}
+    className={cn(
+      HANDLE_BASE_CLASSES,
+      sizeTokens.handle,
+      confirmed ? toneTokens.handleConfirmed : toneTokens.handleIdle,
+    )}
   >
     {confirmed ? (
-      <Check aria-hidden="true" className="size-5" />
+      <Check aria-hidden="true" className={sizeTokens.icon} />
     ) : (
-      <ArrowRight aria-hidden="true" className="size-5" />
+      (icon ?? <ArrowRight aria-hidden="true" className={sizeTokens.icon} />)
     )}
   </motion.button>
 );
 
-export const DragToConfirm = ({
-  label = "Slide to confirm",
-  confirmedLabel = "Confirmed",
-  disabled = false,
-  className,
-  ...options
-}: DragToConfirmProps) => {
-  const { x, confirmed, track, handle, confirm, release, maxTravel } = useDragConfirm(options);
-  const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+const createConfirmKeyHandler =
+  (disabled: boolean, confirm: () => void) => (event: KeyboardEvent<HTMLButtonElement>) => {
     if (disabled || (event.key !== "Enter" && event.key !== " ")) return;
     event.preventDefault();
     confirm();
   };
 
+const buildTrackClasses = (
+  p: { variant: DragToConfirmVariant; disabled: boolean; className?: string | undefined },
+  sizeTokens: DragSizeTokens,
+  toneTokens: DragToneTokens,
+  confirmed: boolean,
+) =>
+  cn(
+    TRACK_BASE_CLASSES,
+    TRACK_VARIANT_CLASSES[p.variant],
+    sizeTokens.track,
+    confirmed && toneTokens.confirmedBorder,
+    p.disabled && "opacity-45",
+    p.className,
+  );
+
+export const DragToConfirm = (inputProps: DragToConfirmProps) => {
+  const p = { ...DEFAULTS, ...inputProps };
+  const { x, confirmed, track, handle, confirm, release, maxTravel } = useDragConfirm(p);
+  const sizeTokens = DRAG_SIZE_CONFIG[p.size];
+  const toneTokens = DRAG_TONE_CONFIG[p.tone];
+
   return (
     <div
       ref={track}
       data-slot="drag-to-confirm"
+      data-tone={p.tone}
+      data-variant={p.variant}
+      data-size={p.size}
       data-confirmed={confirmed ? "" : undefined}
-      className={cn(TRACK_CLASSES, disabled && "opacity-50", className)}
+      className={buildTrackClasses(p, sizeTokens, toneTokens, confirmed)}
     >
       <TrackLayers
         x={x}
         maxTravel={maxTravel}
-        label={label}
-        confirmedLabel={confirmedLabel}
+        label={p.label}
+        confirmedLabel={p.confirmedLabel}
         confirmed={confirmed}
+        sizeTokens={sizeTokens}
+        toneTokens={toneTokens}
       />
       <Handle
         x={x}
         handle={handle}
         track={track}
-        label={label}
-        locked={disabled || confirmed}
+        label={p.label}
+        icon={p.icon}
+        locked={p.disabled || confirmed}
         confirmed={confirmed}
+        sizeTokens={sizeTokens}
+        toneTokens={toneTokens}
         onRelease={release}
-        onKeyDown={onKeyDown}
+        onKeyDown={createConfirmKeyHandler(p.disabled, confirm)}
       />
       <span aria-live="polite" className="sr-only">
-        {confirmed ? confirmedLabel : ""}
+        {confirmed ? p.confirmedLabel : ""}
       </span>
     </div>
   );

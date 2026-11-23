@@ -4,5 +4,5 @@
 import { Context } from "@matt-ui/ui";
 
 export default function ContextInlineDemo() {
-  return <Context variant="inline" />;
+  return <Context variant="inline" surface="glass" modelName="gpt-5-codex" costLabel="~$0.031" />;
 }

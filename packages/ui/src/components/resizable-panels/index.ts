@@ -1,2 +1,7 @@
 export { ResizablePanels } from "./resizable-panels.js";
-export type { ResizablePanelItem, ResizablePanelsProps } from "./resizable-panels.types.js";
+export type {
+  ResizableHandleStyle,
+  ResizablePanelItem,
+  ResizablePanelsProps,
+  ResizablePanelsVariant,
+} from "./resizable-panels.types.js";

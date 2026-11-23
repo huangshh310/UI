@@ -3,7 +3,7 @@
 
 /**
  * DataTable：基于 TanStack Table v9 的声明式数据表格。
- * 支持点击排序（aria-sort）、全局搜索、客户端分页、行选择（复用 DrawCheckbox）、骨架加载与空状态。
+ * 支持点击排序（aria-sort）、全局搜索、客户端分页、行选择（复用 DrawCheckbox）、外观与密度变体、斑马纹、骨架加载与空状态。
  */
 
 import { DrawCheckbox } from "@/components/ui/draw-checkbox";
@@ -29,6 +29,7 @@ import {
   type SortingState,
   useTable,
 } from "@tanstack/react-table";
+import { cva } from "class-variance-authority";
 import {
   ArrowDown,
   ArrowUp,
@@ -36,8 +37,55 @@ import {
   ChevronRight,
   ChevronsUpDown,
   Search,
+  X,
 } from "lucide-react";
-import { type ReactNode, useMemo, useState } from "react";
+import { type MouseEvent, type ReactNode, useMemo, useState } from "react";
+
+export const dataTableShellVariants = cva("w-full overflow-hidden font-sans text-card-foreground", {
+  variants: {
+    variant: {
+      default:
+        "rounded-2xl border border-solid border-border/85 bg-card shadow-[0_2px_10px_-3px_rgba(0,0,0,0.05),0_1px_2px_rgba(0,0,0,0.03)] dark:border-white/10 dark:shadow-[0_12px_30px_-10px_rgba(0,0,0,0.45)]",
+      minimal:
+        "rounded-xl border border-solid border-border/70 bg-background shadow-none dark:border-white/10 dark:bg-card/60",
+      ghost: "border-0 bg-transparent shadow-none",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+});
+
+export const dataTableCellVariants = cva("text-foreground", {
+  variants: {
+    density: {
+      compact: "px-3.5 py-2 text-xs",
+      normal: "px-4 py-3 text-[13px]",
+      comfortable: "px-4 py-4 text-sm",
+    },
+  },
+  defaultVariants: {
+    density: "normal",
+  },
+});
+
+export const dataTableHeadCellVariants = cva(
+  "font-medium whitespace-nowrap text-muted-foreground",
+  {
+    variants: {
+      density: {
+        compact: "px-3.5 py-2 text-[11px]",
+        normal: "px-4 py-2.5 text-xs",
+        comfortable: "px-4 py-3 text-xs",
+      },
+    },
+    defaultVariants: {
+      density: "normal",
+    },
+  },
+);
+export type DataTableVariant = "default" | "minimal" | "ghost";
+export type DataTableDensity = "compact" | "normal" | "comfortable";
 
 export interface DataTableColumn<TData> {
   /** 列唯一标识 */
@@ -64,6 +112,18 @@ export interface DataTableProps<TData> {
   /** 表格标题与副标题 */
   title?: string;
   description?: string;
+  /** 容器外观风格 */
+  variant?: DataTableVariant;
+  /** 行高与单元格内边距密度 */
+  density?: DataTableDensity;
+  /** 是否开启斑马纹交替底色 */
+  striped?: boolean;
+  /** 是否吸顶表头（配合固定高度容器垂直滚动） */
+  stickyHeader?: boolean;
+  /** 顶部工具栏右侧扩展槽 */
+  toolbarActions?: ReactNode;
+  /** 点击行回调（自动忽略复选框与内部按钮点击） */
+  onRowClick?: (row: TData) => void;
   /** 是否显示全局搜索输入框 */
   searchable?: boolean;
   searchPlaceholder?: string;
@@ -97,12 +157,17 @@ type DataTableFeatures = typeof DATA_TABLE_FEATURES;
 const ariaSort = (sorted: false | "asc" | "desc") =>
   sorted === "asc" ? "ascending" : sorted === "desc" ? "descending" : undefined;
 
+const isInteractiveTarget = (target: EventTarget | null) =>
+  target instanceof Element && Boolean(target.closest("button,a,input,label,[role='checkbox']"));
+
 const HeaderCell = <TData extends object>({
   header,
   col,
+  density,
 }: {
   header: Header<DataTableFeatures, TData, unknown>;
   col?: DataTableColumn<TData>;
+  density: DataTableDensity;
 }) => {
   const align = col?.align ?? "left";
   const sorted = header.column.getIsSorted();
@@ -110,10 +175,7 @@ const HeaderCell = <TData extends object>({
     <th
       scope="col"
       aria-sort={col?.sortable ? ariaSort(sorted) : undefined}
-      className={cn(
-        "px-4 py-2.5 text-xs font-medium whitespace-nowrap text-muted-foreground",
-        ALIGN_CLASS[align],
-      )}
+      className={cn(dataTableHeadCellVariants({ density }), ALIGN_CLASS[align])}
     >
       {col?.sortable ? (
         <SortHeaderButton
@@ -132,6 +194,8 @@ const HeaderCell = <TData extends object>({
 const DataTableHead = <TData extends object>({
   headers,
   columns,
+  density,
+  stickyHeader,
   selectable,
   allSelected,
   someSelected,
@@ -139,15 +203,17 @@ const DataTableHead = <TData extends object>({
 }: {
   headers: Header<DataTableFeatures, TData, unknown>[];
   columns: DataTableColumn<TData>[];
+  density: DataTableDensity;
+  stickyHeader: boolean;
   selectable: boolean;
   allSelected: boolean;
   someSelected: boolean;
   onToggleAll: (checked: boolean) => void;
 }) => (
-  <thead>
-    <tr className="border-b border-solid border-border/80 bg-secondary/35">
+  <thead className={cn(stickyHeader && "sticky top-0 z-10 backdrop-blur-md")}>
+    <tr className="border-b border-solid border-border/75 bg-secondary/35 dark:border-white/10 dark:bg-white/[0.03]">
       {selectable && (
-        <th scope="col" className="w-10 px-4 py-2.5 text-left">
+        <th scope="col" className={cn("w-10 text-left", dataTableHeadCellVariants({ density }))}>
           <DrawCheckbox
             tone="signal"
             aria-label="选择当前页全部行"
@@ -158,42 +224,29 @@ const DataTableHead = <TData extends object>({
         </th>
       )}
       {headers.map((header, idx) => (
-        <HeaderCell key={header.id} header={header} col={columns[idx]} />
+        <HeaderCell key={header.id} header={header} col={columns[idx]} density={density} />
       ))}
     </tr>
   </thead>
 );
 
-const DataTableRow = <TData extends object>({
+const DataTableRowCells = <TData extends object>({
   row,
   columns,
-  selectable,
+  density,
 }: {
   row: Row<DataTableFeatures, TData>;
   columns: DataTableColumn<TData>[];
-  selectable: boolean;
+  density: DataTableDensity;
 }) => (
-  <tr
-    data-selected={row.getIsSelected() ? "" : undefined}
-    className="border-t border-solid border-border/60 transition-colors duration-(--ui-duration-instant) hover:bg-accent/45 data-selected:bg-signal/6"
-  >
-    {selectable && (
-      <td className="w-10 px-4 py-3">
-        <DrawCheckbox
-          tone="signal"
-          aria-label={`选择第 ${row.index + 1} 行`}
-          checked={row.getIsSelected()}
-          onCheckedChange={(checked) => row.toggleSelected(checked)}
-        />
-      </td>
-    )}
+  <>
     {row.getAllCells().map((cell, idx) => {
       const align = columns[idx]?.align ?? "left";
       return (
         <td
           key={cell.id}
           className={cn(
-            "px-4 py-3 text-sm text-foreground",
+            dataTableCellVariants({ density }),
             ALIGN_CLASS[align],
             align === "right" && "tabular-nums",
           )}
@@ -202,21 +255,72 @@ const DataTableRow = <TData extends object>({
         </td>
       );
     })}
-  </tr>
+  </>
 );
+
+const DataTableRow = <TData extends object>({
+  row,
+  columns,
+  density,
+  striped,
+  selectable,
+  onRowClick,
+}: {
+  row: Row<DataTableFeatures, TData>;
+  columns: DataTableColumn<TData>[];
+  density: DataTableDensity;
+  striped: boolean;
+  selectable: boolean;
+  onRowClick?: (row: TData) => void;
+}) => {
+  const handleClick = (event: MouseEvent<HTMLTableRowElement>) => {
+    if (!onRowClick || isInteractiveTarget(event.target)) return;
+    onRowClick(row.original);
+  };
+
+  return (
+    <tr
+      data-selected={row.getIsSelected() ? "" : undefined}
+      onClick={onRowClick ? handleClick : undefined}
+      className={cn(
+        "border-t border-solid border-border/55 transition-colors duration-(--ui-duration-instant) hover:bg-accent/45 data-selected:bg-signal/6 dark:border-white/7",
+        striped && "even:bg-secondary/25 dark:even:bg-white/[0.025]",
+        onRowClick && "cursor-pointer",
+      )}
+    >
+      {selectable && (
+        <td className={cn("w-10", dataTableCellVariants({ density }))}>
+          <DrawCheckbox
+            tone="signal"
+            aria-label={`选择第 ${row.index + 1} 行`}
+            checked={row.getIsSelected()}
+            onCheckedChange={(checked) => row.toggleSelected(checked)}
+          />
+        </td>
+      )}
+      <DataTableRowCells row={row} columns={columns} density={density} />
+    </tr>
+  );
+};
 
 const DataTableBody = <TData extends object>({
   rows,
   columns,
+  density,
+  striped,
   selectable,
   loading,
   emptyMessage,
+  onRowClick,
 }: {
   rows: Row<DataTableFeatures, TData>[];
   columns: DataTableColumn<TData>[];
+  density: DataTableDensity;
+  striped: boolean;
   selectable: boolean;
   loading: boolean;
   emptyMessage: string;
+  onRowClick?: (row: TData) => void;
 }) => {
   const colSpan = columns.length + (selectable ? 1 : 0);
   if (loading) return <TableLoadingRows colSpan={colSpan} />;
@@ -232,15 +336,27 @@ const DataTableBody = <TData extends object>({
   return (
     <>
       {rows.map((row) => (
-        <DataTableRow key={row.id} row={row} columns={columns} selectable={selectable} />
+        <DataTableRow
+          key={row.id}
+          row={row}
+          columns={columns}
+          density={density}
+          striped={striped}
+          selectable={selectable}
+          onRowClick={onRowClick}
+        />
       ))}
     </>
   );
 };
+const FOCUS_RING =
+  "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
+
 const PAGE_BTN_CLASSES = cn(
-  "inline-flex size-7 cursor-pointer items-center justify-center rounded-md border border-solid border-border bg-background text-muted-foreground shadow-sm dark:bg-card",
-  "transition-colors duration-(--ui-duration-fast) hover:border-foreground/22 hover:text-foreground",
-  "outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-40",
+  "inline-flex size-7 cursor-pointer items-center justify-center rounded-lg border border-solid border-input/55 bg-background text-muted-foreground shadow-[0_1px_2px_rgba(0,0,0,0.03)] dark:border-white/12 dark:bg-card",
+  "transition-colors duration-(--ui-duration-fast) hover:border-foreground/25 hover:text-foreground",
+  FOCUS_RING,
+  "disabled:pointer-events-none disabled:opacity-40",
 );
 
 const ALIGN_CLASS = {
@@ -248,6 +364,57 @@ const ALIGN_CLASS = {
   center: "text-center",
   right: "text-right",
 } as const;
+
+const TableSearchInput = ({
+  query,
+  placeholder,
+  onChange,
+}: {
+  query: string;
+  placeholder: string;
+  onChange: (next: string) => void;
+}) => (
+  <div className="relative w-full sm:w-56">
+    <Search
+      aria-hidden="true"
+      className="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted-foreground"
+    />
+    <input
+      type="search"
+      aria-label="搜索表格"
+      value={query}
+      onChange={(event) => onChange(event.target.value)}
+      placeholder={placeholder}
+      className={cn(
+        "h-8 w-full rounded-lg border border-solid border-input/50 bg-background pr-7 pl-8 font-sans text-xs text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) placeholder:text-muted-foreground/75 hover:border-foreground/25 dark:border-white/12 dark:bg-card/85 dark:hover:border-white/22",
+        "outline-none focus:border-ring focus:bg-card focus:ring-1 focus:ring-ring focus:ring-inset",
+      )}
+    />
+    {query.length > 0 && (
+      <button
+        type="button"
+        aria-label="清除搜索"
+        onClick={() => onChange("")}
+        className={cn(
+          "absolute top-1/2 right-1.5 inline-flex size-5 -translate-y-1/2 cursor-pointer items-center justify-center rounded-md border border-solid border-transparent bg-transparent text-muted-foreground hover:bg-accent hover:text-foreground",
+          FOCUS_RING,
+        )}
+      >
+        <X aria-hidden="true" className="size-3" />
+      </button>
+    )}
+  </div>
+);
+
+const ToolbarTitle = ({ title, description }: { title?: string; description?: string }) => {
+  if (!title && !description) return null;
+  return (
+    <div className="min-w-0">
+      {title && <p className="m-0 text-sm font-semibold tracking-tight text-foreground">{title}</p>}
+      {description && <p className="m-0 mt-0.5 text-xs text-muted-foreground">{description}</p>}
+    </div>
+  );
+};
 
 const TableToolbar = ({
   title,
@@ -257,6 +424,7 @@ const TableToolbar = ({
   query,
   onQueryChange,
   totalCount,
+  toolbarActions,
 }: {
   title?: string;
   description?: string;
@@ -265,35 +433,29 @@ const TableToolbar = ({
   query: string;
   onQueryChange: (next: string) => void;
   totalCount: number;
+  toolbarActions?: ReactNode;
 }) => {
-  if (!title && !description && !searchable) return null;
+  const hasHeading = Boolean(title || description);
+  const hasControls = Boolean(searchable || toolbarActions);
+  if (!hasHeading && !hasControls) return null;
   return (
-    <div className="flex flex-col gap-3 border-b border-solid border-border/80 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-      {(title || description) && (
-        <div className="min-w-0">
-          {title && <p className="m-0 text-sm font-semibold text-foreground">{title}</p>}
-          {description && <p className="m-0 mt-0.5 text-xs text-muted-foreground">{description}</p>}
-        </div>
-      )}
-      {searchable && (
-        <div className="flex items-center gap-3">
-          <div className="relative w-full sm:w-56">
-            <Search
-              aria-hidden="true"
-              className="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted-foreground"
-            />
-            <input
-              type="search"
-              aria-label="搜索表格"
-              value={query}
-              onChange={(event) => onQueryChange(event.target.value)}
-              placeholder={searchPlaceholder}
-              className="h-8 w-full rounded-full border border-solid border-border bg-secondary/50 pr-3.5 pl-8 font-sans text-xs text-foreground outline-none transition-[border-color,box-shadow,background-color] duration-(--ui-duration-fast) placeholder:text-muted-foreground/80 hover:border-foreground/22 focus:border-ring focus:bg-card focus:ring-1 focus:ring-ring focus:ring-inset"
-            />
-          </div>
-          <span className="shrink-0 font-mono text-xs text-muted-foreground tabular-nums">
-            {totalCount} 条
-          </span>
+    <div className="flex flex-col gap-3 border-b border-solid border-border/75 px-5 py-3.5 sm:flex-row sm:items-center sm:justify-between dark:border-white/10">
+      <ToolbarTitle title={title} description={description} />
+      {hasControls && (
+        <div className="flex flex-wrap items-center gap-2.5">
+          {searchable && (
+            <>
+              <TableSearchInput
+                query={query}
+                placeholder={searchPlaceholder}
+                onChange={onQueryChange}
+              />
+              <span className="shrink-0 font-mono text-xs text-muted-foreground tabular-nums">
+                {totalCount} 条
+              </span>
+            </>
+          )}
+          {toolbarActions}
         </div>
       )}
     </div>
@@ -315,7 +477,8 @@ const SortHeaderButton = ({
     type="button"
     onClick={onToggle}
     className={cn(
-      "inline-flex cursor-pointer items-center gap-1 rounded border-0 bg-transparent p-0 font-sans text-xs font-medium text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+      "inline-flex cursor-pointer items-center gap-1 rounded border border-solid border-transparent bg-transparent px-1 py-0.5 -mx-1 font-sans text-xs font-medium text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:text-foreground",
+      FOCUS_RING,
       align === "right" && "ml-auto flex-row-reverse",
       sorted && "text-foreground",
     )}
@@ -326,7 +489,7 @@ const SortHeaderButton = ({
     ) : sorted === "desc" ? (
       <ArrowDown aria-hidden="true" className="size-3.5 text-signal" />
     ) : (
-      <ChevronsUpDown aria-hidden="true" className="size-3.5 opacity-55" />
+      <ChevronsUpDown aria-hidden="true" className="size-3.5 opacity-50" />
     )}
   </button>
 );
@@ -334,9 +497,9 @@ const SortHeaderButton = ({
 const TableLoadingRows = ({ colSpan }: { colSpan: number }) => (
   <>
     {[0, 1, 2].map((row) => (
-      <tr key={row} className="border-t border-solid border-border/60">
+      <tr key={row} className="border-t border-solid border-border/55 dark:border-white/7">
         <td colSpan={colSpan} className="px-4 py-3.5">
-          <div className="h-4 w-full animate-pulse rounded-md bg-secondary motion-reduce:animate-none" />
+          <div className="h-3.5 w-full animate-pulse rounded-md bg-secondary/80 motion-reduce:animate-none" />
           <span className="sr-only">加载中</span>
         </td>
       </tr>
@@ -361,7 +524,7 @@ const TablePagination = (props: TablePaginationProps) => {
   const end = Math.min(props.totalCount, (props.pageIndex + 1) * props.pageSize);
 
   return (
-    <div className="flex items-center justify-between gap-3 border-t border-solid border-border/80 px-5 py-3 text-xs text-muted-foreground">
+    <div className="flex items-center justify-between gap-3 border-t border-solid border-border/75 px-5 py-3 text-xs text-muted-foreground dark:border-white/10">
       <span className="tabular-nums">
         第{" "}
         <strong className="font-medium text-foreground">
@@ -442,46 +605,55 @@ const ScrollableTable = <TData extends object>({
 }: {
   props: DataTableProps<TData>;
   table: ReturnType<typeof useTableState<TData>>["table"];
-}) => (
-  <div
-    // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-    tabIndex={0}
-    aria-label={props.title ?? "数据表格"}
-    className="w-full overflow-x-auto outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
-  >
-    <table className="w-full border-collapse">
-      <DataTableHead
-        headers={table.getFlatHeaders()}
-        columns={props.columns}
-        selectable={Boolean(props.selectable)}
-        allSelected={table.getIsAllPageRowsSelected()}
-        someSelected={table.getIsSomePageRowsSelected()}
-        onToggleAll={(checked) => table.toggleAllPageRowsSelected(checked)}
-      />
-      <tbody>
-        <DataTableBody
-          rows={table.getRowModel().rows}
+}) => {
+  const density = props.density ?? "normal";
+  return (
+    <div
+      // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+      tabIndex={0}
+      aria-label={props.title ?? "数据表格"}
+      className="w-full overflow-x-auto outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset"
+    >
+      <table className="w-full border-collapse">
+        <DataTableHead
+          headers={table.getFlatHeaders()}
           columns={props.columns}
+          density={density}
+          stickyHeader={Boolean(props.stickyHeader)}
           selectable={Boolean(props.selectable)}
-          loading={Boolean(props.loading)}
-          emptyMessage={props.emptyMessage ?? "暂无数据"}
+          allSelected={table.getIsAllPageRowsSelected()}
+          someSelected={table.getIsSomePageRowsSelected()}
+          onToggleAll={(checked) => table.toggleAllPageRowsSelected(checked)}
         />
-      </tbody>
-    </table>
-  </div>
-);
+        <tbody>
+          <DataTableBody
+            rows={table.getRowModel().rows}
+            columns={props.columns}
+            density={density}
+            striped={Boolean(props.striped)}
+            selectable={Boolean(props.selectable)}
+            loading={Boolean(props.loading)}
+            emptyMessage={props.emptyMessage ?? "暂无数据"}
+            onRowClick={props.onRowClick}
+          />
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 export const DataTable = <TData extends object>(props: DataTableProps<TData>) => {
   const { table, globalFilter, setGlobalFilter } = useTableState(props);
   const totalCount = table.getFilteredRowModel().rows.length;
+  const variant = props.variant ?? "default";
+  const density = props.density ?? "normal";
 
   return (
     <div
       data-slot="data-table"
-      className={cn(
-        "w-full overflow-hidden rounded-[22px] border border-solid border-border/85 bg-card font-sans text-card-foreground shadow-md",
-        props.className,
-      )}
+      data-variant={variant}
+      data-density={density}
+      className={cn(dataTableShellVariants({ variant }), props.className)}
     >
       <TableToolbar
         title={props.title}
@@ -491,6 +663,7 @@ export const DataTable = <TData extends object>(props: DataTableProps<TData>) =>
         query={globalFilter}
         onQueryChange={setGlobalFilter}
         totalCount={totalCount}
+        toolbarActions={props.toolbarActions}
       />
       <ScrollableTable props={props} table={table} />
       <TablePagination

@@ -55,4 +55,20 @@ describe("OriginDropdown", () => {
     await user.click(await screen.findByRole("menuitemcheckbox", { name: /显示对齐网格/ }));
     expect(onToggleGrid).toHaveBeenCalledWith(true);
   });
+
+  it("支持受控模式、compact 尺寸、badge 与 signal 语义项", () => {
+    render(
+      <OriginDropdown
+        open
+        size="sm"
+        triggerVariant="subtle"
+        label="快速操作"
+        items={[{ kind: "action", id: "upgrade", label: "升级计划", badge: "PRO", tone: "signal" }]}
+      />,
+    );
+
+    const menu = screen.getByRole("menu");
+    expect(menu.getAttribute("data-size")).toBe("sm");
+    expect(screen.getByText("PRO")).toBeTruthy();
+  });
 });

@@ -3,6 +3,9 @@
  */
 import type { ReactNode } from "react";
 
+export type DataTableVariant = "default" | "minimal" | "ghost";
+export type DataTableDensity = "compact" | "normal" | "comfortable";
+
 export interface DataTableColumn<TData> {
   /** 列唯一标识 */
   id: string;
@@ -28,6 +31,18 @@ export interface DataTableProps<TData> {
   /** 表格标题与副标题 */
   title?: string;
   description?: string;
+  /** 容器外观风格 */
+  variant?: DataTableVariant;
+  /** 行高与单元格内边距密度 */
+  density?: DataTableDensity;
+  /** 是否开启斑马纹交替底色 */
+  striped?: boolean;
+  /** 是否吸顶表头（配合固定高度容器垂直滚动） */
+  stickyHeader?: boolean;
+  /** 顶部工具栏右侧扩展槽 */
+  toolbarActions?: ReactNode;
+  /** 点击行回调（自动忽略复选框与内部按钮点击） */
+  onRowClick?: (row: TData) => void;
   /** 是否显示全局搜索输入框 */
   searchable?: boolean;
   searchPlaceholder?: string;

@@ -9,9 +9,17 @@
 import { cn } from "@matt-ui/utils";
 import type { PointerEvent } from "react";
 import type { LiquidRippleButtonProps } from "./liquid-ripple-button.types.js";
+import {
+  liquidRippleButtonVariants,
+  RIPPLE_TONE_CLASSES,
+} from "./liquid-ripple-button.variants.js";
 import { useRipples } from "./use-ripples.js";
 
 export const LiquidRippleButton = ({
+  variant = "primary",
+  size = "md",
+  radius = "pill",
+  rippleColor,
   className,
   children,
   type = "button",
@@ -29,25 +37,30 @@ export const LiquidRippleButton = ({
     <button
       type={type}
       data-slot="liquid-ripple-button"
-      className={cn(
-        "relative isolate m-0 box-border inline-flex h-10 cursor-pointer items-center justify-center gap-2 overflow-hidden",
-        "appearance-none rounded-full border border-solid border-transparent bg-primary px-5",
-        "font-sans text-sm font-medium whitespace-nowrap text-primary-foreground select-none",
-        "outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid",
-        "disabled:pointer-events-none disabled:opacity-50",
-        className,
-      )}
+      data-variant={variant}
+      data-size={size}
+      data-radius={radius}
+      className={cn(liquidRippleButtonVariants({ variant, size, radius }), className)}
       onPointerDown={handlePointerDown}
       {...props}
     >
-      {ripples.map(({ id, x, y, size }) => (
+      {ripples.map(({ id, x, y, size: diameter }) => (
         <span
           key={id}
           ref={animate(id)}
           aria-hidden="true"
           data-slot="ripple"
-          className="pointer-events-none absolute -z-10 rounded-full bg-primary-foreground opacity-0"
-          style={{ left: x, top: y, width: size, height: size }}
+          className={cn(
+            "pointer-events-none absolute -z-10 rounded-full opacity-0",
+            !rippleColor && RIPPLE_TONE_CLASSES[variant],
+          )}
+          style={{
+            left: x,
+            top: y,
+            width: diameter,
+            height: diameter,
+            backgroundColor: rippleColor,
+          }}
         />
       ))}
       {children}

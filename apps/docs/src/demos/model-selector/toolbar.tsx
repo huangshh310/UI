@@ -8,9 +8,10 @@ import { Context, ModelSelector, PromptInput } from "@matt-ui/ui";
 export default function ModelSelectorToolbarDemo() {
   return (
     <PromptInput
+      variant="elevated"
       placeholder="模型选择与上下文环形表盘直接内聚于底部工具栏…"
-      toolbarLeft={<ModelSelector />}
-      toolbarRight={<Context />}
+      toolbarLeft={<ModelSelector size="sm" variant="ghost" />}
+      toolbarRight={<Context size="sm" surface="subtle" />}
     />
   );
 }

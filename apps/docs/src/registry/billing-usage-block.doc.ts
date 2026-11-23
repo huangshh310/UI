@@ -21,14 +21,15 @@ export function Example() {
       slug: "basic",
       name: "团队订阅、配额预警与账单历史",
       description:
-        "组合当前套餐头、配额超限 Alert、三组资源 Progress 条以及可排序检索的发票 DataTable。",
+        "组合当前套餐头、配额超限 Alert、三组资源 Progress 卡片以及可排序检索的发票 DataTable。",
       file: "billing-usage-block/basic.tsx",
       Demo: BillingUsageBlockBasicDemo,
     },
     {
       slug: "enterprise",
-      name: "企业专属节点高配额视图",
-      description: "通过 planName、priceLabel 与 quotas 自定义企业级配额和计费展示。",
+      name: "企业专属节点高配额精简视图",
+      description:
+        '结合 variant="elevated"、compact 与自定义 quotas 展示低负载配额健康度与快速扩容入口。',
       file: "billing-usage-block/enterprise.tsx",
       Demo: BillingUsageBlockEnterpriseDemo,
       directory: false,
@@ -48,6 +49,42 @@ export function Example() {
       description: "当前周期价格文案",
     },
     {
+      name: "renewalDate",
+      type: "string",
+      defaultValue: '"2026-12-01"',
+      description: "下次自动续费日期文案",
+    },
+    {
+      name: "paymentMethod",
+      type: "string",
+      defaultValue: '"Visa •••• 4242"',
+      description: "当前默认支付方式摘要",
+    },
+    {
+      name: "upgradeLabel",
+      type: "string",
+      defaultValue: '"升级企业版"',
+      description: "主升级操作按钮文案",
+    },
+    {
+      name: "variant",
+      type: '"default" | "elevated" | "subtle"',
+      defaultValue: '"default"',
+      description: "外层卡片容器变体",
+    },
+    {
+      name: "compact",
+      type: "boolean",
+      defaultValue: "false",
+      description: "紧凑模式，收紧内边距并隐藏账单表",
+    },
+    {
+      name: "showInvoices",
+      type: "boolean",
+      defaultValue: "true",
+      description: "是否显示历史发票表格",
+    },
+    {
       name: "quotas",
       type: "UsageQuota[]",
       defaultValue: "内置 3 项",
@@ -60,9 +97,16 @@ export function Example() {
       description: "历史发票数据",
     },
     { name: "onUpgrade", type: "() => void", defaultValue: "—", description: "点击升级按钮触发" },
+    {
+      name: "onManagePayment",
+      type: "() => void",
+      defaultValue: "—",
+      description: "点击支付方式按钮触发",
+    },
   ],
   accessibility: [
     "配额进度条基于 Base UI Progress 暴露 aria-valuenow / aria-valuemax 语义。",
+    "超限预警同时提供告警图标、状态胶囊文案与百分比读数，不单独依赖颜色区分。",
     "历史账单表格保留 DataTable 的排序状态声明与键盘导航。",
   ],
 };

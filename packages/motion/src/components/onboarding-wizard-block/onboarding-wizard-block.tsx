@@ -6,15 +6,13 @@
 import { cn } from "@matt-ui/utils";
 import { motion, useReducedMotion } from "motion/react";
 import { useState, type ReactNode } from "react";
-import {
-  REGIONS,
-  STEPS,
-  StepHeader,
-  StepProfile,
-  StepSecurity,
-  StepSummary,
-} from "./onboarding-wizard-steps.js";
+import { StepHeader, StepProfile, StepSecurity, StepSummary } from "./onboarding-wizard-steps.js";
 import type { OnboardingWizardBlockProps } from "./onboarding-wizard-block.types.js";
+import {
+  WIZARD_REGIONS,
+  WIZARD_STEPS,
+  WIZARD_SURFACE_CLASS,
+} from "./onboarding-wizard-block.variants.js";
 
 const WizardFooter = ({
   step,
@@ -27,24 +25,31 @@ const WizardFooter = ({
   onBack: () => void;
   onNext: () => void;
 }) => (
-  <div className="flex items-center justify-between gap-2 border-t border-solid border-border/80 pt-4">
+  <div className="flex flex-wrap items-center justify-between gap-2 border-t border-solid border-border/75 pt-4 dark:border-white/10">
     <button
       type="button"
       disabled={step === 0 && !completed}
       onClick={onBack}
-      className="inline-flex h-8 cursor-pointer items-center rounded-lg border border-solid border-border bg-background px-3 font-sans text-xs font-medium text-foreground transition-colors hover:bg-accent disabled:pointer-events-none disabled:opacity-40 dark:bg-card"
+      className="inline-flex h-8.5 cursor-pointer items-center rounded-xl border border-solid border-border/80 bg-background px-3.5 font-sans text-xs font-medium text-foreground transition-colors hover:bg-accent outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-40 dark:border-white/12 dark:bg-card"
     >
       {completed ? "重新配置" : "上一步"}
     </button>
-    {!completed && (
-      <button
-        type="button"
-        onClick={onNext}
-        className="inline-flex h-9 cursor-pointer items-center rounded-full border border-solid border-primary bg-primary px-4 font-sans text-xs font-medium text-primary-foreground transition-opacity hover:opacity-90"
-      >
-        {step === STEPS.length - 1 ? "完成初始化" : "下一步"}
-      </button>
-    )}
+    <div className="flex items-center gap-3">
+      {!completed && (
+        <span className="font-mono text-[11px] text-muted-foreground tabular-nums">
+          第 {step + 1} / {WIZARD_STEPS.length} 步
+        </span>
+      )}
+      {!completed && (
+        <button
+          type="button"
+          onClick={onNext}
+          className="inline-flex h-9 cursor-pointer items-center rounded-full border border-solid border-primary bg-primary px-4 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-[opacity,transform] hover:opacity-92 active:scale-[0.98] outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+        >
+          {step === WIZARD_STEPS.length - 1 ? "完成初始化" : "下一步"}
+        </button>
+      )}
+    </div>
   </div>
 );
 
@@ -75,13 +80,13 @@ interface WizardFormState {
   otp: string;
 }
 
-const INITIAL_FORM: WizardFormState = {
-  workspace: "matt-ui Studio",
-  region: REGIONS[0] ?? "东京（ap-northeast-1）",
+const createInitialForm = (defaultWorkspace: string): WizardFormState => ({
+  workspace: defaultWorkspace,
+  region: WIZARD_REGIONS[0]?.label ?? "东京（ap-northeast-1）",
   sso: true,
   audit: true,
   otp: "",
-};
+});
 
 const StepBody = ({
   step,
@@ -121,21 +126,30 @@ const StepBody = ({
       workspace={form.workspace}
       region={form.region}
       sso={form.sso}
+      audit={form.audit}
       completed={completed}
     />
   );
 };
 
-export const OnboardingWizardBlock = ({ onComplete, className }: OnboardingWizardBlockProps) => {
+export const OnboardingWizardBlock = ({
+  title = "初始化你的团队工作区",
+  description = "按步骤完成基础信息、访问安全与 Registry 同步配置。",
+  variant = "card",
+  defaultWorkspace = "matt-ui Studio",
+  allowStepJump = true,
+  onComplete,
+  className,
+}: OnboardingWizardBlockProps) => {
   const reduced = useReducedMotion();
   const [step, setStep] = useState(0);
   const [completed, setCompleted] = useState(false);
-  const [form, setForm] = useState<WizardFormState>(INITIAL_FORM);
+  const [form, setForm] = useState<WizardFormState>(() => createInitialForm(defaultWorkspace));
 
   const patch = (next: Partial<WizardFormState>) => setForm((prev) => ({ ...prev, ...next }));
-  const pct = completed ? 100 : Math.round(((step + 1) / STEPS.length) * 100);
+  const pct = completed ? 100 : Math.round(((step + 1) / WIZARD_STEPS.length) * 100);
   const handleNext = () => {
-    if (step < STEPS.length - 1) return setStep((s) => s + 1);
+    if (step < WIZARD_STEPS.length - 1) return setStep((s) => s + 1);
     setCompleted(true);
     onComplete?.({ workspace: form.workspace, region: form.region, sso: form.sso });
   };
@@ -144,12 +158,23 @@ export const OnboardingWizardBlock = ({ onComplete, className }: OnboardingWizar
   return (
     <div
       data-slot="onboarding-wizard-block"
+      data-variant={variant}
       className={cn(
-        "flex w-full max-w-4xl flex-col gap-5 rounded-2xl border border-solid border-border bg-card p-6 shadow-sm",
+        "flex w-full max-w-4xl flex-col gap-5 border border-solid",
+        WIZARD_SURFACE_CLASS[variant],
         className,
       )}
     >
-      <StepHeader step={completed ? STEPS.length : step} pct={pct} />
+      <StepHeader
+        title={title}
+        description={description}
+        step={completed ? WIZARD_STEPS.length : step}
+        pct={pct}
+        reduced={reduced}
+        allowStepJump={allowStepJump}
+        completed={completed}
+        onSelectStep={setStep}
+      />
       <StepMotionPanel panelKey={completed ? "done" : step} reduced={reduced}>
         <StepBody step={step} form={form} completed={completed} patch={patch} />
       </StepMotionPanel>

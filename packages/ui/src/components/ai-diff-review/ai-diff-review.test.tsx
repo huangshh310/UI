@@ -17,4 +17,26 @@ describe("AiDiffReview", () => {
     expect(onApply).toHaveBeenCalledWith(["d2", "d3", "d4"]);
     expect(screen.getByText("已应用变更")).toBeTruthy();
   });
+
+  it("支持变更摘要、语言角标、adaptive 主题与全部放弃回调", async () => {
+    const user = userEvent.setup();
+    const onRejectAll = vi.fn<() => void>();
+    const { container } = render(
+      <AiDiffReview
+        fileName="registry.json"
+        summary="同步新增 AI 组件条目计数"
+        language="json"
+        theme="adaptive"
+        onRejectAll={onRejectAll}
+      />,
+    );
+
+    expect(container.querySelector('[data-theme="adaptive"]')).toBeTruthy();
+    expect(screen.getByText("同步新增 AI 组件条目计数")).toBeTruthy();
+    expect(screen.getByText("json")).toBeTruthy();
+
+    await user.click(screen.getByRole("button", { name: "放弃" }));
+    expect(onRejectAll).toHaveBeenCalledTimes(1);
+    expect(screen.getByText("已勾选 0 / 3 处变更")).toBeTruthy();
+  });
 });

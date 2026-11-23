@@ -10,7 +10,13 @@
 import { cn } from "@matt-ui/utils";
 import { Check, LoaderCircle, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import type { MouseEvent } from "react";
+import type { MouseEvent, ReactNode } from "react";
+import {
+  MORPHING_BASE_CLASSES,
+  MORPHING_RADIUS_CLASSES,
+  MORPHING_SIZE_CLASSES,
+  resolveMorphingTone,
+} from "./morphing-button.styles.js";
 import type { MorphingButtonProps, MorphingButtonStatus } from "./morphing-button.types.js";
 
 const DEFAULT_LABELS: Record<MorphingButtonStatus, string> = {
@@ -26,29 +32,24 @@ const ICONS: Partial<Record<MorphingButtonStatus, typeof Check>> = {
   error: X,
 };
 
-const TONES: Record<MorphingButtonStatus, string> = {
-  idle: "bg-primary text-primary-foreground",
-  loading: "bg-primary text-primary-foreground",
-  success: "bg-signal text-signal-foreground",
-  error: "bg-destructive text-destructive-foreground",
-};
-
-const BUTTON_CLASSES = cn(
-  "m-0 box-border inline-flex h-11 cursor-pointer appearance-none items-center justify-center overflow-hidden rounded-full border-0 px-6",
-  "font-sans text-sm font-medium whitespace-nowrap select-none transition-colors duration-(--ui-duration-normal)",
-  "outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid",
-  "disabled:pointer-events-none disabled:opacity-50 data-[status=loading]:cursor-progress",
-);
+const DEFAULTS = {
+  variant: "primary",
+  successTone: "signal",
+  size: "md",
+  radius: "pill",
+  type: "button",
+} as const;
 
 interface MorphingLabelProps {
   status: MorphingButtonStatus;
   label: string;
+  idleIcon?: ReactNode;
   reduceMotion: boolean;
 }
 
 /** 按钮里随阶段切换的图标与文字：新内容自下而上淡入，旧内容向上淡出 */
-const MorphingLabel = ({ status, label, reduceMotion }: MorphingLabelProps) => {
-  const Icon = ICONS[status];
+const MorphingLabel = ({ status, label, idleIcon, reduceMotion }: MorphingLabelProps) => {
+  const StatusIcon = ICONS[status];
   const offset = reduceMotion ? 0 : 10;
 
   return (
@@ -62,8 +63,9 @@ const MorphingLabel = ({ status, label, reduceMotion }: MorphingLabelProps) => {
         exit={{ opacity: 0, y: -offset }}
         transition={{ duration: reduceMotion ? 0 : 0.18 }}
       >
-        {Icon && (
-          <Icon
+        {status === "idle" && idleIcon}
+        {StatusIcon && (
+          <StatusIcon
             className={cn(
               "size-4",
               status === "loading" && "animate-spin motion-reduce:animate-none",
@@ -76,21 +78,36 @@ const MorphingLabel = ({ status, label, reduceMotion }: MorphingLabelProps) => {
   );
 };
 
-export const MorphingButton = ({
-  status,
-  labels,
-  className,
-  type = "button",
-  onClick,
-  ...props
-}: MorphingButtonProps) => {
+const buildMorphingClasses = (
+  p: Pick<Required<MorphingButtonProps>, "status" | "variant" | "successTone" | "size" | "radius">,
+  className?: string,
+) =>
+  cn(
+    MORPHING_BASE_CLASSES,
+    MORPHING_SIZE_CLASSES[p.size],
+    MORPHING_RADIUS_CLASSES[p.radius],
+    resolveMorphingTone(p.status, p.variant, p.successTone),
+    className,
+  );
+
+export const MorphingButton = (inputProps: MorphingButtonProps) => {
+  const p = { ...DEFAULTS, ...inputProps };
+  const {
+    status,
+    labels,
+    variant,
+    successTone,
+    size,
+    radius,
+    idleIcon,
+    className,
+    type,
+    onClick,
+    ...rest
+  } = p;
   const reduceMotion = Boolean(useReducedMotion());
   const label = labels?.[status] ?? DEFAULT_LABELS[status];
   const loading = status === "loading";
-
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (!loading) onClick?.(event);
-  };
 
   return (
     <>
@@ -99,14 +116,23 @@ export const MorphingButton = ({
         type={type}
         aria-label={label}
         aria-busy={loading || undefined}
+        aria-disabled={loading || undefined}
         data-slot="morphing-button"
         data-status={status}
+        data-variant={variant}
+        data-size={size}
+        data-radius={radius}
         transition={{ type: "spring", stiffness: 420, damping: 32 }}
-        className={cn(BUTTON_CLASSES, TONES[status], className)}
-        onClick={handleClick}
-        {...props}
+        className={buildMorphingClasses({ status, variant, successTone, size, radius }, className)}
+        onClick={(e: MouseEvent<HTMLButtonElement>) => !loading && onClick?.(e)}
+        {...rest}
       >
-        <MorphingLabel status={status} label={label} reduceMotion={reduceMotion} />
+        <MorphingLabel
+          status={status}
+          label={label}
+          idleIcon={idleIcon}
+          reduceMotion={reduceMotion}
+        />
       </motion.button>
       <span aria-live="polite" className="sr-only">
         {status === "idle" ? "" : label}

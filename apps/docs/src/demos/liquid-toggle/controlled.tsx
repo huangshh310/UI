@@ -8,8 +8,13 @@ export default function LiquidToggleControlledDemo() {
   const [enabled, setEnabled] = useState(true);
 
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-solid border-border bg-card px-4 py-3 text-sm shadow-xs">
-      <LiquidToggle checked={enabled} onCheckedChange={setEnabled} aria-labelledby={id} />
+    <div className="flex items-center gap-3.5 rounded-xl border border-solid border-border bg-card px-4 py-3 text-sm shadow-xs">
+      <LiquidToggle
+        checked={enabled}
+        onCheckedChange={setEnabled}
+        tone="emerald"
+        aria-labelledby={id}
+      />
       <div className="flex flex-col">
         <span id={id} className="text-xs font-medium text-foreground">
           边缘缓存预热

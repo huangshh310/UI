@@ -10,6 +10,7 @@ export default function PeekCardBasicDemo() {
         triggerLabel="ORD-2026-089"
         href="#order-preview"
         title="ORD-2026-089"
+        badge="PAID"
         subtitle="Stripe Checkout"
         value="¥1,290.00"
         identity={{ initials: "林", name: "林知远", meta: "zhiyuan@matt.dev" }}
@@ -20,6 +21,7 @@ export default function PeekCardBasicDemo() {
         ]}
         footerLeft="2 分钟前"
         status="已结算"
+        statusTone="success"
       />{" "}
       查看结算明细。
     </p>

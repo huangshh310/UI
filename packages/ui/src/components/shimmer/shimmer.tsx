@@ -3,19 +3,21 @@
  * 底层文本保持实色语义对比度，装饰高光层标记 aria-hidden 并自动响应减少动态效果设置。
  */
 import { cn } from "@matt-ui/utils";
-import type { ShimmerLinesProps, ShimmerProps, ShimmerSpeed } from "./shimmer.types.js";
-
-const SPEED_DURATION: Record<ShimmerSpeed, string> = {
-  slow: "duration-(--ui-duration-slow)",
-  normal: "duration-(--ui-duration-normal)",
-  fast: "duration-(--ui-duration-fast)",
-};
-
-const LINE_WIDTHS = ["w-[86%]", "w-[72%]", "w-[58%]", "w-[79%]", "w-[46%]"] as const;
+import type { ShimmerLinesProps, ShimmerProps } from "./shimmer.types.js";
+import {
+  SHIMMER_LINE_WIDTHS,
+  SHIMMER_SPEED_DURATION,
+  shimmerLineBarVariants,
+  shimmerLinesContainerVariants,
+  shimmerTextVariants,
+} from "./shimmer.variants.js";
 
 export const Shimmer = ({
   as: Tag = "span",
   speed = "normal",
+  size = "xs",
+  tone = "muted",
+  variant = "default",
   active = true,
   className,
   children,
@@ -24,19 +26,18 @@ export const Shimmer = ({
   <Tag
     data-slot="shimmer"
     data-active={active ? "true" : "false"}
-    className={cn(
-      "relative inline-block font-sans text-xs font-medium text-muted-foreground",
-      className,
-    )}
+    data-variant={variant}
+    data-tone={tone}
+    className={cn(shimmerTextVariants({ size, tone, variant }), className)}
     {...props}
   >
-    <span>{children}</span>
+    <span className="relative">{children}</span>
     {active && (
       <span
         aria-hidden="true"
         className={cn(
-          "pointer-events-none absolute inset-0 animate-pulse bg-gradient-to-r from-transparent via-card/55 to-transparent select-none",
-          SPEED_DURATION[speed],
+          "pointer-events-none absolute inset-0 animate-pulse bg-gradient-to-r from-transparent via-background/75 to-transparent select-none dark:via-white/16",
+          SHIMMER_SPEED_DURATION[speed],
           "motion-reduce:hidden",
         )}
       />
@@ -46,6 +47,9 @@ export const Shimmer = ({
 
 export const ShimmerLines = ({
   lines = 3,
+  size = "md",
+  variant = "default",
+  tone = "muted",
   label = "正在生成回复…",
   className,
   ...props
@@ -56,7 +60,8 @@ export const ShimmerLines = ({
       aria-busy="true"
       aria-label={label}
       data-slot="shimmer-lines"
-      className={cn("flex w-full flex-col gap-2.5 py-1", className)}
+      data-variant={variant}
+      className={cn(shimmerLinesContainerVariants({ size, variant }), className)}
       {...props}
     >
       {Array.from({ length: safeCount }, (_, idx) => (
@@ -65,8 +70,8 @@ export const ShimmerLines = ({
           data-slot="shimmer-line"
           aria-hidden="true"
           className={cn(
-            "block h-3 animate-pulse rounded-full bg-secondary motion-reduce:animate-none",
-            LINE_WIDTHS[idx % LINE_WIDTHS.length],
+            shimmerLineBarVariants({ size, tone }),
+            SHIMMER_LINE_WIDTHS[idx % SHIMMER_LINE_WIDTHS.length],
           )}
         />
       ))}

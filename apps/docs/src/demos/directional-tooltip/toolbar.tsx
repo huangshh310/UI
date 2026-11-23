@@ -12,20 +12,15 @@ const TOOLS = [
 
 export default function DirectionalTooltipToolbarDemo() {
   return (
-    <DirectionalTooltipProvider delay={120}>
-      <div className="inline-flex items-center gap-1 rounded-xl border border-solid border-border bg-card p-1 shadow-xs">
+    <DirectionalTooltipProvider delay={100}>
+      <div className="inline-flex items-center gap-1 rounded-xl border border-solid border-border/80 bg-card/90 p-1 shadow-xs backdrop-blur-md dark:border-white/10">
         {TOOLS.map(({ id, label, shortcut, Icon }) => (
           <DirectionalTooltip
             key={id}
             side="top"
-            content={
-              <span className="inline-flex items-center gap-2">
-                <span>{label}</span>
-                <kbd className="rounded bg-background/15 px-1 font-mono text-[10px]">
-                  {shortcut}
-                </kbd>
-              </span>
-            }
+            variant="inverted"
+            content={label}
+            shortcut={shortcut}
           >
             <Button size="icon" variant="ghost" aria-label={label}>
               <Icon className="size-4" />

@@ -1,18 +1,36 @@
 "use client";
 
+/**
+ * Slider：基于 Base UI Slider 的精密滑块与区间双滑块，支持三档尺寸、多色调、浮动读数气泡与刻度标记。
+ */
 import { Slider as BaseSlider } from "@base-ui/react/slider";
 import { cn } from "@matt-ui/utils";
-import type { SliderMark, SliderProps, SliderValue } from "./slider.types.js";
+import { useState } from "react";
+import type {
+  SliderMark,
+  SliderProps,
+  SliderSize,
+  SliderTone,
+  SliderValue,
+} from "./slider.types.js";
+import {
+  SLIDER_TOOLTIP_CLASS,
+  sliderIndicatorVariants,
+  sliderThumbVariants,
+  sliderTrackVariants,
+} from "./slider.variants.js";
 
-const THUMB_CLASS = cn(
-  "size-4.5 cursor-pointer rounded-full border-2 border-solid border-primary bg-background shadow-sm outline-none",
-  "transition-[transform,box-shadow] duration-(--ui-duration-fast) hover:scale-110 focus-visible:ring-4 focus-visible:ring-ring/25 data-dragging:scale-110 dark:bg-card",
-);
+const formatSingle = (val: number, fmt?: (n: number) => string) => (fmt ? fmt(val) : String(val));
 
-const formatReadout = (val: readonly number[], fmt?: (n: number) => string) => {
-  const f = fmt ?? ((n: number) => String(n));
-  return val.length > 1 ? `${f(val[0] ?? 0)} – ${f(val[1] ?? 0)}` : f(val[0] ?? 0);
-};
+const formatReadout = (val: readonly number[], fmt?: (n: number) => string) =>
+  val.length > 1
+    ? `${formatSingle(val[0] ?? 0, fmt)} – ${formatSingle(val[1] ?? 0, fmt)}`
+    : formatSingle(val[0] ?? 0, fmt);
+
+const toTuple = (val: SliderValue): readonly number[] => (Array.isArray(val) ? val : [val]);
+
+const normalizeValue = (next: number | readonly number[], min: number, max: number): SliderValue =>
+  Array.isArray(next) ? [next[0] ?? min, next[1] ?? max] : (next as number);
 
 const SliderHeader = ({
   label,
@@ -32,7 +50,7 @@ const SliderHeader = ({
         <span />
       )}
       {showValue && (
-        <BaseSlider.Value className="font-mono text-muted-foreground tabular-nums">
+        <BaseSlider.Value className="rounded-md bg-secondary/75 px-1.5 py-0.5 font-mono text-[11px] font-medium text-foreground tabular-nums dark:bg-white/[0.07]">
           {(_formatted, raw) => formatReadout(raw, formatValue)}
         </BaseSlider.Value>
       )}
@@ -49,53 +67,108 @@ const SliderMarksRow = ({ marks }: { marks?: SliderMark[] }) =>
     </div>
   ) : null;
 
-const normalizeValue = (next: number | readonly number[], min: number, max: number): SliderValue =>
-  Array.isArray(next) ? [next[0] ?? min, next[1] ?? max] : (next as number);
+interface SliderTrackBarProps {
+  isRange: boolean;
+  size: SliderSize;
+  tone: SliderTone;
+  label?: string;
+  showTooltip: boolean;
+  values: readonly number[];
+  formatValue?: (val: number) => string;
+}
 
-const SliderTrackBar = ({ isRange, label }: { isRange: boolean; label?: string }) => (
-  <BaseSlider.Control className="flex w-full touch-none items-center py-2">
-    <BaseSlider.Track className="relative h-1.5 w-full rounded-full bg-secondary">
-      <BaseSlider.Indicator className="h-full rounded-full bg-primary" />
-      <BaseSlider.Thumb index={0} aria-label={label ?? "滑块"} className={THUMB_CLASS} />
-      {isRange && (
-        <BaseSlider.Thumb
-          index={1}
-          aria-label={label ? `${label}上限` : "区间上限"}
-          className={THUMB_CLASS}
+const SliderTrackBar = ({
+  isRange,
+  size,
+  tone,
+  label,
+  showTooltip,
+  values,
+  formatValue,
+}: SliderTrackBarProps) => {
+  const thumbClass = sliderThumbVariants({ size, tone });
+  return (
+    <BaseSlider.Control className="flex w-full touch-none items-center py-2.5">
+      <BaseSlider.Track data-slot="slider-track" className={sliderTrackVariants({ size })}>
+        <BaseSlider.Indicator
+          data-slot="slider-indicator"
+          className={sliderIndicatorVariants({ tone })}
         />
-      )}
-    </BaseSlider.Track>
-  </BaseSlider.Control>
-);
+        <BaseSlider.Thumb index={0} aria-label={label ?? "滑块"} className={thumbClass}>
+          {showTooltip && (
+            <span aria-hidden="true" className={SLIDER_TOOLTIP_CLASS}>
+              {formatSingle(values[0] ?? 0, formatValue)}
+            </span>
+          )}
+        </BaseSlider.Thumb>
+        {isRange && (
+          <BaseSlider.Thumb
+            index={1}
+            aria-label={label ? `${label}上限` : "区间上限"}
+            className={thumbClass}
+          >
+            {showTooltip && (
+              <span aria-hidden="true" className={SLIDER_TOOLTIP_CLASS}>
+                {formatSingle(values[1] ?? 0, formatValue)}
+              </span>
+            )}
+          </BaseSlider.Thumb>
+        )}
+      </BaseSlider.Track>
+    </BaseSlider.Control>
+  );
+};
+
+const resolveSliderConfig = (props: SliderProps) => ({
+  defaultValue: props.defaultValue ?? 50,
+  min: props.min ?? 0,
+  max: props.max ?? 100,
+  step: props.step ?? 1,
+  size: props.size ?? "md",
+  tone: props.tone ?? "default",
+  showValue: props.showValue ?? false,
+  showTooltip: props.showTooltip ?? false,
+  disabled: props.disabled ?? false,
+});
 
 export const Slider = (props: SliderProps) => {
-  const {
-    defaultValue = 50,
-    min = 0,
-    max = 100,
-    step = 1,
-    showValue = false,
-    disabled = false,
-  } = props;
-  const isRange = Array.isArray(props.value ?? defaultValue);
+  const cfg = resolveSliderConfig(props);
+  const [internal, setInternal] = useState<SliderValue>(cfg.defaultValue);
+  const currentValue = props.value ?? internal;
+
+  const handleChange = (next: number | readonly number[]) => {
+    const normalized = normalizeValue(next, cfg.min, cfg.max);
+    if (props.value === undefined) setInternal(normalized);
+    props.onValueChange?.(normalized);
+  };
 
   return (
     <BaseSlider.Root
       value={props.value}
-      defaultValue={props.value === undefined ? defaultValue : undefined}
-      onValueChange={(next) => props.onValueChange?.(normalizeValue(next, min, max))}
-      min={min}
-      max={max}
-      step={step}
-      disabled={disabled}
+      defaultValue={props.value === undefined ? cfg.defaultValue : undefined}
+      onValueChange={handleChange}
+      min={cfg.min}
+      max={cfg.max}
+      step={cfg.step}
+      disabled={cfg.disabled}
       data-slot="slider"
+      data-size={cfg.size}
+      data-tone={cfg.tone}
       className={cn(
-        "flex w-full flex-col gap-2 select-none data-disabled:opacity-50",
+        "flex w-full flex-col gap-1.5 select-none data-disabled:opacity-50",
         props.className,
       )}
     >
-      <SliderHeader label={props.label} showValue={showValue} formatValue={props.formatValue} />
-      <SliderTrackBar isRange={isRange} label={props.label} />
+      <SliderHeader label={props.label} showValue={cfg.showValue} formatValue={props.formatValue} />
+      <SliderTrackBar
+        isRange={Array.isArray(currentValue)}
+        size={cfg.size}
+        tone={cfg.tone}
+        label={props.label}
+        showTooltip={cfg.showTooltip}
+        values={toTuple(currentValue)}
+        formatValue={props.formatValue}
+      />
       <SliderMarksRow marks={props.marks} />
     </BaseSlider.Root>
   );

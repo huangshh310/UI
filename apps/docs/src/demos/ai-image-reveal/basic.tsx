@@ -9,6 +9,7 @@ const encodeSvg = (svg: string) => `data:image/svg+xml;charset=utf-8,${encodeURI
 const ARTWORKS = [
   {
     label: "晨雾山岚",
+    badge: "1024×1024 · Flux",
     prompt: "极简主义晨雾山谷与微光水面，柔和电影级中性色调",
     src: encodeSvg(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480">
       <defs>
@@ -32,6 +33,7 @@ const ARTWORKS = [
   },
   {
     label: "钴蓝建筑",
+    badge: "1024×1024 · Imagen",
     prompt: "午后日光下的极简建筑曲面与钴蓝天空，建筑摄影质感",
     src: encodeSvg(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480">
       <defs>
@@ -59,11 +61,14 @@ export default function AiImageRevealBasicDemo() {
   const current = ARTWORKS[index]!;
 
   return (
-    <div className="flex w-full max-w-[236px] flex-col items-center gap-3">
+    <div className="flex w-full max-w-[260px] flex-col items-center gap-3">
       <AiImageReveal
         ref={revealRef}
         src={current.src}
         alt={current.label}
+        variant="framed"
+        badge={current.badge}
+        showReplayButton
         aspectRatio={1}
         duration={2.2}
         generatingLabel="正在显影…"
@@ -72,7 +77,7 @@ export default function AiImageRevealBasicDemo() {
         <button
           type="button"
           onClick={() => revealRef.current?.replay()}
-          className="inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-full border border-border bg-card px-3 font-sans text-xs font-medium text-foreground shadow-xs transition-colors hover:bg-accent outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-full border border-solid border-border/80 bg-card px-3 font-sans text-xs font-medium text-foreground shadow-xs transition-colors hover:bg-accent outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset dark:border-white/10"
         >
           <RotateCcw className="size-3" aria-hidden="true" />
           重播
@@ -80,7 +85,7 @@ export default function AiImageRevealBasicDemo() {
         <button
           type="button"
           onClick={() => setIndex((i) => (i + 1) % ARTWORKS.length)}
-          className="inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-full border border-border bg-card px-3 font-sans text-xs text-muted-foreground shadow-xs transition-colors hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-full border border-solid border-border/80 bg-card px-3 font-sans text-xs text-muted-foreground shadow-xs transition-colors hover:text-foreground outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset dark:border-white/10"
         >
           <Sparkles className="size-3" aria-hidden="true" />
           换一幅

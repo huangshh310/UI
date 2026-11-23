@@ -1,5 +1,8 @@
 "use client";
 
+/**
+ * 示例：ThinkingOrb 全部 9 种认知状态物理编排矩阵。
+ */
 import { ThinkingOrb, type ThinkingOrbState } from "@matt-ui/ui";
 
 const ALL_STATES: { id: ThinkingOrbState; label: string }[] = [
@@ -20,9 +23,9 @@ export default function ThinkingOrbStatesDemo() {
       {ALL_STATES.map((item) => (
         <div
           key={item.id}
-          className="flex flex-col items-center gap-2.5 rounded-2xl border border-border/75 bg-card p-4"
+          className="flex flex-col items-center gap-2.5 rounded-2xl border border-solid border-border/80 bg-card/85 p-4 shadow-xs transition-colors hover:border-foreground/20 dark:border-white/10 dark:hover:border-white/20"
         >
-          <ThinkingOrb state={item.id} size={64} />
+          <ThinkingOrb state={item.id} size={60} />
           <span className="font-mono text-[11px] text-muted-foreground">{item.label}</span>
         </div>
       ))}

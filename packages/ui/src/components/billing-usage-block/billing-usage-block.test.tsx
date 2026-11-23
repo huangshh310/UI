@@ -18,4 +18,15 @@ describe("BillingUsageBlock", () => {
     await user.click(screen.getByRole("button", { name: "升级企业版" }));
     expect(onUpgrade).toHaveBeenCalledTimes(1);
   });
+
+  it("紧凑模式隐藏账单表格并支持支付方式管理回调", async () => {
+    const user = userEvent.setup();
+    const onManagePayment = vi.fn<() => void>();
+
+    render(<BillingUsageBlock compact onManagePayment={onManagePayment} />);
+    expect(screen.queryByText("历史账单与发票")).toBeNull();
+
+    await user.click(screen.getByRole("button", { name: "支付方式" }));
+    expect(onManagePayment).toHaveBeenCalledTimes(1);
+  });
 });

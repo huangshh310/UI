@@ -22,4 +22,19 @@ describe("NumberFlow", () => {
     );
     expect(screen.getByText(/2,560/)).toBeTruthy();
   });
+
+  it("支持 size、trend 数据属性与前后缀静态渲染", () => {
+    const { container, rerender } = render(
+      <NumberFlow value={4890} prefix="¥" suffix="/月" size="xl" trend="up" />,
+    );
+    const root = container.querySelector('[data-slot="number-flow"]');
+    expect(root?.getAttribute("data-size")).toBe("xl");
+    expect(root?.getAttribute("data-trend")).toBe("up");
+    expect(screen.getByText("¥4,890/月")).toBeTruthy();
+
+    rerender(<NumberFlow value={3120} prefix="¥" suffix="/月" size="sm" trend="down" />);
+    expect(root?.getAttribute("data-size")).toBe("sm");
+    expect(root?.getAttribute("data-trend")).toBe("down");
+    expect(screen.getByText("¥3,120/月")).toBeTruthy();
+  });
 });
