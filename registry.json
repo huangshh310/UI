@@ -3655,7 +3655,7 @@
       "title": "Spring Select",
       "description": "A select dropdown built on Base UI with crisp spring-overshoot panel and chevron transitions.",
       "categories": ["forms"],
-      "dependencies": ["@base-ui/react", "lucide-react"],
+      "dependencies": ["class-variance-authority", "@base-ui/react", "lucide-react"],
       "registryDependencies": ["utils"],
       "files": [
         {
