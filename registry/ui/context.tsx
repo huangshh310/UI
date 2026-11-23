@@ -14,31 +14,32 @@ import { useState } from "react";
 export const CONTEXT_FOCUS_RING =
   "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
 
+/** 克制的中性灰阶层次 + 品牌蓝分段色谱（高占用由环形与状态文本渐进提示） */
 export const CONTEXT_TONE_BAR: Record<ContextSegmentTone, string> = {
-  primary: "bg-primary",
+  primary: "bg-foreground",
   signal: "bg-signal",
-  success: "bg-emerald-500 dark:bg-emerald-400",
-  warning: "bg-amber-500 dark:bg-amber-400",
+  success: "bg-muted-foreground/65 dark:bg-white/45",
+  warning: "bg-foreground/25 dark:bg-white/25",
 };
 
 export const CONTEXT_POPOVER_SURFACE =
-  "w-84 origin-(--transform-origin) overflow-hidden rounded-2xl border border-solid border-border/80 bg-popover/96 text-popover-foreground shadow-[0_18px_48px_-12px_rgba(0,0,0,0.16),0_3px_10px_-2px_rgba(0,0,0,0.06)] backdrop-blur-xl transition-[transform,opacity] duration-(--ui-duration-normal) ease-(--ui-ease-out) outline-none data-ending-style:scale-97 data-ending-style:opacity-0 data-starting-style:scale-97 data-starting-style:opacity-0 dark:border-white/10 dark:shadow-[0_24px_64px_-12px_rgba(0,0,0,0.78)]";
+  "w-80 origin-(--transform-origin) overflow-hidden rounded-xl border border-solid border-border bg-popover/98 text-popover-foreground shadow-[0_10px_30px_-8px_rgba(0,0,0,0.12),0_2px_6px_-1px_rgba(0,0,0,0.04)] backdrop-blur-xl transition-[transform,opacity] duration-(--ui-duration-normal) ease-(--ui-ease-out) outline-none data-ending-style:scale-[0.97] data-ending-style:opacity-0 data-starting-style:scale-[0.97] data-starting-style:opacity-0 dark:border-white/10 dark:shadow-[0_18px_40px_-10px_rgba(0,0,0,0.65)]";
 
 export const contextTriggerVariants = cva(
-  `inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-solid font-mono font-medium text-foreground tabular-nums select-none transition-[background-color,border-color,box-shadow] duration-(--ui-duration-fast) data-popup-open:border-ring/70 data-popup-open:bg-accent ${CONTEXT_FOCUS_RING}`,
+  `inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-solid font-mono font-medium text-foreground tabular-nums select-none transition-colors duration-(--ui-duration-fast) data-popup-open:border-foreground/20 data-popup-open:bg-accent/60 ${CONTEXT_FOCUS_RING}`,
   {
     variants: {
       size: {
         sm: "h-7 px-2 text-[11px]",
-        md: "h-8 px-2.5 text-[11px]",
+        md: "h-8 px-2.5 text-xs",
       },
       surface: {
         default:
-          "border-border/80 bg-card/90 shadow-xs hover:border-foreground/22 hover:bg-card dark:border-white/10 dark:bg-card/80 dark:hover:border-white/22",
+          "border-border bg-card shadow-xs hover:border-foreground/20 hover:bg-accent/50 dark:border-white/10 dark:hover:border-white/20",
         subtle:
           "border-transparent bg-secondary/75 hover:bg-secondary dark:bg-white/8 dark:hover:bg-white/12",
         glass:
-          "border-border/75 bg-popover/85 shadow-xs backdrop-blur-xl hover:border-foreground/22 dark:border-white/10 dark:bg-popover/78",
+          "border-border bg-popover/90 shadow-xs backdrop-blur-xl hover:border-foreground/20 dark:border-white/10 dark:bg-popover/80",
       },
     },
     defaultVariants: {
@@ -49,14 +50,14 @@ export const contextTriggerVariants = cva(
 );
 
 export const contextInlineVariants = cva(
-  "w-full max-w-md rounded-2xl border border-solid text-card-foreground",
+  "w-full rounded-xl border border-solid text-card-foreground",
   {
     variants: {
       surface: {
-        default: "border-border/80 bg-card/92 shadow-sm dark:border-white/10 dark:bg-card/85",
-        subtle: "border-border/65 bg-secondary/40 dark:border-white/8 dark:bg-white/4",
+        default: "border-border bg-card shadow-xs dark:border-white/10",
+        subtle: "border-border/75 bg-secondary/45 dark:border-white/10 dark:bg-white/4",
         glass:
-          "border-border/75 bg-popover/90 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-popover/80",
+          "border-border bg-popover/90 shadow-xs backdrop-blur-xl dark:border-white/10 dark:bg-popover/85",
       },
     },
     defaultVariants: {
@@ -125,7 +126,7 @@ const ContextRingIcon = ({ pct }: { pct: number }) => {
         cy="8"
         r={radius}
         fill="none"
-        className="stroke-border/80 dark:stroke-white/14"
+        className="stroke-border dark:stroke-white/14"
         strokeWidth="2.2"
       />
       <circle
@@ -162,12 +163,12 @@ const ContextBreakdownHeader = (p: BreakdownHeaderProps) => (
       <div className="flex flex-wrap items-center gap-1.5">
         <span className="text-xs font-semibold text-foreground">上下文窗口</span>
         {(p.compacted || p.showCost) && (
-          <span className="rounded-md border border-solid border-border/70 bg-secondary/75 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground dark:border-white/10 dark:bg-white/8">
+          <span className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground dark:bg-white/8">
             {p.compacted ? `已释放 ${formatContextTokens(p.savedTokens)}` : p.costLabel}
           </span>
         )}
       </div>
-      <span className="font-mono text-xs text-muted-foreground tabular-nums">
+      <span className="font-mono text-[11px] text-muted-foreground tabular-nums">
         {formatContextTokens(p.used)} / {formatContextTokens(p.maxTokens)} · {p.pct}%
         {p.modelName ? ` · ${p.modelName}` : ""}
       </span>
@@ -177,14 +178,14 @@ const ContextBreakdownHeader = (p: BreakdownHeaderProps) => (
         type="button"
         onClick={p.onToggleCompact}
         className={cn(
-          "inline-flex h-7 shrink-0 cursor-pointer items-center gap-1 rounded-lg border border-solid border-border/80 bg-card px-2.5 font-sans text-xs font-medium text-foreground shadow-xs transition-colors duration-(--ui-duration-fast) hover:border-foreground/22 hover:bg-accent dark:border-white/12 dark:hover:border-white/22",
+          "inline-flex h-7 shrink-0 cursor-pointer items-center gap-1 rounded-lg border border-solid border-border bg-card px-2.5 font-sans text-xs font-medium text-foreground shadow-xs transition-colors duration-(--ui-duration-fast) hover:border-foreground/20 hover:bg-accent/50 dark:border-white/10 dark:hover:border-white/20",
           CONTEXT_FOCUS_RING,
         )}
       >
         {p.compacted ? (
-          <RotateCcw aria-hidden="true" className="size-3" />
+          <RotateCcw aria-hidden="true" className="size-3 text-muted-foreground" />
         ) : (
-          <Minimize2 aria-hidden="true" className="size-3 text-signal" />
+          <Minimize2 aria-hidden="true" className="size-3 text-muted-foreground" />
         )}
         <span>{p.compacted ? "还原" : "压缩上下文"}</span>
       </button>
@@ -194,36 +195,43 @@ const ContextBreakdownHeader = (p: BreakdownHeaderProps) => (
 
 const ContextSegmentLegend = ({
   segments,
+  maxTokens,
   focusedId,
   onFocus,
 }: {
   segments: ContextSegment[];
+  maxTokens: number;
   focusedId: string | null;
   onFocus: (id: string | null) => void;
 }) => (
-  <div className="grid grid-cols-2 gap-1.5">
+  <div className="flex flex-col gap-0.5">
     {segments.map((seg) => {
       const active = focusedId === seg.id;
       const barTone = CONTEXT_TONE_BAR[seg.tone ?? "signal"];
+      const share = Math.round((seg.tokens / maxTokens) * 100);
       return (
         <button
           key={seg.id}
           type="button"
           aria-pressed={active}
+          aria-label={`${seg.label} ${share}% · ${formatContextTokens(seg.tokens)}`}
           onClick={() => onFocus(active ? null : seg.id)}
           className={cn(
-            `flex cursor-pointer items-center justify-between gap-2 rounded-lg border border-solid px-2.5 py-1.5 text-left text-[11px] transition-colors duration-(--ui-duration-fast) ${CONTEXT_FOCUS_RING}`,
+            `flex w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-solid px-2 py-1.5 text-left text-xs transition-colors duration-(--ui-duration-fast) ${CONTEXT_FOCUS_RING}`,
             active
-              ? "border-signal/55 bg-signal/10 text-foreground"
-              : "border-border/70 bg-secondary/40 text-muted-foreground hover:border-border hover:bg-accent/60 hover:text-foreground dark:border-white/8 dark:bg-white/5 dark:hover:bg-white/9",
+              ? "border-border bg-secondary/80 text-foreground dark:border-white/12 dark:bg-white/10"
+              : "border-transparent bg-transparent text-muted-foreground hover:bg-accent/55 hover:text-foreground",
           )}
         >
-          <span className="inline-flex min-w-0 items-center gap-1.5 truncate">
+          <span className="inline-flex min-w-0 items-center gap-2 truncate">
             <span aria-hidden="true" className={cn("size-2 shrink-0 rounded-full", barTone)} />
-            <span className="truncate">{seg.label}</span>
+            <span className={cn("truncate", active && "font-medium text-foreground")}>
+              {seg.label}
+            </span>
           </span>
-          <span className="font-mono text-[11px] font-medium text-foreground tabular-nums">
-            {formatContextTokens(seg.tokens)}
+          <span className="inline-flex shrink-0 items-center gap-2 font-mono text-[11px] tabular-nums">
+            <span className="text-muted-foreground">{share}%</span>
+            <span className="font-medium text-foreground">{formatContextTokens(seg.tokens)}</span>
           </span>
         </button>
       );
@@ -240,6 +248,13 @@ interface ContextBreakdownContentProps extends BreakdownHeaderProps {
 
 const ContextBreakdownContent = (p: ContextBreakdownContentProps) => {
   const remaining = Math.max(0, p.maxTokens - p.used);
+  const statusTone =
+    p.pct >= 90
+      ? "text-destructive"
+      : p.pct >= 80
+        ? "text-amber-600 dark:text-amber-400"
+        : undefined;
+
   return (
     <div className={cn("flex flex-col gap-3 font-sans", p.compact ? "p-3" : "p-3.5")}>
       <ContextBreakdownHeader
@@ -254,7 +269,7 @@ const ContextBreakdownContent = (p: ContextBreakdownContentProps) => {
         compactable={p.compactable}
         onToggleCompact={p.onToggleCompact}
       />
-      <div className="flex h-2 w-full gap-0.5 overflow-hidden rounded-full bg-secondary/90 p-0.5 dark:bg-white/10">
+      <div className="flex h-1.5 w-full gap-0.5 overflow-hidden rounded-full bg-secondary dark:bg-white/10">
         {p.segments.map((seg) => (
           <div
             key={seg.id}
@@ -267,10 +282,15 @@ const ContextBreakdownContent = (p: ContextBreakdownContentProps) => {
           />
         ))}
       </div>
-      <ContextSegmentLegend segments={p.segments} focusedId={p.focusedId} onFocus={p.onFocus} />
-      <div className="flex items-center justify-between border-t border-solid border-border/65 pt-2 font-mono text-[11px] text-muted-foreground tabular-nums dark:border-white/8">
+      <ContextSegmentLegend
+        segments={p.segments}
+        maxTokens={p.maxTokens}
+        focusedId={p.focusedId}
+        onFocus={p.onFocus}
+      />
+      <div className="flex items-center justify-between border-t border-solid border-border pt-2 font-mono text-[11px] text-muted-foreground tabular-nums dark:border-white/10">
         <span>剩余可用 {formatContextTokens(remaining)}</span>
-        <span className={p.pct >= 80 ? "text-amber-600 dark:text-amber-400" : undefined}>
+        <span className={statusTone}>
           {p.pct >= 90 ? "接近上限" : p.pct >= 80 ? "建议压缩" : "预算健康"}
         </span>
       </div>

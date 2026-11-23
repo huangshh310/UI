@@ -2,12 +2,12 @@
 "use client";
 
 /**
- * StatsOverviewBlock：组合 NumberFlow 滚动数字与周期分段切换的业务 KPI 概览区块。
+ * StatsOverviewBlock：组合 NumberFlow 滚动数字、全宽平滑面积微图与周期分段切换的业务 KPI 概览区块。
  */
 
 import { NumberFlow } from "@/components/ui/number-flow";
 import { cn } from "@/lib/utils";
-import { Activity, ArrowDownRight, ArrowUpRight, Layers, Users } from "lucide-react";
+import { Activity, ArrowDownRight, ArrowUpRight, Layers, TrendingUp, Users } from "lucide-react";
 import { type ComponentType, useId, useState } from "react";
 
 export type MetricTrendTone = "positive" | "warning" | "negative";
@@ -32,6 +32,12 @@ export const STATS_PERIOD_OPTIONS: { id: StatsPeriod; label: string }[] = [
   { id: "30d", label: "近 30 天" },
   { id: "quarter", label: "本季度" },
 ];
+
+export const STATS_PERIOD_COMPARE_LABEL: Record<StatsPeriod, string> = {
+  "7d": "较上期",
+  "30d": "较上期",
+  quarter: "较上季",
+};
 
 export const STATS_METRICS_BY_PERIOD: Record<StatsPeriod, StatsMetricItem[]> = {
   "7d": [
@@ -168,11 +174,26 @@ export const STATS_METRICS_BY_PERIOD: Record<StatsPeriod, StatsMetricItem[]> = {
   ],
 };
 
-export const STATS_SPARK_PATHS: Record<MetricIconKey, string> = {
-  mrr: "M2 24 C16 22, 24 14, 38 15 C52 16, 62 7, 78 4",
-  users: "M2 23 C14 21, 28 19, 40 13 C52 7, 64 9, 78 3",
-  installs: "M2 25 C18 22, 30 18, 44 12 C58 6, 68 5, 78 2",
-  latency: "M2 8 C18 11, 30 13, 44 16 C58 19, 68 20, 78 22",
+/** 适配 viewBox="0 0 120 32" 的平滑三次贝塞尔趋势曲线，上下预留安全内距防裁切 */
+export const STATS_SPARK_PATHS: Record<StatsPeriod, Record<MetricIconKey, string>> = {
+  "7d": {
+    mrr: "M0 24 C18 22, 30 25, 48 18 C66 11, 84 15, 102 9 C110 7, 115 6, 120 5",
+    users: "M0 23 C16 21, 28 19, 44 20 C60 21, 74 13, 92 12 C104 11, 112 8, 120 7",
+    installs: "M0 26 C20 25, 36 22, 54 19 C72 16, 88 12, 104 8 C111 6, 116 5, 120 4",
+    latency: "M0 8 C20 10, 38 11, 56 14 C74 17, 92 18, 108 20 C114 21, 117 21, 120 22",
+  },
+  "30d": {
+    mrr: "M0 26 C18 24, 32 18, 48 19 C64 20, 78 11, 96 10 C106 9, 113 6, 120 4",
+    users: "M0 25 C18 22, 34 21, 50 15 C66 9, 82 12, 98 7 C108 5, 114 4, 120 4",
+    installs: "M0 27 C22 25, 40 21, 58 15 C76 9, 92 7, 108 5 C114 4, 117 3, 120 3",
+    latency: "M0 7 C20 10, 38 14, 56 16 C74 18, 92 21, 108 23 C114 24, 117 24, 120 25",
+  },
+  quarter: {
+    mrr: "M0 28 C20 25, 34 21, 52 16 C70 11, 86 9, 104 6 C112 5, 116 4, 120 3",
+    users: "M0 27 C18 26, 36 18, 54 14 C72 10, 88 8, 106 5 C113 4, 116 4, 120 3",
+    installs: "M0 28 C24 27, 44 22, 64 14 C84 6, 98 5, 112 4 C116 3, 118 3, 120 3",
+    latency: "M0 6 C22 10, 40 16, 60 19 C80 22, 96 24, 110 26 C115 26, 118 27, 120 27",
+  },
 };
 
 export const STATS_GRID_CLASS: Record<StatsOverviewColumns, string> = {
@@ -180,29 +201,33 @@ export const STATS_GRID_CLASS: Record<StatsOverviewColumns, string> = {
   4: "grid-cols-1 @md:grid-cols-2 @3xl:grid-cols-4",
 };
 
+/**
+ * bento 变体通过外层 bg-border + gap-px + overflow-hidden 形成 1px 发丝内分割线，
+ * 无论 1/2/4 列都能保持无缝对齐，不产生多余外边或双倍边框。
+ */
 export const STATS_WRAPPER_CLASS: Record<StatsOverviewVariant, string> = {
-  cards: "gap-4",
+  cards: "gap-3.5",
   bento:
-    "gap-0 overflow-hidden rounded-[22px] border border-solid border-border/80 bg-card shadow-xs dark:border-white/10",
+    "gap-px overflow-hidden rounded-xl border border-solid border-border bg-border shadow-xs dark:border-white/10 dark:bg-white/10",
   minimal: "gap-3",
 };
 
 export const STATS_CARD_CLASS: Record<StatsOverviewVariant, string> = {
   cards:
-    "rounded-[22px] border border-solid border-border/80 bg-card shadow-xs transition-[border-color,box-shadow] duration-(--ui-duration-fast) hover:border-foreground/18 hover:shadow-sm dark:border-white/10 dark:hover:border-white/20",
+    "rounded-xl border border-solid border-border bg-card shadow-xs transition-[border-color,box-shadow] duration-(--ui-duration-fast) hover:border-foreground/18 dark:border-white/10 dark:hover:border-white/20",
   bento:
-    "border-b border-solid border-border/75 bg-transparent transition-colors hover:bg-secondary/25 last:border-b-0 @md:border-r @md:border-border/75 dark:border-white/10 dark:@md:border-white/10",
+    "bg-card transition-colors duration-(--ui-duration-fast) hover:bg-muted/40 dark:hover:bg-white/[0.03]",
   minimal:
-    "rounded-2xl border border-solid border-border/70 bg-secondary/35 transition-colors hover:border-border dark:border-white/10 dark:bg-secondary/25",
+    "rounded-xl border border-solid border-transparent bg-muted/55 transition-colors duration-(--ui-duration-fast) hover:border-border hover:bg-muted/80 dark:bg-muted/45 dark:hover:border-white/10 dark:hover:bg-muted/65",
 };
 
-export const STATS_TREND_PILL_CLASS: Record<MetricTrendTone, string> = {
+export const STATS_TREND_BADGE_CLASS: Record<MetricTrendTone, string> = {
   positive:
-    "border-emerald-600/20 bg-emerald-500/12 text-emerald-800 dark:border-emerald-400/25 dark:bg-emerald-500/16 dark:text-emerald-300",
+    "border-emerald-600/20 bg-emerald-500/10 text-emerald-800 dark:border-emerald-400/20 dark:bg-emerald-500/15 dark:text-emerald-300",
   warning:
-    "border-amber-600/25 bg-amber-500/14 text-amber-900 dark:border-amber-400/25 dark:bg-amber-500/16 dark:text-amber-200",
+    "border-amber-600/20 bg-amber-500/10 text-amber-900 dark:border-amber-400/20 dark:bg-amber-500/15 dark:text-amber-200",
   negative:
-    "border-rose-600/20 bg-rose-500/12 text-rose-800 dark:border-rose-400/25 dark:bg-rose-500/16 dark:text-rose-300",
+    "border-rose-600/20 bg-rose-500/10 text-rose-800 dark:border-rose-400/20 dark:bg-rose-500/15 dark:text-rose-300",
 };
 
 export const STATS_SPARK_TONE_CLASS: Record<MetricTrendTone, string> = {
@@ -212,9 +237,9 @@ export const STATS_SPARK_TONE_CLASS: Record<MetricTrendTone, string> = {
 };
 
 export const STATS_BAR_TONE_CLASS: Record<MetricTrendTone, string> = {
-  positive: "bg-foreground/85 dark:bg-foreground/90",
-  warning: "bg-amber-500 dark:bg-amber-400",
-  negative: "bg-destructive",
+  positive: "bg-signal/85 dark:bg-signal",
+  warning: "bg-amber-500/85 dark:bg-amber-400",
+  negative: "bg-destructive/85 dark:bg-destructive",
 };
 export type StatsPeriod = "7d" | "30d" | "quarter";
 
@@ -241,30 +266,42 @@ export interface StatsOverviewBlockProps {
   className?: string;
 }
 const METRIC_ICONS: Record<MetricIconKey, ComponentType<{ className?: string }>> = {
-  mrr: ArrowUpRight,
+  mrr: TrendingUp,
   users: Users,
   installs: Layers,
   latency: Activity,
 };
 
-const Sparkline = ({ path, tone }: { path: string; tone: MetricTrendTone }) => {
+/** 独立全宽平滑面积微图，配合 non-scaling-stroke 保证任意列宽下零溢出且线条匀称 */
+const AreaSparkline = ({ path, tone }: { path: string; tone: MetricTrendTone }) => {
   const gradId = useId();
-  const areaPath = `${path} L78 28 L2 28 Z`;
+  const areaPath = `${path} L120 32 L0 32 Z`;
   return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 80 28"
-      className={cn("h-7 w-20 shrink-0 overflow-visible", STATS_SPARK_TONE_CLASS[tone])}
-    >
-      <defs>
-        <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="currentColor" stopOpacity="0.2" />
-          <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <path d={areaPath} fill={`url(#${gradId})`} />
-      <path d={path} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
-    </svg>
+    <div className="w-full overflow-hidden">
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 120 32"
+        preserveAspectRatio="none"
+        className={cn("block h-8 w-full overflow-hidden", STATS_SPARK_TONE_CLASS[tone])}
+      >
+        <defs>
+          <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="currentColor" stopOpacity="0.18" />
+            <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path d={areaPath} fill={`url(#${gradId})`} />
+        <path
+          d={path}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          vectorEffect="non-scaling-stroke"
+        />
+      </svg>
+    </div>
   );
 };
 
@@ -275,7 +312,10 @@ const PeriodSwitcher = ({
   period: StatsPeriod;
   onSelect: (next: StatsPeriod) => void;
 }) => (
-  <div className="inline-flex items-center gap-0.5 rounded-full border border-solid border-border/80 bg-secondary/65 p-1 dark:border-white/10 dark:bg-secondary/45">
+  <fieldset
+    aria-label="统计周期"
+    className="m-0 inline-flex h-8 items-center gap-0.5 rounded-lg border border-solid border-border bg-muted/70 p-0.5 dark:border-white/10 dark:bg-muted/60"
+  >
     {STATS_PERIOD_OPTIONS.map(({ id, label }) => (
       <button
         key={id}
@@ -283,21 +323,51 @@ const PeriodSwitcher = ({
         aria-pressed={period === id}
         onClick={() => onSelect(id)}
         className={cn(
-          "h-7 cursor-pointer rounded-full border-0 px-3 font-sans text-xs font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
+          "inline-flex h-full cursor-pointer items-center justify-center rounded-md border-0 px-2.5 font-sans text-xs font-medium whitespace-nowrap transition-[color,background-color,box-shadow] duration-(--ui-duration-fast) outline-none focus-visible:ring-2 focus-visible:ring-ring",
           period === id
-            ? "bg-card text-foreground shadow-xs ring-1 ring-border/70 dark:ring-white/12"
+            ? "bg-card text-foreground shadow-xs"
             : "bg-transparent text-muted-foreground hover:text-foreground",
         )}
       >
         {label}
       </button>
     ))}
-  </div>
+  </fieldset>
 );
 
-const MetricGoalFooter = ({ item }: { item: StatsMetricItem }) => (
+const MetricValueRow = ({ item }: { item: StatsMetricItem }) => {
+  const TrendIcon = item.direction === "down" ? ArrowDownRight : ArrowUpRight;
+  return (
+    <div className="flex min-w-0 flex-col items-start gap-1.5">
+      <NumberFlow
+        value={item.value}
+        prefix={item.prefix}
+        suffix={item.suffix}
+        format={{ maximumFractionDigits: 0 }}
+        className="text-2xl font-semibold tracking-tight text-foreground tabular-nums"
+      />
+      <span
+        className={cn(
+          "inline-flex shrink-0 items-center gap-0.5 rounded-md border border-solid px-1.5 py-0.5 font-mono text-[11px] leading-tight font-medium tabular-nums",
+          STATS_TREND_BADGE_CLASS[item.tone],
+        )}
+      >
+        <TrendIcon aria-hidden="true" className="size-3" />
+        <span>{item.delta}</span>
+      </span>
+    </div>
+  );
+};
+
+const MetricGoalFooter = ({
+  item,
+  compareLabel,
+}: {
+  item: StatsMetricItem;
+  compareLabel: string;
+}) => (
   <div className="flex flex-col gap-1.5 border-t border-solid border-border/70 pt-3 dark:border-white/10">
-    <div className="h-1.5 w-full overflow-hidden rounded-full bg-secondary">
+    <div className="h-1 w-full overflow-hidden rounded-full bg-muted">
       <div
         className={cn(
           "h-full rounded-full transition-[width] duration-(--ui-duration-normal) motion-reduce:transition-none",
@@ -306,70 +376,39 @@ const MetricGoalFooter = ({ item }: { item: StatsMetricItem }) => (
         style={{ width: `${item.goalPct}%` }}
       />
     </div>
-    <div className="flex items-center justify-between gap-2 font-mono text-[11px] text-muted-foreground tabular-nums">
-      <span>{item.goalLabel}</span>
-      <span>{item.goalPct}%</span>
+    <div className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground tabular-nums">
+      <span className="truncate font-mono">{item.goalLabel}</span>
+      <span className="shrink-0">{compareLabel}</span>
     </div>
   </div>
 );
 
-const MetricValueRow = ({ item, compact }: { item: StatsMetricItem; compact: boolean }) => {
-  const TrendIcon = item.direction === "down" ? ArrowDownRight : ArrowUpRight;
-  return (
-    <div className="flex items-end justify-between gap-2">
-      <div className="flex flex-col gap-1.5">
-        <NumberFlow
-          value={item.value}
-          prefix={item.prefix}
-          suffix={item.suffix}
-          format={{ maximumFractionDigits: 0 }}
-          className={cn(
-            "font-semibold tracking-tight text-foreground",
-            compact ? "text-2xl" : "text-3xl",
-          )}
-        />
-        <span
-          className={cn(
-            "inline-flex w-fit items-center gap-0.5 rounded-full border border-solid px-2 py-0.5 font-mono text-[11px] font-medium tabular-nums",
-            STATS_TREND_PILL_CLASS[item.tone],
-          )}
-        >
-          <TrendIcon aria-hidden="true" className="size-3" />
-          <span>{item.delta}</span>
-        </span>
-      </div>
-      <Sparkline path={STATS_SPARK_PATHS[item.id]} tone={item.tone} />
-    </div>
-  );
-};
-
-const MetricCard = ({
-  item,
-  variant,
-  compact,
-}: {
+interface MetricCardProps {
   item: StatsMetricItem;
+  sparkPath: string;
+  compareLabel: string;
   variant: StatsOverviewVariant;
   compact: boolean;
-}) => {
+}
+
+const MetricCard = ({ item, sparkPath, compareLabel, variant, compact }: MetricCardProps) => {
   const Icon = METRIC_ICONS[item.id];
   return (
     <div
       data-slot="stats-metric-card"
       className={cn(
-        "flex flex-col justify-between",
-        compact ? "gap-3 p-4" : "gap-4 p-5",
+        "flex min-w-0 flex-col justify-between overflow-hidden",
+        compact ? "gap-3 p-4" : "gap-3.5 p-4 @4xl:p-5",
         STATS_CARD_CLASS[variant],
       )}
     >
       <div className="flex items-center justify-between gap-2">
-        <span className="text-[13px] font-medium text-muted-foreground">{item.label}</span>
-        <span className="inline-flex size-8 items-center justify-center rounded-xl border border-solid border-border/60 bg-secondary/75 text-foreground/80 dark:border-white/10 dark:bg-secondary/50">
-          <Icon className="size-4" />
-        </span>
+        <span className="truncate text-xs font-medium text-muted-foreground">{item.label}</span>
+        <Icon aria-hidden="true" className="size-4 shrink-0 text-muted-foreground" />
       </div>
-      <MetricValueRow item={item} compact={compact} />
-      {!compact && <MetricGoalFooter item={item} />}
+      <MetricValueRow item={item} />
+      <AreaSparkline path={sparkPath} tone={item.tone} />
+      {!compact && <MetricGoalFooter item={item} compareLabel={compareLabel} />}
     </div>
   );
 };
@@ -386,6 +425,8 @@ export const StatsOverviewBlock = ({
 }: StatsOverviewBlockProps) => {
   const [period, setPeriod] = useState<StatsPeriod>(defaultPeriod);
   const metrics = STATS_METRICS_BY_PERIOD[period];
+  const sparkMap = STATS_SPARK_PATHS[period];
+  const compareLabel = STATS_PERIOD_COMPARE_LABEL[period];
 
   const handleSelectPeriod = (next: StatsPeriod) => {
     setPeriod(next);
@@ -396,18 +437,25 @@ export const StatsOverviewBlock = ({
     <div
       data-slot="stats-overview-block"
       data-variant={variant}
-      className={cn("@container flex w-full flex-col gap-5", className)}
+      className={cn("@container flex w-full flex-col gap-4", className)}
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <p className="m-0 text-[17px] font-semibold tracking-tight text-foreground">{title}</p>
+        <div className="min-w-0">
+          <p className="m-0 text-base font-semibold tracking-tight text-foreground">{title}</p>
           <p className="m-0 mt-0.5 text-xs text-muted-foreground">{description}</p>
         </div>
         <PeriodSwitcher period={period} onSelect={handleSelectPeriod} />
       </div>
       <div className={cn("grid", STATS_GRID_CLASS[columns], STATS_WRAPPER_CLASS[variant])}>
         {metrics.map((item) => (
-          <MetricCard key={item.id} item={item} variant={variant} compact={compact} />
+          <MetricCard
+            key={item.id}
+            item={item}
+            sparkPath={sparkMap[item.id]}
+            compareLabel={compareLabel}
+            variant={variant}
+            compact={compact}
+          />
         ))}
       </div>
     </div>

@@ -4,7 +4,7 @@ import { AudioWaves } from "@matt-ui/motion";
 
 export default function AudioWavesCompactDemo() {
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex w-full max-w-lg flex-col items-center gap-3">
       <AudioWaves
         defaultActive
         tone="obsidian"
@@ -12,6 +12,7 @@ export default function AudioWavesCompactDemo() {
         bars={18}
         label="暗色演播室转写"
         durationLabel="01:04"
+        className="w-full"
       />
       <AudioWaves
         defaultActive

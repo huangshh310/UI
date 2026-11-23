@@ -1,16 +1,17 @@
 "use client";
 
 /**
- * Message：单回合对话复合组件（对标 shadcn AI Elements Message + ChatGPT/Claude 无框流式排版）。
- * 支持元信息头（作者/模型徽章/时间戳）、多版本分支切换、原位编辑与异常重试。
+ * Message：单回合对话复合组件（对标 Vercel AI Elements / ChatGPT / Claude 无框流式排版）。
+ * 支持元信息头（作者/模型微标/时间戳）、多版本分支切换、原位编辑与异常重试。
  */
 import { cn } from "@matt-ui/utils";
 import { AlertCircle, Check, RotateCcw } from "lucide-react";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {
   MessageBranch,
   MessageBranchContent,
   MessageBranchSelector,
+  MessageCtx,
   MessageEditForm,
 } from "./message-parts.js";
 import type {
@@ -25,12 +26,6 @@ import {
   messageActionVariants,
   messageContentVariants,
 } from "./message.variants.js";
-
-const MessageCtx = createContext<MessageContextValue>({
-  from: "assistant",
-  status: "ready",
-  variant: "default",
-});
 
 const hasMessageMeta = (p: Pick<MessageProps, "author" | "model" | "timestamp" | "avatar">) =>
   Boolean(p.author || p.model || p.timestamp || p.avatar);
@@ -53,7 +48,7 @@ const MessageMetaHeader = (
       {p.avatar && <span className="shrink-0">{p.avatar}</span>}
       {p.author && <span className="font-medium text-foreground">{p.author}</span>}
       {p.model && (
-        <span className="rounded-md border border-solid border-border/75 bg-secondary/70 px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground dark:border-white/10 dark:bg-white/8">
+        <span className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground dark:bg-white/8">
           {p.model}
         </span>
       )}
@@ -69,7 +64,7 @@ const MessageStatusFeedback = ({
 }: Pick<MessageContextValue, "status" | "errorMessage" | "onRetry">) => {
   if (status === "stopped") {
     return (
-      <div className="mt-1 inline-flex w-fit items-center gap-1.5 rounded-full border border-solid border-border/75 bg-secondary/70 px-2.5 py-0.5 font-sans text-[11px] text-muted-foreground dark:border-white/10 dark:bg-white/8">
+      <div className="mt-1 inline-flex w-fit items-center gap-1.5 rounded-md bg-muted px-2 py-0.5 font-sans text-[11px] text-muted-foreground dark:bg-white/8">
         <span aria-hidden="true" className="size-1.5 rounded-full bg-muted-foreground/75" />
         <span>已停止生成</span>
       </div>
@@ -79,7 +74,7 @@ const MessageStatusFeedback = ({
     return (
       <div
         role="alert"
-        className="mt-1.5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-solid border-destructive/35 bg-destructive/8 px-3.5 py-2 text-xs text-foreground dark:border-destructive dark:bg-destructive/14"
+        className="mt-1.5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-solid border-destructive/30 bg-destructive/8 px-3.5 py-2.5 text-xs text-foreground dark:border-destructive/50 dark:bg-destructive/14"
       >
         <span className="inline-flex items-center gap-2">
           <AlertCircle aria-hidden="true" className="size-3.5 shrink-0 text-destructive" />
@@ -90,7 +85,7 @@ const MessageStatusFeedback = ({
             type="button"
             onClick={onRetry}
             className={cn(
-              "inline-flex h-6.5 cursor-pointer items-center gap-1 rounded-lg border border-solid border-border/80 bg-card px-2.5 font-sans text-xs font-medium text-foreground shadow-xs transition-colors duration-(--ui-duration-fast) hover:bg-accent dark:border-white/12",
+              "inline-flex h-7 cursor-pointer items-center gap-1 rounded-lg border border-solid border-border bg-card px-2.5 font-sans text-xs font-medium text-foreground shadow-xs transition-colors duration-(--ui-duration-fast) hover:bg-accent/60 dark:border-white/10",
               MESSAGE_FOCUS_RING,
             )}
           >
@@ -161,7 +156,7 @@ export const MessageContent = ({ className, children, ...props }: MessageContent
       {from === "assistant" && status === "streaming" && (
         <span
           aria-hidden="true"
-          className="ml-1 inline-block size-2 animate-pulse rounded-full bg-signal align-middle motion-reduce:animate-none"
+          className="ml-1 inline-block h-3.5 w-0.5 animate-pulse rounded-full bg-signal align-text-bottom motion-reduce:animate-none"
         />
       )}
     </div>

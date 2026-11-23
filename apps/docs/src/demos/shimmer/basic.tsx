@@ -1,10 +1,9 @@
 "use client";
 
 /**
- * 示例：Shimmer 微光扫掠文字与流式阶段切换。
+ * 示例：Shimmer 真实水平流光扫掠文字、阶段切换与动效暂停控制。
  */
 import { Shimmer } from "@matt-ui/ui";
-import { Sparkles } from "lucide-react";
 import { useState } from "react";
 
 const PHASES = [
@@ -18,10 +17,9 @@ export default function ShimmerBasicDemo() {
   const [active, setActive] = useState(true);
 
   return (
-    <div className="flex w-full max-w-md flex-col gap-3">
-      <div className="inline-flex w-fit items-center gap-2 rounded-full border border-solid border-border/80 bg-card/90 px-3.5 py-1.5 shadow-xs backdrop-blur-md dark:border-white/10">
-        <Sparkles aria-hidden="true" className="size-3.5 text-signal" />
-        <Shimmer active={active} size="xs">
+    <div className="flex w-full max-w-lg flex-col gap-3.5">
+      <div className="flex items-center gap-2.5">
+        <Shimmer active={active} size="sm" tone="muted">
           {PHASES[idx % PHASES.length]}
         </Shimmer>
       </div>
@@ -29,16 +27,16 @@ export default function ShimmerBasicDemo() {
         <button
           type="button"
           onClick={() => setIdx((prev) => prev + 1)}
-          className="cursor-pointer rounded-lg border border-solid border-border/80 bg-card px-2.5 py-1 font-sans text-xs text-foreground shadow-xs transition-colors hover:border-foreground/22 hover:bg-accent focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset focus-visible:outline-none dark:border-white/10 dark:hover:border-white/22"
+          className="cursor-pointer rounded-lg border border-solid border-border bg-card px-2.5 py-1 font-sans text-xs font-medium text-foreground shadow-xs transition-colors outline-none hover:border-foreground/20 hover:bg-accent/50 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset dark:border-white/10 dark:hover:border-white/20"
         >
           切换阶段文案
         </button>
         <button
           type="button"
           onClick={() => setActive((prev) => !prev)}
-          className="cursor-pointer rounded-lg border border-solid border-border/80 bg-transparent px-2.5 py-1 font-sans text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset focus-visible:outline-none dark:border-white/10"
+          className="cursor-pointer rounded-lg border border-solid border-border bg-transparent px-2.5 py-1 font-sans text-xs text-muted-foreground transition-colors outline-none hover:bg-accent/50 hover:text-foreground focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset dark:border-white/10"
         >
-          {active ? "暂停微光" : "恢复微光"}
+          {active ? "暂停扫光" : "恢复扫光"}
         </button>
       </div>
     </div>

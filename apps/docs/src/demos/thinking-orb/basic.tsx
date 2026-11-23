@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * 示例：ThinkingOrb 3D 球面粒子认知态切换与实时状态胶囊。
+ * 示例：ThinkingOrb 3D 球面粒子认知态切换与极简等宽微标。
  */
 import { ThinkingOrb, type ThinkingOrbState } from "@matt-ui/ui";
 import { useState } from "react";
@@ -21,7 +21,7 @@ export default function ThinkingOrbBasicDemo() {
   return (
     <div className="flex flex-col items-center gap-5">
       <ThinkingOrb state={state} variant="halo" size={112} label={current?.caption} interactive />
-      <div className="inline-flex flex-wrap items-center justify-center gap-1 rounded-full border border-solid border-border/80 bg-popover/96 p-1 shadow-xs backdrop-blur-xl dark:border-white/10">
+      <div className="inline-flex flex-wrap items-center justify-center gap-0.5 rounded-lg border border-solid border-border bg-muted/70 p-0.5 dark:border-white/10 dark:bg-white/6">
         {STATES.map((item) => {
           const active = item.id === state;
           return (
@@ -30,10 +30,10 @@ export default function ThinkingOrbBasicDemo() {
               type="button"
               onClick={() => setState(item.id)}
               aria-pressed={active}
-              className={`cursor-pointer rounded-full border-0 px-3 py-1 font-sans text-xs transition-colors outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset ${
+              className={`cursor-pointer rounded-md border border-solid px-2.5 py-1 font-sans text-xs transition-colors outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset ${
                 active
-                  ? "bg-primary font-medium text-primary-foreground shadow-xs"
-                  : "bg-transparent text-muted-foreground hover:text-foreground"
+                  ? "border-border bg-card font-medium text-foreground shadow-xs dark:border-white/12 dark:bg-card"
+                  : "border-transparent bg-transparent text-muted-foreground hover:text-foreground"
               }`}
             >
               {item.label}

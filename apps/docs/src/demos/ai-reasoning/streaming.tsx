@@ -8,7 +8,7 @@ export default function AiReasoningStreamingDemo() {
   const [status, setStatus] = useState<AiReasoningStatus>("thinking");
 
   return (
-    <div className="flex w-full max-w-xl flex-col items-center gap-3">
+    <div className="flex w-full max-w-2xl flex-col items-start gap-3">
       <AiReasoning
         variant="ghost"
         status={status}

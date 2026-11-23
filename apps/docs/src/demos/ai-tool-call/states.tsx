@@ -4,7 +4,7 @@ import { AiToolCall } from "@matt-ui/ui";
 
 export default function AiToolCallStatesDemo() {
   return (
-    <div className="flex w-full max-w-xl flex-col gap-2.5">
+    <div className="flex w-full max-w-2xl flex-col gap-2.5">
       <AiToolCall
         toolName="audit_contrast"
         status="running"

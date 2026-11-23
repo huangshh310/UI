@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * AiChatThread：C 端 AI 对话消息流，支持用户/助手气泡、流式生成态、多版本分支切换、复制、反馈评分与快捷追问。
+ * AiChatThread：轻盈现代的 AI 对话消息流，支持用户/助手消息、流式生成态、多版本分支切换、复制、反馈评分与快捷追问。
  */
 
 import { cn } from "@/lib/utils";
@@ -20,12 +20,13 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-export const chatThreadVariants = cva("flex w-full max-w-xl flex-col text-card-foreground", {
+export const chatThreadVariants = cva("flex w-full flex-col text-card-foreground", {
   variants: {
     variant: {
-      card: "gap-4 rounded-2xl border border-solid border-border/85 bg-card p-5 shadow-xs",
-      seamless: "gap-4 bg-transparent p-1",
-      compact: "gap-3 rounded-xl border border-solid border-border/80 bg-card p-3.5 shadow-xs",
+      card: "gap-5 rounded-xl border border-solid border-border bg-card p-5 shadow-xs dark:border-white/10",
+      seamless: "gap-5 bg-transparent p-0",
+      compact:
+        "gap-3.5 rounded-xl border border-solid border-border bg-card p-3.5 shadow-xs dark:border-white/10",
     },
   },
   defaultVariants: {
@@ -34,7 +35,7 @@ export const chatThreadVariants = cva("flex w-full max-w-xl flex-col text-card-f
 });
 
 export const CHAT_ACTION_BTN =
-  "inline-flex size-6.5 cursor-pointer items-center justify-center rounded-lg border-0 bg-transparent text-muted-foreground transition-colors hover:bg-accent hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring";
+  "inline-flex size-7 cursor-pointer items-center justify-center rounded-md border border-solid border-transparent bg-transparent text-muted-foreground transition-colors hover:bg-accent hover:text-foreground outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
 
 export const CHAT_DEFAULT_MESSAGES: AiChatMessage[] = [
   {
@@ -105,7 +106,7 @@ const VariantPager = ({
   onNext: () => void;
 }) =>
   count > 1 ? (
-    <div className="inline-flex items-center gap-0.5 rounded-full border border-solid border-border/70 bg-secondary/50 px-1 py-0.5 font-mono text-[11px] text-muted-foreground tabular-nums">
+    <div className="inline-flex items-center gap-0.5 font-mono text-[11px] text-muted-foreground tabular-nums">
       <button type="button" aria-label="上一版本回复" onClick={onPrev} className={CHAT_ACTION_BTN}>
         <ChevronLeft className="size-3.5" />
       </button>
@@ -133,7 +134,7 @@ const VoteButtons = ({
       onClick={() => onVote("up")}
       className={cn(
         CHAT_ACTION_BTN,
-        vote === "up" && "bg-emerald-500/12 text-emerald-700 dark:text-emerald-300",
+        vote === "up" && "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
       )}
     >
       <ThumbsUp className="size-3.5" />
@@ -145,7 +146,7 @@ const VoteButtons = ({
       onClick={() => onVote("down")}
       className={cn(
         CHAT_ACTION_BTN,
-        vote === "down" && "bg-rose-500/12 text-rose-700 dark:text-rose-300",
+        vote === "down" && "bg-rose-500/10 text-rose-700 dark:text-rose-300",
       )}
     >
       <ThumbsDown className="size-3.5" />
@@ -190,7 +191,7 @@ interface MessageActionsProps {
 const MessageActions = (p: MessageActionsProps) => {
   const { copied, handleCopy } = useCopyTimer(p.text, p.onCopy);
   return (
-    <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 border-t border-solid border-border/60 pt-2">
+    <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
       <div className="flex items-center gap-0.5">
         <button
           type="button"
@@ -232,12 +233,13 @@ const AssistantMetaHeader = ({
   showTimestamps: boolean;
 }) => (
   <div className="mb-1.5 flex flex-wrap items-center justify-between gap-2">
-    <div className="flex items-center gap-2">
-      <span className="text-xs font-semibold tracking-tight text-foreground">
+    <div className="flex items-center gap-1.5">
+      <Sparkles aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
+      <span className="text-xs font-medium tracking-tight text-foreground">
         {msg.model ?? "助手"}
       </span>
       {msg.streaming && (
-        <span className="inline-flex items-center gap-1 rounded-full bg-signal/12 px-2 py-0.5 font-mono text-[10px] font-medium text-signal">
+        <span className="inline-flex items-center gap-1 rounded-md bg-muted px-1.5 py-0.5 font-mono text-[10px] font-medium text-muted-foreground">
           <span aria-hidden="true" className="size-1.5 animate-pulse rounded-full bg-signal" />
           生成中
         </span>
@@ -252,16 +254,16 @@ const AssistantMetaHeader = ({
 
 const FollowUpBar = ({ items, onPick }: { items: string[]; onPick: (p: string) => void }) =>
   items.length > 0 ? (
-    <div className="flex flex-wrap items-center gap-1.5 border-t border-solid border-border/70 pt-3">
+    <div className="flex flex-wrap items-center gap-1.5 border-t border-solid border-border/75 pt-3 dark:border-white/8">
       {items.map((item) => (
         <button
           key={item}
           type="button"
           onClick={() => onPick(item)}
-          className="inline-flex cursor-pointer items-center gap-1 rounded-full border border-solid border-border/85 bg-background px-3 py-1 font-sans text-xs font-medium text-foreground transition-colors hover:border-signal/40 hover:bg-secondary/80 outline-none focus-visible:ring-2 focus-visible:ring-ring dark:bg-secondary/50"
+          className="inline-flex h-7 cursor-pointer items-center gap-1 rounded-lg border border-solid border-border/75 bg-transparent px-2.5 font-sans text-xs text-muted-foreground transition-colors hover:border-border hover:bg-muted/60 hover:text-foreground outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset dark:border-white/8 dark:hover:bg-white/[0.04]"
         >
           <span>{item}</span>
-          <ArrowUpRight aria-hidden="true" className="size-3 text-muted-foreground" />
+          <ArrowUpRight aria-hidden="true" className="size-3 opacity-70" />
         </button>
       ))}
     </div>
@@ -277,11 +279,11 @@ const UserBubble = ({
   showTimestamps: boolean;
 }) => (
   <div className="flex flex-col items-end gap-1">
-    <div className="max-w-[82%] rounded-2xl rounded-br-sm border border-solid border-border/65 bg-secondary/85 px-4 py-2.5 text-[13.5px] leading-relaxed text-foreground">
+    <div className="max-w-[82%] rounded-xl bg-secondary/80 px-3.5 py-2.5 text-[13.5px] leading-relaxed text-foreground">
       {content}
     </div>
     {showTimestamps && timestamp && (
-      <span className="pr-1 font-mono text-[10px] text-muted-foreground tabular-nums">
+      <span className="pr-1 font-mono text-[11px] text-muted-foreground tabular-nums">
         {timestamp}
       </span>
     )}
@@ -302,33 +304,28 @@ const AssistantBubble = (p: AssistantBubbleProps) => {
   const idx = ((p.variantIdx % variants.length) + variants.length) % variants.length;
   const activeText = variants[idx] ?? p.msg.content;
   return (
-    <div className="flex items-start gap-3">
-      <span className="mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full border border-solid border-border/80 bg-secondary/75 text-foreground shadow-2xs">
-        <Sparkles aria-hidden="true" className="size-3.5" />
-      </span>
-      <div className="min-w-0 flex-1">
-        <AssistantMetaHeader msg={p.msg} showTimestamps={p.showTimestamps} />
-        <p className="m-0 text-[13.5px] leading-[1.68] text-foreground/92">
-          {activeText}
-          {p.msg.streaming && (
-            <span
-              aria-hidden="true"
-              className="ml-1 inline-block h-3.5 w-1.5 translate-y-0.5 animate-pulse rounded-[2px] bg-signal align-baseline"
-            />
-          )}
-        </p>
-        <MessageActions
-          text={activeText}
-          variantIdx={idx}
-          variantCount={variants.length}
-          vote={p.vote}
-          onPrevVariant={() => p.onSetVariant(idx - 1)}
-          onNextVariant={() => p.onSetVariant(idx + 1)}
-          onRegenerate={() => p.onSetVariant(idx + 1)}
-          onCopy={() => p.onCopy(activeText)}
-          onVote={p.onVote}
-        />
-      </div>
+    <div className="flex flex-col">
+      <AssistantMetaHeader msg={p.msg} showTimestamps={p.showTimestamps} />
+      <p className="m-0 text-[13.5px] leading-[1.7] text-foreground/92">
+        {activeText}
+        {p.msg.streaming && (
+          <span
+            aria-hidden="true"
+            className="ml-0.5 inline-block h-3.5 w-0.5 translate-y-0.5 animate-pulse bg-foreground/75 align-baseline"
+          />
+        )}
+      </p>
+      <MessageActions
+        text={activeText}
+        variantIdx={idx}
+        variantCount={variants.length}
+        vote={p.vote}
+        onPrevVariant={() => p.onSetVariant(idx - 1)}
+        onNextVariant={() => p.onSetVariant(idx + 1)}
+        onRegenerate={() => p.onSetVariant(idx + 1)}
+        onCopy={() => p.onCopy(activeText)}
+        onVote={p.onVote}
+      />
     </div>
   );
 };
@@ -366,7 +363,7 @@ export const AiChatThread = (props: AiChatThreadProps) => {
       data-variant={variant}
       className={cn(chatThreadVariants({ variant }), props.className)}
     >
-      <div aria-live="polite" className="flex flex-col gap-3.5">
+      <div aria-live="polite" className="flex flex-col gap-4">
         {messages.map((msg) =>
           msg.role === "user" ? (
             <UserBubble

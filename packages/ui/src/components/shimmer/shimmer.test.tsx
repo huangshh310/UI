@@ -2,7 +2,7 @@
  * Shimmer 行为规约：验证语义标签切换、静态退化态、变体属性与多行流式骨架的无障碍状态声明。
  */
 import { cleanup, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { Shimmer, ShimmerLines } from "../../index.js";
 
 afterEach(cleanup);
@@ -50,5 +50,31 @@ describe("Shimmer", () => {
     expect(status.getAttribute("aria-busy")).toBe("true");
     expect(status.getAttribute("data-variant")).toBe("card");
     expect(status.querySelectorAll('[data-slot="shimmer-line"]')).toHaveLength(4);
+  });
+
+  it("按 speed 通过 Web Animations API 驱动从左到右扫光动画", () => {
+    const cancel = vi.fn<() => void>();
+    const animate = vi.fn<Element["animate"]>(() => ({ cancel }) as unknown as Animation);
+    const originalAnimate = Element.prototype.animate;
+    Element.prototype.animate = animate;
+
+    try {
+      const { rerender, unmount } = render(<Shimmer speed="fast">扫光测试</Shimmer>);
+      expect(animate).toHaveBeenCalledWith(
+        [{ backgroundPosition: "150% 0" }, { backgroundPosition: "-150% 0" }],
+        expect.objectContaining({ duration: 1100, iterations: Infinity, easing: "linear" }),
+      );
+
+      rerender(<Shimmer speed="slow">扫光测试</Shimmer>);
+      expect(animate).toHaveBeenLastCalledWith(
+        [{ backgroundPosition: "150% 0" }, { backgroundPosition: "-150% 0" }],
+        expect.objectContaining({ duration: 2800, iterations: Infinity, easing: "linear" }),
+      );
+
+      unmount();
+      expect(cancel).toHaveBeenCalled();
+    } finally {
+      Element.prototype.animate = originalAnimate;
+    }
   });
 });

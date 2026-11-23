@@ -138,16 +138,9 @@ const useOrbCanvasLoop = (
   }, [canvasRef, particlesRef, opts, reducedRef]);
 };
 
-const ThinkingOrbCaption = ({ label, paused }: { label: string; paused: boolean }) => (
+const ThinkingOrbCaption = ({ label }: { label: string }) => (
   <span data-slot="thinking-orb-label" className={thinkingOrbLabelVariants()}>
-    <span
-      aria-hidden="true"
-      className={cn(
-        "size-1.5 rounded-full bg-signal",
-        !paused && "animate-pulse motion-reduce:animate-none",
-      )}
-    />
-    <span>{label}</span>
+    {label}
   </span>
 );
 
@@ -208,7 +201,7 @@ const ThinkingOrbView = (p: ThinkingOrbViewProps) => {
       >
         {p.canvasNode}
       </span>
-      <ThinkingOrbCaption label={p.resolvedLabel} paused={p.opts.paused} />
+      <ThinkingOrbCaption label={p.resolvedLabel} />
     </output>
   );
 };

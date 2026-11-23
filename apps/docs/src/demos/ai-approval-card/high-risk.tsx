@@ -5,12 +5,13 @@ import { AiApprovalCard } from "@matt-ui/ui";
 export default function AiApprovalCardHighRiskDemo() {
   return (
     <AiApprovalCard
+      className="w-full max-w-xl"
       title="生产环境 schema 变更审批"
       description="该指令将更新线上边缘存储索引，请选择回滚保护策略。"
       agentName="Deploy Agent · Production"
       workingDir="/srv/edge-db"
       impact="影响 2 张索引表 · 5 秒可回滚"
-      command="pnpm db:migrate --env production"
+      command="pnpm db:migrate --env production --verify-checksums"
       riskLevel="high"
       options={[
         {

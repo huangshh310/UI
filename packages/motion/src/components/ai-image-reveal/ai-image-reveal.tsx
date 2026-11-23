@@ -169,7 +169,7 @@ const RevealCaption = ({
 
 const buildStageClass = (radius: RevealViewOptions["radius"]) =>
   cn(
-    "relative w-full overflow-hidden border border-solid border-border/75 bg-secondary/45 dark:border-white/10",
+    "relative w-full overflow-hidden border border-solid border-border/70 bg-muted/50 dark:border-white/10 dark:bg-white/[0.03]",
     REVEAL_STAGE_RADIUS[radius],
   );
 

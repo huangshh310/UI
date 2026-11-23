@@ -10,7 +10,7 @@ export default function MessageStatesDemo() {
   const [retried, setRetried] = useState(false);
 
   return (
-    <div className="flex w-full max-w-xl flex-col gap-5">
+    <div className="flex w-full max-w-2xl flex-col gap-5">
       <Message from="system">
         <MessageContent>已切换至深度推理模式 · 上下文上限 200K</MessageContent>
       </Message>

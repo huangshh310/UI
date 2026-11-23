@@ -2,36 +2,36 @@
 "use client";
 
 /**
- * ModelSelector：紧凑型模型与推理深度浮层选择器（对标 shadcn AI Elements Model Selector）。
- * 基于 Base UI Popover 构建，提供毛玻璃浮层、厂商分组、思考强度与联网开关。
+ * ModelSelector：紧凑型模型与推理深度浮层选择器（对标 Claude / Cursor / Vercel AI Elements）。
+ * 基于 Base UI Popover 构建，提供利落浮层、两栏模型信息、思考强度与联网开关。
  */
 
 import { cn } from "@/lib/utils";
 import { Popover } from "@base-ui/react/popover";
 import { cva } from "class-variance-authority";
-import { Brain, Check, ChevronDown, Code2, Eye, Globe, Search, Sparkles, Zap } from "lucide-react";
+import { Brain, Check, ChevronDown, Code2, Eye, Globe, Search, Zap } from "lucide-react";
 import { useState } from "react";
 
 export const MODEL_SELECTOR_FOCUS_RING =
   "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
 
 export const MODEL_SELECTOR_POPUP_CLASSES =
-  "w-80 origin-(--transform-origin) overflow-hidden rounded-2xl border border-solid border-border/80 bg-popover/96 text-popover-foreground shadow-[0_18px_48px_-12px_rgba(0,0,0,0.16),0_3px_10px_-2px_rgba(0,0,0,0.06)] backdrop-blur-xl transition-[transform,opacity] duration-(--ui-duration-normal) ease-(--ui-ease-out) outline-none data-ending-style:-translate-y-1 data-ending-style:scale-97 data-ending-style:opacity-0 data-starting-style:-translate-y-1 data-starting-style:scale-97 data-starting-style:opacity-0 dark:border-white/10 dark:shadow-[0_24px_64px_-12px_rgba(0,0,0,0.78)]";
+  "w-80 origin-(--transform-origin) overflow-hidden rounded-xl border border-solid border-border bg-popover/98 text-popover-foreground shadow-[0_10px_30px_-8px_rgba(0,0,0,0.12),0_2px_6px_-1px_rgba(0,0,0,0.04)] backdrop-blur-xl transition-[transform,opacity] duration-(--ui-duration-normal) ease-(--ui-ease-out) outline-none data-ending-style:-translate-y-1 data-ending-style:scale-[0.97] data-ending-style:opacity-0 data-starting-style:-translate-y-1 data-starting-style:scale-[0.97] data-starting-style:opacity-0 dark:border-white/10 dark:shadow-[0_18px_40px_-10px_rgba(0,0,0,0.65)]";
 
 export const modelSelectorTriggerVariants = cva(
-  `group inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-solid font-sans font-medium text-foreground select-none transition-[background-color,border-color,box-shadow] duration-(--ui-duration-fast) data-popup-open:border-ring/70 data-popup-open:bg-accent disabled:pointer-events-none disabled:opacity-50 ${MODEL_SELECTOR_FOCUS_RING}`,
+  `group inline-flex cursor-pointer items-center gap-1.5 border border-solid font-sans font-medium text-foreground select-none transition-[background-color,border-color] duration-(--ui-duration-fast) data-popup-open:border-foreground/20 data-popup-open:bg-accent/60 disabled:pointer-events-none disabled:opacity-50 ${MODEL_SELECTOR_FOCUS_RING}`,
   {
     variants: {
       variant: {
-        pill: "border-border/80 bg-card/90 shadow-xs hover:border-foreground/22 hover:bg-card dark:border-white/10 dark:bg-card/80 dark:hover:border-white/22",
+        pill: "rounded-full border-border bg-card shadow-xs hover:border-foreground/20 hover:bg-accent/50 dark:border-white/10 dark:hover:border-white/20",
         ghost:
-          "border-transparent bg-transparent hover:bg-accent/70 data-popup-open:border-border/70 dark:hover:bg-white/8",
+          "rounded-lg border-transparent bg-transparent hover:bg-accent/60 data-popup-open:border-border dark:hover:bg-white/8",
         glass:
-          "border-border/75 bg-popover/85 shadow-xs backdrop-blur-xl hover:border-foreground/22 dark:border-white/12 dark:bg-popover/78",
+          "rounded-full border-border bg-popover/90 shadow-xs backdrop-blur-xl hover:border-foreground/20 dark:border-white/10 dark:bg-popover/80",
       },
       size: {
-        sm: "h-7 px-2 text-[11px]",
-        md: "h-8 px-2.5 text-xs",
+        sm: "h-7 px-2.5 text-xs",
+        md: "h-8 px-3 text-xs",
       },
     },
     defaultVariants: {
@@ -158,7 +158,7 @@ const CAP_LABEL: Record<ModelCapabilityTag, string> = {
 };
 
 const SearchField = ({ query, onChange }: { query: string; onChange: (next: string) => void }) => (
-  <div className="flex items-center gap-2 border-b border-solid border-border/75 px-3 py-2 dark:border-white/10">
+  <div className="flex items-center gap-2 border-b border-solid border-border px-3 py-2 dark:border-white/10">
     <Search aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
     <input
       type="search"
@@ -171,31 +171,30 @@ const SearchField = ({ query, onChange }: { query: string; onChange: (next: stri
   </div>
 );
 
-const ModelOptionBadges = ({ item }: { item: ModelOption }) => (
-  <div className="flex flex-wrap items-center gap-1.5">
-    <span className="font-sans text-xs font-semibold text-foreground">{item.name}</span>
-    {item.badge && (
-      <span className="rounded-md border border-solid border-signal/35 bg-signal/10 px-1.5 py-0.2 font-mono text-[10px] font-medium text-signal">
-        {item.badge}
-      </span>
-    )}
-    {item.contextWindow && (
-      <span className="rounded-md border border-solid border-border/65 bg-secondary/75 px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground tabular-nums dark:border-white/8 dark:bg-white/8">
-        {item.contextWindow}
-      </span>
-    )}
-    {item.capabilities?.map((cap) => {
-      const Icon = CAP_ICON[cap];
-      return (
-        <span
-          key={cap}
-          title={CAP_LABEL[cap]}
-          className="inline-flex items-center text-muted-foreground"
-        >
-          <Icon aria-hidden="true" className="size-3" />
+const ModelMetaColumn = ({ item, active }: { item: ModelOption; active: boolean }) => (
+  <div className="flex shrink-0 flex-col items-end gap-1 pt-0.5">
+    <div className="flex items-center gap-1.5">
+      {item.contextWindow && (
+        <span className="font-mono text-[10px] text-muted-foreground tabular-nums">
+          {item.contextWindow}
         </span>
-      );
-    })}
+      )}
+      <span className="inline-flex size-3.5 items-center justify-center">
+        {active && <Check aria-hidden="true" className="size-3.5 text-foreground" />}
+      </span>
+    </div>
+    {item.capabilities && item.capabilities.length > 0 && (
+      <div className="flex items-center gap-1 text-muted-foreground/80">
+        {item.capabilities.map((cap) => {
+          const Icon = CAP_ICON[cap];
+          return (
+            <span key={cap} title={CAP_LABEL[cap]} className="inline-flex items-center">
+              <Icon aria-hidden="true" className="size-3" />
+            </span>
+          );
+        })}
+      </div>
+    )}
   </div>
 );
 
@@ -214,22 +213,31 @@ const ModelOptionRow = ({
       aria-pressed={active}
       onClick={onSelect}
       className={cn(
-        `flex w-full cursor-pointer items-start justify-between gap-3 rounded-xl border border-solid px-2.5 py-2 text-left transition-colors duration-(--ui-duration-fast) ${MODEL_SELECTOR_FOCUS_RING}`,
+        `flex w-full cursor-pointer items-start justify-between gap-3 rounded-lg border border-solid px-2.5 py-2 text-left transition-colors duration-(--ui-duration-fast) ${MODEL_SELECTOR_FOCUS_RING}`,
         active
-          ? "border-border/75 bg-secondary/90 text-foreground dark:border-white/10 dark:bg-white/10"
-          : "border-transparent bg-transparent hover:bg-accent/70",
+          ? "border-border bg-secondary/80 text-foreground dark:border-white/10 dark:bg-white/10"
+          : "border-transparent bg-transparent hover:bg-accent/55",
       )}
     >
       <div className="min-w-0 flex-1">
-        <ModelOptionBadges item={item} />
+        <div className="flex items-center gap-1.5">
+          <span className="truncate font-sans text-xs font-medium text-foreground">
+            {item.name}
+          </span>
+          {item.badge && (
+            <span className="shrink-0 rounded-md bg-muted px-1.5 py-0.5 font-mono text-[10px] font-medium text-muted-foreground dark:bg-white/10">
+              {item.badge}
+            </span>
+          )}
+        </div>
         {item.description && (
-          <p className="m-0 mt-0.5 truncate font-sans text-[11px] text-muted-foreground">
+          <p className="m-0 mt-0.5 truncate font-sans text-[11px] leading-snug text-muted-foreground">
             {item.description}
             {item.speedHint ? ` · ${item.speedHint}` : ""}
           </p>
         )}
       </div>
-      {active && <Check aria-hidden="true" className="mt-0.5 size-3.5 shrink-0 text-signal" />}
+      <ModelMetaColumn item={item} active={active} />
     </button>
   </li>
 );
@@ -256,7 +264,7 @@ const GroupedModelList = ({
 }) => (
   <div
     aria-label="按厂商分组的可用模型"
-    className="flex max-h-68 flex-col gap-2 overflow-y-auto p-1.5"
+    className="flex max-h-64 flex-col gap-2 overflow-y-auto p-1.5"
   >
     {groupModelsByProvider(models).map(([provider, group]) => (
       <div key={provider} className="flex flex-col gap-0.5">
@@ -321,7 +329,7 @@ const EffortSegment = ({
   effort: ReasoningEffort;
   onSelect: (next: ReasoningEffort) => void;
 }) => (
-  <fieldset className="m-0 inline-flex items-center gap-0.5 rounded-full border border-solid border-border/75 bg-secondary/80 p-0.5 dark:border-white/10 dark:bg-white/7">
+  <fieldset className="m-0 inline-flex items-center gap-0.5 rounded-lg border border-solid border-border bg-muted/75 p-0.5 dark:border-white/10 dark:bg-white/6">
     <legend className="sr-only">思考强度</legend>
     {(["fast", "balanced", "deep"] as const).map((level) => (
       <button
@@ -330,9 +338,9 @@ const EffortSegment = ({
         aria-pressed={effort === level}
         onClick={() => onSelect(level)}
         className={cn(
-          `cursor-pointer rounded-full border border-solid border-transparent px-2 py-0.5 font-sans text-[11px] font-medium transition-all duration-(--ui-duration-fast) ${MODEL_SELECTOR_FOCUS_RING}`,
+          `cursor-pointer rounded-md border border-solid border-transparent px-2 py-0.5 font-sans text-[11px] font-medium transition-colors duration-(--ui-duration-fast) ${MODEL_SELECTOR_FOCUS_RING}`,
           effort === level
-            ? "border-border/65 bg-card text-foreground shadow-xs dark:border-white/12 dark:bg-card"
+            ? "border-border bg-card text-foreground shadow-xs dark:border-white/12 dark:bg-card"
             : "bg-transparent text-muted-foreground hover:text-foreground",
         )}
       >
@@ -357,7 +365,7 @@ const SelectorFooter = ({
   webSearch: boolean;
   onWebSearchToggle: () => void;
 }) => (
-  <div className="flex flex-wrap items-center justify-between gap-2 border-t border-solid border-border/75 bg-secondary/35 px-2.5 py-2 dark:border-white/10 dark:bg-white/4">
+  <div className="flex flex-wrap items-center justify-between gap-2 border-t border-solid border-border bg-muted/40 px-2.5 py-2 dark:border-white/10 dark:bg-white/4">
     {showEffort && <EffortSegment effort={effort} onSelect={onEffortChange} />}
     {showWebSearch && (
       <button
@@ -365,10 +373,10 @@ const SelectorFooter = ({
         aria-pressed={webSearch}
         onClick={onWebSearchToggle}
         className={cn(
-          `inline-flex h-6 cursor-pointer items-center gap-1 rounded-full border border-solid px-2 font-sans text-[11px] font-medium transition-colors duration-(--ui-duration-fast) ${MODEL_SELECTOR_FOCUS_RING}`,
+          `inline-flex h-7 cursor-pointer items-center gap-1 rounded-lg border border-solid px-2.5 font-sans text-[11px] font-medium transition-colors duration-(--ui-duration-fast) ${MODEL_SELECTOR_FOCUS_RING}`,
           webSearch
             ? "border-primary bg-primary text-primary-foreground shadow-xs"
-            : "border-border/80 bg-card text-muted-foreground hover:text-foreground dark:border-white/12",
+            : "border-border bg-card text-muted-foreground hover:border-foreground/20 hover:text-foreground dark:border-white/10",
         )}
       >
         <Globe aria-hidden="true" className="size-3" />
@@ -449,14 +457,11 @@ const TriggerLabel = ({
 }) => (
   <>
     {!hasCustomAria && <span className="sr-only">选择模型：</span>}
-    <Sparkles aria-hidden="true" className="size-3.5 shrink-0 text-signal" />
     <span className="max-w-36 truncate">{modelName}</span>
     {showEffort && (
-      <span className="rounded-full bg-secondary/90 px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground dark:bg-white/10">
-        {EFFORT_LABELS[effort]}
-      </span>
+      <span className="font-normal text-muted-foreground">· {EFFORT_LABELS[effort]}</span>
     )}
-    {webSearch && <Globe aria-hidden="true" className="size-3 shrink-0 text-signal" />}
+    {webSearch && <Globe aria-hidden="true" className="size-3 shrink-0 text-muted-foreground" />}
     <ChevronDown
       aria-hidden="true"
       className="size-3.5 shrink-0 text-muted-foreground transition-transform duration-(--ui-duration-fast) group-data-popup-open:rotate-180"

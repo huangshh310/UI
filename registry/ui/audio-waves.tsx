@@ -2,7 +2,8 @@
 "use client";
 
 /**
- * AudioWaves：C 端 AI 语音声波律动条与听写胶囊（参考 ChatGPT Voice / Superwhisper）。
+ * AudioWaves：极简语音声波听写条与胶囊（对标 Superwhisper / ChatGPT Voice）。
+ * 声波律动全部采用 GPU 合成 transform（scaleY / scale），零 layout 重排。
  */
 
 import { cn } from "@/lib/utils";
@@ -10,42 +11,46 @@ import { Mic, Pause } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 
+export const WAVE_FOCUS_RING =
+  "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
+
+/** 自然语音包络曲线（用于纯 scaleY GPU 合成动画） */
 export const WAVE_BAR_ENVELOPE = [
-  0.28, 0.5, 0.78, 0.62, 0.95, 0.72, 1, 0.88, 0.95, 0.64, 0.8, 0.52, 0.36, 0.25,
+  0.26, 0.44, 0.68, 0.56, 0.88, 0.74, 1, 0.84, 0.92, 0.66, 0.76, 0.52, 0.38, 0.24,
 ] as const;
 
 export const WAVE_SHELL_TONE: Record<AudioWavesTone, string> = {
-  default: "border-border/85 bg-card text-card-foreground shadow-xs",
-  signal: "border-signal/25 bg-card text-card-foreground shadow-xs",
-  emerald: "border-emerald-500/25 bg-card text-card-foreground shadow-xs",
-  obsidian: "[color-scheme:dark] border-zinc-800 bg-zinc-950 text-zinc-50 shadow-md",
+  default: "border-border bg-card text-card-foreground shadow-xs dark:border-white/10",
+  signal: "border-border bg-card text-card-foreground shadow-xs dark:border-white/10",
+  emerald: "border-border bg-card text-card-foreground shadow-xs dark:border-white/10",
+  obsidian: "[color-scheme:dark] border-white/10 bg-neutral-950 text-neutral-50 shadow-xs",
 };
 
 export const WAVE_BAR_ACTIVE_COLOR: Record<AudioWavesTone, string> = {
-  default: "bg-foreground",
+  default: "bg-foreground/85",
   signal: "bg-signal",
-  emerald: "bg-emerald-500",
-  obsidian: "bg-emerald-400",
+  emerald: "bg-emerald-600 dark:bg-emerald-400",
+  obsidian: "bg-white/90",
 };
 
 export const WAVE_BAR_IDLE_COLOR: Record<AudioWavesTone, string> = {
-  default: "bg-muted-foreground/35",
-  signal: "bg-muted-foreground/35",
-  emerald: "bg-muted-foreground/35",
-  obsidian: "bg-zinc-700",
+  default: "bg-muted-foreground/30",
+  signal: "bg-muted-foreground/30",
+  emerald: "bg-muted-foreground/30",
+  obsidian: "bg-white/20",
 };
 
 export const WAVE_DOT_INDICATOR: Record<AudioWavesTone, string> = {
-  default: "bg-emerald-500",
+  default: "bg-foreground/80",
   signal: "bg-signal",
-  emerald: "bg-emerald-500",
-  obsidian: "bg-emerald-400",
+  emerald: "bg-emerald-600 dark:bg-emerald-400",
+  obsidian: "bg-white/85",
 };
 
-export const WAVE_HEIGHT_BY_SIZE: Record<AudioWavesSize, { box: string; maxPx: number }> = {
-  sm: { box: "h-6 gap-[2.5px]", maxPx: 18 },
-  md: { box: "h-8 gap-[3px]", maxPx: 26 },
-  lg: { box: "h-10 gap-1", maxPx: 34 },
+export const WAVE_SIZE_CLASS: Record<AudioWavesSize, { box: string; barHeight: string }> = {
+  sm: { box: "h-5 gap-[2.5px]", barHeight: "h-4" },
+  md: { box: "h-7 gap-[3px]", barHeight: "h-6" },
+  lg: { box: "h-9 gap-1", barHeight: "h-8" },
 };
 export type AudioWavesVariant = "bars" | "mirror" | "dots";
 export type AudioWavesSize = "sm" | "md" | "lg";
@@ -88,38 +93,49 @@ interface WaveBarsProps {
   reduced: boolean | null;
 }
 
-const barAnimation = (isDots: boolean, maxPx: number, active: boolean) => {
-  if (!active) return isDots ? { scale: 0.75, opacity: 0.4 } : { height: 4, opacity: 0.4 };
-  return isDots
-    ? { scale: [0.65, 1.35, 0.75, 1.15, 0.65], opacity: [0.45, 1, 0.6, 0.95, 0.45] }
-    : { height: [4, maxPx, 7, Math.round(maxPx * 0.72), 4], opacity: [0.6, 1, 0.75, 1, 0.6] };
+const barAnimation = (isDots: boolean, peak: number, active: boolean) => {
+  if (!active) return isDots ? { scale: 0.72, opacity: 0.35 } : { scaleY: 0.18, opacity: 0.35 };
+  if (isDots) {
+    return { scale: [0.7, 1.24, 0.8, 1.08, 0.7], opacity: [0.45, 0.95, 0.6, 0.9, 0.45] };
+  }
+  const midLow = Math.max(0.24, Number((peak * 0.42).toFixed(2)));
+  const midHigh = Math.max(0.32, Number((peak * 0.78).toFixed(2)));
+  return { scaleY: [0.18, peak, midLow, midHigh, 0.18], opacity: [0.55, 1, 0.72, 0.92, 0.55] };
 };
 
 const WaveBars = ({ count, isActive, variant, size, tone, reduced }: WaveBarsProps) => {
-  const cfg = WAVE_HEIGHT_BY_SIZE[size];
+  const cfg = WAVE_SIZE_CLASS[size];
   const color = isActive ? WAVE_BAR_ACTIVE_COLOR[tone] : WAVE_BAR_IDLE_COLOR[tone];
   const isDots = variant === "dots";
   const animateNow = isActive && !reduced;
+  const originClass = variant === "bars" ? "origin-bottom" : "origin-center";
 
   return (
     <div
       aria-hidden="true"
-      className={cn("flex px-1", cfg.box, variant === "bars" ? "items-end pb-1" : "items-center")}
+      className={cn(
+        "flex shrink-0 px-0.5",
+        cfg.box,
+        variant === "bars" ? "items-end" : "items-center",
+      )}
     >
       {Array.from({ length: count }, (_, idx) => {
         const peak = WAVE_BAR_ENVELOPE[idx % WAVE_BAR_ENVELOPE.length] ?? 0.6;
-        const maxPx = Math.round(peak * cfg.maxPx);
         return (
           <motion.span
             key={idx}
-            animate={barAnimation(isDots, maxPx, animateNow)}
+            animate={barAnimation(isDots, peak, animateNow)}
             transition={{
-              duration: 0.95,
+              duration: 0.88 + (idx % 3) * 0.12,
               repeat: Number.POSITIVE_INFINITY,
               delay: idx * 0.045,
               ease: "easeInOut",
             }}
-            className={cn("rounded-full", isDots ? "size-1.5" : "w-[3px]", color)}
+            className={cn(
+              "rounded-full will-change-transform",
+              isDots ? "size-1.5" : cn("w-[2.5px]", cfg.barHeight, originClass),
+              color,
+            )}
           />
         );
       })}
@@ -131,17 +147,16 @@ interface MicTriggerProps {
   isActive: boolean;
   obsidian: boolean;
   compact: boolean;
-  reduced: boolean | null;
   onToggle: () => void;
 }
 
-const MicTrigger = ({ isActive, obsidian, compact, reduced, onToggle }: MicTriggerProps) => {
+const MicTrigger = ({ isActive, obsidian, compact, onToggle }: MicTriggerProps) => {
   const activeStyle = obsidian
-    ? "border-emerald-400/50 bg-emerald-500 text-zinc-950 shadow-xs"
-    : "border-primary bg-primary text-primary-foreground shadow-xs";
+    ? "border-white/20 bg-white text-neutral-950 hover:bg-neutral-200"
+    : "border-primary bg-primary text-primary-foreground hover:opacity-92";
   const idleStyle = obsidian
-    ? "border-zinc-700 bg-zinc-900 text-zinc-100 hover:bg-zinc-800"
-    : "border-border bg-secondary text-foreground hover:bg-accent";
+    ? "border-white/12 bg-white/[0.06] text-neutral-200 hover:bg-white/[0.12]"
+    : "border-border bg-muted/70 text-foreground hover:bg-accent/70 dark:border-white/12 dark:bg-white/[0.05]";
 
   return (
     <button
@@ -150,26 +165,16 @@ const MicTrigger = ({ isActive, obsidian, compact, reduced, onToggle }: MicTrigg
       aria-pressed={isActive}
       onClick={onToggle}
       className={cn(
-        "relative inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full border border-solid transition-all active:scale-95 outline-none focus-visible:ring-2 focus-visible:ring-ring",
-        compact ? "size-8" : "size-9",
+        "inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full border border-solid transition-colors active:scale-95",
+        compact ? "size-7" : "size-8",
         isActive ? activeStyle : idleStyle,
+        WAVE_FOCUS_RING,
       )}
     >
-      {isActive && !reduced && (
-        <motion.span
-          aria-hidden="true"
-          animate={{ scale: [1, 1.38], opacity: [0.4, 0] }}
-          transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, ease: "easeOut" }}
-          className={cn(
-            "pointer-events-none absolute inset-0 rounded-full",
-            obsidian ? "bg-emerald-400/40" : "bg-primary/25",
-          )}
-        />
-      )}
       {isActive ? (
-        <Pause aria-hidden="true" className="relative size-3.5" />
+        <Pause aria-hidden="true" className="size-3.5" />
       ) : (
-        <Mic aria-hidden="true" className="relative size-3.5" />
+        <Mic aria-hidden="true" className="size-3.5" />
       )}
     </button>
   );
@@ -185,39 +190,33 @@ interface MetaProps {
 
 const WaveStatusMeta = ({ isActive, tone, label, locale, durationLabel }: MetaProps) => {
   const obsidian = tone === "obsidian";
+  const sub = obsidian ? "text-neutral-400" : "text-muted-foreground";
   return (
-    <div className="flex items-center gap-2 text-xs whitespace-nowrap">
-      <span className="inline-flex items-center gap-1.5 font-medium">
+    <div className="flex min-w-0 flex-1 flex-wrap items-center justify-between gap-x-3 gap-y-1 text-xs">
+      <span className="inline-flex min-w-0 items-center gap-1.5 font-medium">
         <span
           aria-hidden="true"
           className={cn(
-            "size-1.5 rounded-full transition-colors",
+            "size-1.5 shrink-0 rounded-full transition-colors",
             isActive ? WAVE_DOT_INDICATOR[tone] : "bg-muted-foreground/40",
           )}
         />
-        <span className={obsidian ? "text-zinc-100" : "text-foreground"}>
+        <span
+          className={cn("whitespace-nowrap", obsidian ? "text-neutral-100" : "text-foreground")}
+        >
           {label ?? (isActive ? "正在聆听语音…" : "语音已暂停")}
         </span>
       </span>
-      {locale && (
-        <span
-          className={cn(
-            "rounded-full border border-solid px-2 py-0.5 font-mono text-[10px]",
-            obsidian
-              ? "border-zinc-800 bg-zinc-900 text-zinc-300"
-              : "border-border/80 bg-secondary/70 text-muted-foreground",
-          )}
-        >
-          {locale}
-        </span>
-      )}
       <span
-        className={cn(
-          "rounded-full px-2 py-0.5 font-mono text-[11px] font-medium tabular-nums",
-          obsidian ? "bg-zinc-900 text-zinc-300" : "bg-secondary/80 text-muted-foreground",
-        )}
+        className={cn("flex shrink-0 items-center gap-1.5 font-mono text-[11px] tabular-nums", sub)}
       >
-        {durationLabel}
+        {locale && <span>{locale}</span>}
+        {locale && (
+          <span aria-hidden="true" className="opacity-45">
+            ·
+          </span>
+        )}
+        <span>{durationLabel}</span>
       </span>
     </div>
   );
@@ -226,10 +225,10 @@ const WaveStatusMeta = ({ isActive, tone, label, locale, durationLabel }: MetaPr
 const TranscriptBox = ({ text, obsidian }: { text: string; obsidian: boolean }) => (
   <p
     className={cn(
-      "m-0 rounded-xl border border-solid px-3 py-1.5 text-xs leading-relaxed",
+      "m-0 rounded-lg px-3 py-2 text-xs leading-relaxed",
       obsidian
-        ? "border-zinc-800/80 bg-zinc-900/90 text-zinc-300"
-        : "border-border/60 bg-secondary/45 text-muted-foreground",
+        ? "bg-white/[0.04] text-neutral-300"
+        : "bg-muted/45 text-muted-foreground dark:bg-white/[0.04]",
     )}
   >
     “{text}”
@@ -266,17 +265,16 @@ const WaveShell = (p: WaveShellProps) => {
       data-tone={p.cfg.tone}
       className={cn(
         "inline-flex flex-col border border-solid",
-        p.cfg.compact ? "gap-1.5 rounded-full px-2.5 py-1.5" : "gap-2.5 rounded-[22px] p-3",
+        p.cfg.compact ? "gap-1.5 rounded-full px-2.5 py-1.5" : "gap-2.5 rounded-xl px-3.5 py-3",
         WAVE_SHELL_TONE[p.cfg.tone],
         p.className,
       )}
     >
-      <div className={cn("flex flex-wrap items-center gap-3", p.cfg.compact ? "pr-1" : "pr-2")}>
+      <div className="flex w-full items-center gap-3">
         <MicTrigger
           isActive={p.isActive}
           obsidian={obsidian}
           compact={p.cfg.compact}
-          reduced={p.reduced}
           onToggle={p.onToggle}
         />
         <WaveBars

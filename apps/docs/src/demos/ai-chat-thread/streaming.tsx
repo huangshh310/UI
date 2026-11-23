@@ -5,6 +5,7 @@ import { AiChatThread } from "@matt-ui/ui";
 export default function AiChatThreadStreamingDemo() {
   return (
     <AiChatThread
+      className="max-w-2xl"
       variant="compact"
       initialMessages={[
         {
@@ -21,7 +22,7 @@ export default function AiChatThreadStreamingDemo() {
           timestamp: "10:15",
           streaming: true,
           content:
-            "正在核对 11 个 AI 组件的发丝边框层级、深色曜石代码舞台对比度以及单焦点环规范，审批按钮与分支切换均已保持 100% 向后兼容…",
+            "正在核对 11 个 AI 组件的发丝边框层级、自适应语义代码表面以及单层内嵌焦点环规范，审批按钮与分支切换均已保持 100% 向后兼容…",
         },
       ]}
       followUps={["导出变更清单", "运行双主题 axe 审计"]}

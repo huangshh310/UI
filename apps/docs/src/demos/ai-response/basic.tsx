@@ -50,7 +50,7 @@ export default function AiResponseBasicDemo() {
   const [note, setNote] = useState<string | null>(null);
 
   return (
-    <div className="flex w-full max-w-md flex-col gap-2">
+    <div className="flex w-full max-w-2xl flex-col gap-2">
       <AiResponse
         model="Claude 4.5 Sonnet"
         modelBadge="200K"

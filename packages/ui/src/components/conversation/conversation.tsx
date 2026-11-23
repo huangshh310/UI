@@ -1,11 +1,11 @@
 "use client";
 
 /**
- * Conversation：流式对话滚动容器原语（对标 shadcn AI Elements Conversation + ChatGPT/Claude 贴底锚定）。
- * 流式输出时若视口处于底部则自动跟随，用户上滚阅读时立即解绑并浮现毛玻璃回到底部按钮。
+ * Conversation：流式对话滚动容器原语（对标 Vercel AI Elements / ChatGPT / Claude 贴底锚定）。
+ * 流式输出时若视口处于底部则自动跟随，用户上滚阅读时立即解绑并浮现克制回到底部按钮。
  */
 import { cn } from "@matt-ui/utils";
-import { ArrowDown, Sparkles } from "lucide-react";
+import { ArrowDown, MessageSquare } from "lucide-react";
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import type {
   ConversationContentProps,
@@ -105,7 +105,7 @@ export const Conversation = ({
         {fadeEdges && (
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-background/90 to-transparent"
+            className="pointer-events-none absolute inset-x-0 top-0 z-10 h-10 bg-gradient-to-b from-background via-background/60 to-transparent"
           />
         )}
         <div
@@ -119,7 +119,7 @@ export const Conversation = ({
         {fadeEdges && (
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-6 bg-gradient-to-t from-background/90 to-transparent"
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-10 bg-gradient-to-t from-background via-background/60 to-transparent"
           />
         )}
       </div>
@@ -159,11 +159,11 @@ export const ConversationEmptyState = ({
     className={cn(conversationEmptyVariants({ size }), className)}
     {...props}
   >
-    <span className="inline-flex size-11 items-center justify-center rounded-2xl border border-solid border-border/80 bg-card/92 text-signal shadow-[0_6px_20px_-8px_rgba(0,0,0,0.14)] dark:border-white/12 dark:bg-card/80">
-      {icon ?? <Sparkles aria-hidden="true" className="size-5" />}
+    <span className="inline-flex size-9 items-center justify-center rounded-xl border border-solid border-border bg-card text-foreground/80 shadow-xs dark:border-white/10">
+      {icon ?? <MessageSquare aria-hidden="true" className="size-4" />}
     </span>
     {badge && (
-      <span className="inline-flex items-center rounded-full border border-solid border-border/75 bg-secondary/65 px-2.5 py-0.5 font-mono text-[10px] font-medium text-muted-foreground dark:border-white/10 dark:bg-white/7">
+      <span className="inline-flex items-center rounded-full border border-solid border-border bg-muted/60 px-2.5 py-0.5 font-mono text-[10px] font-medium text-muted-foreground dark:border-white/10 dark:bg-white/6">
         {badge}
       </span>
     )}
@@ -180,9 +180,22 @@ export const ConversationEmptyState = ({
         <p className="m-0 text-xs leading-relaxed text-muted-foreground">{description}</p>
       )}
     </div>
-    {children && <div className="mt-1 w-full max-w-xl">{children}</div>}
+    {children && <div className="mt-2 w-full">{children}</div>}
   </div>
 );
+
+const UnreadBadge = ({ count, floating }: { count: number; floating?: boolean }) =>
+  count > 0 ? (
+    <span
+      aria-hidden="true"
+      className={cn(
+        "inline-flex min-w-4 items-center justify-center rounded-full bg-signal px-1.5 py-0.5 font-mono text-[10px] leading-none font-semibold text-signal-foreground tabular-nums",
+        floating && "pointer-events-none absolute -top-1.5 -right-1.5 shadow-xs",
+      )}
+    >
+      {count}
+    </span>
+  ) : null;
 
 export const ConversationScrollButton = ({
   variant = "pill",
@@ -199,31 +212,29 @@ export const ConversationScrollButton = ({
 
   return (
     <div className="pointer-events-none sticky bottom-3 z-20 mt-auto flex justify-center px-4 pb-1">
-      <button
-        type="button"
-        aria-label={ariaLabel}
-        data-slot="conversation-scroll-button"
-        data-variant={variant}
-        onClick={(event) => {
-          scrollToBottom("smooth");
-          onClick?.(event);
-        }}
-        className={cn(conversationScrollButtonVariants({ variant }), className)}
-        {...props}
-      >
-        <ArrowDown aria-hidden="true" className="size-3.5 text-signal" />
-        {variant === "pill" && <span>{label}</span>}
-        {unreadCount > 0 && (
-          <span
-            className={cn(
-              "inline-flex min-w-4.5 items-center justify-center rounded-full bg-signal px-1.5 py-0.5 font-mono text-[10px] font-semibold text-signal-foreground tabular-nums",
-              variant === "icon" && "absolute -top-1.5 -right-1.5 shadow-xs",
-            )}
-          >
-            {unreadCount}
-          </span>
-        )}
-      </button>
+      <div className="relative inline-flex">
+        <button
+          type="button"
+          aria-label={ariaLabel}
+          data-slot="conversation-scroll-button"
+          data-variant={variant}
+          onClick={(event) => {
+            scrollToBottom("smooth");
+            onClick?.(event);
+          }}
+          className={cn(conversationScrollButtonVariants({ variant }), className)}
+          {...props}
+        >
+          <ArrowDown aria-hidden="true" className="size-3.5 text-foreground" />
+          {variant === "pill" && (
+            <>
+              <span>{label}</span>
+              <UnreadBadge count={unreadCount} />
+            </>
+          )}
+        </button>
+        {variant === "icon" && <UnreadBadge count={unreadCount} floating />}
+      </div>
     </div>
   );
 };

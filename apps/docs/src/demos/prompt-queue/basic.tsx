@@ -21,7 +21,7 @@ export default function PromptQueueBasicDemo() {
   );
 
   return (
-    <div className="flex w-full max-w-xl flex-col gap-2">
+    <div className="flex w-full max-w-2xl flex-col gap-2">
       <PromptQueue
         items={queue}
         variant="glass"

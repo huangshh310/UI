@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { afterEach, describe, expect, it } from "vitest";
 import { AiAgentActivity, type AiAgentActivityItemData } from "../../index.js";
@@ -76,6 +76,8 @@ describe("AiAgentActivity", () => {
     expect(toggle.getAttribute("aria-expanded")).toBe("true");
     await user.click(toggle);
     expect(toggle.getAttribute("aria-expanded")).toBe("false");
-    expect(screen.queryByText("检索京都东山区路线")).toBeNull();
+    await waitFor(() => {
+      expect(screen.queryByText("检索京都东山区路线")).toBeNull();
+    });
   });
 });

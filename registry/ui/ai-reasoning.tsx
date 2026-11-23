@@ -2,13 +2,21 @@
 "use client";
 
 /**
- * AiReasoning：Claude / DeepSeek / o3 风格的深度思考与思维链可折叠推理轨迹卡片。
+ * AiReasoning：Claude / Vercel AI Elements 风格的极简深度思考与思维链可折叠推理流。
  */
 
 import { cn } from "@/lib/utils";
-import { Check, ChevronDown, Loader2, Sparkles } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { ChevronDown, Loader2, Sparkles } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
+
+export const REASONING_FOCUS_RING =
+  "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
+
+export const REASONING_COLLAPSE_TRANSITION = {
+  duration: 0.18,
+  ease: [0.22, 1, 0.36, 1] as const,
+};
 
 export const REASONING_DEFAULT_STEPS: AiReasoningStep[] = [
   {
@@ -35,8 +43,9 @@ export const REASONING_DEFAULT_STEPS: AiReasoningStep[] = [
 ];
 
 export const REASONING_SHELL_CLASS: Record<AiReasoningVariant, string> = {
-  card: "rounded-2xl border border-solid border-border/85 bg-card text-card-foreground shadow-xs",
-  ghost: "rounded-xl border border-solid border-border/65 bg-secondary/35 text-card-foreground",
+  card: "rounded-xl border border-solid border-border bg-card text-card-foreground shadow-xs dark:border-white/10",
+  ghost:
+    "rounded-xl border border-solid border-border/70 bg-muted/40 text-card-foreground dark:border-white/10 dark:bg-white/[0.03]",
   inline: "rounded-lg border-0 bg-transparent text-foreground",
 };
 export type AiReasoningStatus = "thinking" | "completed";
@@ -72,50 +81,57 @@ export interface AiReasoningProps {
   /** 自定义类名 */
   className?: string;
 }
-const TimelineStepItem = ({
-  step,
-  idx,
-  isActiveStep,
-  reduced,
-}: {
-  step: AiReasoningStep;
-  idx: number;
-  isActiveStep: boolean;
-  reduced: boolean | null;
-}) => (
-  <motion.li
-    initial={reduced ? false : { opacity: 0, y: 2 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.16, delay: idx * 0.04 }}
-    className="relative flex flex-col gap-0.5"
-  >
+const StepRail = ({ isActiveStep, isLast }: { isActiveStep: boolean; isLast: boolean }) => (
+  <div className="flex w-4 shrink-0 flex-col items-center">
     <span
       aria-hidden="true"
       className={cn(
-        "absolute top-1.5 -left-[20.5px] size-2 rounded-full border border-solid",
+        "mt-1.5 size-1.5 shrink-0 rounded-full",
         isActiveStep
-          ? "border-signal bg-signal shadow-[0_0_0_3px_color-mix(in_srgb,var(--ui-signal)_18%,transparent)]"
-          : "border-border bg-card",
+          ? "bg-signal"
+          : "border border-solid border-muted-foreground/45 bg-card dark:border-white/30",
       )}
     />
-    <div className="flex items-center justify-between gap-2">
-      <div className="flex min-w-0 items-center gap-2">
-        <span className="truncate text-[13px] font-medium text-foreground">{step.title}</span>
-        {step.tag && (
-          <span className="shrink-0 rounded-md border border-solid border-border/60 bg-secondary/80 px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
-            {step.tag}
+    {!isLast && (
+      <span aria-hidden="true" className="my-1 w-px flex-1 bg-border/80 dark:bg-white/10" />
+    )}
+  </div>
+);
+
+interface TimelineStepItemProps {
+  step: AiReasoningStep;
+  idx: number;
+  isActiveStep: boolean;
+  isLast: boolean;
+  reduced: boolean | null;
+}
+
+const TimelineStepItem = ({ step, idx, isActiveStep, isLast, reduced }: TimelineStepItemProps) => (
+  <motion.li
+    initial={reduced ? false : { opacity: 0, y: 2 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: reduced ? 0 : 0.16, delay: reduced ? 0 : idx * 0.035 }}
+    className="flex gap-2.5"
+  >
+    <StepRail isActiveStep={isActiveStep} isLast={isLast} />
+    <div className={cn("flex min-w-0 flex-1 flex-col gap-0.5", !isLast && "pb-3")}>
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex min-w-0 items-center gap-2">
+          <span className="truncate text-[13px] font-medium text-foreground">{step.title}</span>
+          {step.tag && (
+            <span className="shrink-0 font-mono text-[11px] text-muted-foreground">{step.tag}</span>
+          )}
+        </div>
+        {step.duration && (
+          <span className="shrink-0 font-mono text-[11px] text-muted-foreground tabular-nums">
+            {step.duration}
           </span>
         )}
       </div>
-      {step.duration && (
-        <span className="shrink-0 font-mono text-[11px] text-muted-foreground tabular-nums">
-          {step.duration}
-        </span>
+      {step.detail && (
+        <p className="m-0 text-xs leading-relaxed text-muted-foreground">{step.detail}</p>
       )}
     </div>
-    {step.detail && (
-      <p className="m-0 text-xs leading-relaxed text-muted-foreground">{step.detail}</p>
-    )}
   </motion.li>
 );
 
@@ -131,42 +147,45 @@ const StepTimeline = ({
   reduced: boolean | null;
 }) => (
   <motion.div
-    initial={reduced ? false : { opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ duration: reduced ? 0 : 0.16, ease: "easeOut" }}
-    className={cn(
-      variant === "inline"
-        ? "pt-2 pb-1 pl-3"
-        : "border-t border-solid border-border/70 px-4 py-3.5",
-    )}
+    key="reasoning-timeline"
+    initial={reduced ? false : { opacity: 0, height: 0 }}
+    animate={{ opacity: 1, height: "auto" }}
+    exit={reduced ? { opacity: 0 } : { opacity: 0, height: 0 }}
+    transition={reduced ? { duration: 0 } : REASONING_COLLAPSE_TRANSITION}
+    className="overflow-hidden"
   >
-    <ol className="m-0 flex list-none flex-col gap-3 border-l border-solid border-border/85 pl-4">
-      {steps.map((step, idx) => (
-        <TimelineStepItem
-          key={step.id}
-          step={step}
-          idx={idx}
-          isActiveStep={status === "thinking" && idx === steps.length - 1}
-          reduced={reduced}
-        />
-      ))}
-    </ol>
+    <div
+      className={cn(
+        variant === "inline"
+          ? "pt-1.5 pb-1 pl-2"
+          : "border-t border-solid border-border/75 px-4 py-3 dark:border-white/10",
+      )}
+    >
+      <ol className="m-0 flex list-none flex-col p-0">
+        {steps.map((step, idx) => (
+          <TimelineStepItem
+            key={step.id}
+            step={step}
+            idx={idx}
+            isActiveStep={status === "thinking" && idx === steps.length - 1}
+            isLast={idx === steps.length - 1}
+            reduced={reduced}
+          />
+        ))}
+      </ol>
+    </div>
   </motion.div>
 );
 
-const ReasoningBadge = ({ status }: { status: AiReasoningStatus }) => (
-  <span
-    className={cn(
-      "inline-flex size-6.5 shrink-0 items-center justify-center rounded-full",
-      status === "thinking"
-        ? "bg-signal/12 text-signal"
-        : "bg-emerald-500/12 text-emerald-700 dark:text-emerald-300",
-    )}
-  >
+const ReasoningStatusIcon = ({ status }: { status: AiReasoningStatus }) => (
+  <span className="inline-flex size-4 shrink-0 items-center justify-center">
     {status === "thinking" ? (
-      <Loader2 aria-hidden="true" className="size-3.5 animate-spin motion-reduce:animate-none" />
+      <Loader2
+        aria-hidden="true"
+        className="size-3.5 animate-spin text-signal motion-reduce:animate-none"
+      />
     ) : (
-      <Sparkles aria-hidden="true" className="size-3.5" />
+      <Sparkles aria-hidden="true" className="size-3.5 text-muted-foreground" />
     )}
   </span>
 );
@@ -191,23 +210,19 @@ const ReasoningHeader = (p: HeaderProps) => {
       aria-expanded={p.expanded}
       onClick={p.onToggle}
       className={cn(
-        "flex w-full cursor-pointer flex-col gap-1 border-0 bg-transparent text-left transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
+        "flex w-full cursor-pointer flex-col gap-0.5 border border-solid border-transparent bg-transparent text-left transition-colors duration-(--ui-duration-fast)",
+        REASONING_FOCUS_RING,
         p.variant === "inline"
-          ? "rounded-lg px-2 py-1.5 hover:bg-accent/50"
-          : "px-4 py-3 hover:bg-accent/40",
+          ? "rounded-lg px-2 py-1.5 hover:bg-muted/60 dark:hover:bg-white/[0.05]"
+          : "px-4 py-3 hover:bg-muted/40 dark:hover:bg-white/[0.03]",
       )}
     >
       <div className="flex w-full items-center justify-between gap-3">
         <div className="flex min-w-0 flex-wrap items-center gap-2">
-          <ReasoningBadge status={p.status} />
-          <span className="text-xs font-semibold tracking-tight text-foreground">{heading}</span>
-          <span className="inline-flex items-center gap-1 rounded-full border border-solid border-border/75 bg-secondary/75 px-2.5 py-0.5 font-mono text-[11px] font-medium text-muted-foreground tabular-nums">
-            {p.status === "completed" && (
-              <Check aria-hidden="true" className="size-3 text-emerald-600 dark:text-emerald-400" />
-            )}
-            <span>
-              {p.durationLabel} · {p.stepCount} 步
-            </span>
+          <ReasoningStatusIcon status={p.status} />
+          <span className="text-[13px] font-medium tracking-tight text-foreground">{heading}</span>
+          <span className="font-mono text-[11px] text-muted-foreground tabular-nums">
+            {p.durationLabel} · {p.stepCount} 步
           </span>
           {p.tokensLabel && (
             <span className="font-mono text-[11px] text-muted-foreground tabular-nums">
@@ -218,13 +233,13 @@ const ReasoningHeader = (p: HeaderProps) => {
         <ChevronDown
           aria-hidden="true"
           className={cn(
-            "size-4 shrink-0 text-muted-foreground transition-transform duration-(--ui-duration-fast)",
+            "size-3.5 shrink-0 text-muted-foreground transition-transform duration-(--ui-duration-fast)",
             p.expanded && "rotate-180",
           )}
         />
       </div>
       {!p.expanded && p.preview && (
-        <span className="truncate pl-8.5 text-xs text-muted-foreground">{p.preview}</span>
+        <span className="truncate pl-6 text-xs text-muted-foreground">{p.preview}</span>
       )}
     </button>
   );
@@ -249,11 +264,7 @@ export const AiReasoning = (props: AiReasoningProps) => {
       data-slot="ai-reasoning"
       data-status={status}
       data-variant={variant}
-      className={cn(
-        "w-full max-w-xl overflow-hidden",
-        REASONING_SHELL_CLASS[variant],
-        props.className,
-      )}
+      className={cn("w-full overflow-hidden", REASONING_SHELL_CLASS[variant], props.className)}
     >
       <ReasoningHeader
         status={status}
@@ -266,9 +277,11 @@ export const AiReasoning = (props: AiReasoningProps) => {
         preview={steps[steps.length - 1]?.title}
         onToggle={toggle}
       />
-      {expanded && (
-        <StepTimeline steps={steps} status={status} variant={variant} reduced={reduced} />
-      )}
+      <AnimatePresence initial={false}>
+        {expanded && (
+          <StepTimeline steps={steps} status={status} variant={variant} reduced={reduced} />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

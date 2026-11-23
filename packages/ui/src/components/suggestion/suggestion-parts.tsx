@@ -4,7 +4,7 @@
  * Suggestions 的卡片网格与垂直追问列表子部件。
  */
 import { cn } from "@matt-ui/utils";
-import { ArrowRight, ArrowUpRight, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 import type {
   SuggestionItem,
@@ -37,10 +37,10 @@ const SuggestionCategoryRow = ({
         aria-pressed={active === cat}
         onClick={() => onSelect(cat)}
         className={cn(
-          `h-6.5 cursor-pointer rounded-full border border-solid px-2.5 font-sans text-xs font-medium transition-colors duration-(--ui-duration-fast) ${SUGGESTION_FOCUS_RING}`,
+          `h-7 cursor-pointer rounded-lg border border-solid px-2.5 font-sans text-xs font-medium transition-colors duration-(--ui-duration-fast) ${SUGGESTION_FOCUS_RING}`,
           active === cat
-            ? "border-border/80 bg-secondary text-foreground shadow-xs dark:border-white/12 dark:bg-white/12"
-            : "border-transparent bg-transparent text-muted-foreground hover:bg-accent/60 hover:text-foreground",
+            ? "border-border bg-secondary text-foreground shadow-xs dark:border-white/12 dark:bg-white/12"
+            : "border-transparent bg-transparent text-muted-foreground hover:bg-accent/50 hover:text-foreground",
         )}
       >
         {cat}
@@ -73,11 +73,11 @@ const SuggestionStarterGrid = ({
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1.5">
             {item.icon && <span className="shrink-0 text-muted-foreground">{item.icon}</span>}
-            <span className="truncate font-sans text-xs font-semibold text-foreground">
+            <span className="truncate font-sans text-xs font-medium text-foreground">
               {item.label}
             </span>
             {item.badge && (
-              <span className="shrink-0 rounded bg-secondary/85 px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground dark:bg-white/10">
+              <span className="shrink-0 rounded-md bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground dark:bg-white/10">
                 {item.badge}
               </span>
             )}
@@ -90,7 +90,7 @@ const SuggestionStarterGrid = ({
         </div>
         <ArrowUpRight
           aria-hidden="true"
-          className="mt-0.5 size-3.5 shrink-0 text-muted-foreground transition-transform duration-(--ui-duration-fast) group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground"
+          className="mt-0.5 size-3.5 shrink-0 text-muted-foreground transition-colors duration-(--ui-duration-fast) group-hover:text-foreground"
         />
       </button>
     ))}
@@ -110,24 +110,24 @@ const SuggestionListRow = ({
     type="button"
     onClick={() => onSelect?.(item.prompt ?? item.label, item)}
     className={cn(
-      `group flex w-full cursor-pointer items-center justify-between gap-3 border-0 bg-transparent text-left transition-colors duration-(--ui-duration-fast) hover:bg-accent/65 ${SUGGESTION_FOCUS_RING}`,
+      `group flex w-full cursor-pointer items-center justify-between gap-3 border-0 bg-transparent text-left transition-colors duration-(--ui-duration-fast) hover:bg-accent/50 ${SUGGESTION_FOCUS_RING}`,
       size === "sm" ? "px-3 py-2" : "px-3.5 py-2.5",
     )}
   >
     <div className="flex min-w-0 flex-1 items-center gap-2">
-      {item.icon ?? (
-        <Sparkles aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
-      )}
+      {item.icon && <span className="shrink-0 text-muted-foreground">{item.icon}</span>}
       <div className="min-w-0 flex-1">
         <div className="truncate text-xs font-medium text-foreground">{item.label}</div>
         {item.description && (
-          <div className="truncate text-[11px] text-muted-foreground">{item.description}</div>
+          <div className="mt-0.5 truncate text-[11px] text-muted-foreground">
+            {item.description}
+          </div>
         )}
       </div>
     </div>
     <div className="flex shrink-0 items-center gap-2">
       {item.badge && (
-        <span className="rounded bg-secondary/85 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground dark:bg-white/10">
+        <span className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground dark:bg-white/10">
           {item.badge}
         </span>
       )}
@@ -190,7 +190,7 @@ export const SuggestionsCardsPanel = ({
     <div
       data-slot="suggestions"
       data-variant="cards"
-      className={cn("flex w-full max-w-xl flex-col gap-3 font-sans", className)}
+      className={cn("flex w-full flex-col gap-3 font-sans", className)}
       {...props}
     >
       {showCategoryFilter && categories.length > 0 && (

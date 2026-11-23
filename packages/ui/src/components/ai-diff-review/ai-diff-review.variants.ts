@@ -5,16 +5,16 @@ import { cva } from "class-variance-authority";
 import type { AiDiffLine, AiDiffLineType, AiDiffReviewTheme } from "./ai-diff-review.types.js";
 
 export const diffReviewShellVariants = cva(
-  "w-full max-w-xl overflow-hidden border border-solid border-border/85 bg-card text-card-foreground shadow-xs",
+  "w-full overflow-hidden rounded-xl border border-solid shadow-xs",
   {
     variants: {
-      compact: {
-        false: "rounded-2xl",
-        true: "rounded-xl",
+      theme: {
+        adaptive: "border-border bg-card text-card-foreground dark:border-white/10",
+        obsidian: "[color-scheme:dark] border-zinc-800 bg-zinc-950 text-zinc-100",
       },
     },
     defaultVariants: {
-      compact: false,
+      theme: "adaptive",
     },
   },
 );
@@ -29,13 +29,14 @@ export const DIFF_DEFAULT_LINES: AiDiffLine[] = [
 
 export const DIFF_ROW_STYLE: Record<AiDiffReviewTheme, Record<AiDiffLineType, string>> = {
   obsidian: {
-    add: "border-l-2 border-l-emerald-500 bg-emerald-500/14 text-emerald-100",
-    remove: "border-l-2 border-l-rose-500 bg-rose-500/14 text-rose-100",
+    add: "border-l-2 border-l-emerald-500/80 bg-emerald-500/12 text-emerald-100",
+    remove: "border-l-2 border-l-rose-500/80 bg-rose-500/12 text-rose-100",
     context: "border-l-2 border-l-transparent bg-transparent text-zinc-300",
   },
   adaptive: {
-    add: "border-l-2 border-l-emerald-500 bg-emerald-500/10 text-foreground",
-    remove: "border-l-2 border-l-rose-500 bg-rose-500/10 text-foreground",
+    add: "border-l-2 border-l-emerald-500/75 bg-emerald-500/[0.08] text-foreground dark:bg-emerald-500/12",
+    remove:
+      "border-l-2 border-l-rose-500/75 bg-rose-500/[0.08] text-foreground dark:bg-rose-500/12",
     context: "border-l-2 border-l-transparent bg-transparent text-muted-foreground",
   },
 };
@@ -44,11 +45,11 @@ export const DIFF_MARKER_STYLE: Record<AiDiffReviewTheme, Record<AiDiffLineType,
   obsidian: {
     add: "text-emerald-400",
     remove: "text-rose-400",
-    context: "text-zinc-500",
+    context: "text-zinc-400",
   },
   adaptive: {
-    add: "text-emerald-700 dark:text-emerald-300",
-    remove: "text-rose-700 dark:text-rose-300",
+    add: "text-emerald-700 dark:text-emerald-400",
+    remove: "text-rose-700 dark:text-rose-400",
     context: "text-muted-foreground",
   },
 };

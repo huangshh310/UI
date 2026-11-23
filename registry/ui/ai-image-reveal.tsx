@@ -28,15 +28,15 @@ export const REVEAL_EASE_OUT = [0.22, 1, 0.36, 1] as const;
 export const REVEAL_SHELL_VARIANT: Record<AiImageRevealVariant, string> = {
   default: "",
   framed:
-    "rounded-[26px] border border-solid border-border/80 bg-card/92 p-2 shadow-[0_14px_36px_-14px_rgba(0,0,0,0.14)] dark:border-white/10 dark:bg-card/85 dark:shadow-[0_20px_48px_-14px_rgba(0,0,0,0.72)]",
+    "rounded-xl border border-solid border-border bg-card p-1.5 shadow-sm dark:border-white/10",
   glass:
-    "rounded-[26px] border border-solid border-border/75 bg-popover/86 p-2 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-popover/78",
+    "rounded-xl border border-solid border-border bg-card/85 p-1.5 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-card/80",
 };
 
 export const REVEAL_STAGE_RADIUS: Record<AiImageRevealRadius, string> = {
-  md: "rounded-2xl",
-  lg: "rounded-[20px]",
-  xl: "rounded-3xl",
+  md: "rounded-lg",
+  lg: "rounded-lg",
+  xl: "rounded-xl",
 };
 export type AiImageRevealPhase = "idle" | "gather" | "refine" | "done" | "error";
 
@@ -82,8 +82,9 @@ export interface AiImageRevealProps extends Omit<HTMLAttributes<HTMLElement>, "c
   onReveal?: () => void;
   onImageError?: () => void;
 }
-const DARK_PALETTE = ["#93c5fd", "#6ee7b7", "#fcd34d", "#f9a8d4", "#d4d4d8"];
-const LIGHT_PALETTE = ["#155dfc", "#0f766e", "#d97706", "#e11d48", "#27272a"];
+/** 低饱和中性微光灰阶 + 克制品牌蓝点缀（对标 Midjourney / OpenAI 柔光显影） */
+const DARK_PALETTE = ["#e4e4e7", "#a1a1aa", "#71717a", "#cbd5e1", "#60a5fa"];
+const LIGHT_PALETTE = ["#71717a", "#a1a1aa", "#52525b", "#94a3b8", "#3b82f6"];
 
 interface RevealEngineState {
   field: ParticleField | null;
@@ -285,19 +286,22 @@ const useImageLoaderEffect = (
     };
   }, [engineRef, src, waiting, runId, w, h, crossOrigin, reduce, onPhase, onError]);
 };
+const OVERLAY_CHIP =
+  "border border-solid border-border/70 bg-background/80 text-foreground backdrop-blur-md dark:border-white/12 dark:bg-neutral-950/75 dark:text-neutral-100";
+
 const RevealStatusPill = ({ label }: { label: string }) => (
   <motion.div
     key="reveal-status"
-    initial={{ opacity: 0, y: 6 }}
+    initial={{ opacity: 0, y: 4 }}
     animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: 4, transition: { duration: 0.2 } }}
-    transition={{ duration: 0.28, ease: REVEAL_EASE_OUT }}
-    className="absolute bottom-3 left-3 inline-flex h-8 items-center gap-2 rounded-full border border-solid border-border/80 bg-popover/92 px-3 text-xs font-medium text-popover-foreground shadow-sm backdrop-blur-xl dark:border-white/12"
+    exit={{ opacity: 0, y: 3, transition: { duration: 0.18 } }}
+    transition={{ duration: 0.24, ease: REVEAL_EASE_OUT }}
+    className={cn(
+      "absolute bottom-2.5 left-2.5 inline-flex h-7 items-center gap-2 rounded-full px-2.5 text-[11px] font-medium shadow-xs",
+      OVERLAY_CHIP,
+    )}
   >
-    <span className="relative flex size-2">
-      <span className="absolute inset-0 animate-ping rounded-full bg-signal/45 motion-reduce:hidden" />
-      <span className="relative size-2 rounded-full bg-signal" />
-    </span>
+    <span aria-hidden="true" className="size-1.5 rounded-full bg-signal" />
     <span>{label}</span>
   </motion.div>
 );
@@ -305,16 +309,16 @@ const RevealStatusPill = ({ label }: { label: string }) => (
 const RevealErrorOverlay = ({ onRetry }: { onRetry: () => void }) => (
   <div
     role="alert"
-    className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-background/80 px-6 text-center backdrop-blur-md"
+    className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-background/85 px-6 text-center backdrop-blur-md"
   >
-    <p className="m-0 rounded-lg border border-solid border-destructive/35 bg-destructive/8 px-3 py-1.5 text-xs text-foreground dark:border-destructive dark:bg-destructive/14">
+    <p className="m-0 rounded-lg border border-solid border-destructive/30 bg-destructive/8 px-3 py-1.5 text-xs text-foreground dark:border-destructive/40 dark:bg-destructive/14">
       图像加载失败，请重试。
     </p>
     <button
       type="button"
       onClick={onRetry}
       className={cn(
-        "h-8 cursor-pointer rounded-full border border-solid border-transparent bg-primary px-4 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-transform active:scale-[0.97]",
+        "h-8 cursor-pointer rounded-lg border border-solid border-transparent bg-primary px-3.5 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-opacity hover:opacity-90",
         REVEAL_FOCUS_RING,
       )}
     >
@@ -339,7 +343,8 @@ const RevealDoneControls = ({
         aria-label="重播显影动画"
         onClick={onRetry}
         className={cn(
-          "absolute top-3 right-3 inline-flex h-7 cursor-pointer items-center gap-1 rounded-full border border-solid border-border/75 bg-popover/90 px-2.5 font-sans text-[11px] font-medium text-popover-foreground shadow-xs backdrop-blur-xl transition-colors hover:bg-popover dark:border-white/12",
+          "absolute top-2.5 right-2.5 inline-flex h-6 cursor-pointer items-center gap-1 rounded-full px-2 font-sans text-[11px] font-medium transition-colors hover:bg-background/95 dark:hover:bg-neutral-900/90",
+          OVERLAY_CHIP,
           REVEAL_FOCUS_RING,
         )}
       >
@@ -348,7 +353,7 @@ const RevealDoneControls = ({
       </button>
     )}
     {actions && (
-      <div className="absolute right-3 bottom-3 flex items-center gap-1.5">{actions}</div>
+      <div className="absolute right-2.5 bottom-2.5 flex items-center gap-1.5">{actions}</div>
     )}
   </>
 );
@@ -368,7 +373,12 @@ const RevealOverlays = (p: RevealOverlaysProps) => {
   return (
     <>
       {p.badge && (
-        <span className="pointer-events-none absolute top-3 left-3 inline-flex items-center rounded-full border border-solid border-border/75 bg-popover/88 px-2.5 py-0.5 font-mono text-[10px] font-medium text-popover-foreground shadow-xs backdrop-blur-xl dark:border-white/12">
+        <span
+          className={cn(
+            "pointer-events-none absolute top-2.5 left-2.5 inline-flex h-6 items-center rounded-full px-2 font-mono text-[10px] font-medium",
+            OVERLAY_CHIP,
+          )}
+        >
           {p.badge}
         </span>
       )}
@@ -983,7 +993,7 @@ const RevealCaption = ({
 
 const buildStageClass = (radius: RevealViewOptions["radius"]) =>
   cn(
-    "relative w-full overflow-hidden border border-solid border-border/75 bg-secondary/45 dark:border-white/10",
+    "relative w-full overflow-hidden border border-solid border-border/70 bg-muted/50 dark:border-white/10 dark:bg-white/[0.03]",
     REVEAL_STAGE_RADIUS[radius],
   );
 

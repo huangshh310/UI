@@ -1,36 +1,51 @@
 "use client";
 
 /**
- * AiResponse 内部视觉子部件：状态光珠、工具折叠抽屉、参考来源折叠列表与操作按钮栏。
+ * AiResponse 内部视觉子部件：极简状态微标、工具折叠抽屉与参考来源折叠列表。
  */
 import { cn } from "@matt-ui/utils";
-import { AlertCircle, Check, ChevronDown, ExternalLink, Loader2, Wrench } from "lucide-react";
+import {
+  AlertCircle,
+  Check,
+  ChevronDown,
+  ExternalLink,
+  Link2,
+  Loader2,
+  Wrench,
+} from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import { hostOf, isExternalHref, safeHref } from "./ai-response-safe.js";
 import type { AiResponseSource, AiResponseStatus, AiResponseTool } from "./ai-response.types.js";
-import { AI_RESPONSE_FOCUS_RING, AI_RESPONSE_SPRING } from "./ai-response.variants.js";
+import {
+  AI_RESPONSE_COLLAPSE_TRANSITION,
+  AI_RESPONSE_FOCUS_RING,
+  AI_RESPONSE_TRIGGER_BTN,
+} from "./ai-response.variants.js";
 
 export const ResponseStatusDot = ({ status }: { status: AiResponseStatus }) => {
-  const active = status === "generating" || status === "streaming";
-  if (status === "error")
-    return <AlertCircle aria-hidden="true" className="size-3.5 text-destructive" />;
-  return (
-    <span className="relative flex size-2.5 items-center justify-center">
-      {active && (
-        <span className="absolute inset-0 animate-ping rounded-full bg-signal/45 motion-reduce:hidden" />
-      )}
-      <span
-        className={cn("relative size-2 rounded-full", active ? "bg-signal" : "bg-foreground/75")}
+  if (status === "error") {
+    return <AlertCircle aria-hidden="true" className="size-3.5 shrink-0 text-destructive" />;
+  }
+  if (status === "generating" || status === "streaming") {
+    return (
+      <Loader2
+        aria-hidden="true"
+        className="size-3.5 shrink-0 animate-spin text-signal motion-reduce:animate-none"
       />
+    );
+  }
+  return (
+    <span aria-hidden="true" className="inline-flex size-3.5 shrink-0 items-center justify-center">
+      <span className="size-1.5 rounded-full bg-muted-foreground/55 dark:bg-white/35" />
     </span>
   );
 };
 
 export const ResponseGeneratingSkeleton = ({ label }: { label: string }) => (
   <div className="space-y-2.5 py-1" aria-busy="true">
-    <div className="h-3 w-3/4 animate-pulse rounded-full bg-secondary/95 dark:bg-white/10" />
-    <div className="h-3 w-1/2 animate-pulse rounded-full bg-secondary/95 dark:bg-white/10" />
+    <div className="h-2.5 w-3/4 animate-pulse rounded-full bg-muted dark:bg-white/10" />
+    <div className="h-2.5 w-1/2 animate-pulse rounded-full bg-muted dark:bg-white/10" />
     <p className="m-0 pt-1 text-xs text-muted-foreground">{label}</p>
   </div>
 );
@@ -48,10 +63,10 @@ const ToolStatusGlyph = ({ status }: { status: AiResponseTool["status"] }) => {
 const ToolListRow = ({ tool }: { tool: AiResponseTool }) => (
   <li
     className={cn(
-      "flex items-center justify-between gap-3 rounded-xl border border-solid px-3 py-2 text-xs",
+      "flex items-center justify-between gap-3 rounded-lg border border-solid px-3 py-2 text-xs",
       tool.status === "error"
-        ? "border-destructive/35 bg-destructive/6 dark:border-destructive dark:bg-destructive/12"
-        : "border-border/75 bg-secondary/35 dark:border-white/10 dark:bg-white/5",
+        ? "border-destructive/35 bg-destructive/[0.06] dark:border-destructive/50 dark:bg-destructive/12"
+        : "border-border/80 bg-muted/35 dark:border-white/10 dark:bg-white/[0.03]",
     )}
   >
     <div className="flex min-w-0 items-center gap-2">
@@ -86,25 +101,25 @@ export const ResponseToolsPanel = ({
         type="button"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className={cn(
-          "inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-solid border-border/80 bg-secondary/55 px-2.5 py-1 font-sans text-xs text-muted-foreground transition-colors hover:border-foreground/22 hover:text-foreground dark:border-white/10 dark:bg-white/6 dark:hover:border-white/22",
-          AI_RESPONSE_FOCUS_RING,
-        )}
+        className={cn("-ml-2", AI_RESPONSE_TRIGGER_BTN)}
       >
-        <Wrench aria-hidden="true" className="size-3" />
+        <Wrench aria-hidden="true" className="size-3.5 text-muted-foreground/80" />
         <span className="tabular-nums">已调用 {tools.length} 项工具</span>
         <ChevronDown
           aria-hidden="true"
-          className={cn("size-3 transition-transform", open && "rotate-180")}
+          className={cn(
+            "size-3.5 transition-transform duration-(--ui-duration-fast)",
+            open && "rotate-180",
+          )}
         />
       </button>
       <AnimatePresence initial={false}>
         {open && (
           <motion.ul
-            initial={reduced ? { opacity: 1 } : { opacity: 0, height: 0 }}
+            initial={reduced ? false : { opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={reduced ? { opacity: 0 } : { opacity: 0, height: 0 }}
-            transition={reduced ? { duration: 0 } : AI_RESPONSE_SPRING}
+            transition={reduced ? { duration: 0 } : AI_RESPONSE_COLLAPSE_TRANSITION}
             className="m-0 mt-2 list-none space-y-1.5 overflow-hidden p-0"
           >
             {tools.map((tool) => (
@@ -134,13 +149,13 @@ const SourceCardRow = ({
         target={external ? "_blank" : undefined}
         rel={external ? "noopener noreferrer" : undefined}
         className={cn(
-          "group flex flex-col gap-1 rounded-xl border border-solid border-border/75 bg-secondary/35 p-2.5 text-left no-underline transition-colors hover:border-foreground/22 hover:bg-secondary/65 dark:border-white/10 dark:bg-white/5 dark:hover:border-white/22 dark:hover:bg-white/9",
+          "group flex flex-col gap-1 rounded-lg border border-solid border-border/80 bg-muted/30 p-2.5 text-left no-underline transition-colors hover:border-foreground/20 hover:bg-muted/60 dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-white/20 dark:hover:bg-white/[0.06]",
           AI_RESPONSE_FOCUS_RING,
         )}
       >
         <div className="flex items-center justify-between gap-2">
           <span className="flex min-w-0 items-center gap-1.5 text-xs font-medium text-foreground">
-            <span className="inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-secondary font-mono text-[10px] text-muted-foreground dark:bg-white/12">
+            <span className="inline-flex size-4 shrink-0 items-center justify-center rounded-md bg-muted font-mono text-[10px] text-muted-foreground dark:bg-white/10">
               {index + 1}
             </span>
             <span className="truncate">{source.title}</span>
@@ -173,11 +188,11 @@ const SourcesAnimatedList = ({
   <AnimatePresence initial={false}>
     {open && (
       <motion.ol
-        initial={reduced ? { opacity: 1 } : { opacity: 0, height: 0 }}
+        initial={reduced ? false : { opacity: 0, height: 0 }}
         animate={{ opacity: 1, height: "auto" }}
         exit={reduced ? { opacity: 0 } : { opacity: 0, height: 0 }}
-        transition={reduced ? { duration: 0 } : AI_RESPONSE_SPRING}
-        className="m-0 mt-2.5 grid list-none gap-2 overflow-hidden p-0 sm:grid-cols-2"
+        transition={reduced ? { duration: 0 } : AI_RESPONSE_COLLAPSE_TRANSITION}
+        className="m-0 mt-2 grid list-none gap-2 overflow-hidden p-0 sm:grid-cols-2"
       >
         {items.map((item, index) => (
           <SourceCardRow
@@ -212,7 +227,7 @@ export const ResponseSourcesPanel = ({
   return (
     <div
       className={cn(
-        "mt-3 border-t border-solid border-border/70 pt-3 dark:border-white/10",
+        "mt-3 border-t border-solid border-border/75 pt-2.5 dark:border-white/10",
         className,
       )}
     >
@@ -220,15 +235,16 @@ export const ResponseSourcesPanel = ({
         type="button"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className={cn(
-          "inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-solid border-transparent bg-transparent px-1 py-0.5 font-sans text-xs font-medium text-muted-foreground transition-colors hover:text-foreground",
-          AI_RESPONSE_FOCUS_RING,
-        )}
+        className={cn("-ml-2", AI_RESPONSE_TRIGGER_BTN)}
       >
+        <Link2 aria-hidden="true" className="size-3.5 text-muted-foreground/80" />
         <span className="tabular-nums">参考来源（{validSources.length}）</span>
         <ChevronDown
           aria-hidden="true"
-          className={cn("size-3.5 transition-transform", open && "rotate-180")}
+          className={cn(
+            "size-3.5 transition-transform duration-(--ui-duration-fast)",
+            open && "rotate-180",
+          )}
         />
       </button>
       <SourcesAnimatedList open={open} reduced={reduced} items={validSources} />

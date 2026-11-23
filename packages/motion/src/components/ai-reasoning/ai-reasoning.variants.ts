@@ -1,7 +1,15 @@
 /**
- * AiReasoning 视觉变体与默认思维链步骤。
+ * AiReasoning 视觉变体、动效参数与默认思维链步骤。
  */
 import type { AiReasoningStep, AiReasoningVariant } from "./ai-reasoning.types.js";
+
+export const REASONING_FOCUS_RING =
+  "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
+
+export const REASONING_COLLAPSE_TRANSITION = {
+  duration: 0.18,
+  ease: [0.22, 1, 0.36, 1] as const,
+};
 
 export const REASONING_DEFAULT_STEPS: AiReasoningStep[] = [
   {
@@ -28,7 +36,8 @@ export const REASONING_DEFAULT_STEPS: AiReasoningStep[] = [
 ];
 
 export const REASONING_SHELL_CLASS: Record<AiReasoningVariant, string> = {
-  card: "rounded-2xl border border-solid border-border/85 bg-card text-card-foreground shadow-xs",
-  ghost: "rounded-xl border border-solid border-border/65 bg-secondary/35 text-card-foreground",
+  card: "rounded-xl border border-solid border-border bg-card text-card-foreground shadow-xs dark:border-white/10",
+  ghost:
+    "rounded-xl border border-solid border-border/70 bg-muted/40 text-card-foreground dark:border-white/10 dark:bg-white/[0.03]",
   inline: "rounded-lg border-0 bg-transparent text-foreground",
 };

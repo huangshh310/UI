@@ -1,21 +1,21 @@
 "use client";
 
 /**
- * AiVoiceStage：C 端全模态实时语音交互舞台（参考 ChatGPT Advanced Voice / Gemini Live），
- * 复用流体极光 AiOrb、实时字幕与触感圆形通话控制栏。
+ * AiVoiceStage：全模态实时语音交互舞台（对标 ChatGPT Advanced Voice / ElevenLabs / Apple Intelligence），
+ * 融合光学流体状态球、1px 发丝声纹涟漪、微声波指示条、居中实时字幕流与悬浮通话控制岛。
  */
 import { cn } from "@matt-ui/utils";
 import { useState, type ReactNode } from "react";
 import type { AiOrbState, AiOrbVariant } from "../ai-orb/index.js";
-import {
-  EndedCard,
-  OrbStageCenter,
-  StageCaption,
-  StageHeader,
-  VoiceControls,
-} from "./ai-voice-stage.parts.js";
+import { EndedCard, StageCaption, StageHeader, VoiceControls } from "./ai-voice-stage.parts.js";
+import { OrbStageCenter } from "./ai-voice-stage.stage.js";
 import type { AiVoiceStageProps, AiVoiceStageVariant } from "./ai-voice-stage.types.js";
-import { VOICE_STAGE_SURFACE, VOICE_STATE_CYCLE } from "./ai-voice-stage.variants.js";
+import {
+  VOICE_AMBIENT_CARD,
+  VOICE_AMBIENT_OBSIDIAN,
+  VOICE_STAGE_SURFACE,
+  VOICE_STATE_CYCLE,
+} from "./ai-voice-stage.variants.js";
 
 const VOICE_DEFAULT_CAPTION =
   "“明天东京多云转晴，21°C，很适合上午去代官山散步，要我帮你记进日程吗？”";
@@ -83,18 +83,27 @@ interface StageBodyProps {
 const StageBody = (p: StageBodyProps) => {
   const obsidian = p.variant === "obsidian";
   const compact = p.variant === "compact";
+  const ambient = obsidian ? VOICE_AMBIENT_OBSIDIAN[p.state] : VOICE_AMBIENT_CARD[p.state];
+
   return (
     <div
       data-slot="ai-voice-stage"
       data-state={p.state}
       data-variant={p.variant}
       className={cn(
-        "relative flex w-full flex-col items-center overflow-hidden border border-solid text-center",
-        compact ? "max-w-md gap-3.5 p-4" : "max-w-sm gap-5 p-6",
+        "relative flex w-full max-w-xl flex-col items-center overflow-hidden border border-solid text-center",
+        compact ? "gap-4 p-5" : "gap-6 px-7 py-6 sm:px-9 sm:py-7",
         VOICE_STAGE_SURFACE[p.variant],
         p.className,
       )}
     >
+      {!compact && (
+        <span
+          aria-hidden="true"
+          style={{ background: ambient }}
+          className="pointer-events-none absolute inset-0"
+        />
+      )}
       <StageHeader
         assistantName={p.assistantName}
         modelLabel={p.modelLabel}
@@ -111,7 +120,7 @@ const StageBody = (p: StageBodyProps) => {
       {p.showCaption && (
         <StageCaption caption={p.caption} speaker={p.speaker} obsidian={obsidian} />
       )}
-      <div>{p.controls}</div>
+      <div className="relative pt-1">{p.controls}</div>
     </div>
   );
 };

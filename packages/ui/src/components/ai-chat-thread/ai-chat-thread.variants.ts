@@ -4,12 +4,13 @@
 import { cva } from "class-variance-authority";
 import type { AiChatMessage } from "./ai-chat-thread.types.js";
 
-export const chatThreadVariants = cva("flex w-full max-w-xl flex-col text-card-foreground", {
+export const chatThreadVariants = cva("flex w-full flex-col text-card-foreground", {
   variants: {
     variant: {
-      card: "gap-4 rounded-2xl border border-solid border-border/85 bg-card p-5 shadow-xs",
-      seamless: "gap-4 bg-transparent p-1",
-      compact: "gap-3 rounded-xl border border-solid border-border/80 bg-card p-3.5 shadow-xs",
+      card: "gap-5 rounded-xl border border-solid border-border bg-card p-5 shadow-xs dark:border-white/10",
+      seamless: "gap-5 bg-transparent p-0",
+      compact:
+        "gap-3.5 rounded-xl border border-solid border-border bg-card p-3.5 shadow-xs dark:border-white/10",
     },
   },
   defaultVariants: {
@@ -18,7 +19,7 @@ export const chatThreadVariants = cva("flex w-full max-w-xl flex-col text-card-f
 });
 
 export const CHAT_ACTION_BTN =
-  "inline-flex size-6.5 cursor-pointer items-center justify-center rounded-lg border-0 bg-transparent text-muted-foreground transition-colors hover:bg-accent hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring";
+  "inline-flex size-7 cursor-pointer items-center justify-center rounded-md border border-solid border-transparent bg-transparent text-muted-foreground transition-colors hover:bg-accent hover:text-foreground outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
 
 export const CHAT_DEFAULT_MESSAGES: AiChatMessage[] = [
   {

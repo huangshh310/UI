@@ -1,5 +1,5 @@
 /**
- * Conversation 的样式定义：极简/发丝画布/毛玻璃视口、阅读栏宽阶梯与悬浮归位触发器。
+ * Conversation 的样式定义：极简/利落画布/柔光视口、阅读栏宽阶梯与克制悬浮归位触发器。
  */
 import { cva } from "class-variance-authority";
 
@@ -13,9 +13,9 @@ export const conversationRootVariants = cva(
       variant: {
         minimal: "",
         surface:
-          "rounded-2xl border border-solid border-border/80 bg-background shadow-xs dark:border-white/10",
+          "rounded-xl border border-solid border-border bg-background shadow-xs dark:border-white/10",
         glass:
-          "rounded-2xl border border-solid border-border/75 bg-card/75 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-card/65",
+          "rounded-xl border border-solid border-border bg-card/85 shadow-xs backdrop-blur-xl dark:border-white/10 dark:bg-card/75",
       },
     },
     defaultVariants: {
@@ -27,8 +27,8 @@ export const conversationRootVariants = cva(
 export const conversationContentVariants = cva("mx-auto flex w-full flex-1 flex-col", {
   variants: {
     size: {
-      sm: "max-w-xl gap-4 px-3.5 py-4",
-      md: "max-w-2xl gap-6 px-4 py-6",
+      sm: "max-w-xl gap-4 px-4 py-4",
+      md: "max-w-2xl gap-6 px-5 py-6",
       lg: "max-w-3xl gap-7 px-6 py-7",
     },
   },
@@ -54,12 +54,12 @@ export const conversationEmptyVariants = cva(
 );
 
 export const conversationScrollButtonVariants = cva(
-  `pointer-events-auto inline-flex cursor-pointer items-center justify-center rounded-full border border-solid border-border/80 bg-popover/96 font-sans text-xs font-medium text-popover-foreground shadow-[0_12px_32px_-8px_rgba(0,0,0,0.18),0_2px_6px_-1px_rgba(0,0,0,0.06)] backdrop-blur-xl transition-[transform,background-color,border-color,box-shadow] duration-(--ui-duration-fast) hover:-translate-y-0.5 hover:border-foreground/22 hover:bg-popover active:scale-98 dark:border-white/12 dark:shadow-[0_16px_40px_-10px_rgba(0,0,0,0.75)] dark:hover:border-white/22 ${CONVERSATION_FOCUS_RING}`,
+  `pointer-events-auto inline-flex cursor-pointer items-center justify-center rounded-full border border-solid border-border bg-popover/98 font-sans text-xs font-medium text-popover-foreground shadow-[0_6px_20px_-6px_rgba(0,0,0,0.12),0_2px_4px_-1px_rgba(0,0,0,0.04)] backdrop-blur-xl transition-colors duration-(--ui-duration-fast) hover:border-foreground/20 hover:bg-accent/60 dark:border-white/10 dark:shadow-[0_12px_28px_-8px_rgba(0,0,0,0.6)] dark:hover:border-white/20 ${CONVERSATION_FOCUS_RING}`,
   {
     variants: {
       variant: {
         pill: "h-8 gap-1.5 px-3",
-        icon: "relative size-8.5",
+        icon: "relative size-8",
       },
     },
     defaultVariants: {

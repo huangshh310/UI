@@ -12,6 +12,7 @@ import {
   ChevronDown,
   Copy,
   ExternalLink,
+  Link2,
   Loader2,
   RotateCcw,
   ThumbsDown,
@@ -24,20 +25,20 @@ import { createContext, type ReactNode, useContext, useState } from "react";
 export const AI_RESPONSE_FOCUS_RING =
   "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
 
-export const AI_RESPONSE_SPRING = {
-  type: "spring" as const,
-  stiffness: 420,
-  damping: 32,
-  mass: 0.8,
+export const AI_RESPONSE_COLLAPSE_TRANSITION = {
+  duration: 0.18,
+  ease: [0.22, 1, 0.36, 1] as const,
 };
 
-export const AI_RESPONSE_ACTION_BTN = `inline-flex size-7 cursor-pointer items-center justify-center rounded-lg border border-solid border-transparent bg-transparent text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:bg-secondary/90 hover:text-foreground dark:hover:bg-white/10 ${AI_RESPONSE_FOCUS_RING}`;
+export const AI_RESPONSE_ACTION_BTN = `inline-flex size-7 cursor-pointer items-center justify-center rounded-lg border border-solid border-transparent bg-transparent text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:bg-muted hover:text-foreground dark:hover:bg-white/[0.08] ${AI_RESPONSE_FOCUS_RING}`;
+
+export const AI_RESPONSE_TRIGGER_BTN = `inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-solid border-transparent bg-transparent px-2 py-1 font-sans text-xs font-medium text-muted-foreground transition-colors duration-(--ui-duration-fast) hover:bg-muted/70 hover:text-foreground dark:hover:bg-white/[0.06] ${AI_RESPONSE_FOCUS_RING}`;
 
 export const AI_RESPONSE_SHELL_VARIANT: Record<AiResponseVariant, string> = {
-  card: "rounded-[22px] border border-solid border-border/80 bg-card/95 shadow-xs dark:border-white/10 dark:bg-card/85",
+  card: "rounded-xl border border-solid border-border bg-card shadow-xs dark:border-white/10",
   ghost: "border-0 bg-transparent",
   glass:
-    "rounded-[22px] border border-solid border-border/75 bg-popover/92 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-popover/82",
+    "rounded-xl border border-solid border-border bg-popover/90 shadow-xs backdrop-blur-xl dark:border-white/10 dark:bg-popover/85",
 };
 
 export const AI_RESPONSE_SHELL_PADDING: Record<AiResponseSize, string> = {
@@ -224,9 +225,9 @@ const ResponseActionBar = ({
 const INLINE_RE = /(`[^`]+`|\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\)|\*[^*\n]+\*)/g;
 
 const HEADING_CLASSES = [
-  "mt-5 mb-2 text-base font-semibold tracking-tight text-foreground first:mt-0",
-  "mt-4 mb-1.5 text-[15px] font-semibold tracking-tight text-foreground first:mt-0",
-  "mt-3.5 mb-1 text-sm font-semibold text-foreground first:mt-0",
+  "mt-6 mb-2.5 text-lg font-semibold tracking-tight text-foreground first:mt-0",
+  "mt-5 mb-2 text-[15px] font-semibold tracking-tight text-foreground first:mt-0",
+  "mt-4 mb-1.5 text-sm font-semibold tracking-tight text-foreground first:mt-0",
 ];
 
 const renderLinkToken = (token: string, key: string): ReactNode => {
@@ -262,7 +263,7 @@ const renderInline = (text: string, prefix: string): ReactNode[] => {
       parts.push(
         <code
           key={key}
-          className="rounded-md bg-secondary/80 px-1.5 py-0.5 font-mono text-[12px] text-foreground"
+          className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[12px] text-foreground dark:bg-white/[0.08]"
         >
           {token.slice(1, -1)}
         </code>,
@@ -299,20 +300,20 @@ const MarkdownCodeBlock = ({ lang, code }: { lang: string; code: string }) => {
   };
 
   return (
-    <div className="my-3 overflow-hidden rounded-xl border border-solid border-border/80 bg-secondary/40 dark:border-white/10 dark:bg-white/5">
-      <div className="flex items-center justify-between border-b border-solid border-border/70 px-3.5 py-2 dark:border-white/10">
+    <div className="my-3.5 overflow-hidden rounded-lg border border-solid border-border bg-muted/30 dark:border-white/10 dark:bg-white/[0.03]">
+      <div className="flex items-center justify-between border-b border-solid border-border/80 bg-muted/70 px-3.5 py-1.5 dark:border-white/10 dark:bg-white/[0.05]">
         <span className="font-mono text-[11px] text-muted-foreground">{lang || "code"}</span>
         <button
           type="button"
           onClick={handleCopy}
           aria-label="复制代码块"
-          className="inline-flex cursor-pointer items-center gap-1 rounded-md border border-solid border-transparent bg-transparent px-1.5 py-0.5 font-sans text-[11px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset"
+          className={`inline-flex cursor-pointer items-center gap-1 rounded-md border border-solid border-transparent bg-transparent px-1.5 py-0.5 font-sans text-[11px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground ${AI_RESPONSE_FOCUS_RING}`}
         >
           {copied ? <Check className="size-3" /> : <Copy className="size-3" />}
           <span>{copied ? "已复制" : "复制"}</span>
         </button>
       </div>
-      <pre className="m-0 overflow-x-auto p-3.5 font-mono text-[12px] leading-relaxed text-foreground">
+      <pre className="m-0 overflow-x-auto px-3.5 py-3 font-mono text-[12.5px] leading-relaxed text-foreground">
         <code>{code}</code>
       </pre>
     </div>
@@ -328,10 +329,10 @@ const MarkdownTableBlock = ({
   rows: string[][];
   index: number;
 }) => (
-  <div className="my-3 overflow-x-auto rounded-xl border border-solid border-border/80 dark:border-white/10">
+  <div className="my-3.5 overflow-x-auto rounded-lg border border-solid border-border dark:border-white/10">
     <table className="w-full border-collapse text-left text-xs">
       <thead>
-        <tr className="border-b border-solid border-border/80 bg-secondary/40">
+        <tr className="border-b border-solid border-border/80 bg-muted/60 dark:border-white/10 dark:bg-white/[0.05]">
           {headers.map((h, hi) => (
             <th key={hi} className="px-3 py-2 font-medium text-foreground">
               {renderInline(h, `th-${index}-${hi}`)}
@@ -341,7 +342,10 @@ const MarkdownTableBlock = ({
       </thead>
       <tbody>
         {rows.map((row, ri) => (
-          <tr key={ri} className="border-b border-solid border-border/60 last:border-b-0">
+          <tr
+            key={ri}
+            className="border-b border-solid border-border/60 last:border-b-0 dark:border-white/10"
+          >
             {row.map((cell, ci) => (
               <td key={ci} className="px-3 py-2 text-muted-foreground">
                 {renderInline(cell, `td-${index}-${ri}-${ci}`)}
@@ -385,8 +389,23 @@ const MarkdownListBlock = ({
 const StreamingCaret = () => (
   <span
     aria-hidden="true"
-    className="ml-1 inline-block h-[1.05em] w-[2px] animate-pulse bg-foreground align-[-0.15em]"
+    className="ml-0.5 inline-block h-[1em] w-[1.5px] animate-pulse rounded-full bg-signal align-[-0.12em] motion-reduce:animate-none"
   />
+);
+
+const MarkdownQuoteBlock = ({
+  text,
+  index,
+  caret,
+}: {
+  text: string;
+  index: number;
+  caret: ReactNode;
+}) => (
+  <blockquote className="my-3 border-l-2 border-solid border-border pl-3.5 text-[13px] leading-relaxed text-muted-foreground dark:border-white/20">
+    {renderInline(text, `q-${index}`)}
+    {caret}
+  </blockquote>
 );
 
 const renderBlock = (block: MarkdownBlock, index: number, showCaret: boolean): ReactNode => {
@@ -395,7 +414,12 @@ const renderBlock = (block: MarkdownBlock, index: number, showCaret: boolean): R
     return <MarkdownCodeBlock key={index} lang={block.lang} code={block.code} />;
   }
   if (block.type === "hr") {
-    return <hr key={index} className="my-4 border-0 border-t border-solid border-border/80" />;
+    return (
+      <hr
+        key={index}
+        className="my-4 border-0 border-t border-solid border-border/80 dark:border-white/10"
+      />
+    );
   }
   if (block.type === "heading") {
     return (
@@ -406,15 +430,7 @@ const renderBlock = (block: MarkdownBlock, index: number, showCaret: boolean): R
     );
   }
   if (block.type === "quote") {
-    return (
-      <blockquote
-        key={index}
-        className="my-3 border-l-2 border-solid border-border pl-3.5 text-[13px] leading-relaxed text-muted-foreground"
-      >
-        {renderInline(block.text, `q-${index}`)}
-        {caret}
-      </blockquote>
-    );
+    return <MarkdownQuoteBlock key={index} text={block.text} index={index} caret={caret} />;
   }
   if (block.type === "list") {
     return (
@@ -562,25 +578,28 @@ const parseMarkdownBlocks = (content: string): MarkdownBlock[] => {
   return blocks;
 };
 const ResponseStatusDot = ({ status }: { status: AiResponseStatus }) => {
-  const active = status === "generating" || status === "streaming";
-  if (status === "error")
-    return <AlertCircle aria-hidden="true" className="size-3.5 text-destructive" />;
-  return (
-    <span className="relative flex size-2.5 items-center justify-center">
-      {active && (
-        <span className="absolute inset-0 animate-ping rounded-full bg-signal/45 motion-reduce:hidden" />
-      )}
-      <span
-        className={cn("relative size-2 rounded-full", active ? "bg-signal" : "bg-foreground/75")}
+  if (status === "error") {
+    return <AlertCircle aria-hidden="true" className="size-3.5 shrink-0 text-destructive" />;
+  }
+  if (status === "generating" || status === "streaming") {
+    return (
+      <Loader2
+        aria-hidden="true"
+        className="size-3.5 shrink-0 animate-spin text-signal motion-reduce:animate-none"
       />
+    );
+  }
+  return (
+    <span aria-hidden="true" className="inline-flex size-3.5 shrink-0 items-center justify-center">
+      <span className="size-1.5 rounded-full bg-muted-foreground/55 dark:bg-white/35" />
     </span>
   );
 };
 
 const ResponseGeneratingSkeleton = ({ label }: { label: string }) => (
   <div className="space-y-2.5 py-1" aria-busy="true">
-    <div className="h-3 w-3/4 animate-pulse rounded-full bg-secondary/95 dark:bg-white/10" />
-    <div className="h-3 w-1/2 animate-pulse rounded-full bg-secondary/95 dark:bg-white/10" />
+    <div className="h-2.5 w-3/4 animate-pulse rounded-full bg-muted dark:bg-white/10" />
+    <div className="h-2.5 w-1/2 animate-pulse rounded-full bg-muted dark:bg-white/10" />
     <p className="m-0 pt-1 text-xs text-muted-foreground">{label}</p>
   </div>
 );
@@ -598,10 +617,10 @@ const ToolStatusGlyph = ({ status }: { status: AiResponseTool["status"] }) => {
 const ToolListRow = ({ tool }: { tool: AiResponseTool }) => (
   <li
     className={cn(
-      "flex items-center justify-between gap-3 rounded-xl border border-solid px-3 py-2 text-xs",
+      "flex items-center justify-between gap-3 rounded-lg border border-solid px-3 py-2 text-xs",
       tool.status === "error"
-        ? "border-destructive/35 bg-destructive/6 dark:border-destructive dark:bg-destructive/12"
-        : "border-border/75 bg-secondary/35 dark:border-white/10 dark:bg-white/5",
+        ? "border-destructive/35 bg-destructive/[0.06] dark:border-destructive/50 dark:bg-destructive/12"
+        : "border-border/80 bg-muted/35 dark:border-white/10 dark:bg-white/[0.03]",
     )}
   >
     <div className="flex min-w-0 items-center gap-2">
@@ -636,25 +655,25 @@ const ResponseToolsPanel = ({
         type="button"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className={cn(
-          "inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-solid border-border/80 bg-secondary/55 px-2.5 py-1 font-sans text-xs text-muted-foreground transition-colors hover:border-foreground/22 hover:text-foreground dark:border-white/10 dark:bg-white/6 dark:hover:border-white/22",
-          AI_RESPONSE_FOCUS_RING,
-        )}
+        className={cn("-ml-2", AI_RESPONSE_TRIGGER_BTN)}
       >
-        <Wrench aria-hidden="true" className="size-3" />
+        <Wrench aria-hidden="true" className="size-3.5 text-muted-foreground/80" />
         <span className="tabular-nums">已调用 {tools.length} 项工具</span>
         <ChevronDown
           aria-hidden="true"
-          className={cn("size-3 transition-transform", open && "rotate-180")}
+          className={cn(
+            "size-3.5 transition-transform duration-(--ui-duration-fast)",
+            open && "rotate-180",
+          )}
         />
       </button>
       <AnimatePresence initial={false}>
         {open && (
           <motion.ul
-            initial={reduced ? { opacity: 1 } : { opacity: 0, height: 0 }}
+            initial={reduced ? false : { opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={reduced ? { opacity: 0 } : { opacity: 0, height: 0 }}
-            transition={reduced ? { duration: 0 } : AI_RESPONSE_SPRING}
+            transition={reduced ? { duration: 0 } : AI_RESPONSE_COLLAPSE_TRANSITION}
             className="m-0 mt-2 list-none space-y-1.5 overflow-hidden p-0"
           >
             {tools.map((tool) => (
@@ -684,13 +703,13 @@ const SourceCardRow = ({
         target={external ? "_blank" : undefined}
         rel={external ? "noopener noreferrer" : undefined}
         className={cn(
-          "group flex flex-col gap-1 rounded-xl border border-solid border-border/75 bg-secondary/35 p-2.5 text-left no-underline transition-colors hover:border-foreground/22 hover:bg-secondary/65 dark:border-white/10 dark:bg-white/5 dark:hover:border-white/22 dark:hover:bg-white/9",
+          "group flex flex-col gap-1 rounded-lg border border-solid border-border/80 bg-muted/30 p-2.5 text-left no-underline transition-colors hover:border-foreground/20 hover:bg-muted/60 dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-white/20 dark:hover:bg-white/[0.06]",
           AI_RESPONSE_FOCUS_RING,
         )}
       >
         <div className="flex items-center justify-between gap-2">
           <span className="flex min-w-0 items-center gap-1.5 text-xs font-medium text-foreground">
-            <span className="inline-flex size-4 shrink-0 items-center justify-center rounded-full bg-secondary font-mono text-[10px] text-muted-foreground dark:bg-white/12">
+            <span className="inline-flex size-4 shrink-0 items-center justify-center rounded-md bg-muted font-mono text-[10px] text-muted-foreground dark:bg-white/10">
               {index + 1}
             </span>
             <span className="truncate">{source.title}</span>
@@ -723,11 +742,11 @@ const SourcesAnimatedList = ({
   <AnimatePresence initial={false}>
     {open && (
       <motion.ol
-        initial={reduced ? { opacity: 1 } : { opacity: 0, height: 0 }}
+        initial={reduced ? false : { opacity: 0, height: 0 }}
         animate={{ opacity: 1, height: "auto" }}
         exit={reduced ? { opacity: 0 } : { opacity: 0, height: 0 }}
-        transition={reduced ? { duration: 0 } : AI_RESPONSE_SPRING}
-        className="m-0 mt-2.5 grid list-none gap-2 overflow-hidden p-0 sm:grid-cols-2"
+        transition={reduced ? { duration: 0 } : AI_RESPONSE_COLLAPSE_TRANSITION}
+        className="m-0 mt-2 grid list-none gap-2 overflow-hidden p-0 sm:grid-cols-2"
       >
         {items.map((item, index) => (
           <SourceCardRow
@@ -762,7 +781,7 @@ const ResponseSourcesPanel = ({
   return (
     <div
       className={cn(
-        "mt-3 border-t border-solid border-border/70 pt-3 dark:border-white/10",
+        "mt-3 border-t border-solid border-border/75 pt-2.5 dark:border-white/10",
         className,
       )}
     >
@@ -770,15 +789,16 @@ const ResponseSourcesPanel = ({
         type="button"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className={cn(
-          "inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-solid border-transparent bg-transparent px-1 py-0.5 font-sans text-xs font-medium text-muted-foreground transition-colors hover:text-foreground",
-          AI_RESPONSE_FOCUS_RING,
-        )}
+        className={cn("-ml-2", AI_RESPONSE_TRIGGER_BTN)}
       >
+        <Link2 aria-hidden="true" className="size-3.5 text-muted-foreground/80" />
         <span className="tabular-nums">参考来源（{validSources.length}）</span>
         <ChevronDown
           aria-hidden="true"
-          className={cn("size-3.5 transition-transform", open && "rotate-180")}
+          className={cn(
+            "size-3.5 transition-transform duration-(--ui-duration-fast)",
+            open && "rotate-180",
+          )}
         />
       </button>
       <SourcesAnimatedList open={open} reduced={reduced} items={validSources} />
@@ -900,11 +920,11 @@ export const AiResponseHeader = ({
     <div className={cn("mb-3 flex items-center justify-between gap-2 select-none", className)}>
       <div className="flex min-w-0 items-center gap-2">
         <ResponseStatusDot status={ctx.status} />
-        <span className="truncate text-xs font-medium tracking-tight text-foreground">
+        <span className="truncate text-[13px] font-medium tracking-tight text-foreground">
           {model ?? ctx.model}
         </span>
         {badge && (
-          <span className="shrink-0 rounded-md border border-solid border-border/70 bg-secondary/70 px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground dark:border-white/10 dark:bg-white/8">
+          <span className="shrink-0 rounded-md bg-muted px-1.5 py-0.5 font-mono text-[11px] text-muted-foreground dark:bg-white/[0.07]">
             {badge}
           </span>
         )}
@@ -925,7 +945,7 @@ export const AiResponseContent = ({ className }: AiResponseContentProps) => {
       <div
         role="alert"
         className={cn(
-          "flex flex-wrap items-center justify-between gap-3 rounded-xl border border-solid border-destructive/35 bg-destructive/8 px-3.5 py-2.5 text-xs text-foreground dark:border-destructive dark:bg-destructive/14",
+          "flex flex-wrap items-center justify-between gap-3 rounded-lg border border-solid border-destructive/35 bg-destructive/[0.06] px-3.5 py-2.5 text-xs text-foreground dark:border-destructive/50 dark:bg-destructive/12",
           className,
         )}
       >
@@ -935,7 +955,7 @@ export const AiResponseContent = ({ className }: AiResponseContentProps) => {
             type="button"
             onClick={onRegenerate}
             className={cn(
-              "cursor-pointer rounded-full border border-solid border-destructive/40 bg-transparent px-2.5 py-1 font-sans text-xs font-medium text-destructive transition-colors hover:bg-destructive/10 dark:border-destructive",
+              "h-7 cursor-pointer rounded-lg border border-solid border-destructive/40 bg-transparent px-2.5 font-sans text-xs font-medium text-destructive transition-colors hover:bg-destructive/10 dark:border-destructive/60",
               AI_RESPONSE_FOCUS_RING,
             )}
           >
@@ -1016,7 +1036,7 @@ export const AiResponse = (props: AiResponseProps) => {
         data-status={ctxValue.status}
         data-variant={variant}
         className={cn(
-          "w-full max-w-2xl font-sans text-card-foreground",
+          "w-full font-sans text-card-foreground",
           AI_RESPONSE_SHELL_VARIANT[variant],
           variant !== "ghost" && AI_RESPONSE_SHELL_PADDING[size],
           props.className,

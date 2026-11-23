@@ -7,13 +7,14 @@ import { Check, Copy } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import { type MarkdownBlock, parseMarkdownBlocks } from "./ai-response-parser.js";
 import { copyTextToClipboard, isExternalHref, safeHref } from "./ai-response-safe.js";
+import { AI_RESPONSE_FOCUS_RING } from "./ai-response.variants.js";
 
 const INLINE_RE = /(`[^`]+`|\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\)|\*[^*\n]+\*)/g;
 
 const HEADING_CLASSES = [
-  "mt-5 mb-2 text-base font-semibold tracking-tight text-foreground first:mt-0",
-  "mt-4 mb-1.5 text-[15px] font-semibold tracking-tight text-foreground first:mt-0",
-  "mt-3.5 mb-1 text-sm font-semibold text-foreground first:mt-0",
+  "mt-6 mb-2.5 text-lg font-semibold tracking-tight text-foreground first:mt-0",
+  "mt-5 mb-2 text-[15px] font-semibold tracking-tight text-foreground first:mt-0",
+  "mt-4 mb-1.5 text-sm font-semibold tracking-tight text-foreground first:mt-0",
 ];
 
 const renderLinkToken = (token: string, key: string): ReactNode => {
@@ -49,7 +50,7 @@ const renderInline = (text: string, prefix: string): ReactNode[] => {
       parts.push(
         <code
           key={key}
-          className="rounded-md bg-secondary/80 px-1.5 py-0.5 font-mono text-[12px] text-foreground"
+          className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[12px] text-foreground dark:bg-white/[0.08]"
         >
           {token.slice(1, -1)}
         </code>,
@@ -86,20 +87,20 @@ const MarkdownCodeBlock = ({ lang, code }: { lang: string; code: string }) => {
   };
 
   return (
-    <div className="my-3 overflow-hidden rounded-xl border border-solid border-border/80 bg-secondary/40 dark:border-white/10 dark:bg-white/5">
-      <div className="flex items-center justify-between border-b border-solid border-border/70 px-3.5 py-2 dark:border-white/10">
+    <div className="my-3.5 overflow-hidden rounded-lg border border-solid border-border bg-muted/30 dark:border-white/10 dark:bg-white/[0.03]">
+      <div className="flex items-center justify-between border-b border-solid border-border/80 bg-muted/70 px-3.5 py-1.5 dark:border-white/10 dark:bg-white/[0.05]">
         <span className="font-mono text-[11px] text-muted-foreground">{lang || "code"}</span>
         <button
           type="button"
           onClick={handleCopy}
           aria-label="复制代码块"
-          className="inline-flex cursor-pointer items-center gap-1 rounded-md border border-solid border-transparent bg-transparent px-1.5 py-0.5 font-sans text-[11px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset"
+          className={`inline-flex cursor-pointer items-center gap-1 rounded-md border border-solid border-transparent bg-transparent px-1.5 py-0.5 font-sans text-[11px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground ${AI_RESPONSE_FOCUS_RING}`}
         >
           {copied ? <Check className="size-3" /> : <Copy className="size-3" />}
           <span>{copied ? "已复制" : "复制"}</span>
         </button>
       </div>
-      <pre className="m-0 overflow-x-auto p-3.5 font-mono text-[12px] leading-relaxed text-foreground">
+      <pre className="m-0 overflow-x-auto px-3.5 py-3 font-mono text-[12.5px] leading-relaxed text-foreground">
         <code>{code}</code>
       </pre>
     </div>
@@ -115,10 +116,10 @@ const MarkdownTableBlock = ({
   rows: string[][];
   index: number;
 }) => (
-  <div className="my-3 overflow-x-auto rounded-xl border border-solid border-border/80 dark:border-white/10">
+  <div className="my-3.5 overflow-x-auto rounded-lg border border-solid border-border dark:border-white/10">
     <table className="w-full border-collapse text-left text-xs">
       <thead>
-        <tr className="border-b border-solid border-border/80 bg-secondary/40">
+        <tr className="border-b border-solid border-border/80 bg-muted/60 dark:border-white/10 dark:bg-white/[0.05]">
           {headers.map((h, hi) => (
             <th key={hi} className="px-3 py-2 font-medium text-foreground">
               {renderInline(h, `th-${index}-${hi}`)}
@@ -128,7 +129,10 @@ const MarkdownTableBlock = ({
       </thead>
       <tbody>
         {rows.map((row, ri) => (
-          <tr key={ri} className="border-b border-solid border-border/60 last:border-b-0">
+          <tr
+            key={ri}
+            className="border-b border-solid border-border/60 last:border-b-0 dark:border-white/10"
+          >
             {row.map((cell, ci) => (
               <td key={ci} className="px-3 py-2 text-muted-foreground">
                 {renderInline(cell, `td-${index}-${ri}-${ci}`)}
@@ -172,8 +176,23 @@ const MarkdownListBlock = ({
 const StreamingCaret = () => (
   <span
     aria-hidden="true"
-    className="ml-1 inline-block h-[1.05em] w-[2px] animate-pulse bg-foreground align-[-0.15em]"
+    className="ml-0.5 inline-block h-[1em] w-[1.5px] animate-pulse rounded-full bg-signal align-[-0.12em] motion-reduce:animate-none"
   />
+);
+
+const MarkdownQuoteBlock = ({
+  text,
+  index,
+  caret,
+}: {
+  text: string;
+  index: number;
+  caret: ReactNode;
+}) => (
+  <blockquote className="my-3 border-l-2 border-solid border-border pl-3.5 text-[13px] leading-relaxed text-muted-foreground dark:border-white/20">
+    {renderInline(text, `q-${index}`)}
+    {caret}
+  </blockquote>
 );
 
 const renderBlock = (block: MarkdownBlock, index: number, showCaret: boolean): ReactNode => {
@@ -182,7 +201,12 @@ const renderBlock = (block: MarkdownBlock, index: number, showCaret: boolean): R
     return <MarkdownCodeBlock key={index} lang={block.lang} code={block.code} />;
   }
   if (block.type === "hr") {
-    return <hr key={index} className="my-4 border-0 border-t border-solid border-border/80" />;
+    return (
+      <hr
+        key={index}
+        className="my-4 border-0 border-t border-solid border-border/80 dark:border-white/10"
+      />
+    );
   }
   if (block.type === "heading") {
     return (
@@ -193,15 +217,7 @@ const renderBlock = (block: MarkdownBlock, index: number, showCaret: boolean): R
     );
   }
   if (block.type === "quote") {
-    return (
-      <blockquote
-        key={index}
-        className="my-3 border-l-2 border-solid border-border pl-3.5 text-[13px] leading-relaxed text-muted-foreground"
-      >
-        {renderInline(block.text, `q-${index}`)}
-        {caret}
-      </blockquote>
-    );
+    return <MarkdownQuoteBlock key={index} text={block.text} index={index} caret={caret} />;
   }
   if (block.type === "list") {
     return (

@@ -1,10 +1,9 @@
 "use client";
 
 /**
- * Suggestions / Suggestion：无外框灵感启动卡、垂直追问列表与流式追问胶囊组（对标 shadcn AI Elements Suggestion）。
+ * Suggestions / Suggestion：无外框灵感启动卡、垂直追问列表与流式追问胶囊组（对标 Vercel AI Elements / Linear）。
  */
 import { cn } from "@matt-ui/utils";
-import { Sparkles } from "lucide-react";
 import { SuggestionFollowUpList, SuggestionsCardsPanel } from "./suggestion-parts.js";
 import type { SuggestionItem, SuggestionProps, SuggestionsProps } from "./suggestion.types.js";
 import { suggestionPillVariants } from "./suggestion.variants.js";
@@ -67,10 +66,10 @@ export const Suggestion = ({
     className={cn(suggestionPillVariants({ variant, size }), className)}
     {...props}
   >
-    {icon ?? <Sparkles aria-hidden="true" className="size-3 shrink-0 text-muted-foreground" />}
+    {icon && <span className="shrink-0 text-muted-foreground">{icon}</span>}
     <span>{children ?? suggestion}</span>
     {badge && (
-      <span className="rounded bg-secondary/90 px-1 py-0.2 font-mono text-[10px] text-muted-foreground dark:bg-white/10">
+      <span className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground dark:bg-white/10">
         {badge}
       </span>
     )}

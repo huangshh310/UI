@@ -5,6 +5,7 @@ import { AiCitation } from "@matt-ui/ui";
 export default function AiCitationApiDemo() {
   return (
     <AiCitation
+      className="w-full max-w-2xl"
       variant="popover"
       answer="浮层与阴影配方在构建阶段统一收敛至 CSS 变量，确保磨砂背景与高对比度文本在浅色/深色主题间保持一致。"
       sources={[
@@ -13,6 +14,7 @@ export default function AiCitationApiDemo() {
           index: 1,
           title: "C 端物理高光与多层阴影规范",
           domain: "packages/tokens/shadows.css",
+          url: "https://github.com/huangshh310/UI",
           badge: "CSS",
           score: "99% 匹配",
           publishedAt: "2026-11",
@@ -23,6 +25,7 @@ export default function AiCitationApiDemo() {
           index: 2,
           title: "四周圆角悬浮 Sheet 布局设计",
           domain: "packages/ui/sheet.variants.ts",
+          url: "https://github.com/huangshh310/UI",
           badge: "UI",
           score: "96% 匹配",
           publishedAt: "2026-11",

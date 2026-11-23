@@ -31,7 +31,7 @@ export default function SuggestionListDemo() {
   const [picked, setPicked] = useState<string | null>(null);
 
   return (
-    <div className="flex w-full max-w-xl flex-col gap-2.5">
+    <div className="flex w-full max-w-2xl flex-col gap-2.5">
       <Suggestions
         variant="list"
         surface="default"

@@ -10,7 +10,7 @@ export default function SuggestionBasicDemo() {
   const [picked, setPicked] = useState<string | null>(null);
 
   return (
-    <div className="flex w-full max-w-xl flex-col gap-3">
+    <div className="flex w-full max-w-2xl flex-col gap-3">
       <Suggestions>
         <Suggestion
           suggestion="提炼贴底滚动锚定机制与防抖边界"

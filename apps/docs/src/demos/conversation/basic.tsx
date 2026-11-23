@@ -23,7 +23,7 @@ const INITIAL_TURNS = [
   {
     id: "4",
     role: "assistant" as const,
-    text: "Conversation 实时监测贴底阈值：一旦用户主动上滚便立即解绑自动跟随，并在底部浮现毛玻璃回到底部胶囊。",
+    text: "Conversation 实时监测贴底阈值：一旦用户主动上滚便立即解绑自动跟随，并在底部浮现克制回到底部胶囊。",
   },
 ];
 
@@ -43,7 +43,7 @@ const DemoControlsBar = ({
     <button
       type="button"
       onClick={onAppend}
-      className="cursor-pointer rounded-full border border-solid border-border/80 bg-card px-3 py-1 font-sans text-xs font-medium text-foreground shadow-xs transition-colors hover:border-foreground/22 hover:bg-accent focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset focus-visible:outline-none dark:border-white/10"
+      className="cursor-pointer rounded-lg border border-solid border-border bg-card px-3 py-1 font-sans text-xs font-medium text-foreground shadow-xs transition-colors outline-none hover:border-foreground/20 hover:bg-accent/50 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset dark:border-white/10 dark:hover:border-white/20"
     >
       模拟追加流式消息
     </button>
@@ -69,7 +69,7 @@ export default function ConversationBasicDemo() {
   };
 
   return (
-    <div className="flex w-full max-w-xl flex-col gap-2.5">
+    <div className="flex w-full max-w-2xl flex-col gap-2.5">
       <Conversation
         variant="surface"
         fadeEdges

@@ -2,12 +2,12 @@
 "use client";
 
 /**
- * Suggestions / Suggestion：无外框灵感启动卡、垂直追问列表与流式追问胶囊组（对标 shadcn AI Elements Suggestion）。
+ * Suggestions / Suggestion：无外框灵感启动卡、垂直追问列表与流式追问胶囊组（对标 Vercel AI Elements / Linear）。
  */
 
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
-import { ArrowRight, ArrowUpRight, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { type ButtonHTMLAttributes, type HTMLAttributes, type ReactNode, useState } from "react";
 
 export const SUGGESTION_FOCUS_RING =
@@ -20,16 +20,16 @@ export const SUGGESTIONS_GRID_COLUMNS: Record<SuggestionsColumns, string> = {
 };
 
 export const suggestionPillVariants = cva(
-  `inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border border-solid font-sans font-medium transition-[transform,border-color,background-color,box-shadow] duration-(--ui-duration-fast) active:scale-98 ${SUGGESTION_FOCUS_RING}`,
+  `inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border border-solid font-sans font-medium transition-colors duration-(--ui-duration-fast) ${SUGGESTION_FOCUS_RING}`,
   {
     variants: {
       variant: {
         default:
-          "border-border/80 bg-card/90 text-foreground shadow-xs hover:-translate-y-0.5 hover:border-foreground/22 hover:bg-card dark:border-white/10 dark:bg-card/80 dark:hover:border-white/22 dark:hover:bg-card",
+          "border-border bg-card text-foreground shadow-xs hover:border-foreground/20 hover:bg-accent/50 dark:border-white/10 dark:hover:border-white/20",
         ghost:
-          "border-transparent bg-secondary/70 text-foreground hover:bg-secondary dark:bg-white/7 dark:hover:bg-white/12",
+          "border-transparent bg-secondary/70 text-foreground hover:bg-secondary dark:bg-white/8 dark:hover:bg-white/12",
         signal:
-          "border-signal/35 bg-signal/10 text-foreground hover:-translate-y-0.5 hover:border-signal/55 hover:bg-signal/15 dark:border-signal/40 dark:bg-signal/14",
+          "border-signal/35 bg-signal/10 text-foreground hover:border-signal/55 hover:bg-signal/15 dark:border-signal/40 dark:bg-signal/14",
       },
       size: {
         sm: "h-7 px-3 text-[11px]",
@@ -44,16 +44,16 @@ export const suggestionPillVariants = cva(
 );
 
 export const suggestionCardVariants = cva(
-  `group flex cursor-pointer items-start justify-between gap-3 rounded-2xl border border-solid text-left transition-[transform,border-color,background-color,box-shadow] duration-(--ui-duration-fast) ${SUGGESTION_FOCUS_RING}`,
+  `group flex cursor-pointer items-start justify-between gap-3 rounded-xl border border-solid text-left transition-colors duration-(--ui-duration-fast) ${SUGGESTION_FOCUS_RING}`,
   {
     variants: {
       surface: {
         default:
-          "border-border/80 bg-card/90 shadow-xs hover:-translate-y-0.5 hover:border-foreground/22 hover:bg-card dark:border-white/10 dark:bg-card/80 dark:hover:border-white/22 dark:hover:bg-card",
+          "border-border bg-card shadow-xs hover:border-foreground/20 hover:bg-accent/50 dark:border-white/10 dark:hover:border-white/20",
         ghost:
-          "border-border/60 bg-secondary/45 hover:border-border hover:bg-secondary/75 dark:border-white/8 dark:bg-white/5 dark:hover:border-white/16 dark:hover:bg-white/8",
+          "border-border/75 bg-secondary/45 hover:border-border hover:bg-secondary/75 dark:border-white/10 dark:bg-white/5 dark:hover:border-white/20 dark:hover:bg-white/8",
         glass:
-          "border-border/75 bg-popover/88 shadow-xs backdrop-blur-xl hover:-translate-y-0.5 hover:border-foreground/22 dark:border-white/10 dark:bg-popover/82 dark:hover:border-white/22",
+          "border-border bg-popover/90 shadow-xs backdrop-blur-xl hover:border-foreground/20 hover:bg-accent/50 dark:border-white/10 dark:bg-popover/85 dark:hover:border-white/20",
       },
       size: {
         sm: "p-3",
@@ -68,14 +68,14 @@ export const suggestionCardVariants = cva(
 );
 
 export const suggestionListContainerVariants = cva(
-  "flex w-full max-w-xl flex-col divide-y divide-border/65 overflow-hidden rounded-2xl border border-solid font-sans dark:divide-white/8",
+  "flex w-full flex-col divide-y divide-border overflow-hidden rounded-xl border border-solid font-sans dark:divide-white/10",
   {
     variants: {
       surface: {
-        default: "border-border/80 bg-card/90 shadow-xs dark:border-white/10 dark:bg-card/80",
-        ghost: "border-border/60 bg-transparent dark:border-white/10",
+        default: "border-border bg-card shadow-xs dark:border-white/10",
+        ghost: "border-border/75 bg-transparent dark:border-white/10",
         glass:
-          "border-border/75 bg-popover/90 shadow-xs backdrop-blur-xl dark:border-white/10 dark:bg-popover/82",
+          "border-border bg-popover/90 shadow-xs backdrop-blur-xl dark:border-white/10 dark:bg-popover/85",
       },
     },
     defaultVariants: {
@@ -155,10 +155,10 @@ const SuggestionCategoryRow = ({
         aria-pressed={active === cat}
         onClick={() => onSelect(cat)}
         className={cn(
-          `h-6.5 cursor-pointer rounded-full border border-solid px-2.5 font-sans text-xs font-medium transition-colors duration-(--ui-duration-fast) ${SUGGESTION_FOCUS_RING}`,
+          `h-7 cursor-pointer rounded-lg border border-solid px-2.5 font-sans text-xs font-medium transition-colors duration-(--ui-duration-fast) ${SUGGESTION_FOCUS_RING}`,
           active === cat
-            ? "border-border/80 bg-secondary text-foreground shadow-xs dark:border-white/12 dark:bg-white/12"
-            : "border-transparent bg-transparent text-muted-foreground hover:bg-accent/60 hover:text-foreground",
+            ? "border-border bg-secondary text-foreground shadow-xs dark:border-white/12 dark:bg-white/12"
+            : "border-transparent bg-transparent text-muted-foreground hover:bg-accent/50 hover:text-foreground",
         )}
       >
         {cat}
@@ -191,11 +191,11 @@ const SuggestionStarterGrid = ({
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1.5">
             {item.icon && <span className="shrink-0 text-muted-foreground">{item.icon}</span>}
-            <span className="truncate font-sans text-xs font-semibold text-foreground">
+            <span className="truncate font-sans text-xs font-medium text-foreground">
               {item.label}
             </span>
             {item.badge && (
-              <span className="shrink-0 rounded bg-secondary/85 px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground dark:bg-white/10">
+              <span className="shrink-0 rounded-md bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground dark:bg-white/10">
                 {item.badge}
               </span>
             )}
@@ -208,7 +208,7 @@ const SuggestionStarterGrid = ({
         </div>
         <ArrowUpRight
           aria-hidden="true"
-          className="mt-0.5 size-3.5 shrink-0 text-muted-foreground transition-transform duration-(--ui-duration-fast) group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground"
+          className="mt-0.5 size-3.5 shrink-0 text-muted-foreground transition-colors duration-(--ui-duration-fast) group-hover:text-foreground"
         />
       </button>
     ))}
@@ -228,24 +228,24 @@ const SuggestionListRow = ({
     type="button"
     onClick={() => onSelect?.(item.prompt ?? item.label, item)}
     className={cn(
-      `group flex w-full cursor-pointer items-center justify-between gap-3 border-0 bg-transparent text-left transition-colors duration-(--ui-duration-fast) hover:bg-accent/65 ${SUGGESTION_FOCUS_RING}`,
+      `group flex w-full cursor-pointer items-center justify-between gap-3 border-0 bg-transparent text-left transition-colors duration-(--ui-duration-fast) hover:bg-accent/50 ${SUGGESTION_FOCUS_RING}`,
       size === "sm" ? "px-3 py-2" : "px-3.5 py-2.5",
     )}
   >
     <div className="flex min-w-0 flex-1 items-center gap-2">
-      {item.icon ?? (
-        <Sparkles aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
-      )}
+      {item.icon && <span className="shrink-0 text-muted-foreground">{item.icon}</span>}
       <div className="min-w-0 flex-1">
         <div className="truncate text-xs font-medium text-foreground">{item.label}</div>
         {item.description && (
-          <div className="truncate text-[11px] text-muted-foreground">{item.description}</div>
+          <div className="mt-0.5 truncate text-[11px] text-muted-foreground">
+            {item.description}
+          </div>
         )}
       </div>
     </div>
     <div className="flex shrink-0 items-center gap-2">
       {item.badge && (
-        <span className="rounded bg-secondary/85 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground dark:bg-white/10">
+        <span className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground dark:bg-white/10">
           {item.badge}
         </span>
       )}
@@ -308,7 +308,7 @@ const SuggestionsCardsPanel = ({
     <div
       data-slot="suggestions"
       data-variant="cards"
-      className={cn("flex w-full max-w-xl flex-col gap-3 font-sans", className)}
+      className={cn("flex w-full flex-col gap-3 font-sans", className)}
       {...props}
     >
       {showCategoryFilter && categories.length > 0 && (
@@ -382,10 +382,10 @@ export const Suggestion = ({
     className={cn(suggestionPillVariants({ variant, size }), className)}
     {...props}
   >
-    {icon ?? <Sparkles aria-hidden="true" className="size-3 shrink-0 text-muted-foreground" />}
+    {icon && <span className="shrink-0 text-muted-foreground">{icon}</span>}
     <span>{children ?? suggestion}</span>
     {badge && (
-      <span className="rounded bg-secondary/90 px-1 py-0.2 font-mono text-[10px] text-muted-foreground dark:bg-white/10">
+      <span className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground dark:bg-white/10">
         {badge}
       </span>
     )}

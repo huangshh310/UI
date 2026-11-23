@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * AiAgentCockpitBlock：由 AiOrb、AudioWaves、AiReasoning、SegmentedControl 与 NumberFlow 组合的 C 端多模态智能体驾驶舱区块。
+ * AiAgentCockpitBlock：由 AiOrb、AudioWaves、AiReasoning、SegmentedControl 与 NumberFlow 组合的现代多模态智能体工作台。
  */
 
 import { AiOrb } from "@/components/ui/ai-orb";
@@ -11,12 +11,15 @@ import { AudioWaves } from "@/components/ui/audio-waves";
 import { NumberFlow } from "@/components/ui/number-flow";
 import { SegmentedControl } from "@/components/ui/segmented-control";
 import { cn } from "@/lib/utils";
-import { Send, Sparkles } from "lucide-react";
+import { Send } from "lucide-react";
 import { useState } from "react";
+
+export const COCKPIT_FOCUS_RING =
+  "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
 
 export const COCKPIT_MODES = [
   { value: "chat", label: "智能对话" },
-  { value: "voice", label: "实时语音", badge: "Live" },
+  { value: "voice", label: "实时语音" },
   { value: "research", label: "深度研究" },
 ];
 
@@ -27,33 +30,25 @@ export const COCKPIT_QUICK_PROMPTS = [
 ];
 
 export const COCKPIT_SURFACE_CLASS: Record<AiCockpitVariant, string> = {
-  default: "border-border/80 bg-card shadow-xs dark:border-white/10",
-  elevated: "border-border/80 bg-card shadow-md dark:border-white/12",
+  default: "border-border bg-card shadow-xs dark:border-white/10",
+  elevated: "border-border bg-card shadow-sm dark:border-white/12",
   studio:
-    "border-border/80 bg-card shadow-md ring-1 ring-border/40 dark:border-white/12 dark:ring-white/6",
+    "border-border bg-card shadow-sm ring-1 ring-border/50 dark:border-white/12 dark:ring-white/6",
 };
 
-export const COCKPIT_MODE_META: Record<
-  AiCockpitMode,
-  { badge: string; pillClass: string; dotClass: string }
-> = {
+/** 精炼状态文字与克制微指示点（告别高饱和彩色大胶囊） */
+export const COCKPIT_MODE_META: Record<AiCockpitMode, { badge: string; dotClass: string }> = {
   chat: {
     badge: "对话就绪",
-    pillClass:
-      "border-emerald-600/20 bg-emerald-500/12 text-emerald-800 dark:border-emerald-400/25 dark:bg-emerald-500/16 dark:text-emerald-300",
-    dotClass: "bg-emerald-500",
+    dotClass: "bg-foreground/75",
   },
   voice: {
     badge: "语音通道在线",
-    pillClass:
-      "border-signal/25 bg-signal/10 text-blue-700 dark:border-signal/35 dark:bg-signal/18 dark:text-blue-300",
     dotClass: "bg-signal",
   },
   research: {
     badge: "深度推理中",
-    pillClass:
-      "border-amber-600/25 bg-amber-500/14 text-amber-900 dark:border-amber-400/25 dark:bg-amber-500/16 dark:text-amber-200",
-    dotClass: "bg-amber-500",
+    dotClass: "bg-signal",
   },
 };
 export type AiCockpitMode = "chat" | "voice" | "research";
@@ -82,7 +77,7 @@ const COCKPIT_DEFAULTS = {
   defaultMode: "chat" as AiCockpitMode,
   variant: "default" as const,
   title: "多模态智能体驾驶舱",
-  subtitle: "融合实时语音波形、思维链推理轨迹与物理分段控制器的 C 端工作台。",
+  subtitle: "融合实时语音波形、思维链推理轨迹与物理分段控制器的 AI 工作台。",
   initialTokens: 1420,
   compact: false,
 };
@@ -95,33 +90,19 @@ const CockpitBrand = ({
   title: string;
   subtitle: string;
   mode: AiCockpitMode;
-}) => {
-  const modeMeta = COCKPIT_MODE_META[mode];
-  return (
-    <div className="flex items-center gap-3">
-      <AiOrb
-        state={mode === "voice" ? "listening" : mode === "research" ? "thinking" : "speaking"}
-        variant={mode === "research" ? "lattice" : "aurora"}
-        size="md"
-      />
-      <div>
-        <div className="flex flex-wrap items-center gap-2">
-          <p className="m-0 text-base font-semibold tracking-tight text-foreground">{title}</p>
-          <span
-            className={cn(
-              "inline-flex items-center gap-1.5 rounded-full border border-solid px-2 py-0.5 text-[11px] font-medium",
-              modeMeta.pillClass,
-            )}
-          >
-            <span aria-hidden="true" className={cn("size-1.5 rounded-full", modeMeta.dotClass)} />
-            <span>{modeMeta.badge}</span>
-          </span>
-        </div>
-        <p className="m-0 mt-0.5 text-xs text-muted-foreground">{subtitle}</p>
-      </div>
+}) => (
+  <div className="flex min-w-0 items-center gap-3">
+    <AiOrb
+      state={mode === "voice" ? "listening" : mode === "research" ? "thinking" : "speaking"}
+      variant={mode === "research" ? "lattice" : "aurora"}
+      size="sm"
+    />
+    <div className="min-w-0">
+      <p className="m-0 truncate text-sm font-semibold tracking-tight text-foreground">{title}</p>
+      <p className="m-0 mt-0.5 truncate text-xs text-muted-foreground">{subtitle}</p>
     </div>
-  );
-};
+  </div>
+);
 
 const CockpitHeader = ({
   title,
@@ -135,41 +116,54 @@ const CockpitHeader = ({
   mode: AiCockpitMode;
   tokens: number;
   onModeChange: (next: AiCockpitMode) => void;
-}) => (
-  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-solid border-border/75 pb-4 dark:border-white/10">
-    <CockpitBrand title={title} subtitle={subtitle} mode={mode} />
-    <div className="flex flex-wrap items-center gap-2.5">
-      <div className="flex items-center gap-1.5 rounded-full border border-solid border-border/80 bg-secondary/50 px-3 py-1 text-xs dark:border-white/10 dark:bg-secondary/35">
-        <span className="text-muted-foreground">已消耗</span>
-        <NumberFlow
-          value={tokens}
-          suffix=" tok"
-          format={{ maximumFractionDigits: 0 }}
-          className="font-semibold text-foreground"
+}) => {
+  const modeMeta = COCKPIT_MODE_META[mode];
+  return (
+    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-solid border-border pb-4 dark:border-white/10">
+      <CockpitBrand title={title} subtitle={subtitle} mode={mode} />
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
+          <span className="inline-flex items-center gap-1.5 font-medium text-foreground/85">
+            <span aria-hidden="true" className={cn("size-1.5 rounded-full", modeMeta.dotClass)} />
+            <span>{modeMeta.badge}</span>
+          </span>
+          <span aria-hidden="true" className="opacity-35">
+            ·
+          </span>
+          <span className="inline-flex items-center gap-1 font-mono text-[11px] tabular-nums">
+            <span>已消耗</span>
+            <NumberFlow
+              value={tokens}
+              suffix=" tok"
+              format={{ maximumFractionDigits: 0 }}
+              className="font-medium text-foreground"
+            />
+          </span>
+        </div>
+        <SegmentedControl
+          ariaLabel="智能体模式切换"
+          size="sm"
+          items={COCKPIT_MODES}
+          value={mode}
+          onValueChange={(v) => onModeChange(v as AiCockpitMode)}
         />
       </div>
-      <SegmentedControl
-        ariaLabel="智能体模式切换"
-        items={COCKPIT_MODES}
-        value={mode}
-        onValueChange={(v) => onModeChange(v as AiCockpitMode)}
-      />
     </div>
-  </div>
-);
+  );
+};
 
-const QuickPromptBar = ({ onRun }: { onRun: (text: string) => void }) => (
-  <div className="flex flex-wrap items-center gap-1.5">
-    <span className="inline-flex items-center gap-1 text-[11px] font-medium text-muted-foreground">
-      <Sparkles aria-hidden="true" className="size-3 text-muted-foreground" />
-      快捷指令：
-    </span>
+const QuickPromptLinks = ({ onRun }: { onRun: (text: string) => void }) => (
+  <div className="flex flex-wrap items-center gap-1">
+    <span className="mr-1 text-[11px] text-muted-foreground">快捷指令</span>
     {COCKPIT_QUICK_PROMPTS.map((prompt) => (
       <button
         key={prompt}
         type="button"
         onClick={() => onRun(prompt)}
-        className="cursor-pointer rounded-full border border-solid border-border/80 bg-card px-2.5 py-1 font-sans text-[11px] font-medium text-foreground transition-colors hover:border-foreground/25 hover:bg-accent outline-none focus-visible:ring-2 focus-visible:ring-ring dark:border-white/10 dark:hover:border-white/25"
+        className={cn(
+          "cursor-pointer rounded-md border border-solid border-transparent bg-transparent px-2 py-0.5 font-sans text-[11px] font-medium text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground dark:hover:bg-white/[0.06]",
+          COCKPIT_FOCUS_RING,
+        )}
       >
         {prompt}
       </button>
@@ -188,8 +182,7 @@ const ComposerBar = ({
   onDraftChange: (next: string) => void;
   onRun: (text: string) => void;
 }) => (
-  <div className="flex flex-col gap-3 rounded-2xl border border-solid border-border/80 bg-secondary/30 p-3.5 dark:border-white/10 dark:bg-secondary/20">
-    <QuickPromptBar onRun={onRun} />
+  <div className="flex flex-col gap-2.5 border-t border-solid border-border pt-4 dark:border-white/10">
     <div className="flex items-center gap-2">
       <input
         aria-label="输入智能体指令"
@@ -197,21 +190,30 @@ const ComposerBar = ({
         onChange={(e) => onDraftChange(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && draft.trim() && onRun(draft.trim())}
         placeholder="输入设计需求、语音听写或架构审查指令…"
-        className="h-10 min-w-0 flex-1 rounded-full border border-solid border-border/80 bg-background px-4 text-xs text-foreground outline-none transition-[border-color,box-shadow] focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset dark:border-white/12 dark:bg-card"
+        className={cn(
+          "h-9 min-w-0 flex-1 rounded-lg border border-solid border-border bg-background px-3 text-xs text-foreground transition-colors placeholder:text-muted-foreground dark:border-white/12 dark:bg-white/[0.03]",
+          COCKPIT_FOCUS_RING,
+        )}
       />
       <button
         type="button"
         aria-label="执行指令"
         onClick={() => draft.trim() && onRun(draft.trim())}
-        className="inline-flex h-10 cursor-pointer items-center gap-1.5 rounded-full border border-solid border-primary bg-primary px-4 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-[opacity,transform] hover:opacity-92 active:scale-[0.98] outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+        className={cn(
+          "inline-flex h-9 shrink-0 cursor-pointer items-center gap-1.5 rounded-lg border border-solid border-transparent bg-primary px-3.5 font-sans text-xs font-medium text-primary-foreground transition-opacity hover:opacity-92 active:scale-[0.99]",
+          COCKPIT_FOCUS_RING,
+        )}
       >
         <Send aria-hidden="true" className="size-3.5" />
         <span>执行</span>
       </button>
     </div>
-    <p className="m-0 font-mono text-[11px] text-muted-foreground tabular-nums">
-      最近执行：{lastPrompt}
-    </p>
+    <div className="flex flex-wrap items-center justify-between gap-2">
+      <QuickPromptLinks onRun={onRun} />
+      <p className="m-0 font-mono text-[11px] text-muted-foreground tabular-nums">
+        最近执行：{lastPrompt}
+      </p>
+    </div>
   </div>
 );
 
@@ -222,26 +224,23 @@ const VoicePanel = ({
   voiceActive: boolean;
   onVoiceChange: (next: boolean) => void;
 }) => (
-  <div className="flex flex-col justify-between gap-3 rounded-2xl border border-solid border-border/80 bg-secondary/25 p-4 dark:border-white/10 dark:bg-secondary/20">
-    <div className="flex items-start justify-between gap-2">
-      <div>
-        <p className="m-0 text-xs font-semibold text-foreground">实时语音与流式状态流</p>
-        <p className="m-0 mt-1 text-xs leading-relaxed text-muted-foreground">
-          支持随时切入语音听写模式，流体极光球与频谱波形自动联动。
-        </p>
-      </div>
-      <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-solid border-border/80 bg-card px-2 py-0.5 font-mono text-[10px] text-muted-foreground dark:border-white/10">
+  <div className="flex flex-col gap-3 border-t border-solid border-border pt-4 @2xl:border-t-0 @2xl:border-l @2xl:pt-0 @2xl:pl-5 dark:border-white/10">
+    <div className="flex items-center justify-between gap-2">
+      <span className="text-xs font-medium text-foreground">实时语音通道</span>
+      <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground tabular-nums">
         <span
           aria-hidden="true"
           className={cn(
             "size-1.5 rounded-full",
-            voiceActive ? "bg-emerald-500" : "bg-muted-foreground/45",
+            voiceActive ? "bg-signal" : "bg-muted-foreground/40",
           )}
         />
         <span>{voiceActive ? "48kHz · 在线" : "待命"}</span>
       </span>
     </div>
     <AudioWaves
+      size="sm"
+      bars={10}
       active={voiceActive}
       onActiveChange={onVoiceChange}
       locale="中 / EN"
@@ -292,41 +291,36 @@ export const AiAgentCockpitBlock = (props: AiAgentCockpitBlockProps) => {
       data-slot="ai-agent-cockpit-block"
       data-variant={cfg.variant}
       className={cn(
-        "@container relative flex w-full max-w-4xl flex-col overflow-hidden rounded-[24px] border border-solid text-card-foreground",
+        "@container relative flex w-full flex-col overflow-hidden rounded-xl border border-solid text-card-foreground",
         cfg.compact ? "gap-4 p-4" : "gap-5 p-6",
         COCKPIT_SURFACE_CLASS[cfg.variant],
         cfg.className,
       )}
     >
-      {cfg.variant === "studio" && (
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-signal/[0.06] to-transparent dark:from-signal/[0.12]"
-        />
-      )}
-      <div className={cn("relative z-10 flex flex-col", cfg.compact ? "gap-4" : "gap-5")}>
-        <CockpitHeader
-          title={cfg.title}
-          subtitle={cfg.subtitle}
-          mode={c.mode}
-          tokens={c.tokens}
-          onModeChange={c.handleModeChange}
-        />
-        <div className="grid grid-cols-1 gap-4 @2xl:grid-cols-2">
+      <CockpitHeader
+        title={cfg.title}
+        subtitle={cfg.subtitle}
+        mode={c.mode}
+        tokens={c.tokens}
+        onModeChange={c.handleModeChange}
+      />
+      <div className="grid grid-cols-1 gap-5 @2xl:grid-cols-2 @2xl:gap-0">
+        <div className="@2xl:pr-5">
           <AiReasoning
+            variant="inline"
             status={c.mode === "research" ? "thinking" : "completed"}
             defaultExpanded
             className="max-w-none"
           />
-          <VoicePanel voiceActive={c.voiceActive} onVoiceChange={c.setVoiceActive} />
         </div>
-        <ComposerBar
-          draft={c.draft}
-          lastPrompt={c.lastPrompt}
-          onDraftChange={c.setDraft}
-          onRun={c.runPrompt}
-        />
+        <VoicePanel voiceActive={c.voiceActive} onVoiceChange={c.setVoiceActive} />
       </div>
+      <ComposerBar
+        draft={c.draft}
+        lastPrompt={c.lastPrompt}
+        onDraftChange={c.setDraft}
+        onRun={c.runPrompt}
+      />
     </div>
   );
 };

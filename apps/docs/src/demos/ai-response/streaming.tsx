@@ -39,7 +39,7 @@ export default function AiResponseStreamingDemo() {
   };
 
   return (
-    <div className="flex w-full max-w-xl flex-col gap-3">
+    <div className="flex w-full max-w-2xl flex-col gap-3">
       <AiResponse
         variant="glass"
         model="Matt AI · Streaming"
@@ -52,14 +52,14 @@ export default function AiResponseStreamingDemo() {
         <button
           type="button"
           onClick={restart}
-          className="h-8 cursor-pointer rounded-full border border-solid border-border/80 bg-card px-3.5 font-sans text-xs font-medium text-foreground shadow-xs transition-colors hover:bg-accent outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset dark:border-white/10"
+          className="h-8 cursor-pointer rounded-lg border border-solid border-border bg-card px-3 font-sans text-xs font-medium text-foreground shadow-xs transition-colors hover:bg-accent outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset dark:border-white/10"
         >
           重播流式输出
         </button>
         <button
           type="button"
           onClick={() => setStatus("error")}
-          className="h-8 cursor-pointer rounded-full border border-solid border-border/80 bg-card px-3.5 font-sans text-xs text-muted-foreground shadow-xs transition-colors hover:text-foreground outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset dark:border-white/10"
+          className="h-8 cursor-pointer rounded-lg border border-solid border-border bg-card px-3 font-sans text-xs text-muted-foreground shadow-xs transition-colors hover:bg-accent hover:text-foreground outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset dark:border-white/10"
         >
           预览错误态
         </button>

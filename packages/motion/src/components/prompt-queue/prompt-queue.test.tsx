@@ -1,7 +1,7 @@
 /**
  * PromptQueue 行为规约：验证空队列隐藏、折叠切换、暂停续发、立即插队发送、编辑取回与单条移除。
  */
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { PromptQueue, type QueuedPromptItem } from "../../index.js";
@@ -51,7 +51,9 @@ describe("PromptQueue", () => {
     expect(onRemove).toHaveBeenCalledWith("q2");
 
     await user.click(screen.getByRole("button", { name: /条待发送/ }));
-    expect(screen.queryByText("顺便补充深色主题下的边框对比度数据")).toBeNull();
+    await waitFor(() => {
+      expect(screen.queryByText("顺便补充深色主题下的边框对比度数据")).toBeNull();
+    });
   });
 
   it("支持暂停/恢复自动发出回调与清空队列操作", async () => {

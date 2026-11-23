@@ -1,11 +1,10 @@
 "use client";
 
 /**
- * AiAgentActivity：极简克制的 AI 智能体工具调用轨迹与推理时间线，支持卡片/无框/毛玻璃变体、整板折叠与单步明细抽屉。
+ * AiAgentActivity：Cursor / Linear 风格的 AI 智能体工具调用轨迹与推理时间线，支持卡片/无框/毛玻璃变体、整板平滑折叠与单步明细抽屉。
  */
 import { cn } from "@matt-ui/utils";
-import { ChevronDown } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { createContext, useContext, useState } from "react";
 import {
   ActivityDetailsDrawer,
@@ -13,6 +12,7 @@ import {
   ActivityHeaderProgressLine,
   ActivityHeaderStatus,
   ActivityHeaderTitle,
+  ActivityItemTitleRow,
   ActivityStatusGlyph,
 } from "./ai-agent-activity-parts.js";
 import type {
@@ -24,11 +24,10 @@ import type {
   AiAgentActivityVariant,
 } from "./ai-agent-activity.types.js";
 import {
+  ACTIVITY_COLLAPSE_TRANSITION,
   ACTIVITY_FOCUS_RING,
   ACTIVITY_SHELL_VARIANT,
-  ACTIVITY_SPRING,
   ACTIVITY_STATUS_CIRCLE,
-  ACTIVITY_TYPE_LABELS,
 } from "./ai-agent-activity.variants.js";
 
 interface ActivityContextValue {
@@ -70,9 +69,9 @@ export const AiAgentActivityHeader = (props: AiAgentActivityHeaderProps) => {
   return (
     <div
       className={cn(
-        "relative flex flex-wrap items-center justify-between gap-2.5 select-none",
+        "relative flex flex-wrap items-center justify-between gap-2 select-none",
         showDivider && "border-b border-solid border-border/75 dark:border-white/10",
-        ctx.compact ? "px-3.5 py-2.5" : "px-5 py-3.5",
+        ctx.variant === "ghost" ? "px-1 py-1.5" : ctx.compact ? "px-3.5 py-2.5" : "px-4 py-3",
         props.className,
       )}
     >
@@ -84,7 +83,7 @@ export const AiAgentActivityHeader = (props: AiAgentActivityHeaderProps) => {
           onToggle={ctx.toggleCollapsed}
         />
         {props.agentName && (
-          <span className="truncate rounded-md border border-solid border-border/70 bg-secondary/65 px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground dark:border-white/10 dark:bg-white/7">
+          <span className="truncate font-mono text-[11px] text-muted-foreground">
             {props.agentName}
           </span>
         )}
@@ -102,79 +101,25 @@ export const AiAgentActivityHeader = (props: AiAgentActivityHeaderProps) => {
   );
 };
 
-const ItemTitleRow = ({
-  activity,
-  hasDetails,
-  expanded,
-  showTypeBadge,
-  reduced,
-}: {
-  activity: AiAgentActivityItemData;
-  hasDetails: boolean;
-  expanded: boolean;
-  showTypeBadge: boolean;
-  reduced: boolean | null;
-}) => (
-  <>
-    <div className="flex w-full items-center justify-between gap-3">
-      <div className="flex min-w-0 items-center gap-1.5">
-        <span
-          className={cn(
-            "truncate text-[13px] tracking-tight",
-            activity.status === "running" ? "font-medium text-foreground" : "text-foreground/90",
-          )}
-        >
-          {activity.title}
-        </span>
-        {showTypeBadge && (
-          <span className="shrink-0 rounded bg-secondary/85 px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground dark:bg-white/8">
-            {ACTIVITY_TYPE_LABELS[activity.type]}
-          </span>
-        )}
-      </div>
-      <span className="flex shrink-0 items-center gap-1.5 font-mono text-[11px] text-muted-foreground tabular-nums">
-        {activity.duration && <span>{activity.duration}</span>}
-        {hasDetails && (
-          <motion.span
-            animate={{ rotate: expanded ? 180 : 0 }}
-            transition={reduced ? { duration: 0 } : ACTIVITY_SPRING}
-            className="inline-flex text-muted-foreground"
-          >
-            <ChevronDown aria-hidden="true" className="size-3.5" />
-          </motion.span>
-        )}
-      </span>
-    </div>
-    {activity.description && (
-      <p className="m-0 mt-1 text-xs leading-relaxed text-muted-foreground">
-        {activity.description}
-      </p>
-    )}
-  </>
-);
-
 const ItemContentShell = ({
   activity,
   hasDetails,
   expanded,
   showTypeBadge,
-  reduced,
   onToggle,
 }: {
   activity: AiAgentActivityItemData;
   hasDetails: boolean;
   expanded: boolean;
   showTypeBadge: boolean;
-  reduced: boolean | null;
   onToggle: () => void;
 }) => {
   const row = (
-    <ItemTitleRow
+    <ActivityItemTitleRow
       activity={activity}
       hasDetails={hasDetails}
       expanded={expanded}
       showTypeBadge={showTypeBadge}
-      reduced={reduced}
     />
   );
   if (!hasDetails) return <div>{row}</div>;
@@ -184,7 +129,7 @@ const ItemContentShell = ({
       aria-expanded={expanded}
       onClick={onToggle}
       className={cn(
-        "flex w-full cursor-pointer flex-col rounded-lg border border-solid border-transparent bg-transparent p-0 text-left font-sans",
+        "flex w-full cursor-pointer flex-col rounded-md border border-solid border-transparent bg-transparent p-0 text-left font-sans transition-colors hover:text-foreground",
         ACTIVITY_FOCUS_RING,
       )}
     >
@@ -204,28 +149,26 @@ export const AiAgentActivityItem = ({
   const reduced = useReducedMotion();
 
   return (
-    <div className={cn("relative flex items-start gap-3", className)}>
-      {!isLast && (
+    <div className={cn("flex gap-3", className)}>
+      <div className="flex w-5 shrink-0 flex-col items-center">
         <span
-          aria-hidden="true"
-          className="absolute top-6 bottom-[-14px] left-[9.5px] w-px bg-border/75 dark:bg-white/10"
-        />
-      )}
-      <span
-        className={cn(
-          "relative z-10 mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full",
-          ACTIVITY_STATUS_CIRCLE[activity.status],
+          className={cn(
+            "mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full",
+            ACTIVITY_STATUS_CIRCLE[activity.status],
+          )}
+        >
+          <ActivityStatusGlyph status={activity.status} />
+        </span>
+        {!isLast && (
+          <span aria-hidden="true" className="my-1 w-px flex-1 bg-border/80 dark:bg-white/10" />
         )}
-      >
-        <ActivityStatusGlyph status={activity.status} />
-      </span>
-      <div className={cn("min-w-0 flex-1 last:pb-0", compact ? "pb-3" : "pb-4")}>
+      </div>
+      <div className={cn("min-w-0 flex-1", !isLast && (compact ? "pb-3" : "pb-4"))}>
         <ItemContentShell
           activity={activity}
           hasDetails={hasDetails}
           expanded={expanded}
           showTypeBadge={showTypeBadge}
-          reduced={reduced}
           onToggle={() => toggleExpand(activity.id)}
         />
         <ActivityDetailsDrawer
@@ -240,17 +183,42 @@ export const AiAgentActivityItem = ({
 };
 
 export const AiAgentActivityTimeline = ({ className }: AiAgentActivityTimelineProps) => {
-  const { activities, compact, collapsed } = useAiAgentActivity();
-  if (collapsed) return null;
-  if (activities.length === 0) {
-    return <p className="m-0 py-10 text-center text-xs text-muted-foreground">暂无执行轨迹</p>;
-  }
+  const { activities, variant, compact, collapsed } = useAiAgentActivity();
+  const reduced = useReducedMotion();
+
   return (
-    <div className={cn("flex flex-col gap-1", compact ? "px-3.5 py-3" : "px-5 py-4", className)}>
-      {activities.map((item, idx) => (
-        <AiAgentActivityItem key={item.id} activity={item} isLast={idx === activities.length - 1} />
-      ))}
-    </div>
+    <AnimatePresence initial={false}>
+      {!collapsed && (
+        <motion.div
+          key="activity-timeline"
+          initial={reduced ? false : { opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={reduced ? { opacity: 0 } : { opacity: 0, height: 0 }}
+          transition={reduced ? { duration: 0 } : ACTIVITY_COLLAPSE_TRANSITION}
+          className="overflow-hidden"
+        >
+          {activities.length === 0 ? (
+            <p className="m-0 py-10 text-center text-xs text-muted-foreground">暂无执行轨迹</p>
+          ) : (
+            <div
+              className={cn(
+                "flex flex-col",
+                variant === "ghost" ? "px-1 pt-2 pb-1" : compact ? "px-3.5 py-3" : "px-4 py-3.5",
+                className,
+              )}
+            >
+              {activities.map((item, idx) => (
+                <AiAgentActivityItem
+                  key={item.id}
+                  activity={item}
+                  isLast={idx === activities.length - 1}
+                />
+              ))}
+            </div>
+          )}
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
@@ -297,7 +265,7 @@ export const AiAgentActivity = (props: AiAgentActivityProps) => {
         data-slot="ai-agent-activity"
         data-variant={value.variant}
         className={cn(
-          "w-full max-w-xl overflow-hidden font-sans text-card-foreground",
+          "w-full overflow-hidden font-sans text-card-foreground",
           ACTIVITY_SHELL_VARIANT[value.variant],
           props.className,
         )}

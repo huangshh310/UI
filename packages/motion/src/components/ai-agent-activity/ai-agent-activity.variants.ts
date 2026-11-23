@@ -10,29 +10,28 @@ import type {
 export const ACTIVITY_FOCUS_RING =
   "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
 
-export const ACTIVITY_SPRING = {
-  type: "spring" as const,
-  stiffness: 320,
-  damping: 32,
-  mass: 0.6,
+export const ACTIVITY_COLLAPSE_TRANSITION = {
+  duration: 0.18,
+  ease: [0.22, 1, 0.36, 1] as const,
 };
 
 export const ACTIVITY_SHELL_VARIANT: Record<AiAgentActivityVariant, string> = {
-  card: "rounded-2xl border border-solid border-border/80 bg-card/95 shadow-xs dark:border-white/10 dark:bg-card/85",
+  card: "rounded-xl border border-solid border-border bg-card shadow-xs dark:border-white/10",
   ghost: "border-0 bg-transparent",
   glass:
-    "rounded-2xl border border-solid border-border/75 bg-popover/92 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-popover/82",
+    "rounded-xl border border-solid border-border bg-popover/90 shadow-xs backdrop-blur-xl dark:border-white/10 dark:bg-popover/85",
 };
 
 export const ACTIVITY_STATUS_CIRCLE: Record<AiAgentActivityStatus, string> = {
   running:
-    "border border-solid border-border/85 bg-card ring-2 ring-emerald-500/22 dark:border-white/15",
+    "border border-solid border-signal/35 bg-signal/10 text-signal dark:border-signal/40 dark:bg-signal/15",
   success:
-    "border border-solid border-emerald-500/25 bg-emerald-500/12 dark:border-emerald-400/25 dark:bg-emerald-500/16",
+    "border border-solid border-emerald-500/25 bg-emerald-500/10 text-emerald-600 dark:border-emerald-400/25 dark:bg-emerald-500/15 dark:text-emerald-400",
   error:
-    "border border-solid border-destructive/40 bg-destructive/12 dark:border-destructive dark:bg-destructive/18",
-  cancelled: "border border-solid border-border/80 bg-secondary/75 dark:border-white/10",
-  pending: "border border-solid border-border/80 bg-card dark:border-white/12",
+    "border border-solid border-destructive/35 bg-destructive/10 text-destructive dark:border-destructive/45 dark:bg-destructive/15",
+  cancelled:
+    "border border-solid border-border bg-muted/60 text-muted-foreground dark:border-white/10 dark:bg-white/[0.06]",
+  pending: "border border-solid border-border bg-card text-muted-foreground dark:border-white/12",
 };
 
 export const ACTIVITY_TYPE_LABELS: Record<AiAgentActivityType, string> = {

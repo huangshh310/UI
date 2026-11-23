@@ -11,6 +11,7 @@ import {
   ChevronRight,
   Copy,
   RefreshCw,
+  Sparkles,
   ThumbsDown,
   ThumbsUp,
 } from "lucide-react";
@@ -30,7 +31,7 @@ const VariantPager = ({
   onNext: () => void;
 }) =>
   count > 1 ? (
-    <div className="inline-flex items-center gap-0.5 rounded-full border border-solid border-border/70 bg-secondary/50 px-1 py-0.5 font-mono text-[11px] text-muted-foreground tabular-nums">
+    <div className="inline-flex items-center gap-0.5 font-mono text-[11px] text-muted-foreground tabular-nums">
       <button type="button" aria-label="上一版本回复" onClick={onPrev} className={CHAT_ACTION_BTN}>
         <ChevronLeft className="size-3.5" />
       </button>
@@ -58,7 +59,7 @@ const VoteButtons = ({
       onClick={() => onVote("up")}
       className={cn(
         CHAT_ACTION_BTN,
-        vote === "up" && "bg-emerald-500/12 text-emerald-700 dark:text-emerald-300",
+        vote === "up" && "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
       )}
     >
       <ThumbsUp className="size-3.5" />
@@ -70,7 +71,7 @@ const VoteButtons = ({
       onClick={() => onVote("down")}
       className={cn(
         CHAT_ACTION_BTN,
-        vote === "down" && "bg-rose-500/12 text-rose-700 dark:text-rose-300",
+        vote === "down" && "bg-rose-500/10 text-rose-700 dark:text-rose-300",
       )}
     >
       <ThumbsDown className="size-3.5" />
@@ -115,7 +116,7 @@ export interface MessageActionsProps {
 export const MessageActions = (p: MessageActionsProps) => {
   const { copied, handleCopy } = useCopyTimer(p.text, p.onCopy);
   return (
-    <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 border-t border-solid border-border/60 pt-2">
+    <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
       <div className="flex items-center gap-0.5">
         <button
           type="button"
@@ -157,12 +158,13 @@ export const AssistantMetaHeader = ({
   showTimestamps: boolean;
 }) => (
   <div className="mb-1.5 flex flex-wrap items-center justify-between gap-2">
-    <div className="flex items-center gap-2">
-      <span className="text-xs font-semibold tracking-tight text-foreground">
+    <div className="flex items-center gap-1.5">
+      <Sparkles aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
+      <span className="text-xs font-medium tracking-tight text-foreground">
         {msg.model ?? "助手"}
       </span>
       {msg.streaming && (
-        <span className="inline-flex items-center gap-1 rounded-full bg-signal/12 px-2 py-0.5 font-mono text-[10px] font-medium text-signal">
+        <span className="inline-flex items-center gap-1 rounded-md bg-muted px-1.5 py-0.5 font-mono text-[10px] font-medium text-muted-foreground">
           <span aria-hidden="true" className="size-1.5 animate-pulse rounded-full bg-signal" />
           生成中
         </span>
@@ -177,16 +179,16 @@ export const AssistantMetaHeader = ({
 
 export const FollowUpBar = ({ items, onPick }: { items: string[]; onPick: (p: string) => void }) =>
   items.length > 0 ? (
-    <div className="flex flex-wrap items-center gap-1.5 border-t border-solid border-border/70 pt-3">
+    <div className="flex flex-wrap items-center gap-1.5 border-t border-solid border-border/75 pt-3 dark:border-white/8">
       {items.map((item) => (
         <button
           key={item}
           type="button"
           onClick={() => onPick(item)}
-          className="inline-flex cursor-pointer items-center gap-1 rounded-full border border-solid border-border/85 bg-background px-3 py-1 font-sans text-xs font-medium text-foreground transition-colors hover:border-signal/40 hover:bg-secondary/80 outline-none focus-visible:ring-2 focus-visible:ring-ring dark:bg-secondary/50"
+          className="inline-flex h-7 cursor-pointer items-center gap-1 rounded-lg border border-solid border-border/75 bg-transparent px-2.5 font-sans text-xs text-muted-foreground transition-colors hover:border-border hover:bg-muted/60 hover:text-foreground outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset dark:border-white/8 dark:hover:bg-white/[0.04]"
         >
           <span>{item}</span>
-          <ArrowUpRight aria-hidden="true" className="size-3 text-muted-foreground" />
+          <ArrowUpRight aria-hidden="true" className="size-3 opacity-70" />
         </button>
       ))}
     </div>
@@ -202,11 +204,11 @@ export const UserBubble = ({
   showTimestamps: boolean;
 }) => (
   <div className="flex flex-col items-end gap-1">
-    <div className="max-w-[82%] rounded-2xl rounded-br-sm border border-solid border-border/65 bg-secondary/85 px-4 py-2.5 text-[13.5px] leading-relaxed text-foreground">
+    <div className="max-w-[82%] rounded-xl bg-secondary/80 px-3.5 py-2.5 text-[13.5px] leading-relaxed text-foreground">
       {content}
     </div>
     {showTimestamps && timestamp && (
-      <span className="pr-1 font-mono text-[10px] text-muted-foreground tabular-nums">
+      <span className="pr-1 font-mono text-[11px] text-muted-foreground tabular-nums">
         {timestamp}
       </span>
     )}

@@ -27,6 +27,12 @@ export const STATS_PERIOD_OPTIONS: { id: StatsPeriod; label: string }[] = [
   { id: "quarter", label: "本季度" },
 ];
 
+export const STATS_PERIOD_COMPARE_LABEL: Record<StatsPeriod, string> = {
+  "7d": "较上期",
+  "30d": "较上期",
+  quarter: "较上季",
+};
+
 export const STATS_METRICS_BY_PERIOD: Record<StatsPeriod, StatsMetricItem[]> = {
   "7d": [
     {
@@ -162,11 +168,26 @@ export const STATS_METRICS_BY_PERIOD: Record<StatsPeriod, StatsMetricItem[]> = {
   ],
 };
 
-export const STATS_SPARK_PATHS: Record<MetricIconKey, string> = {
-  mrr: "M2 24 C16 22, 24 14, 38 15 C52 16, 62 7, 78 4",
-  users: "M2 23 C14 21, 28 19, 40 13 C52 7, 64 9, 78 3",
-  installs: "M2 25 C18 22, 30 18, 44 12 C58 6, 68 5, 78 2",
-  latency: "M2 8 C18 11, 30 13, 44 16 C58 19, 68 20, 78 22",
+/** 适配 viewBox="0 0 120 32" 的平滑三次贝塞尔趋势曲线，上下预留安全内距防裁切 */
+export const STATS_SPARK_PATHS: Record<StatsPeriod, Record<MetricIconKey, string>> = {
+  "7d": {
+    mrr: "M0 24 C18 22, 30 25, 48 18 C66 11, 84 15, 102 9 C110 7, 115 6, 120 5",
+    users: "M0 23 C16 21, 28 19, 44 20 C60 21, 74 13, 92 12 C104 11, 112 8, 120 7",
+    installs: "M0 26 C20 25, 36 22, 54 19 C72 16, 88 12, 104 8 C111 6, 116 5, 120 4",
+    latency: "M0 8 C20 10, 38 11, 56 14 C74 17, 92 18, 108 20 C114 21, 117 21, 120 22",
+  },
+  "30d": {
+    mrr: "M0 26 C18 24, 32 18, 48 19 C64 20, 78 11, 96 10 C106 9, 113 6, 120 4",
+    users: "M0 25 C18 22, 34 21, 50 15 C66 9, 82 12, 98 7 C108 5, 114 4, 120 4",
+    installs: "M0 27 C22 25, 40 21, 58 15 C76 9, 92 7, 108 5 C114 4, 117 3, 120 3",
+    latency: "M0 7 C20 10, 38 14, 56 16 C74 18, 92 21, 108 23 C114 24, 117 24, 120 25",
+  },
+  quarter: {
+    mrr: "M0 28 C20 25, 34 21, 52 16 C70 11, 86 9, 104 6 C112 5, 116 4, 120 3",
+    users: "M0 27 C18 26, 36 18, 54 14 C72 10, 88 8, 106 5 C113 4, 116 4, 120 3",
+    installs: "M0 28 C24 27, 44 22, 64 14 C84 6, 98 5, 112 4 C116 3, 118 3, 120 3",
+    latency: "M0 6 C22 10, 40 16, 60 19 C80 22, 96 24, 110 26 C115 26, 118 27, 120 27",
+  },
 };
 
 export const STATS_GRID_CLASS: Record<StatsOverviewColumns, string> = {
@@ -174,29 +195,33 @@ export const STATS_GRID_CLASS: Record<StatsOverviewColumns, string> = {
   4: "grid-cols-1 @md:grid-cols-2 @3xl:grid-cols-4",
 };
 
+/**
+ * bento 变体通过外层 bg-border + gap-px + overflow-hidden 形成 1px 发丝内分割线，
+ * 无论 1/2/4 列都能保持无缝对齐，不产生多余外边或双倍边框。
+ */
 export const STATS_WRAPPER_CLASS: Record<StatsOverviewVariant, string> = {
-  cards: "gap-4",
+  cards: "gap-3.5",
   bento:
-    "gap-0 overflow-hidden rounded-[22px] border border-solid border-border/80 bg-card shadow-xs dark:border-white/10",
+    "gap-px overflow-hidden rounded-xl border border-solid border-border bg-border shadow-xs dark:border-white/10 dark:bg-white/10",
   minimal: "gap-3",
 };
 
 export const STATS_CARD_CLASS: Record<StatsOverviewVariant, string> = {
   cards:
-    "rounded-[22px] border border-solid border-border/80 bg-card shadow-xs transition-[border-color,box-shadow] duration-(--ui-duration-fast) hover:border-foreground/18 hover:shadow-sm dark:border-white/10 dark:hover:border-white/20",
+    "rounded-xl border border-solid border-border bg-card shadow-xs transition-[border-color,box-shadow] duration-(--ui-duration-fast) hover:border-foreground/18 dark:border-white/10 dark:hover:border-white/20",
   bento:
-    "border-b border-solid border-border/75 bg-transparent transition-colors hover:bg-secondary/25 last:border-b-0 @md:border-r @md:border-border/75 dark:border-white/10 dark:@md:border-white/10",
+    "bg-card transition-colors duration-(--ui-duration-fast) hover:bg-muted/40 dark:hover:bg-white/[0.03]",
   minimal:
-    "rounded-2xl border border-solid border-border/70 bg-secondary/35 transition-colors hover:border-border dark:border-white/10 dark:bg-secondary/25",
+    "rounded-xl border border-solid border-transparent bg-muted/55 transition-colors duration-(--ui-duration-fast) hover:border-border hover:bg-muted/80 dark:bg-muted/45 dark:hover:border-white/10 dark:hover:bg-muted/65",
 };
 
-export const STATS_TREND_PILL_CLASS: Record<MetricTrendTone, string> = {
+export const STATS_TREND_BADGE_CLASS: Record<MetricTrendTone, string> = {
   positive:
-    "border-emerald-600/20 bg-emerald-500/12 text-emerald-800 dark:border-emerald-400/25 dark:bg-emerald-500/16 dark:text-emerald-300",
+    "border-emerald-600/20 bg-emerald-500/10 text-emerald-800 dark:border-emerald-400/20 dark:bg-emerald-500/15 dark:text-emerald-300",
   warning:
-    "border-amber-600/25 bg-amber-500/14 text-amber-900 dark:border-amber-400/25 dark:bg-amber-500/16 dark:text-amber-200",
+    "border-amber-600/20 bg-amber-500/10 text-amber-900 dark:border-amber-400/20 dark:bg-amber-500/15 dark:text-amber-200",
   negative:
-    "border-rose-600/20 bg-rose-500/12 text-rose-800 dark:border-rose-400/25 dark:bg-rose-500/16 dark:text-rose-300",
+    "border-rose-600/20 bg-rose-500/10 text-rose-800 dark:border-rose-400/20 dark:bg-rose-500/15 dark:text-rose-300",
 };
 
 export const STATS_SPARK_TONE_CLASS: Record<MetricTrendTone, string> = {
@@ -206,7 +231,7 @@ export const STATS_SPARK_TONE_CLASS: Record<MetricTrendTone, string> = {
 };
 
 export const STATS_BAR_TONE_CLASS: Record<MetricTrendTone, string> = {
-  positive: "bg-foreground/85 dark:bg-foreground/90",
-  warning: "bg-amber-500 dark:bg-amber-400",
-  negative: "bg-destructive",
+  positive: "bg-signal/85 dark:bg-signal",
+  warning: "bg-amber-500/85 dark:bg-amber-400",
+  negative: "bg-destructive/85 dark:bg-destructive",
 };

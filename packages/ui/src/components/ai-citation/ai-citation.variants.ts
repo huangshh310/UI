@@ -4,12 +4,13 @@
 import { cva } from "class-variance-authority";
 import type { AiCitationSource } from "./ai-citation.types.js";
 
-export const citationShellVariants = cva("flex w-full max-w-xl flex-col text-card-foreground", {
+export const citationShellVariants = cva("flex w-full flex-col text-card-foreground", {
   variants: {
     variant: {
-      card: "gap-3.5 rounded-2xl border border-solid border-border/85 bg-card p-5 shadow-xs",
-      popover: "gap-3 rounded-2xl border border-solid border-border/80 bg-card/80 p-4 shadow-xs",
-      inline: "gap-2.5 bg-transparent p-0",
+      card: "gap-3.5 overflow-hidden rounded-xl border border-solid border-border bg-card p-4 shadow-xs dark:border-white/10",
+      popover:
+        "gap-3.5 overflow-hidden rounded-xl border border-solid border-border bg-popover/95 p-4 text-popover-foreground shadow-md backdrop-blur-md dark:border-white/10",
+      inline: "gap-3 bg-transparent p-0",
     },
   },
   defaultVariants: {

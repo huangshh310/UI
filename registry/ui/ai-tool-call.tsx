@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * AiToolCall：MCP / 智能体工具调用与流水线步骤检查器卡片，支持入参/返回暗色 JSON 载荷展开复制与失败重试。
+ * AiToolCall：Cursor / Vercel AI Elements 风格的紧凑工具调用轨迹，支持入参/返回 JSON 载荷展开复制与失败重试。
  */
 
 import { cn } from "@/lib/utils";
@@ -16,19 +16,17 @@ import {
   Copy,
   Loader2,
   RotateCcw,
-  Terminal,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export const toolCallShellVariants = cva(
-  "w-full max-w-xl overflow-hidden border border-solid transition-colors",
+  "w-full overflow-hidden rounded-xl border border-solid transition-colors",
   {
     variants: {
       variant: {
-        card: "rounded-2xl border-border/85 bg-card text-card-foreground shadow-xs",
-        compact: "rounded-xl border-border/80 bg-card text-card-foreground shadow-2xs",
-        obsidian:
-          "[color-scheme:dark] rounded-2xl border-zinc-800 bg-zinc-950 text-zinc-50 shadow-md",
+        card: "border-border bg-card text-card-foreground shadow-xs dark:border-white/10",
+        compact: "border-border bg-card text-card-foreground dark:border-white/10",
+        obsidian: "[color-scheme:dark] border-zinc-800 bg-zinc-950 text-zinc-100 shadow-xs",
       },
     },
     defaultVariants: {
@@ -37,56 +35,11 @@ export const toolCallShellVariants = cva(
   },
 );
 
-export const TOOL_STATUS_META: Record<
-  AiToolCallStatus,
-  { label: string; pillClass: string; dotClass: string }
-> = {
-  running: {
-    label: "执行中",
-    pillClass: "border-signal/30 bg-signal/10 text-signal",
-    dotClass: "bg-signal animate-pulse",
-  },
-  completed: {
-    label: "已完成",
-    pillClass: "border-emerald-500/30 bg-emerald-500/12 text-emerald-700 dark:text-emerald-300",
-    dotClass: "bg-emerald-500",
-  },
-  error: {
-    label: "失败",
-    pillClass: "border-destructive/35 bg-destructive/12 text-destructive",
-    dotClass: "bg-destructive",
-  },
-  pending: {
-    label: "排队中",
-    pillClass: "border-amber-500/30 bg-amber-500/12 text-amber-700 dark:text-amber-300",
-    dotClass: "bg-amber-500",
-  },
-};
-
-export const TOOL_STATUS_META_DARK: Record<
-  AiToolCallStatus,
-  { label: string; pillClass: string; dotClass: string }
-> = {
-  running: {
-    label: "执行中",
-    pillClass: "border-sky-500/35 bg-sky-500/15 text-sky-300",
-    dotClass: "bg-sky-400 animate-pulse",
-  },
-  completed: {
-    label: "已完成",
-    pillClass: "border-emerald-500/35 bg-emerald-500/15 text-emerald-300",
-    dotClass: "bg-emerald-400",
-  },
-  error: {
-    label: "失败",
-    pillClass: "border-rose-500/35 bg-rose-500/15 text-rose-300",
-    dotClass: "bg-rose-400",
-  },
-  pending: {
-    label: "排队中",
-    pillClass: "border-amber-500/35 bg-amber-500/15 text-amber-300",
-    dotClass: "bg-amber-400",
-  },
+export const TOOL_STATUS_LABEL: Record<AiToolCallStatus, string> = {
+  running: "执行中",
+  completed: "已完成",
+  error: "失败",
+  pending: "排队中",
 };
 export type AiToolCallStatus = "running" | "completed" | "error" | "pending";
 export type AiToolCallVariant = "card" | "compact" | "obsidian";
@@ -121,42 +74,83 @@ export interface AiToolCallProps {
   /** 自定义类名 */
   className?: string;
 }
-const PayloadBox = ({ label, json }: { label: string; json: string }) => {
+const DRAWER_FOCUS_RING =
+  "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
+
+const useCopyText = (text: string) => {
   const [copied, setCopied] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   useEffect(
     () => () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     },
     [],
   );
+
   const copy = () => {
     setCopied(true);
-    navigator.clipboard?.writeText(json).catch(() => {});
+    navigator.clipboard?.writeText(text).catch(() => {});
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       timerRef.current = null;
       setCopied(false);
     }, 1200);
   };
+
+  return { copied, copy };
+};
+
+interface PayloadSectionProps {
+  label: string;
+  json: string;
+  obsidian: boolean;
+}
+
+const PayloadSection = ({ label, json, obsidian }: PayloadSectionProps) => {
+  const { copied, copy } = useCopyText(json);
+  const btnCls = obsidian
+    ? "text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100"
+    : "text-muted-foreground hover:bg-accent hover:text-foreground";
+  const preCls = obsidian
+    ? "bg-zinc-900/80 text-zinc-200"
+    : "bg-muted/50 text-foreground dark:bg-white/[0.04]";
   return (
-    <div className="[color-scheme:dark] flex flex-col overflow-hidden rounded-xl border border-solid border-zinc-800 bg-zinc-950 text-zinc-100">
-      <div className="flex items-center justify-between gap-2 border-b border-solid border-zinc-800/90 bg-zinc-900/75 px-3 py-1.5">
-        <span className="font-mono text-[10px] font-semibold tracking-wider text-zinc-300 uppercase">
+    <div className="flex min-w-0 flex-col gap-1.5">
+      <div className="flex items-center justify-between gap-2">
+        <span
+          className={cn(
+            "font-mono text-[11px] font-medium tracking-wide",
+            obsidian ? "text-zinc-400" : "text-muted-foreground",
+          )}
+        >
           {label}
         </span>
         <button
           type="button"
           aria-label={copied ? `已复制 ${label}` : `复制 ${label}`}
           onClick={copy}
-          className="inline-flex cursor-pointer items-center gap-1 rounded-md border-0 bg-transparent px-1.5 py-0.5 font-sans text-[10px] font-medium text-zinc-300 transition-colors hover:bg-zinc-800 hover:text-zinc-50 outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className={cn(
+            "inline-flex h-6 cursor-pointer items-center gap-1 rounded-md border border-solid border-transparent bg-transparent px-1.5 font-sans text-[11px] font-medium transition-colors",
+            DRAWER_FOCUS_RING,
+            btnCls,
+          )}
         >
-          {copied ? <Check className="size-3 text-emerald-400" /> : <Copy className="size-3" />}
+          {copied ? (
+            <Check className="size-3 text-emerald-600 dark:text-emerald-400" />
+          ) : (
+            <Copy className="size-3" />
+          )}
           <span>{copied ? "已复制" : "复制"}</span>
         </button>
       </div>
-      <pre className="m-0 p-3 font-mono text-[11px] leading-relaxed break-all whitespace-pre-wrap text-zinc-200">
-        <code>{json}</code>
+      <pre
+        className={cn(
+          "m-0 overflow-x-auto rounded-lg px-3 py-2.5 font-mono text-[11.5px] leading-relaxed",
+          preCls,
+        )}
+      >
+        <code className="whitespace-pre-wrap break-words">{json}</code>
       </pre>
     </div>
   );
@@ -179,13 +173,13 @@ const PayloadDrawer = ({
 }: PayloadDrawerProps) => (
   <div
     className={cn(
-      "flex flex-col gap-3 border-t border-solid p-4",
-      obsidian ? "border-zinc-800 bg-zinc-900/50" : "border-border/75 bg-secondary/35",
+      "flex flex-col gap-3 border-t border-solid px-4 py-3.5",
+      obsidian ? "border-zinc-800" : "border-border/75 dark:border-white/8",
     )}
   >
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-      <PayloadBox label="Parameters" json={inputJson} />
-      <PayloadBox label="Result" json={outputJson} />
+      <PayloadSection label="Parameters" json={inputJson} obsidian={obsidian} />
+      <PayloadSection label="Result" json={outputJson} obsidian={obsidian} />
     </div>
     {status === "error" && onRetry && (
       <div className="flex justify-end">
@@ -193,10 +187,11 @@ const PayloadDrawer = ({
           type="button"
           onClick={onRetry}
           className={cn(
-            "inline-flex h-7.5 cursor-pointer items-center gap-1.5 rounded-full border border-solid px-3 font-sans text-xs font-medium shadow-xs transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            "inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-lg border border-solid px-2.5 font-sans text-xs font-medium transition-colors",
+            DRAWER_FOCUS_RING,
             obsidian
               ? "border-zinc-700 bg-zinc-900 text-zinc-100 hover:bg-zinc-800"
-              : "border-border bg-card text-foreground hover:bg-accent",
+              : "border-border bg-card text-foreground hover:bg-accent dark:border-white/10",
           )}
         >
           <RotateCcw aria-hidden="true" className="size-3" />
@@ -206,13 +201,16 @@ const PayloadDrawer = ({
     )}
   </div>
 );
+const FOCUS_RING =
+  "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
+
 const StatusIcon = ({ status, obsidian }: { status: AiToolCallStatus; obsidian: boolean }) => {
   if (status === "running") {
     return (
       <Loader2
         aria-hidden="true"
         className={cn(
-          "size-4 shrink-0 animate-spin motion-reduce:animate-none",
+          "size-3.5 shrink-0 animate-spin motion-reduce:animate-none",
           obsidian ? "text-sky-400" : "text-signal",
         )}
       />
@@ -222,7 +220,7 @@ const StatusIcon = ({ status, obsidian }: { status: AiToolCallStatus; obsidian: 
     return (
       <AlertCircle
         aria-hidden="true"
-        className={cn("size-4 shrink-0", obsidian ? "text-rose-400" : "text-destructive")}
+        className={cn("size-3.5 shrink-0", obsidian ? "text-rose-400" : "text-destructive")}
       />
     );
   }
@@ -231,7 +229,7 @@ const StatusIcon = ({ status, obsidian }: { status: AiToolCallStatus; obsidian: 
       <Clock
         aria-hidden="true"
         className={cn(
-          "size-4 shrink-0",
+          "size-3.5 shrink-0",
           obsidian ? "text-amber-400" : "text-amber-600 dark:text-amber-400",
         )}
       />
@@ -241,7 +239,7 @@ const StatusIcon = ({ status, obsidian }: { status: AiToolCallStatus; obsidian: 
     <CheckCircle2
       aria-hidden="true"
       className={cn(
-        "size-4 shrink-0",
+        "size-3.5 shrink-0",
         obsidian ? "text-emerald-400" : "text-emerald-600 dark:text-emerald-400",
       )}
     />
@@ -257,19 +255,10 @@ interface MetaProps {
 }
 
 const ToolHeaderMeta = ({ status, durationLabel, tokensLabel, obsidian, expanded }: MetaProps) => {
-  const meta = obsidian ? TOOL_STATUS_META_DARK[status] : TOOL_STATUS_META[status];
   const muted = obsidian ? "text-zinc-400" : "text-muted-foreground";
   return (
     <div className="flex shrink-0 items-center gap-2">
-      <span
-        className={cn(
-          "inline-flex items-center gap-1.5 rounded-full border border-solid px-2 py-0.5 text-[11px] font-medium",
-          meta.pillClass,
-        )}
-      >
-        <span aria-hidden="true" className={cn("size-1.5 rounded-full", meta.dotClass)} />
-        {meta.label}
-      </span>
+      <span className="sr-only">{TOOL_STATUS_LABEL[status]}</span>
       <span className={cn("font-mono text-[11px] tabular-nums", muted)}>{durationLabel}</span>
       {tokensLabel && (
         <span className={cn("hidden font-mono text-[11px] tabular-nums sm:inline", muted)}>
@@ -303,23 +292,17 @@ const ToolIdentity = ({
     <StatusIcon status={status} obsidian={obsidian} />
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 font-mono text-xs font-semibold",
+        "truncate font-mono text-xs font-medium",
         obsidian ? "text-zinc-100" : "text-foreground",
       )}
     >
-      <Terminal
-        aria-hidden="true"
-        className={cn("size-3.5", obsidian ? "text-zinc-400" : "text-muted-foreground")}
-      />
       {toolName}
     </span>
     {provider && (
       <span
         className={cn(
-          "rounded-md border border-solid px-1.5 py-0.5 font-mono text-[10px] font-medium",
-          obsidian
-            ? "border-zinc-800 bg-zinc-900 text-zinc-300"
-            : "border-border/70 bg-secondary/80 text-muted-foreground",
+          "shrink-0 font-mono text-[11px] tabular-nums",
+          obsidian ? "text-zinc-400" : "text-muted-foreground",
         )}
       >
         {provider}
@@ -349,12 +332,13 @@ const ToolHeaderButton = (p: HeaderBtnProps) => {
       aria-expanded={p.expanded}
       onClick={p.onToggle}
       className={cn(
-        "flex w-full cursor-pointer flex-col border-0 bg-transparent text-left transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
-        compact ? "gap-1 px-3.5 py-2.5" : "gap-1.5 px-4 py-3.5",
-        obsidian ? "hover:bg-zinc-900/70" : "hover:bg-accent/40",
+        "flex w-full cursor-pointer flex-col border border-solid border-transparent bg-transparent text-left transition-colors",
+        FOCUS_RING,
+        compact ? "gap-1 px-3.5 py-2.5" : "gap-1 px-4 py-3",
+        obsidian ? "hover:bg-zinc-900/60" : "hover:bg-muted/40 dark:hover:bg-white/[0.03]",
       )}
     >
-      <div className="flex w-full flex-wrap items-center justify-between gap-2">
+      <div className="flex w-full items-center justify-between gap-2">
         <ToolIdentity
           toolName={p.toolName}
           provider={p.provider}
@@ -370,7 +354,12 @@ const ToolHeaderButton = (p: HeaderBtnProps) => {
         />
       </div>
       {!compact && (
-        <span className={cn("pl-6 text-xs", obsidian ? "text-zinc-400" : "text-muted-foreground")}>
+        <span
+          className={cn(
+            "pl-5.5 text-xs leading-relaxed",
+            obsidian ? "text-zinc-400" : "text-muted-foreground",
+          )}
+        >
           {p.summary}
         </span>
       )}

@@ -1,5 +1,5 @@
 /**
- * ThinkingOrb 的样式定义：极简无框、毛玻璃表圈与环境光晕变体。
+ * ThinkingOrb 的样式定义：极简无框、利落表圈、柔光氛围环与禅意等宽微标。
  */
 import { cva } from "class-variance-authority";
 import type { ThinkingOrbState } from "./thinking-orb.types.js";
@@ -23,11 +23,11 @@ export const thinkingOrbFrameVariants = cva(
       variant: {
         minimal: "",
         framed:
-          "border border-solid border-border/80 bg-card/85 shadow-[0_8px_24px_-10px_rgba(0,0,0,0.14),inset_0_1px_0_rgba(255,255,255,0.65)] backdrop-blur-md dark:border-white/10 dark:bg-card/70 dark:shadow-[0_14px_32px_-10px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.08)]",
-        halo: "border border-solid border-border/70 bg-background/75 shadow-[0_0_0_4px_color-mix(in_oklab,var(--color-foreground)_4%,transparent),0_10px_28px_-12px_rgba(0,0,0,0.16)] backdrop-blur-md dark:border-white/12 dark:bg-card/60 dark:shadow-[0_0_0_4px_rgba(255,255,255,0.04),0_14px_36px_-10px_rgba(0,0,0,0.72)]",
+          "border border-solid border-border bg-card shadow-xs dark:border-white/10 dark:bg-card/85",
+        halo: "border border-solid border-border bg-background/85 shadow-[0_0_0_4px_color-mix(in_oklab,var(--ui-foreground)_5%,transparent)] backdrop-blur-md dark:border-white/12 dark:bg-card/70 dark:shadow-[0_0_0_4px_rgba(255,255,255,0.05)]",
       },
       interactive: {
-        true: "hover:scale-103 hover:border-foreground/22 dark:hover:border-white/22",
+        true: "hover:scale-[1.02] hover:border-foreground/20 dark:hover:border-white/20",
         false: "",
       },
     },
@@ -56,5 +56,5 @@ export const thinkingOrbRootVariants = cva("inline-flex shrink-0 items-center ju
 });
 
 export const thinkingOrbLabelVariants = cva(
-  "inline-flex items-center gap-1.5 rounded-full border border-solid border-border/80 bg-card/90 px-2.5 py-0.5 font-mono text-[11px] font-medium text-muted-foreground shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-card/75",
+  "inline-flex items-center font-mono text-[11px] font-medium tracking-tight text-muted-foreground",
 );

@@ -79,11 +79,11 @@ export const AiResponseHeader = ({
     <div className={cn("mb-3 flex items-center justify-between gap-2 select-none", className)}>
       <div className="flex min-w-0 items-center gap-2">
         <ResponseStatusDot status={ctx.status} />
-        <span className="truncate text-xs font-medium tracking-tight text-foreground">
+        <span className="truncate text-[13px] font-medium tracking-tight text-foreground">
           {model ?? ctx.model}
         </span>
         {badge && (
-          <span className="shrink-0 rounded-md border border-solid border-border/70 bg-secondary/70 px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground dark:border-white/10 dark:bg-white/8">
+          <span className="shrink-0 rounded-md bg-muted px-1.5 py-0.5 font-mono text-[11px] text-muted-foreground dark:bg-white/[0.07]">
             {badge}
           </span>
         )}
@@ -104,7 +104,7 @@ export const AiResponseContent = ({ className }: AiResponseContentProps) => {
       <div
         role="alert"
         className={cn(
-          "flex flex-wrap items-center justify-between gap-3 rounded-xl border border-solid border-destructive/35 bg-destructive/8 px-3.5 py-2.5 text-xs text-foreground dark:border-destructive dark:bg-destructive/14",
+          "flex flex-wrap items-center justify-between gap-3 rounded-lg border border-solid border-destructive/35 bg-destructive/[0.06] px-3.5 py-2.5 text-xs text-foreground dark:border-destructive/50 dark:bg-destructive/12",
           className,
         )}
       >
@@ -114,7 +114,7 @@ export const AiResponseContent = ({ className }: AiResponseContentProps) => {
             type="button"
             onClick={onRegenerate}
             className={cn(
-              "cursor-pointer rounded-full border border-solid border-destructive/40 bg-transparent px-2.5 py-1 font-sans text-xs font-medium text-destructive transition-colors hover:bg-destructive/10 dark:border-destructive",
+              "h-7 cursor-pointer rounded-lg border border-solid border-destructive/40 bg-transparent px-2.5 font-sans text-xs font-medium text-destructive transition-colors hover:bg-destructive/10 dark:border-destructive/60",
               AI_RESPONSE_FOCUS_RING,
             )}
           >
@@ -195,7 +195,7 @@ export const AiResponse = (props: AiResponseProps) => {
         data-status={ctxValue.status}
         data-variant={variant}
         className={cn(
-          "w-full max-w-2xl font-sans text-card-foreground",
+          "w-full font-sans text-card-foreground",
           AI_RESPONSE_SHELL_VARIANT[variant],
           variant !== "ghost" && AI_RESPONSE_SHELL_PADDING[size],
           props.className,

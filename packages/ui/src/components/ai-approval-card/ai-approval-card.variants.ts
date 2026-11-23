@@ -5,22 +5,16 @@ import { cva } from "class-variance-authority";
 import type { AiApprovalOption, AiApprovalRisk } from "./ai-approval-card.types.js";
 
 export const approvalCardVariants = cva(
-  "flex w-full max-w-md flex-col border border-solid bg-card text-card-foreground shadow-xs",
+  "flex w-full flex-col overflow-hidden rounded-xl border border-solid border-border bg-card text-card-foreground shadow-xs dark:border-white/10",
   {
     variants: {
       variant: {
-        card: "gap-3.5 rounded-2xl p-5",
-        compact: "gap-2.5 rounded-xl p-4",
-      },
-      riskLevel: {
-        low: "border-border/85",
-        medium: "border-amber-500/35",
-        high: "border-destructive/40",
+        card: "",
+        compact: "",
       },
     },
     defaultVariants: {
       variant: "card",
-      riskLevel: "medium",
     },
   },
 );
@@ -36,21 +30,30 @@ export const APPROVAL_DEFAULT_OPTIONS: AiApprovalOption[] = [
 
 export const APPROVAL_RISK_META: Record<
   AiApprovalRisk,
-  { label: string; iconClass: string; pillClass: string }
+  { label: string; dotClass: string; badgeClass: string; iconWrapClass: string }
 > = {
   low: {
     label: "低风险",
-    iconClass: "border-emerald-500/25 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
-    pillClass: "border-emerald-500/30 bg-emerald-500/12 text-emerald-700 dark:text-emerald-300",
+    dotClass: "bg-emerald-600 dark:bg-emerald-400",
+    badgeClass:
+      "border-emerald-600/20 bg-emerald-500/12 text-emerald-800 dark:border-emerald-400/25 dark:bg-emerald-500/15 dark:text-emerald-200",
+    iconWrapClass:
+      "border-emerald-600/20 bg-emerald-500/10 text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-500/15 dark:text-emerald-300",
   },
   medium: {
     label: "需确认",
-    iconClass: "border-amber-500/30 bg-amber-500/12 text-amber-700 dark:text-amber-300",
-    pillClass: "border-amber-500/30 bg-amber-500/12 text-amber-700 dark:text-amber-300",
+    dotClass: "bg-amber-600 dark:bg-amber-400",
+    badgeClass:
+      "border-amber-600/25 bg-amber-500/12 text-amber-900 dark:border-amber-400/25 dark:bg-amber-500/15 dark:text-amber-200",
+    iconWrapClass:
+      "border-amber-600/20 bg-amber-500/10 text-amber-800 dark:border-amber-400/20 dark:bg-amber-500/15 dark:text-amber-300",
   },
   high: {
     label: "高危操作",
-    iconClass: "border-destructive/30 bg-destructive/10 text-destructive",
-    pillClass: "border-destructive/35 bg-destructive/12 text-destructive",
+    dotClass: "bg-rose-600 dark:bg-rose-400",
+    badgeClass:
+      "border-rose-600/25 bg-rose-500/12 text-rose-800 dark:border-rose-400/25 dark:bg-rose-500/15 dark:text-rose-200",
+    iconWrapClass:
+      "border-rose-600/20 bg-rose-500/10 text-rose-700 dark:border-rose-400/20 dark:bg-rose-500/15 dark:text-rose-300",
   },
 };

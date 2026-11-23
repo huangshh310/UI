@@ -3,40 +3,44 @@
  */
 import type { AudioWavesSize, AudioWavesTone } from "./audio-waves.types.js";
 
+export const WAVE_FOCUS_RING =
+  "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
+
+/** 自然语音包络曲线（用于纯 scaleY GPU 合成动画） */
 export const WAVE_BAR_ENVELOPE = [
-  0.28, 0.5, 0.78, 0.62, 0.95, 0.72, 1, 0.88, 0.95, 0.64, 0.8, 0.52, 0.36, 0.25,
+  0.26, 0.44, 0.68, 0.56, 0.88, 0.74, 1, 0.84, 0.92, 0.66, 0.76, 0.52, 0.38, 0.24,
 ] as const;
 
 export const WAVE_SHELL_TONE: Record<AudioWavesTone, string> = {
-  default: "border-border/85 bg-card text-card-foreground shadow-xs",
-  signal: "border-signal/25 bg-card text-card-foreground shadow-xs",
-  emerald: "border-emerald-500/25 bg-card text-card-foreground shadow-xs",
-  obsidian: "[color-scheme:dark] border-zinc-800 bg-zinc-950 text-zinc-50 shadow-md",
+  default: "border-border bg-card text-card-foreground shadow-xs dark:border-white/10",
+  signal: "border-border bg-card text-card-foreground shadow-xs dark:border-white/10",
+  emerald: "border-border bg-card text-card-foreground shadow-xs dark:border-white/10",
+  obsidian: "[color-scheme:dark] border-white/10 bg-neutral-950 text-neutral-50 shadow-xs",
 };
 
 export const WAVE_BAR_ACTIVE_COLOR: Record<AudioWavesTone, string> = {
-  default: "bg-foreground",
+  default: "bg-foreground/85",
   signal: "bg-signal",
-  emerald: "bg-emerald-500",
-  obsidian: "bg-emerald-400",
+  emerald: "bg-emerald-600 dark:bg-emerald-400",
+  obsidian: "bg-white/90",
 };
 
 export const WAVE_BAR_IDLE_COLOR: Record<AudioWavesTone, string> = {
-  default: "bg-muted-foreground/35",
-  signal: "bg-muted-foreground/35",
-  emerald: "bg-muted-foreground/35",
-  obsidian: "bg-zinc-700",
+  default: "bg-muted-foreground/30",
+  signal: "bg-muted-foreground/30",
+  emerald: "bg-muted-foreground/30",
+  obsidian: "bg-white/20",
 };
 
 export const WAVE_DOT_INDICATOR: Record<AudioWavesTone, string> = {
-  default: "bg-emerald-500",
+  default: "bg-foreground/80",
   signal: "bg-signal",
-  emerald: "bg-emerald-500",
-  obsidian: "bg-emerald-400",
+  emerald: "bg-emerald-600 dark:bg-emerald-400",
+  obsidian: "bg-white/85",
 };
 
-export const WAVE_HEIGHT_BY_SIZE: Record<AudioWavesSize, { box: string; maxPx: number }> = {
-  sm: { box: "h-6 gap-[2.5px]", maxPx: 18 },
-  md: { box: "h-8 gap-[3px]", maxPx: 26 },
-  lg: { box: "h-10 gap-1", maxPx: 34 },
+export const WAVE_SIZE_CLASS: Record<AudioWavesSize, { box: string; barHeight: string }> = {
+  sm: { box: "h-5 gap-[2.5px]", barHeight: "h-4" },
+  md: { box: "h-7 gap-[3px]", barHeight: "h-6" },
+  lg: { box: "h-9 gap-1", barHeight: "h-8" },
 };

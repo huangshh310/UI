@@ -1,12 +1,12 @@
 "use client";
 
 /**
- * AiArtifact：Claude Artifacts / v0 风格的 AI 生成产物画布，支持版本切换、预览/暗色源码视图与一键复制。
+ * AiArtifact：Claude Artifacts / v0 风格的 AI 生成产物画布，支持版本切换、语法高亮源码与实时交互预览。
  */
 import { cn } from "@matt-ui/utils";
-import { Check, Code2, Copy, Download, Eye, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Badge } from "../badge/index.js";
+import { highlightCodeLine } from "./ai-artifact.highlight.js";
+import { ArtifactToolbar } from "./ai-artifact.parts.js";
 import type {
   AiArtifactPreviewSurface,
   AiArtifactProps,
@@ -15,174 +15,56 @@ import type {
 } from "./ai-artifact.types.js";
 import { ARTIFACT_PREVIEW_SURFACE, artifactShellVariants } from "./ai-artifact.variants.js";
 
-const TabToggleButtons = ({
-  tab,
-  onTabChange,
+const CodePane = ({
+  lines,
+  showLineNumbers,
+  obsidian,
 }: {
-  tab: AiArtifactTab;
-  onTabChange: (next: AiArtifactTab) => void;
+  lines: string[];
+  showLineNumbers: boolean;
+  obsidian: boolean;
 }) => (
-  <div className="inline-flex items-center gap-0.5 rounded-full border border-solid border-border/80 bg-secondary/75 p-0.5">
-    {(
-      [
-        { id: "preview", label: "预览", Icon: Eye },
-        { id: "code", label: "源码", Icon: Code2 },
-      ] as const
-    ).map(({ id, label, Icon }) => (
-      <button
-        key={id}
-        type="button"
-        aria-pressed={tab === id}
-        onClick={() => onTabChange(id)}
-        className={cn(
-          "inline-flex h-6 cursor-pointer items-center gap-1 rounded-full border-0 px-2.5 font-sans text-[11px] font-medium transition-all outline-none focus-visible:ring-2 focus-visible:ring-ring",
-          tab === id
-            ? "bg-card text-foreground shadow-xs"
-            : "bg-transparent text-muted-foreground hover:text-foreground",
-        )}
-      >
-        <Icon aria-hidden="true" className="size-3" />
-        <span>{label}</span>
-      </button>
-    ))}
-  </div>
-);
-
-const VersionSwitcher = ({
-  activeVersion,
-  versions,
-  onVersionChange,
-}: {
-  activeVersion: string;
-  versions?: string[];
-  onVersionChange: (ver: string) => void;
-}) =>
-  versions && versions.length > 1 ? (
-    <div className="inline-flex items-center gap-0.5 rounded-md border border-solid border-border/80 bg-card p-0.5">
-      {versions.map((ver) => (
-        <button
-          key={ver}
-          type="button"
-          aria-pressed={activeVersion === ver}
-          onClick={() => onVersionChange(ver)}
-          className={cn(
-            "cursor-pointer rounded border-0 px-1.5 py-0.5 font-mono text-[10px] font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
-            activeVersion === ver
-              ? "bg-signal text-signal-foreground"
-              : "bg-transparent text-muted-foreground hover:text-foreground",
-          )}
-        >
-          {ver}
-        </button>
-      ))}
-    </div>
-  ) : (
-    <Badge variant="outline" shape="tag">
-      {activeVersion}
-    </Badge>
-  );
-
-interface ToolbarProps {
-  title: string;
-  variant: AiArtifactVariant;
-  activeVersion: string;
-  versions?: string[];
-  tab: AiArtifactTab;
-  copied: boolean;
-  hasDownload: boolean;
-  onVersionChange: (ver: string) => void;
-  onTabChange: (next: AiArtifactTab) => void;
-  onCopyClick: () => void;
-  onDownloadClick: () => void;
-}
-
-const ArtifactToolbar = (p: ToolbarProps) => (
   <div
     className={cn(
-      "flex flex-wrap items-center justify-between gap-2 border-b border-solid border-border/80 bg-secondary/45",
-      p.variant === "compact" ? "px-3.5 py-2" : "px-4 py-2.5",
+      "flex h-full min-h-52 flex-col",
+      obsidian
+        ? "bg-zinc-950 text-zinc-100"
+        : "bg-zinc-50/80 text-zinc-800 dark:bg-zinc-950/90 dark:text-zinc-100",
     )}
   >
-    <div className="flex min-w-0 items-center gap-2">
-      <span className="inline-flex size-6.5 shrink-0 items-center justify-center rounded-lg border border-solid border-border/75 bg-card text-foreground shadow-2xs">
-        <Sparkles aria-hidden="true" className="size-3.5 text-signal" />
-      </span>
-      <span className="truncate font-mono text-xs font-semibold text-foreground">{p.title}</span>
-      <VersionSwitcher
-        activeVersion={p.activeVersion}
-        versions={p.versions}
-        onVersionChange={p.onVersionChange}
-      />
-    </div>
-    <div className="flex items-center gap-1.5">
-      {p.variant !== "split" && <TabToggleButtons tab={p.tab} onTabChange={p.onTabChange} />}
-      <button
-        type="button"
-        aria-label={p.copied ? "已复制源码" : "复制源码"}
-        onClick={p.onCopyClick}
-        className="inline-flex h-7 cursor-pointer items-center gap-1 rounded-full border border-solid border-border/85 bg-card px-2.5 font-sans text-[11px] font-medium text-foreground shadow-2xs transition-colors hover:bg-accent outline-none focus-visible:ring-2 focus-visible:ring-ring"
-      >
-        {p.copied ? (
-          <Check aria-hidden="true" className="size-3 text-emerald-600 dark:text-emerald-400" />
-        ) : (
-          <Copy aria-hidden="true" className="size-3 text-muted-foreground" />
-        )}
-        <span>{p.copied ? "已复制" : "复制"}</span>
-      </button>
-      {p.hasDownload && (
-        <button
-          type="button"
-          aria-label="下载源码"
-          onClick={p.onDownloadClick}
-          className="inline-flex size-7 cursor-pointer items-center justify-center rounded-full border border-solid border-border/85 bg-card text-muted-foreground shadow-2xs transition-colors hover:bg-accent hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          <Download aria-hidden="true" className="size-3" />
-        </button>
-      )}
-    </div>
+    <pre className="m-0 flex-1 overflow-x-auto py-3.5 font-mono text-xs leading-6">
+      <code className="flex min-w-max flex-col">
+        {lines.map((line, idx) => (
+          <span
+            key={idx}
+            className={cn(
+              "flex items-baseline px-4 transition-colors",
+              obsidian ? "hover:bg-white/[0.03]" : "hover:bg-foreground/[0.03]",
+            )}
+          >
+            {showLineNumbers && (
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "mr-4 w-7 shrink-0 select-none border-r border-solid pr-3 text-right text-[11px] tabular-nums",
+                  obsidian
+                    ? "border-zinc-800/90 text-zinc-400"
+                    : "border-border/70 text-zinc-600 dark:border-white/10 dark:text-zinc-400",
+                )}
+              >
+                {idx + 1}
+              </span>
+            )}
+            {line && <span className="sr-only select-none">{line}</span>}
+            <span aria-hidden="true" className="whitespace-pre">
+              {highlightCodeLine(line, obsidian)}
+            </span>
+          </span>
+        ))}
+      </code>
+    </pre>
   </div>
 );
-
-const ObsidianCodePane = ({
-  language,
-  code,
-  showLineNumbers,
-}: {
-  language: string;
-  code: string;
-  showLineNumbers: boolean;
-}) => {
-  const lines = code.split("\n");
-  return (
-    <div className="[color-scheme:dark] relative flex flex-col bg-zinc-950 text-zinc-100">
-      <div className="flex items-center justify-between gap-2 border-b border-solid border-zinc-800/85 bg-zinc-900/75 px-4 py-1.5">
-        <span className="font-mono text-[10px] font-medium text-zinc-400">
-          {lines.length} 行源码
-        </span>
-        <span className="rounded bg-zinc-800 px-1.5 py-0.5 font-mono text-[10px] font-medium text-zinc-300 uppercase">
-          {language}
-        </span>
-      </div>
-      <pre className="m-0 overflow-x-auto p-4 font-mono text-xs leading-relaxed text-zinc-100">
-        <code className="flex flex-col gap-0.5">
-          {lines.map((line, idx) => (
-            <span key={idx} className="flex gap-3">
-              {showLineNumbers && (
-                <span
-                  aria-hidden="true"
-                  className="w-5 shrink-0 select-none text-right text-zinc-400 tabular-nums"
-                >
-                  {idx + 1}
-                </span>
-              )}
-              <span className="min-w-0 flex-1 whitespace-pre-wrap break-all">{line || " "}</span>
-            </span>
-          ))}
-        </code>
-      </pre>
-    </div>
-  );
-};
 
 const PreviewPane = ({
   preview,
@@ -193,11 +75,17 @@ const PreviewPane = ({
 }) => (
   <div
     className={cn(
-      "relative flex min-h-44 items-center justify-center overflow-hidden p-6",
+      "relative flex h-full min-h-56 items-center justify-center overflow-hidden p-6 sm:p-8",
       ARTIFACT_PREVIEW_SURFACE[previewSurface],
     )}
   >
-    {preview}
+    {previewSurface === "grid" && (
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,color-mix(in_srgb,var(--ui-card)_82%,transparent)_100%)]"
+      />
+    )}
+    <div className="relative z-10 flex w-full items-center justify-center">{preview}</div>
   </div>
 );
 
@@ -206,30 +94,34 @@ const ArtifactStage = ({
   tab,
   preview,
   previewSurface,
-  language,
-  code,
+  lines,
   showLineNumbers,
 }: {
   variant: AiArtifactVariant;
   tab: AiArtifactTab;
   preview: AiArtifactProps["preview"];
   previewSurface: AiArtifactPreviewSurface;
-  language: string;
-  code: string;
+  lines: string[];
   showLineNumbers: boolean;
 }) => {
+  const obsidian = previewSurface === "obsidian";
   if (variant === "split") {
     return (
-      <div className="grid grid-cols-1 divide-y divide-border/80 md:grid-cols-2 md:divide-x md:divide-y-0">
+      <div
+        className={cn(
+          "grid grid-cols-1 items-stretch divide-y md:grid-cols-2 md:divide-x md:divide-y-0",
+          obsidian ? "divide-zinc-800" : "divide-border/75 dark:divide-white/10",
+        )}
+      >
         <PreviewPane preview={preview} previewSurface={previewSurface} />
-        <ObsidianCodePane language={language} code={code} showLineNumbers={showLineNumbers} />
+        <CodePane lines={lines} showLineNumbers={showLineNumbers} obsidian={obsidian} />
       </div>
     );
   }
   return tab === "preview" ? (
     <PreviewPane preview={preview} previewSurface={previewSurface} />
   ) : (
-    <ObsidianCodePane language={language} code={code} showLineNumbers={showLineNumbers} />
+    <CodePane lines={lines} showLineNumbers={showLineNumbers} obsidian={obsidian} />
   );
 };
 
@@ -257,6 +149,9 @@ const useCopyFeedback = (code: string, onCopy?: (code: string) => void) => {
 
 export const AiArtifact = (props: AiArtifactProps) => {
   const variant = props.variant ?? "card";
+  const previewSurface = props.previewSurface ?? "grid";
+  const obsidian = previewSurface === "obsidian";
+  const lines = props.code.split("\n");
   const initialVersion =
     props.versions?.[props.versions.length - 1] ?? props.version ?? "v2 · React 19";
   const [tab, setTab] = useState<AiArtifactTab>(props.defaultTab ?? "preview");
@@ -267,13 +162,16 @@ export const AiArtifact = (props: AiArtifactProps) => {
     <div
       data-slot="ai-artifact"
       data-variant={variant}
-      className={cn(artifactShellVariants({ variant }), props.className)}
+      className={cn(artifactShellVariants({ obsidian }), props.className)}
     >
       <ArtifactToolbar
         title={props.title}
         variant={variant}
+        obsidian={obsidian}
         activeVersion={activeVersion}
         versions={props.versions}
+        language={props.language ?? "tsx"}
+        lineCount={lines.length}
         tab={tab}
         copied={copied}
         hasDownload={Boolean(props.onDownload)}
@@ -292,9 +190,8 @@ export const AiArtifact = (props: AiArtifactProps) => {
         variant={variant}
         tab={tab}
         preview={props.preview}
-        previewSurface={props.previewSurface ?? "grid"}
-        language={props.language ?? "tsx"}
-        code={props.code}
+        previewSurface={previewSurface}
+        lines={lines}
         showLineNumbers={props.showLineNumbers ?? true}
       />
     </div>

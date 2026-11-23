@@ -6,7 +6,7 @@ export const AI_ORB_DOC: ComponentDoc = {
   slug: "ai-orb",
   name: "AI Orb",
   description:
-    "AI 语音与智能体状态球，支持流光球体（aurora）、暗夜 3x3 像素点阵（lattice）、轨道光环（ring）与触感胶囊形态。",
+    "AI 语音与智能体状态球，支持流体光学球（aurora）、精密微型 OLED 矩阵（lattice）、双轨声纹光环（ring）与触感胶囊形态。",
   category: "ai",
   registryName: "ai-orb",
   dependencies: ["motion"],
@@ -21,14 +21,14 @@ export function Example() {
       slug: "basic",
       name: "三形态状态球实时切换",
       description:
-        "在思考、聆听、回应与待命四种状态间实时切换，同时呈现流光球体、3x3 像素点阵与轨道光环。",
+        "在思考、聆听、回应与待命四种状态间实时切换，同台呈现流体光学球、微型 OLED 矩阵与双轨声纹光环。",
       file: "ai-orb/basic.tsx",
       Demo: AiOrbBasicDemo,
     },
     {
       slug: "pills",
       name: "内联触感状态胶囊（pill 模式）",
-      description: "传入 pill 与 badge 包裹为 C 端圆角状态胶囊，适合嵌入对话流顶部或输入框。",
+      description: "传入 pill 与 badge 包裹为精致顶栏状态触发胶囊，适合嵌入对话流顶部或工具栏。",
       file: "ai-orb/pills.tsx",
       Demo: AiOrbPillsDemo,
       directory: false,
@@ -45,7 +45,7 @@ export function Example() {
       name: "variant",
       type: '"aurora" | "lattice" | "ring"',
       defaultValue: '"aurora"',
-      description: "流光球体、3x3 点阵或轨道光环形态",
+      description: "流体光学球、微型 OLED 矩阵或双轨声纹光环形态",
     },
     {
       name: "size",

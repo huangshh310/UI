@@ -326,7 +326,7 @@
       "description": "AI 生成代码与交互预览分栏产物卡片，支持版本标记、预览/源码切换与一键复制。",
       "categories": ["ai"],
       "dependencies": ["class-variance-authority", "lucide-react"],
-      "registryDependencies": ["utils", "huangshh310/UI/badge"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "registry/ui/ai-artifact.tsx",
@@ -409,7 +409,7 @@
       "description": "行内角标引用胶囊与 RAG 检索上下文卡片，支持点击切换知识片段与匹配度评分。",
       "categories": ["ai"],
       "dependencies": ["class-variance-authority", "lucide-react"],
-      "registryDependencies": ["utils", "huangshh310/UI/badge"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "registry/ui/ai-citation.tsx",
@@ -744,12 +744,7 @@
       "description": "由 PromptInput、Badge、Button 与多会话侧栏组合的 AI 对话与提示词工作台区块。",
       "categories": ["blocks"],
       "dependencies": ["lucide-react"],
-      "registryDependencies": [
-        "utils",
-        "huangshh310/UI/badge",
-        "huangshh310/UI/button",
-        "huangshh310/UI/prompt-input"
-      ],
+      "registryDependencies": ["utils", "huangshh310/UI/prompt-input"],
       "files": [
         {
           "path": "registry/ui/ai-workspace-block.tsx",

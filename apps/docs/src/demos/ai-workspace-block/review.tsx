@@ -28,6 +28,7 @@ const REVIEW_THREADS = [
 export default function AiWorkspaceBlockReviewDemo() {
   return (
     <AiWorkspaceBlock
+      className="max-w-2xl"
       initialThreads={REVIEW_THREADS}
       title="PR 审查副驾驶"
       variant="compact"

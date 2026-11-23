@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * AiWorkspaceBlock：由 PromptInput、Badge、Button 与多会话侧栏组合的 AI 助手与提示词工作台区块。
+ * AiWorkspaceBlock：由 PromptInput 与多会话侧栏组合的 AI 助手与提示词工作台区块。
  */
 import { cn } from "@matt-ui/utils";
 import { useState } from "react";
@@ -96,7 +96,7 @@ export const AiWorkspaceBlock = (props: AiWorkspaceBlockProps) => {
     >
       <div
         className={cn(
-          "flex w-full flex-col overflow-hidden rounded-[24px] border border-solid border-border/80 bg-card shadow-xs dark:border-white/10",
+          "flex w-full flex-col overflow-hidden rounded-xl border border-solid border-border bg-card shadow-xs dark:border-white/10",
           AI_WORKSPACE_SHELL_CLASS[variant],
         )}
       >

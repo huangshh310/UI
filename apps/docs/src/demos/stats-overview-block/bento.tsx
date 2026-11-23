@@ -10,7 +10,8 @@ export default function StatsOverviewBlockBentoDemo() {
       columns={2}
       compact
       title="边缘分发实时遥测"
-      description="紧凑双列发丝网格，适合嵌入控制台侧栏或概览顶部。"
+      description="一体化无缝发丝分割面板，适合嵌入控制台侧栏或概览顶部"
+      className="w-full"
     />
   );
 }

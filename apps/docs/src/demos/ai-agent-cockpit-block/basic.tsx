@@ -3,5 +3,9 @@
 import { AiAgentCockpitBlock } from "@matt-ui/motion";
 
 export default function AiAgentCockpitBlockBasicDemo() {
-  return <AiAgentCockpitBlock />;
+  return (
+    <div className="w-full max-w-4xl">
+      <AiAgentCockpitBlock />
+    </div>
+  );
 }

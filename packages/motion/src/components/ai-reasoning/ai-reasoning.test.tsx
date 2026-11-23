@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { AiReasoning } from "../../index.js";
@@ -15,7 +15,9 @@ describe("AiReasoning", () => {
 
     await user.click(screen.getByRole("button", { name: /已完成深度推理/ }));
     expect(onExpandedChange).toHaveBeenCalledWith(false);
-    expect(screen.queryByText(/查询京都本周末天气与日落时间/)).toBeNull();
+    await waitFor(() => {
+      expect(screen.queryByText(/查询京都本周末天气与日落时间/)).toBeNull();
+    });
   });
 
   it("支持 ghost 变体、自定义标题与思考 Token 计数展示", () => {

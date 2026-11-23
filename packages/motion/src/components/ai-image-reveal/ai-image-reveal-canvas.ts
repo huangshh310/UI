@@ -7,8 +7,9 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import type { AiImageRevealPhase } from "./ai-image-reveal.types.js";
 import { averageCells, createParticleField, type ParticleField } from "./particle-field.js";
 
-const DARK_PALETTE = ["#93c5fd", "#6ee7b7", "#fcd34d", "#f9a8d4", "#d4d4d8"];
-const LIGHT_PALETTE = ["#155dfc", "#0f766e", "#d97706", "#e11d48", "#27272a"];
+/** 低饱和中性微光灰阶 + 克制品牌蓝点缀（对标 Midjourney / OpenAI 柔光显影） */
+const DARK_PALETTE = ["#e4e4e7", "#a1a1aa", "#71717a", "#cbd5e1", "#60a5fa"];
+const LIGHT_PALETTE = ["#71717a", "#a1a1aa", "#52525b", "#94a3b8", "#3b82f6"];
 
 export interface RevealEngineState {
   field: ParticleField | null;

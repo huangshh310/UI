@@ -1,10 +1,9 @@
 "use client";
 
 /**
- * AiChatThread：C 端 AI 对话消息流，支持用户/助手气泡、流式生成态、多版本分支切换、复制、反馈评分与快捷追问。
+ * AiChatThread：轻盈现代的 AI 对话消息流，支持用户/助手消息、流式生成态、多版本分支切换、复制、反馈评分与快捷追问。
  */
 import { cn } from "@matt-ui/utils";
-import { Sparkles } from "lucide-react";
 import { useRef, useState } from "react";
 import {
   AssistantMetaHeader,
@@ -34,33 +33,28 @@ const AssistantBubble = (p: AssistantBubbleProps) => {
   const idx = ((p.variantIdx % variants.length) + variants.length) % variants.length;
   const activeText = variants[idx] ?? p.msg.content;
   return (
-    <div className="flex items-start gap-3">
-      <span className="mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full border border-solid border-border/80 bg-secondary/75 text-foreground shadow-2xs">
-        <Sparkles aria-hidden="true" className="size-3.5" />
-      </span>
-      <div className="min-w-0 flex-1">
-        <AssistantMetaHeader msg={p.msg} showTimestamps={p.showTimestamps} />
-        <p className="m-0 text-[13.5px] leading-[1.68] text-foreground/92">
-          {activeText}
-          {p.msg.streaming && (
-            <span
-              aria-hidden="true"
-              className="ml-1 inline-block h-3.5 w-1.5 translate-y-0.5 animate-pulse rounded-[2px] bg-signal align-baseline"
-            />
-          )}
-        </p>
-        <MessageActions
-          text={activeText}
-          variantIdx={idx}
-          variantCount={variants.length}
-          vote={p.vote}
-          onPrevVariant={() => p.onSetVariant(idx - 1)}
-          onNextVariant={() => p.onSetVariant(idx + 1)}
-          onRegenerate={() => p.onSetVariant(idx + 1)}
-          onCopy={() => p.onCopy(activeText)}
-          onVote={p.onVote}
-        />
-      </div>
+    <div className="flex flex-col">
+      <AssistantMetaHeader msg={p.msg} showTimestamps={p.showTimestamps} />
+      <p className="m-0 text-[13.5px] leading-[1.7] text-foreground/92">
+        {activeText}
+        {p.msg.streaming && (
+          <span
+            aria-hidden="true"
+            className="ml-0.5 inline-block h-3.5 w-0.5 translate-y-0.5 animate-pulse bg-foreground/75 align-baseline"
+          />
+        )}
+      </p>
+      <MessageActions
+        text={activeText}
+        variantIdx={idx}
+        variantCount={variants.length}
+        vote={p.vote}
+        onPrevVariant={() => p.onSetVariant(idx - 1)}
+        onNextVariant={() => p.onSetVariant(idx + 1)}
+        onRegenerate={() => p.onSetVariant(idx + 1)}
+        onCopy={() => p.onCopy(activeText)}
+        onVote={p.onVote}
+      />
     </div>
   );
 };
@@ -98,7 +92,7 @@ export const AiChatThread = (props: AiChatThreadProps) => {
       data-variant={variant}
       className={cn(chatThreadVariants({ variant }), props.className)}
     >
-      <div aria-live="polite" className="flex flex-col gap-3.5">
+      <div aria-live="polite" className="flex flex-col gap-4">
         {messages.map((msg) =>
           msg.role === "user" ? (
             <UserBubble

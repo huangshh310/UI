@@ -3,5 +3,5 @@
 import { AiWorkspaceBlock } from "@matt-ui/ui";
 
 export default function AiWorkspaceBlockBasicDemo() {
-  return <AiWorkspaceBlock />;
+  return <AiWorkspaceBlock className="w-full" />;
 }

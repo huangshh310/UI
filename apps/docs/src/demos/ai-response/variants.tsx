@@ -12,7 +12,7 @@ const GHOST_CONTENT = `已为你的工作区完成依赖边界扫描，结论如
 
 export default function AiResponseVariantsDemo() {
   return (
-    <div className="w-full max-w-xl rounded-2xl border border-solid border-border/80 bg-background p-5 dark:border-white/10">
+    <div className="w-full max-w-2xl">
       <AiResponse
         variant="ghost"
         model="o4 Reasoning"

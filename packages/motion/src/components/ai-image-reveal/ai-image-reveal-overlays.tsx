@@ -10,19 +10,22 @@ import type { ReactNode } from "react";
 import type { AiImageRevealPhase } from "./ai-image-reveal.types.js";
 import { REVEAL_EASE_OUT, REVEAL_FOCUS_RING } from "./ai-image-reveal.variants.js";
 
+const OVERLAY_CHIP =
+  "border border-solid border-border/70 bg-background/80 text-foreground backdrop-blur-md dark:border-white/12 dark:bg-neutral-950/75 dark:text-neutral-100";
+
 const RevealStatusPill = ({ label }: { label: string }) => (
   <motion.div
     key="reveal-status"
-    initial={{ opacity: 0, y: 6 }}
+    initial={{ opacity: 0, y: 4 }}
     animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: 4, transition: { duration: 0.2 } }}
-    transition={{ duration: 0.28, ease: REVEAL_EASE_OUT }}
-    className="absolute bottom-3 left-3 inline-flex h-8 items-center gap-2 rounded-full border border-solid border-border/80 bg-popover/92 px-3 text-xs font-medium text-popover-foreground shadow-sm backdrop-blur-xl dark:border-white/12"
+    exit={{ opacity: 0, y: 3, transition: { duration: 0.18 } }}
+    transition={{ duration: 0.24, ease: REVEAL_EASE_OUT }}
+    className={cn(
+      "absolute bottom-2.5 left-2.5 inline-flex h-7 items-center gap-2 rounded-full px-2.5 text-[11px] font-medium shadow-xs",
+      OVERLAY_CHIP,
+    )}
   >
-    <span className="relative flex size-2">
-      <span className="absolute inset-0 animate-ping rounded-full bg-signal/45 motion-reduce:hidden" />
-      <span className="relative size-2 rounded-full bg-signal" />
-    </span>
+    <span aria-hidden="true" className="size-1.5 rounded-full bg-signal" />
     <span>{label}</span>
   </motion.div>
 );
@@ -30,16 +33,16 @@ const RevealStatusPill = ({ label }: { label: string }) => (
 const RevealErrorOverlay = ({ onRetry }: { onRetry: () => void }) => (
   <div
     role="alert"
-    className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-background/80 px-6 text-center backdrop-blur-md"
+    className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-background/85 px-6 text-center backdrop-blur-md"
   >
-    <p className="m-0 rounded-lg border border-solid border-destructive/35 bg-destructive/8 px-3 py-1.5 text-xs text-foreground dark:border-destructive dark:bg-destructive/14">
+    <p className="m-0 rounded-lg border border-solid border-destructive/30 bg-destructive/8 px-3 py-1.5 text-xs text-foreground dark:border-destructive/40 dark:bg-destructive/14">
       图像加载失败，请重试。
     </p>
     <button
       type="button"
       onClick={onRetry}
       className={cn(
-        "h-8 cursor-pointer rounded-full border border-solid border-transparent bg-primary px-4 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-transform active:scale-[0.97]",
+        "h-8 cursor-pointer rounded-lg border border-solid border-transparent bg-primary px-3.5 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-opacity hover:opacity-90",
         REVEAL_FOCUS_RING,
       )}
     >
@@ -64,7 +67,8 @@ const RevealDoneControls = ({
         aria-label="重播显影动画"
         onClick={onRetry}
         className={cn(
-          "absolute top-3 right-3 inline-flex h-7 cursor-pointer items-center gap-1 rounded-full border border-solid border-border/75 bg-popover/90 px-2.5 font-sans text-[11px] font-medium text-popover-foreground shadow-xs backdrop-blur-xl transition-colors hover:bg-popover dark:border-white/12",
+          "absolute top-2.5 right-2.5 inline-flex h-6 cursor-pointer items-center gap-1 rounded-full px-2 font-sans text-[11px] font-medium transition-colors hover:bg-background/95 dark:hover:bg-neutral-900/90",
+          OVERLAY_CHIP,
           REVEAL_FOCUS_RING,
         )}
       >
@@ -73,7 +77,7 @@ const RevealDoneControls = ({
       </button>
     )}
     {actions && (
-      <div className="absolute right-3 bottom-3 flex items-center gap-1.5">{actions}</div>
+      <div className="absolute right-2.5 bottom-2.5 flex items-center gap-1.5">{actions}</div>
     )}
   </>
 );
@@ -93,7 +97,12 @@ export const RevealOverlays = (p: RevealOverlaysProps) => {
   return (
     <>
       {p.badge && (
-        <span className="pointer-events-none absolute top-3 left-3 inline-flex items-center rounded-full border border-solid border-border/75 bg-popover/88 px-2.5 py-0.5 font-mono text-[10px] font-medium text-popover-foreground shadow-xs backdrop-blur-xl dark:border-white/12">
+        <span
+          className={cn(
+            "pointer-events-none absolute top-2.5 left-2.5 inline-flex h-6 items-center rounded-full px-2 font-mono text-[10px] font-medium",
+            OVERLAY_CHIP,
+          )}
+        >
           {p.badge}
         </span>
       )}

@@ -19,13 +19,13 @@ const ALL_STATES: { id: ThinkingOrbState; label: string }[] = [
 
 export default function ThinkingOrbStatesDemo() {
   return (
-    <div className="grid w-full max-w-xl grid-cols-3 gap-3">
+    <div className="grid w-full max-w-2xl grid-cols-3 gap-3">
       {ALL_STATES.map((item) => (
         <div
           key={item.id}
-          className="flex flex-col items-center gap-2.5 rounded-2xl border border-solid border-border/80 bg-card/85 p-4 shadow-xs transition-colors hover:border-foreground/20 dark:border-white/10 dark:hover:border-white/20"
+          className="flex flex-col items-center gap-2.5 rounded-xl border border-solid border-border bg-card p-4 shadow-xs transition-colors hover:border-foreground/20 dark:border-white/10 dark:hover:border-white/20"
         >
-          <ThinkingOrb state={item.id} size={60} />
+          <ThinkingOrb state={item.id} size={58} />
           <span className="font-mono text-[11px] text-muted-foreground">{item.label}</span>
         </div>
       ))}

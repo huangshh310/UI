@@ -1,5 +1,5 @@
 /**
- * Message 的样式定义：极简无框助手正文、发丝质感用户胶囊、统一单层焦点环与异常横幅。
+ * Message 的样式定义：极简无框助手正文、纯轻表面用户气泡、统一单层焦点环与异常横幅。
  */
 import { cva } from "class-variance-authority";
 
@@ -11,10 +11,10 @@ export const MESSAGE_PAGER_BTN = `inline-flex size-6 cursor-pointer items-center
 export const messageContentVariants = cva("font-sans", {
   variants: {
     from: {
-      user: "max-w-[84%] border border-solid border-border/70 bg-secondary/90 text-secondary-foreground shadow-xs dark:border-white/10 dark:bg-white/9",
+      user: "max-w-[84%] bg-secondary/80 text-foreground dark:bg-white/10",
       assistant: "w-full text-foreground",
       system:
-        "rounded-full border border-solid border-border/80 bg-secondary/50 px-3 py-1 text-xs text-muted-foreground dark:border-white/10 dark:bg-white/6",
+        "rounded-full border border-solid border-border bg-muted/60 px-3 py-1 text-xs text-muted-foreground dark:border-white/10 dark:bg-white/6",
     },
     variant: {
       default: "",
@@ -26,7 +26,7 @@ export const messageContentVariants = cva("font-sans", {
     {
       from: "user",
       variant: "default",
-      class: "rounded-2xl rounded-br-md px-4 py-2.5 text-sm leading-relaxed",
+      class: "rounded-2xl rounded-br-sm px-4 py-2.5 text-sm leading-relaxed",
     },
     {
       from: "user",
@@ -37,7 +37,7 @@ export const messageContentVariants = cva("font-sans", {
       from: "user",
       variant: "flat",
       class:
-        "max-w-full rounded-xl bg-secondary/65 px-3.5 py-2.5 text-sm leading-relaxed dark:bg-white/7",
+        "max-w-full rounded-xl bg-secondary/60 px-3.5 py-2.5 text-sm leading-relaxed dark:bg-white/8",
     },
     { from: "assistant", variant: "default", class: "text-sm leading-7" },
     { from: "assistant", variant: "compact", class: "text-xs leading-6" },
@@ -54,11 +54,11 @@ export const messageActionVariants = cva(
   {
     variants: {
       tone: {
-        default: "text-muted-foreground hover:bg-accent/80 hover:text-foreground",
+        default: "text-muted-foreground hover:bg-accent/70 hover:text-foreground",
         destructive: "text-muted-foreground hover:bg-destructive/12 hover:text-destructive",
       },
       active: {
-        true: "border-border/70 bg-secondary/90 text-foreground hover:bg-secondary dark:border-white/10 dark:bg-white/12",
+        true: "border-border bg-secondary/85 text-foreground hover:bg-secondary dark:border-white/10 dark:bg-white/12",
         false: "",
       },
     },

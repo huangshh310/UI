@@ -10,7 +10,7 @@ import {
 
 export default function ConversationEmptyDemo() {
   return (
-    <Conversation variant="glass" className="w-full max-w-xl">
+    <Conversation variant="surface" className="w-full max-w-2xl">
       <ConversationContent>
         <ConversationEmptyState
           badge="Claude 4.5 Sonnet · 200K Context"

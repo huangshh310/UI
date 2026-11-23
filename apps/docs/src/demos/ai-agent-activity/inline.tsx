@@ -33,7 +33,7 @@ const INLINE_STEPS: AiAgentActivityItemData[] = [
 
 export default function AiAgentActivityInlineDemo() {
   return (
-    <div className="w-full max-w-md rounded-2xl border border-solid border-border/80 bg-card/60 p-2 dark:border-white/10">
+    <div className="w-full max-w-2xl">
       <AiAgentActivity
         variant="ghost"
         compact

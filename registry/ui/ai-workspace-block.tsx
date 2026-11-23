@@ -2,14 +2,12 @@
 "use client";
 
 /**
- * AiWorkspaceBlock：由 PromptInput、Badge、Button 与多会话侧栏组合的 AI 助手与提示词工作台区块。
+ * AiWorkspaceBlock：由 PromptInput 与多会话侧栏组合的 AI 助手与提示词工作台区块。
  */
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { PromptInput } from "@/components/ui/prompt-input";
 import { cn } from "@/lib/utils";
-import { Bot, MessageSquare, Plus, Sparkles, User } from "lucide-react";
+import { MessageSquare, Plus } from "lucide-react";
 import { useState } from "react";
 
 export const AI_WORKSPACE_MODELS = [
@@ -96,6 +94,9 @@ export interface AiWorkspaceBlockProps {
   /** 自定义类名 */
   className?: string;
 }
+const FOCUS_RING =
+  "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
+
 const ThreadButton = ({
   thread,
   active,
@@ -112,14 +113,15 @@ const ThreadButton = ({
     aria-current={active ? "true" : undefined}
     onClick={onSelect}
     className={cn(
-      "flex shrink-0 cursor-pointer items-center justify-between gap-2 rounded-xl border border-solid px-3 py-2 text-left text-xs transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
+      "flex shrink-0 cursor-pointer items-center justify-between gap-2 rounded-lg border border-solid border-transparent px-2.5 py-1.5 text-left text-xs transition-colors",
+      FOCUS_RING,
       active
-        ? "border-border/80 bg-card font-medium text-foreground shadow-xs dark:border-white/12"
-        : "border-transparent bg-transparent text-muted-foreground hover:bg-accent/70 hover:text-foreground",
+        ? "bg-accent/70 font-medium text-foreground"
+        : "bg-transparent text-muted-foreground hover:bg-accent/40 hover:text-foreground",
     )}
   >
     <span className="flex min-w-0 items-center gap-2">
-      <MessageSquare aria-hidden="true" className="size-3.5 shrink-0" />
+      <MessageSquare aria-hidden="true" className="size-3.5 shrink-0 opacity-75" />
       <span className="truncate">{thread.title}</span>
     </span>
     {!compact && (
@@ -139,19 +141,22 @@ const SidebarHeader = ({
   count: number;
   onNew: () => void;
 }) => (
-  <div className="flex items-center justify-between gap-2">
-    <div className="flex items-center gap-2">
-      <span className="inline-flex size-6.5 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-xs">
-        <Sparkles aria-hidden="true" className="size-3.5" />
-      </span>
-      <span className="text-sm font-semibold tracking-tight text-foreground">{title}</span>
-      <Badge variant="secondary" size="sm" className="font-mono tabular-nums">
-        {count}
-      </Badge>
+  <div className="flex items-center justify-between gap-2 px-1">
+    <div className="flex min-w-0 items-center gap-2">
+      <span className="truncate text-xs font-semibold tracking-tight text-foreground">{title}</span>
+      <span className="font-mono text-[11px] text-muted-foreground tabular-nums">{count}</span>
     </div>
-    <Button size="icon" variant="ghost" aria-label="新建对话" onClick={onNew}>
-      <Plus className="size-4" />
-    </Button>
+    <button
+      type="button"
+      aria-label="新建对话"
+      onClick={onNew}
+      className={cn(
+        "inline-flex size-7 shrink-0 cursor-pointer items-center justify-center rounded-md border border-solid border-transparent bg-transparent text-muted-foreground transition-colors hover:bg-accent hover:text-foreground",
+        FOCUS_RING,
+      )}
+    >
+      <Plus className="size-3.5" />
+    </button>
   </div>
 );
 
@@ -174,12 +179,12 @@ const ThreadSidebar = ({
   return (
     <div
       className={cn(
-        "flex shrink-0 flex-col gap-3 border-b border-solid border-border/80 bg-secondary/30 p-3.5 dark:border-white/10 dark:bg-secondary/20",
-        !isCompact && "@2xl:w-64 @2xl:border-r @2xl:border-b-0",
+        "flex shrink-0 flex-col gap-2.5 border-b border-solid border-border/75 bg-muted/35 p-3 dark:border-white/8 dark:bg-white/[0.02]",
+        !isCompact && "@2xl:w-60 @2xl:border-r @2xl:border-b-0",
       )}
     >
       <SidebarHeader title={title} count={threads.length} onNew={onNew} />
-      <div className={cn("flex flex-row gap-1.5 overflow-x-auto", !isCompact && "@2xl:flex-col")}>
+      <div className={cn("flex flex-row gap-1 overflow-x-auto", !isCompact && "@2xl:flex-col")}>
         {threads.map((thread) => (
           <ThreadButton
             key={thread.id}
@@ -195,61 +200,53 @@ const ThreadSidebar = ({
 };
 
 const MessageRow = ({ msg, showTimestamps }: { msg: AiMessage; showTimestamps: boolean }) => {
-  const isUser = msg.role === "user";
-  return (
-    <div className={cn("flex items-start gap-2.5", isUser && "flex-row-reverse")}>
-      <span
-        className={cn(
-          "mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full border border-solid",
-          isUser
-            ? "border-primary bg-primary text-primary-foreground"
-            : "border-border/80 bg-secondary text-foreground dark:border-white/12",
-        )}
-      >
-        {isUser ? (
-          <User aria-hidden="true" className="size-3.5" />
-        ) : (
-          <Bot aria-hidden="true" className="size-3.5" />
-        )}
-      </span>
-      <div className={cn("flex max-w-[82%] flex-col gap-1", isUser && "items-end")}>
-        <div
-          className={cn(
-            "px-3.5 py-2.5 text-[13px] leading-relaxed",
-            isUser
-              ? "rounded-[18px] rounded-tr-sm bg-secondary text-foreground"
-              : "rounded-[18px] rounded-tl-sm border border-solid border-border/80 bg-background text-foreground shadow-xs dark:border-white/10 dark:bg-secondary/35",
-          )}
-        >
+  if (msg.role === "user") {
+    return (
+      <div className="flex flex-col items-end gap-1">
+        <div className="max-w-[82%] rounded-xl bg-secondary/80 px-3.5 py-2.5 text-[13.5px] leading-relaxed text-foreground">
           <p className="m-0">{msg.content}</p>
         </div>
         {showTimestamps && (
-          <span className="px-1 font-mono text-[10px] text-muted-foreground tabular-nums">
-            {isUser ? "你" : "助手"} · {msg.timestamp}
+          <span className="pr-1 font-mono text-[11px] text-muted-foreground tabular-nums">
+            你 · {msg.timestamp}
           </span>
         )}
       </div>
+    );
+  }
+  return (
+    <div className="flex flex-col items-start gap-1">
+      <p className="m-0 text-[13.5px] leading-[1.7] text-foreground/92">{msg.content}</p>
+      {showTimestamps && (
+        <span className="font-mono text-[11px] text-muted-foreground tabular-nums">
+          助手 · {msg.timestamp}
+        </span>
+      )}
     </div>
   );
 };
 
-const ChatHeader = ({ thread, model }: { thread?: AiThread; model: string }) => (
-  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-solid border-border/80 px-4 py-3 dark:border-white/10">
-    <div className="flex min-w-0 items-center gap-2">
-      <p className="m-0 truncate text-sm font-semibold tracking-tight text-foreground">
-        {thread?.title}
-      </p>
-      {thread && (
-        <span className="hidden font-mono text-[11px] text-muted-foreground tabular-nums sm:inline">
-          {thread.messages.length} 条消息
-        </span>
-      )}
+const ChatHeader = ({ thread, model }: { thread?: AiThread; model: string }) => {
+  const modelLabel = AI_WORKSPACE_MODELS.find((m) => m.id === model)?.label ?? model;
+  return (
+    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-solid border-border/75 px-4 py-2.5 dark:border-white/8">
+      <div className="flex min-w-0 items-center gap-2">
+        <p className="m-0 truncate text-xs font-semibold tracking-tight text-foreground">
+          {thread?.title}
+        </p>
+        {thread && (
+          <span className="hidden font-mono text-[11px] text-muted-foreground tabular-nums sm:inline">
+            {thread.messages.length} 条消息
+          </span>
+        )}
+      </div>
+      <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground tabular-nums">
+        <span aria-hidden="true" className="size-1.5 rounded-full bg-emerald-500" />
+        {modelLabel}
+      </span>
     </div>
-    <Badge variant="soft" size="sm" dot>
-      {AI_WORKSPACE_MODELS.find((m) => m.id === model)?.label ?? model}
-    </Badge>
-  </div>
-);
+  );
+};
 
 const ChatPane = ({
   thread,
@@ -271,14 +268,17 @@ const ChatPane = ({
   <div className="flex min-w-0 flex-1 flex-col">
     <ChatHeader thread={thread} model={model} />
     {thread && (
-      <div className="flex flex-1 flex-col gap-4 overflow-y-auto p-5">
+      <div className="flex flex-1 flex-col gap-4 overflow-y-auto px-5 py-4">
         {thread.messages.map((msg) => (
           <MessageRow key={msg.id} msg={msg} showTimestamps={showTimestamps} />
         ))}
       </div>
     )}
-    <div className="border-t border-solid border-border/80 bg-secondary/20 p-3.5 dark:border-white/10 dark:bg-secondary/15">
+    <div className="border-t border-solid border-border/75 px-4 py-3 dark:border-white/8">
       <PromptInput
+        className="max-w-none"
+        size="sm"
+        radius="lg"
         value={draft}
         onValueChange={onDraftChange}
         onSubmit={onSubmit}
@@ -377,7 +377,7 @@ export const AiWorkspaceBlock = (props: AiWorkspaceBlockProps) => {
     >
       <div
         className={cn(
-          "flex w-full flex-col overflow-hidden rounded-[24px] border border-solid border-border/80 bg-card shadow-xs dark:border-white/10",
+          "flex w-full flex-col overflow-hidden rounded-xl border border-solid border-border bg-card shadow-xs dark:border-white/10",
           AI_WORKSPACE_SHELL_CLASS[variant],
         )}
       >

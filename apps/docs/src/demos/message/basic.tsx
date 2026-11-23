@@ -49,7 +49,7 @@ export default function MessageBasicDemo() {
   const [vote, setVote] = useState<"up" | "down" | null>(null);
 
   return (
-    <div className="flex w-full max-w-xl flex-col gap-5">
+    <div className="flex w-full max-w-2xl flex-col gap-5">
       <UserEditableTurn />
       <Message from="assistant" author="Matt AI" model="Claude 4.5" timestamp="14:20">
         <MessageBranch>

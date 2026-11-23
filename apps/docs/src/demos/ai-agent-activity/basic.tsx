@@ -39,7 +39,7 @@ const ACTIVITIES: AiAgentActivityItemData[] = [
 
 export default function AiAgentActivityBasicDemo() {
   return (
-    <div className="w-full max-w-md">
+    <div className="w-full max-w-2xl">
       <AiAgentActivity
         title="构建轨迹"
         agentName="UI Agent"

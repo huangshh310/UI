@@ -15,7 +15,7 @@ export default function PromptQueueVariantsDemo() {
   const [items, setItems] = useState(COMPACT_ITEMS);
 
   return (
-    <div className="flex w-full max-w-xl flex-col gap-3">
+    <div className="flex w-full max-w-2xl flex-col gap-3">
       <PromptQueue
         items={items}
         variant="elevated"
@@ -28,7 +28,7 @@ export default function PromptQueueVariantsDemo() {
         <button
           type="button"
           onClick={() => setItems(COMPACT_ITEMS)}
-          className="w-fit cursor-pointer rounded-lg border border-solid border-border/80 bg-card px-2.5 py-1 font-sans text-xs text-foreground shadow-xs hover:bg-accent"
+          className="h-8 w-fit cursor-pointer rounded-lg border border-solid border-border bg-card px-3 font-sans text-xs font-medium text-foreground shadow-xs transition-colors hover:bg-accent outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset dark:border-white/10"
         >
           恢复演示队列
         </button>

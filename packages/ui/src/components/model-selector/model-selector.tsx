@@ -1,12 +1,12 @@
 "use client";
 
 /**
- * ModelSelector：紧凑型模型与推理深度浮层选择器（对标 shadcn AI Elements Model Selector）。
- * 基于 Base UI Popover 构建，提供毛玻璃浮层、厂商分组、思考强度与联网开关。
+ * ModelSelector：紧凑型模型与推理深度浮层选择器（对标 Claude / Cursor / Vercel AI Elements）。
+ * 基于 Base UI Popover 构建，提供利落浮层、两栏模型信息、思考强度与联网开关。
  */
 import { Popover } from "@base-ui/react/popover";
 import { cn } from "@matt-ui/utils";
-import { ChevronDown, Globe, Sparkles } from "lucide-react";
+import { ChevronDown, Globe } from "lucide-react";
 import { useState } from "react";
 import {
   DEFAULT_MODELS,
@@ -93,14 +93,11 @@ const TriggerLabel = ({
 }) => (
   <>
     {!hasCustomAria && <span className="sr-only">选择模型：</span>}
-    <Sparkles aria-hidden="true" className="size-3.5 shrink-0 text-signal" />
     <span className="max-w-36 truncate">{modelName}</span>
     {showEffort && (
-      <span className="rounded-full bg-secondary/90 px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground dark:bg-white/10">
-        {EFFORT_LABELS[effort]}
-      </span>
+      <span className="font-normal text-muted-foreground">· {EFFORT_LABELS[effort]}</span>
     )}
-    {webSearch && <Globe aria-hidden="true" className="size-3 shrink-0 text-signal" />}
+    {webSearch && <Globe aria-hidden="true" className="size-3 shrink-0 text-muted-foreground" />}
     <ChevronDown
       aria-hidden="true"
       className="size-3.5 shrink-0 text-muted-foreground transition-transform duration-(--ui-duration-fast) group-data-popup-open:rotate-180"

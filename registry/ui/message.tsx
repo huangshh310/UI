@@ -2,8 +2,8 @@
 "use client";
 
 /**
- * Message：单回合对话复合组件（对标 shadcn AI Elements Message + ChatGPT/Claude 无框流式排版）。
- * 支持元信息头（作者/模型徽章/时间戳）、多版本分支切换、原位编辑与异常重试。
+ * Message：单回合对话复合组件（对标 Vercel AI Elements / ChatGPT / Claude 无框流式排版）。
+ * 支持元信息头（作者/模型微标/时间戳）、多版本分支切换、原位编辑与异常重试。
  */
 
 import { cn } from "@/lib/utils";
@@ -30,10 +30,10 @@ export const MESSAGE_PAGER_BTN = `inline-flex size-6 cursor-pointer items-center
 export const messageContentVariants = cva("font-sans", {
   variants: {
     from: {
-      user: "max-w-[84%] border border-solid border-border/70 bg-secondary/90 text-secondary-foreground shadow-xs dark:border-white/10 dark:bg-white/9",
+      user: "max-w-[84%] bg-secondary/80 text-foreground dark:bg-white/10",
       assistant: "w-full text-foreground",
       system:
-        "rounded-full border border-solid border-border/80 bg-secondary/50 px-3 py-1 text-xs text-muted-foreground dark:border-white/10 dark:bg-white/6",
+        "rounded-full border border-solid border-border bg-muted/60 px-3 py-1 text-xs text-muted-foreground dark:border-white/10 dark:bg-white/6",
     },
     variant: {
       default: "",
@@ -45,7 +45,7 @@ export const messageContentVariants = cva("font-sans", {
     {
       from: "user",
       variant: "default",
-      class: "rounded-2xl rounded-br-md px-4 py-2.5 text-sm leading-relaxed",
+      class: "rounded-2xl rounded-br-sm px-4 py-2.5 text-sm leading-relaxed",
     },
     {
       from: "user",
@@ -56,7 +56,7 @@ export const messageContentVariants = cva("font-sans", {
       from: "user",
       variant: "flat",
       class:
-        "max-w-full rounded-xl bg-secondary/65 px-3.5 py-2.5 text-sm leading-relaxed dark:bg-white/7",
+        "max-w-full rounded-xl bg-secondary/60 px-3.5 py-2.5 text-sm leading-relaxed dark:bg-white/8",
     },
     { from: "assistant", variant: "default", class: "text-sm leading-7" },
     { from: "assistant", variant: "compact", class: "text-xs leading-6" },
@@ -73,11 +73,11 @@ export const messageActionVariants = cva(
   {
     variants: {
       tone: {
-        default: "text-muted-foreground hover:bg-accent/80 hover:text-foreground",
+        default: "text-muted-foreground hover:bg-accent/70 hover:text-foreground",
         destructive: "text-muted-foreground hover:bg-destructive/12 hover:text-destructive",
       },
       active: {
-        true: "border-border/70 bg-secondary/90 text-foreground hover:bg-secondary dark:border-white/10 dark:bg-white/12",
+        true: "border-border bg-secondary/85 text-foreground hover:bg-secondary dark:border-white/10 dark:bg-white/12",
         false: "",
       },
     },
@@ -165,6 +165,12 @@ export interface MessageEditFormProps {
   submitLabel?: string;
   className?: string;
 }
+const MessageCtx = createContext<MessageContextValue>({
+  from: "assistant",
+  status: "ready",
+  variant: "default",
+});
+
 interface BranchContextValue {
   branch: number;
   total: number;
@@ -234,7 +240,7 @@ const MessageBranchSelector = ({ className, ...props }: MessageBranchSelectorPro
     <div
       data-slot="message-branch-selector"
       className={cn(
-        "inline-flex items-center gap-0.5 rounded-lg border border-solid border-border/70 bg-secondary/45 px-0.5 font-mono text-[11px] text-muted-foreground tabular-nums dark:border-white/10 dark:bg-white/5",
+        "inline-flex items-center gap-0.5 rounded-lg border border-solid border-border bg-muted/60 px-0.5 font-mono text-[11px] text-muted-foreground tabular-nums dark:border-white/10 dark:bg-white/6",
         className,
       )}
       {...props}
@@ -280,7 +286,7 @@ const EditFormFooter = ({
         type="button"
         onClick={onCancel}
         className={cn(
-          "inline-flex h-7 cursor-pointer items-center rounded-full border border-solid border-border/80 bg-secondary/65 px-3 font-sans text-xs font-medium text-foreground transition-colors duration-(--ui-duration-fast) hover:bg-accent dark:border-white/10",
+          "inline-flex h-7 cursor-pointer items-center rounded-lg border border-solid border-border bg-card px-2.5 font-sans text-xs font-medium text-foreground transition-colors duration-(--ui-duration-fast) hover:bg-accent/60 dark:border-white/10",
           MESSAGE_FOCUS_RING,
         )}
       >
@@ -291,7 +297,7 @@ const EditFormFooter = ({
         disabled={!canSave}
         onClick={onSave}
         className={cn(
-          "inline-flex h-7 cursor-pointer items-center rounded-full border border-solid border-transparent bg-primary px-3 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-opacity duration-(--ui-duration-fast) hover:opacity-90 disabled:pointer-events-none disabled:opacity-45",
+          "inline-flex h-7 cursor-pointer items-center rounded-lg border border-solid border-transparent bg-primary px-2.5 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-opacity duration-(--ui-duration-fast) hover:opacity-90 disabled:pointer-events-none disabled:opacity-45",
           MESSAGE_FOCUS_RING,
         )}
       >
@@ -308,8 +314,10 @@ const MessageEditForm = ({
   submitLabel = "保存并重发",
   className,
 }: MessageEditFormProps) => {
+  const { from, variant } = useContext(MessageCtx);
   const [text, setText] = useState(defaultValue);
   const canSave = text.trim().length > 0;
+  const alignRight = from === "user" && variant !== "flat";
 
   const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Escape") {
@@ -327,7 +335,8 @@ const MessageEditForm = ({
     <div
       data-slot="message-edit-form"
       className={cn(
-        "ml-auto flex w-full max-w-[88%] flex-col gap-2.5 rounded-2xl border border-solid border-border/80 bg-card/95 p-3 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.12)] focus-within:border-ring focus-within:ring-1 focus-within:ring-ring focus-within:ring-inset dark:border-white/12 dark:shadow-[0_14px_32px_-10px_rgba(0,0,0,0.65)]",
+        "flex w-full flex-col gap-2.5 rounded-xl border border-solid border-border bg-card p-3 shadow-xs focus-within:border-ring focus-within:ring-1 focus-within:ring-ring focus-within:ring-inset dark:border-white/10",
+        alignRight && "ml-auto max-w-[88%]",
         className,
       )}
     >
@@ -348,12 +357,6 @@ const MessageEditForm = ({
     </div>
   );
 };
-const MessageCtx = createContext<MessageContextValue>({
-  from: "assistant",
-  status: "ready",
-  variant: "default",
-});
-
 const hasMessageMeta = (p: Pick<MessageProps, "author" | "model" | "timestamp" | "avatar">) =>
   Boolean(p.author || p.model || p.timestamp || p.avatar);
 
@@ -375,7 +378,7 @@ const MessageMetaHeader = (
       {p.avatar && <span className="shrink-0">{p.avatar}</span>}
       {p.author && <span className="font-medium text-foreground">{p.author}</span>}
       {p.model && (
-        <span className="rounded-md border border-solid border-border/75 bg-secondary/70 px-1.5 py-0.2 font-mono text-[10px] text-muted-foreground dark:border-white/10 dark:bg-white/8">
+        <span className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground dark:bg-white/8">
           {p.model}
         </span>
       )}
@@ -391,7 +394,7 @@ const MessageStatusFeedback = ({
 }: Pick<MessageContextValue, "status" | "errorMessage" | "onRetry">) => {
   if (status === "stopped") {
     return (
-      <div className="mt-1 inline-flex w-fit items-center gap-1.5 rounded-full border border-solid border-border/75 bg-secondary/70 px-2.5 py-0.5 font-sans text-[11px] text-muted-foreground dark:border-white/10 dark:bg-white/8">
+      <div className="mt-1 inline-flex w-fit items-center gap-1.5 rounded-md bg-muted px-2 py-0.5 font-sans text-[11px] text-muted-foreground dark:bg-white/8">
         <span aria-hidden="true" className="size-1.5 rounded-full bg-muted-foreground/75" />
         <span>已停止生成</span>
       </div>
@@ -401,7 +404,7 @@ const MessageStatusFeedback = ({
     return (
       <div
         role="alert"
-        className="mt-1.5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-solid border-destructive/35 bg-destructive/8 px-3.5 py-2 text-xs text-foreground dark:border-destructive dark:bg-destructive/14"
+        className="mt-1.5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-solid border-destructive/30 bg-destructive/8 px-3.5 py-2.5 text-xs text-foreground dark:border-destructive/50 dark:bg-destructive/14"
       >
         <span className="inline-flex items-center gap-2">
           <AlertCircle aria-hidden="true" className="size-3.5 shrink-0 text-destructive" />
@@ -412,7 +415,7 @@ const MessageStatusFeedback = ({
             type="button"
             onClick={onRetry}
             className={cn(
-              "inline-flex h-6.5 cursor-pointer items-center gap-1 rounded-lg border border-solid border-border/80 bg-card px-2.5 font-sans text-xs font-medium text-foreground shadow-xs transition-colors duration-(--ui-duration-fast) hover:bg-accent dark:border-white/12",
+              "inline-flex h-7 cursor-pointer items-center gap-1 rounded-lg border border-solid border-border bg-card px-2.5 font-sans text-xs font-medium text-foreground shadow-xs transition-colors duration-(--ui-duration-fast) hover:bg-accent/60 dark:border-white/10",
               MESSAGE_FOCUS_RING,
             )}
           >
@@ -483,7 +486,7 @@ export const MessageContent = ({ className, children, ...props }: MessageContent
       {from === "assistant" && status === "streaming" && (
         <span
           aria-hidden="true"
-          className="ml-1 inline-block size-2 animate-pulse rounded-full bg-signal align-middle motion-reduce:animate-none"
+          className="ml-1 inline-block h-3.5 w-0.5 animate-pulse rounded-full bg-signal align-text-bottom motion-reduce:animate-none"
         />
       )}
     </div>

@@ -5,6 +5,7 @@ import { AiToolCall } from "@matt-ui/ui";
 export default function AiToolCallBasicDemo() {
   return (
     <AiToolCall
+      className="max-w-2xl"
       toolName="search_registry"
       provider="MCP · docs"
       status="completed"

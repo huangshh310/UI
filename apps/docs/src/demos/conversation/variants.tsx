@@ -11,7 +11,7 @@ import {
 
 export default function ConversationVariantsDemo() {
   return (
-    <Conversation variant="surface" fadeEdges unreadCount={3} className="h-52 w-full max-w-xl">
+    <Conversation variant="surface" fadeEdges unreadCount={3} className="h-52 w-full max-w-2xl">
       <ConversationContent size="sm">
         <Message from="user">
           <MessageContent>可以把回到底部按钮做成更轻量的圆形悬浮箭头吗？</MessageContent>
@@ -19,7 +19,7 @@ export default function ConversationVariantsDemo() {
         <Message from="assistant">
           <MessageContent>
             将 ConversationScrollButton 设置为 variant=&quot;icon&quot; 即可切换为 ChatGPT
-            风格的毛玻璃圆形悬浮按钮，并自动在右上角挂载未读计数徽章。
+            风格的极简圆形悬浮按钮，并自动在右上角挂载未读计数徽章。
           </MessageContent>
         </Message>
       </ConversationContent>

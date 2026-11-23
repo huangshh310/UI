@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Message 内部复合子部件：多版本分支状态机与用户消息原位编辑器。
+ * Message 内部复合子部件：消息上下文、多版本分支状态机与用户消息原位编辑器。
  */
 import { cn } from "@matt-ui/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -17,9 +17,16 @@ import type {
   MessageBranchContentProps,
   MessageBranchProps,
   MessageBranchSelectorProps,
+  MessageContextValue,
   MessageEditFormProps,
 } from "./message.types.js";
 import { MESSAGE_FOCUS_RING, MESSAGE_PAGER_BTN } from "./message.variants.js";
+
+export const MessageCtx = createContext<MessageContextValue>({
+  from: "assistant",
+  status: "ready",
+  variant: "default",
+});
 
 interface BranchContextValue {
   branch: number;
@@ -94,7 +101,7 @@ export const MessageBranchSelector = ({ className, ...props }: MessageBranchSele
     <div
       data-slot="message-branch-selector"
       className={cn(
-        "inline-flex items-center gap-0.5 rounded-lg border border-solid border-border/70 bg-secondary/45 px-0.5 font-mono text-[11px] text-muted-foreground tabular-nums dark:border-white/10 dark:bg-white/5",
+        "inline-flex items-center gap-0.5 rounded-lg border border-solid border-border bg-muted/60 px-0.5 font-mono text-[11px] text-muted-foreground tabular-nums dark:border-white/10 dark:bg-white/6",
         className,
       )}
       {...props}
@@ -140,7 +147,7 @@ const EditFormFooter = ({
         type="button"
         onClick={onCancel}
         className={cn(
-          "inline-flex h-7 cursor-pointer items-center rounded-full border border-solid border-border/80 bg-secondary/65 px-3 font-sans text-xs font-medium text-foreground transition-colors duration-(--ui-duration-fast) hover:bg-accent dark:border-white/10",
+          "inline-flex h-7 cursor-pointer items-center rounded-lg border border-solid border-border bg-card px-2.5 font-sans text-xs font-medium text-foreground transition-colors duration-(--ui-duration-fast) hover:bg-accent/60 dark:border-white/10",
           MESSAGE_FOCUS_RING,
         )}
       >
@@ -151,7 +158,7 @@ const EditFormFooter = ({
         disabled={!canSave}
         onClick={onSave}
         className={cn(
-          "inline-flex h-7 cursor-pointer items-center rounded-full border border-solid border-transparent bg-primary px-3 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-opacity duration-(--ui-duration-fast) hover:opacity-90 disabled:pointer-events-none disabled:opacity-45",
+          "inline-flex h-7 cursor-pointer items-center rounded-lg border border-solid border-transparent bg-primary px-2.5 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-opacity duration-(--ui-duration-fast) hover:opacity-90 disabled:pointer-events-none disabled:opacity-45",
           MESSAGE_FOCUS_RING,
         )}
       >
@@ -168,8 +175,10 @@ export const MessageEditForm = ({
   submitLabel = "保存并重发",
   className,
 }: MessageEditFormProps) => {
+  const { from, variant } = useContext(MessageCtx);
   const [text, setText] = useState(defaultValue);
   const canSave = text.trim().length > 0;
+  const alignRight = from === "user" && variant !== "flat";
 
   const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Escape") {
@@ -187,7 +196,8 @@ export const MessageEditForm = ({
     <div
       data-slot="message-edit-form"
       className={cn(
-        "ml-auto flex w-full max-w-[88%] flex-col gap-2.5 rounded-2xl border border-solid border-border/80 bg-card/95 p-3 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.12)] focus-within:border-ring focus-within:ring-1 focus-within:ring-ring focus-within:ring-inset dark:border-white/12 dark:shadow-[0_14px_32px_-10px_rgba(0,0,0,0.65)]",
+        "flex w-full flex-col gap-2.5 rounded-xl border border-solid border-border bg-card p-3 shadow-xs focus-within:border-ring focus-within:ring-1 focus-within:ring-ring focus-within:ring-inset dark:border-white/10",
+        alignRight && "ml-auto max-w-[88%]",
         className,
       )}
     >

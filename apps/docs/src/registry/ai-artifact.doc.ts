@@ -6,7 +6,7 @@ export const AI_ARTIFACT_DOC: ComponentDoc = {
   slug: "ai-artifact",
   name: "AI Artifact",
   description:
-    "AI 生成代码与交互预览产物画布，内置点阵预览画布、暗色曜石源码舞台、多版本切换与一键复制下载。",
+    "AI 生成代码与交互预览产物画布，内置微点阵悬浮预览画布、轻量语法高亮源码舞台、多版本演进切换与一键复制下载。",
   category: "ai",
   registryName: "ai-artifact",
   dependencies: ["class-variance-authority", "lucide-react"],
@@ -19,16 +19,17 @@ export function Example() {
   specimens: [
     {
       slug: "basic",
-      name: "生成组件实时预览与暗色源码切换",
+      name: "多版本交互组件预览与语法高亮源码切换",
       description:
-        "顶栏集成产物版本切换器、预览/源码分段切换与一键复制反馈，预览区附带微点阵底纹。",
+        "顶栏集成版本分段切换器（v1/v2/v3 同步驱动预览与代码演进）、预览/源码切换、一键复制与下载操作。",
       file: "ai-artifact/basic.tsx",
       Demo: AiArtifactBasicDemo,
     },
     {
       slug: "code-first",
-      name: "默认源码模式曜石代码舞台",
-      description: '通过 defaultTab="code" 默认聚焦带行号的曜石暗色源码视图与语言角标。',
+      name: "默认源码模式曜石语法高亮舞台",
+      description:
+        '通过 defaultTab="code" 与 previewSurface="obsidian" 默认聚焦带行号与语法着色的曜石源码视图。',
       file: "ai-artifact/code-first.tsx",
       Demo: AiArtifactCodeFirstDemo,
       directory: false,
