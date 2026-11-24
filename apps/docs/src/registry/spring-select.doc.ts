@@ -13,7 +13,7 @@ export const SPRING_SELECT_DOC: ComponentDoc = {
   slug: "spring-select",
   name: "Spring Select",
   description:
-    "基于 Base UI Select 的极简弹性下拉选择器：轻盈发丝边框与半透明磨砂弹层，支持单选与多选芯片（multiple）、分组菜单、状态圆点、一键清空与校验反馈。",
+    "极简弹性下拉选择器：轻盈发丝边框与半透明磨砂弹层，支持单选与多选芯片（multiple）、分组菜单、状态圆点、一键清空与校验反馈。",
   category: "forms",
   registryName: "spring-select",
   dependencies: [
@@ -156,7 +156,7 @@ export function Demo() {
   ],
   accessibility: [
     "触发器具备具名 combobox 语义，浮层为 listbox，支持方向键、Home/End 与字母 typeahead。",
-    "多选模式由 Base UI 原生管理 aria-multiselectable 与 aria-selected 状态，连续勾选不关闭弹层。",
+    "多选模式自动维护 aria-multiselectable 与 aria-selected 无障碍状态，连续勾选不关闭弹层。",
     "清空按钮独立于触发器之外渲染（无嵌套按钮）；传入 error 时自动设置 aria-invalid 与 alert 提示。",
   ],
 };

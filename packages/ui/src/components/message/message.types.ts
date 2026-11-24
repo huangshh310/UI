@@ -17,7 +17,7 @@ export interface MessageContextValue {
 }
 
 export interface MessageProps extends HTMLAttributes<HTMLElement> {
-  /** 消息发送方角色（对齐 shadcn AI Elements 的 from 属性，避免与原生 ARIA role 冲突） */
+  /** 消息发送方角色（采用 from 属性命名，避免与原生 ARIA role 冲突） */
   from: MessageRole;
   /** 生成状态，默认 ready */
   status?: MessageStatus;
@@ -25,7 +25,7 @@ export interface MessageProps extends HTMLAttributes<HTMLElement> {
   variant?: MessageVariant;
   /** 可选发送方或助手展示名 */
   author?: string;
-  /** 可选模型标识等宽徽章（如 "Claude 4.5"） */
+  /** 可选模型标识等宽徽章（如 "Matt Pro 4"） */
   model?: string;
   /** 可选时间戳文案（如 "刚刚" / "14:22"） */
   timestamp?: string;

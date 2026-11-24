@@ -3,7 +3,7 @@
 
 /**
  * DrawCheckbox：勾选时对勾沿 SVG 路径平滑绘制出来的复选框。
- * 交互行为与 ARIA 语义由 Base UI 的 Checkbox 提供，支持行内、卡片、胶囊、列表行与待办划线模式。
+ * 内置完整的无障碍复选框语义与键盘空格切换，支持行内、卡片、胶囊、列表行与待办划线模式。
  */
 
 import { cn } from "@/lib/utils";
@@ -175,7 +175,7 @@ export interface DrawCheckboxProps {
   value?: string;
   /** 容器外观：行内默认、C 端服务卡片、胶囊标签或轻盈列表行 */
   variant?: DrawCheckboxVariant;
-  /** 复选框几何形状：圆角方块、全圆（Things/iOS 风格）或利落方角 */
+  /** 复选框几何形状：圆角方块、全圆胶囊或利落方角 */
   shape?: DrawCheckboxShape;
   /** 复选框与文案尺寸 */
   size?: DrawCheckboxSize;

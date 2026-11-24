@@ -21,7 +21,7 @@ export const MESSAGE_DOC: ComponentDoc = {
 
 export function Example() {
   return (
-    <Message from="assistant" model="Claude 4.5">
+    <Message from="assistant" model="Matt Pro 4">
       <MessageContent>你好！今天想构建什么组件？</MessageContent>
     </Message>
   );
@@ -46,8 +46,7 @@ export function Example() {
     {
       slug: "metadata",
       name: "极简左对齐流与头像元信息头",
-      description:
-        "通过 variant='flat' 与 author / model / avatar 构建 Linear / IDE 侧栏风格会话。",
+      description: "通过 variant='flat' 与 author / model / avatar 构建紧凑无框侧栏会话。",
       file: "message/metadata.tsx",
       Demo: MessageMetadataDemo,
       directory: false,

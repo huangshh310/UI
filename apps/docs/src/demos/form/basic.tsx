@@ -45,7 +45,7 @@ export const FormBasic = () => {
             value="oss"
             variant="compact"
             label="开源发布"
-            description="通过 shadcn Registry 公开分发"
+            description="通过组件 Registry 公开分发源码"
             badge="免费"
           />
           <FormRadioItem

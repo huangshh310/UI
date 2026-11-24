@@ -52,7 +52,7 @@ export default function AiResponseBasicDemo() {
   return (
     <div className="flex w-full max-w-2xl flex-col gap-2">
       <AiResponse
-        model="Claude 4.5 Sonnet"
+        model="Matt Pro 4"
         modelBadge="200K"
         timestamp="0.8s"
         content={SAMPLE_MARKDOWN}

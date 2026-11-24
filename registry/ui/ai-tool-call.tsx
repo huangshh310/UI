@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * AiToolCall：Cursor / Vercel AI Elements 风格的紧凑工具调用轨迹，支持入参/返回 JSON 载荷展开复制与失败重试。
+ * AiToolCall：紧凑工具调用轨迹卡片，支持执行状态流转、入参与返回 JSON 载荷抽屉及失败重试。
  */
 
 import { cn } from "@/lib/utils";

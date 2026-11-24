@@ -17,7 +17,7 @@ export const AI_RESPONSE_DOC: ComponentDoc = {
 export function Example() {
   return (
     <AiResponse
-      model="Claude 4.5 Sonnet"
+      model="Matt Pro 4"
       modelBadge="200K"
       status="complete"
       content="已整理完**核心要点**，可直接运行 \`pnpm build\` 验证。"

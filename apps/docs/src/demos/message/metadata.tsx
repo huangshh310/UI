@@ -12,8 +12,8 @@ export default function MessageMetadataDemo() {
       <Message
         from="assistant"
         variant="flat"
-        author="Copilot"
-        model="Gemini 3 Flash"
+        author="Matt Assistant"
+        model="Matt Flash 3"
         timestamp="0.4s"
         avatar={
           <span className="inline-flex size-5 items-center justify-center rounded-md border border-solid border-border bg-muted font-mono text-[10px] font-semibold text-foreground dark:border-white/10 dark:bg-white/10">

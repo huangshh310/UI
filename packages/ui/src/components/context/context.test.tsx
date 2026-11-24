@@ -16,7 +16,7 @@ describe("Context", () => {
     render(
       <Context
         maxTokens={100000}
-        modelName="claude-3.7-sonnet"
+        modelName="matt-pro"
         segments={[
           { id: "system", label: "系统提示", tokens: 10000, tone: "primary" },
           { id: "history", label: "历史消息", tokens: 50000, tone: "signal" },
@@ -29,7 +29,7 @@ describe("Context", () => {
     await user.click(trigger);
 
     expect(screen.getByText("历史消息")).toBeTruthy();
-    expect(screen.getByText(/claude-3\.7-sonnet/)).toBeTruthy();
+    expect(screen.getByText(/matt-pro/)).toBeTruthy();
     await user.click(screen.getByRole("button", { name: "压缩上下文" }));
     expect(onCompact).toHaveBeenCalledWith(30000);
     expect(screen.getByText(/已释放 30\.0K/)).toBeTruthy();

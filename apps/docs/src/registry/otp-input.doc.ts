@@ -11,7 +11,7 @@ export const OTP_INPUT_DOC: ComponentDoc = {
   slug: "otp-input",
   name: "OTP Input",
   description:
-    "基于 Base UI OTPField 与 motion 的一次性验证码输入，支持连体分组、柔灰填充与极简下划线四种风格、自动推进、整段粘贴与落位弹跳反馈。",
+    "一次性验证码输入框，支持连体分组、柔灰填充与极简下划线四种风格、自动推进、整段粘贴与弹簧落位反馈。",
   category: "forms",
   registryName: "otp-input",
   dependencies: ["@base-ui/react", "motion", "clsx", "tailwind-merge"],
@@ -67,7 +67,7 @@ export function Demo() {
       name: "variant / size",
       type: `"default" | "grouped" | "filled" | "underline" / "sm" | "md" | "lg"`,
       defaultValue: `"default" / "md"`,
-      description: "槽位视觉形态（含 shadcn 风格连体分组）与三档尺寸。",
+      description: "槽位视觉形态（独立描边、紧凑连体分组、柔灰填充、极简下划线）与三档尺寸。",
     },
     { name: "length", type: "number", defaultValue: "6", description: "验证码输入位数。" },
     {

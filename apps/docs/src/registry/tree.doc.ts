@@ -7,7 +7,7 @@ export const TREE_DOC: ComponentDoc = {
   slug: "tree",
   name: "Tree",
   description:
-    "基于精确锁版本 UI SDK 的层级树形视图，支持 card / ghost 容器、compact / comfortable 密度、可切换缩进参考线与 WAI-ARIA 键盘导航。",
+    "层级树形视图，支持 card / ghost 容器、compact / comfortable 密度、可切换缩进参考线与完整 WAI-ARIA 键盘导航。",
   category: "navigation",
   registryName: "tree",
   dependencies: ["@ui-sdk/react@0.1.0-beta.13", "class-variance-authority", "lucide-react"],

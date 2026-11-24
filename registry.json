@@ -7,7 +7,7 @@
       "name": "accordion",
       "type": "registry:ui",
       "title": "Accordion",
-      "description": "基于 Base UI Accordion 的折叠面板，支持单开/多开、发丝分隔与盒装变体及平滑展开。",
+      "description": "无障碍折叠面板，支持单开与多开模式、发丝分隔与盒装变体及平滑高度过渡。",
       "categories": ["navigation"],
       "dependencies": ["class-variance-authority", "@base-ui/react", "lucide-react"],
       "registryDependencies": ["utils"],
@@ -98,7 +98,7 @@
       "name": "advanced-data-table",
       "type": "registry:ui",
       "title": "Advanced Data Table",
-      "description": "在 TanStack Table 之上扩展分面筛选、列显隐、行密度切换、批量操作栏与 CSV 导出的高级数据表格。",
+      "description": "支持分面筛选、列显隐、行密度切换、批量操作栏与 CSV 导出的高级数据表格。",
       "categories": ["forms"],
       "dependencies": [
         "class-variance-authority",
@@ -625,6 +625,115 @@
           "path": "registry/ui/ai-response.tsx",
           "type": "registry:ui",
           "target": "@ui/ai-response.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
+        },
+        "dark": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-surface",
+      "type": "registry:ui",
+      "title": "AI Surface",
+      "description": "面向 Agent 的受限语义视图协议、JSON Schema 校验、rankWith 优先级渲染内核与纯文本降级容器。",
+      "categories": ["ai"],
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": [
+        "utils",
+        "huangshh310/UI/alert",
+        "huangshh310/UI/badge",
+        "huangshh310/UI/button",
+        "huangshh310/UI/progress",
+        "huangshh310/UI/card",
+        "huangshh310/UI/tabs",
+        "huangshh310/UI/empty-state",
+        "huangshh310/UI/draw-checkbox",
+        "huangshh310/UI/form",
+        "huangshh310/UI/spring-select"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-surface.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-surface.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
+        },
+        "dark": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-surface-agent",
+      "type": "registry:ui",
+      "title": "AiSurfaceAgent",
+      "description": "智能体高阶领域语义渲染包：将审批护栏、代码差异审阅、工具调用轨迹、生成产物画布、知识溯源、树形目录、交互式数据表与可搜索组合框注册进语义视图容器。",
+      "categories": ["ai"],
+      "dependencies": [],
+      "registryDependencies": [
+        "utils",
+        "huangshh310/UI/ai-surface",
+        "huangshh310/UI/ai-approval-card",
+        "huangshh310/UI/ai-diff-review",
+        "huangshh310/UI/ai-tool-call",
+        "huangshh310/UI/ai-artifact",
+        "huangshh310/UI/ai-citation",
+        "huangshh310/UI/tree",
+        "huangshh310/UI/badge",
+        "huangshh310/UI/combobox",
+        "huangshh310/UI/data-table",
+        "huangshh310/UI/progress"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/ai-surface-agent.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-surface-agent.tsx"
         }
       ],
       "cssVars": {
@@ -1386,7 +1495,7 @@
       "name": "combobox",
       "type": "registry:ui",
       "title": "Combobox",
-      "description": "A searchable combobox built on Base UI with highlighted match text, clear trigger, and async loading state.",
+      "description": "可搜索组合选择器，支持单选与多选芯片、命中高亮、一键清空及远程异步加载态。",
       "categories": ["forms"],
       "dependencies": ["class-variance-authority", "@base-ui/react", "lucide-react"],
       "registryDependencies": ["utils"],
@@ -1428,7 +1537,7 @@
       "name": "command-menu",
       "type": "registry:ui",
       "title": "Command Menu",
-      "description": "基于 UI SDK 的全局命令面板，支持模糊匹配高亮、分组命令、键盘循环与子页面栈。",
+      "description": "磨砂全局命令面板，支持模糊匹配高亮、分组命令、全键盘导航与多级子页面栈。",
       "categories": ["overlays"],
       "dependencies": ["class-variance-authority", "@ui-sdk/react@0.1.0-beta.13", "lucide-react"],
       "registryDependencies": ["utils"],
@@ -1604,7 +1713,7 @@
       "name": "data-table",
       "type": "registry:ui",
       "title": "Data Table",
-      "description": "基于 TanStack Table 的声明式数据表格，支持排序、全局搜索、分页、行选择、骨架加载与空状态。",
+      "description": "声明式数据表格，支持列排序、全局搜索、分页、行选择、骨架加载与空状态提示。",
       "categories": ["forms"],
       "dependencies": ["class-variance-authority", "@tanstack/react-table", "lucide-react"],
       "registryDependencies": ["utils", "huangshh310/UI/draw-checkbox"],
@@ -1646,7 +1755,7 @@
       "name": "date-picker",
       "type": "registry:ui",
       "title": "Date Picker",
-      "description": "基于 Base UI Popover 与 Calendar 组合的日期与区间选择器，支持快捷预设与一键清空。",
+      "description": "日期与日期区间选择器，内置毛玻璃浮层、左侧快捷预设、校验提示与一键清空。",
       "categories": ["forms"],
       "dependencies": ["class-variance-authority", "@base-ui/react", "lucide-react"],
       "registryDependencies": ["utils", "huangshh310/UI/calendar"],
@@ -1772,7 +1881,7 @@
       "name": "draw-checkbox",
       "type": "registry:ui",
       "title": "Draw Checkbox",
-      "description": "A checkbox built on Base UI whose checkmark draws smoothly along its SVG path.",
+      "description": "勾选时沿 SVG 路径平滑绘出对勾的无障碍复选框，支持卡片、胶囊与待办划线模式。",
       "categories": ["forms"],
       "dependencies": ["class-variance-authority", "lucide-react", "@base-ui/react"],
       "registryDependencies": ["utils"],
@@ -1944,7 +2053,7 @@
       "name": "form",
       "type": "registry:ui",
       "title": "Form",
-      "description": "A composable form system built on Base UI Form, Field, and RadioGroup with accessible validation messages.",
+      "description": "模块化无障碍表单系统，支持表面与控件变体继承、水平分栏布局及实时校验反馈。",
       "categories": ["forms"],
       "dependencies": ["class-variance-authority", "@base-ui/react"],
       "registryDependencies": ["utils"],
@@ -2539,7 +2648,7 @@
       "name": "number-input",
       "type": "registry:ui",
       "title": "Number Input",
-      "description": "基于 Base UI NumberField 的数值步进输入框，支持加减步进、标签拖拽微调与货币/百分比格式化。",
+      "description": "精密数值步进输入框，支持加减步进、标签横向拖拽微调与货币/百分比格式化。",
       "categories": ["navigation"],
       "dependencies": ["class-variance-authority", "@base-ui/react", "lucide-react"],
       "registryDependencies": ["utils"],
@@ -2670,7 +2779,7 @@
       "name": "otp-input",
       "type": "registry:ui",
       "title": "OTP Input",
-      "description": "An accessible one-time-passcode input built on Base UI OTPField with spring pop feedback on entry.",
+      "description": "一次性验证码输入框，支持四种槽位形态、自动推进、整段粘贴与弹簧落位反馈。",
       "categories": ["forms"],
       "dependencies": ["@base-ui/react", "motion"],
       "registryDependencies": ["utils"],
@@ -2884,7 +2993,7 @@
       "name": "progress",
       "type": "registry:ui",
       "title": "Progress",
-      "description": "基于 Base UI Progress 的极细线性进度条，支持确定进度、不确定态与等宽读数。",
+      "description": "极细线性无障碍进度条，支持确定进度、不确定流光态、多语义色调与等宽百分比读数。",
       "categories": ["display"],
       "dependencies": ["@base-ui/react"],
       "registryDependencies": ["utils"],
@@ -3010,7 +3119,7 @@
       "name": "reorder-list",
       "type": "registry:ui",
       "title": "Reorder List",
-      "description": "基于精确锁版本 UI SDK 与 motion 的拖拽与键盘双通道可重排列表，支持 Space 拿起/方向键换位/Esc 取消。",
+      "description": "拖拽与键盘双通道可重排列表，支持物理弹簧落位、Space 拿起、方向键换位与 Esc 取消。",
       "categories": ["navigation"],
       "dependencies": [
         "@ui-sdk/core@0.1.0-beta.13",
@@ -3057,7 +3166,7 @@
       "name": "resizable-panels",
       "type": "registry:ui",
       "title": "Resizable Panels",
-      "description": "基于精确锁版本 UI SDK 的可拖拽分栏面板，支持最小/最大约束与键盘方向键无障碍调整。",
+      "description": "可拖拽分栏布局面板，支持水平/垂直切分、最小最大尺寸约束与键盘方向键无障碍调节。",
       "categories": ["navigation"],
       "dependencies": ["class-variance-authority", "@ui-sdk/react@0.1.0-beta.13", "lucide-react"],
       "registryDependencies": ["utils"],
@@ -3183,7 +3292,7 @@
       "name": "separator",
       "type": "registry:ui",
       "title": "Separator",
-      "description": "基于 Base UI Separator 的 1px 发丝分隔线，支持水平/垂直方向与居中标签文字。",
+      "description": "1px 发丝语义分隔线，支持水平/垂直方向、实线/虚线/渐变样式与标签文字。",
       "categories": ["display"],
       "dependencies": ["@base-ui/react"],
       "registryDependencies": ["utils"],
@@ -3444,7 +3553,7 @@
       "name": "slider",
       "type": "registry:ui",
       "title": "Slider",
-      "description": "基于 Base UI Slider 的单滑块与区间双滑块，带钴蓝激活轨道、刻度标记与键盘微调。",
+      "description": "精密单滑块与区间双滑块，支持激活轨道色调、刻度标记、浮动读数与键盘微调。",
       "categories": ["navigation"],
       "dependencies": ["class-variance-authority", "@base-ui/react"],
       "registryDependencies": ["utils"],
@@ -3654,7 +3763,7 @@
       "name": "spring-select",
       "type": "registry:ui",
       "title": "Spring Select",
-      "description": "A select dropdown built on Base UI with crisp spring-overshoot panel and chevron transitions.",
+      "description": "弹性磨砂下拉选择器，支持单选与多选芯片、分组列表、状态圆点及完整键盘导航。",
       "categories": ["forms"],
       "dependencies": ["class-variance-authority", "@base-ui/react", "lucide-react"],
       "registryDependencies": ["utils"],
@@ -3780,7 +3889,7 @@
       "name": "stretch-switch",
       "type": "registry:ui",
       "title": "Stretch Switch",
-      "description": "A tactile switch built on Base UI whose thumb stretches while pressed and snaps across with spring physics.",
+      "description": "按压时滑块弹性拉伸并以物理弹簧归位的触感无障碍开关。",
       "categories": ["forms"],
       "dependencies": ["@base-ui/react", "motion"],
       "registryDependencies": ["utils"],
@@ -3864,7 +3973,7 @@
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",
-      "description": "基于 Base UI Tabs 的平滑滑动指示器页签，支持胶囊分段、下划线与卡片三种风格。",
+      "description": "带平滑滑动指示器的无障碍页签，支持胶囊分段、下划线、卡片与内嵌四种风格。",
       "categories": ["navigation"],
       "dependencies": ["class-variance-authority", "@base-ui/react"],
       "registryDependencies": ["utils"],
@@ -3999,7 +4108,7 @@
       "name": "toast",
       "type": "registry:ui",
       "title": "Toast",
-      "description": "基于 Base UI Toast 的堆叠通知系统，支持多方位停靠、语义色调、撤销动作与悬停暂停。",
+      "description": "磨砂悬浮堆叠通知系统，支持多方位停靠、语义色调、动作按钮与悬停暂停。",
       "categories": ["display"],
       "dependencies": ["@base-ui/react", "lucide-react"],
       "registryDependencies": ["utils"],
@@ -4041,7 +4150,7 @@
       "name": "tree",
       "type": "registry:ui",
       "title": "Tree",
-      "description": "基于精确锁版本 UI SDK 的层级树形视图，带缩进参考线、分支展开与完整 WAI-ARIA 键盘导航。",
+      "description": "层级树形视图，带缩进参考线、分支展开折叠与完整 WAI-ARIA 键盘导航。",
       "categories": ["navigation"],
       "dependencies": ["class-variance-authority", "@ui-sdk/react@0.1.0-beta.13", "lucide-react"],
       "registryDependencies": ["utils"],

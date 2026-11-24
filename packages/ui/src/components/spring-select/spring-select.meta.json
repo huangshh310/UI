@@ -1,6 +1,6 @@
 {
   "name": "spring-select",
   "title": "Spring Select",
-  "description": "A select dropdown built on Base UI with crisp spring-overshoot panel and chevron transitions.",
+  "description": "弹性磨砂下拉选择器，支持单选与多选芯片、分组列表、状态圆点及完整键盘导航。",
   "categories": ["forms"]
 }

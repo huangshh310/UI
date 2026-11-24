@@ -1,6 +1,6 @@
 {
   "name": "command-menu",
   "title": "Command Menu",
-  "description": "基于 UI SDK 的全局命令面板，支持模糊匹配高亮、分组命令、键盘循环与子页面栈。",
+  "description": "磨砂全局命令面板，支持模糊匹配高亮、分组命令、全键盘导航与多级子页面栈。",
   "categories": ["overlays"]
 }

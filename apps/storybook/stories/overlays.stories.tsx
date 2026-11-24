@@ -24,7 +24,7 @@ export const ModalsAndSheets: StoryObj = {
       <SettleModal
         trigger={<Button variant="outline">SettleModal</Button>}
         title="发布确认"
-        description="基于 Base UI Dialog 的居中模态框。"
+        description="内置完整焦点陷阱与背景锁定的居中磨砂模态框。"
       >
         确认发布新版本。
       </SettleModal>

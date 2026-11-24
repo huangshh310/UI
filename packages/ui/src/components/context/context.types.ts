@@ -29,7 +29,7 @@ export interface ContextProps {
   costLabel?: string;
   /** 是否展示成本徽章，默认 true */
   showCost?: boolean;
-  /** 可选当前模型标识（展示于浮层头部，如 "claude-3.7-sonnet"） */
+  /** 可选当前模型标识（展示于浮层头部，如 "matt-pro"） */
   modelName?: string;
   /** 是否展示一键压缩按钮，默认 true */
   compactable?: boolean;

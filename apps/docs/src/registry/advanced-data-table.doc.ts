@@ -10,7 +10,7 @@ export const ADVANCED_DATA_TABLE_DOC: ComponentDoc = {
   slug: "advanced-data-table",
   name: "Advanced Data Table",
   description:
-    "在 TanStack Table v9 之上扩展分面筛选、毛玻璃列显隐弹层、行密度切换、斑马纹、骨架态、批量动作栏与 CSV 导出的高级数据表格。",
+    "支持多选分面筛选、毛玻璃列显隐弹层、行密度切换、斑马纹、骨架态、批量动作栏与 CSV 导出的高级数据表格。",
   category: "forms",
   registryName: "advanced-data-table",
   dependencies: [
@@ -85,7 +85,7 @@ export function Demo() {
     },
   ],
   accessibility: [
-    "列显隐毛玻璃弹层由 Base UI Popover 托管焦点与 Escape 关闭，内置 DrawCheckbox 支持空格切换。",
+    "列显隐毛玻璃弹层自动管理焦点与 Escape 关闭，内部复选框完整支持空格键切换。",
     "分面筛选与密度按钮均通过 aria-pressed 明确声明当前选中态，统一单层清晰焦点环。",
     "所有排序、滚动、清除搜索与勾选操作均可纯键盘完成。",
   ],

@@ -11,7 +11,7 @@ export const FORM_DOC: ComponentDoc = {
   slug: "form",
   name: "Form",
   description:
-    "基于 Base UI Form、Field 与 RadioGroup 的极简模块化表单系统，支持表面与控件变体继承、水平分栏布局、分组操作栏与无障碍校验联动。",
+    "极简模块化无障碍表单系统，支持表面与控件变体继承、水平分栏布局、分组操作栏与实时校验联动。",
   category: "forms",
   registryName: "form",
   dependencies: ["@base-ui/react", "class-variance-authority", "clsx", "tailwind-merge"],

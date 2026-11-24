@@ -7,7 +7,7 @@ export const PROGRESS_DOC: ComponentDoc = {
   slug: "progress",
   name: "Progress",
   description:
-    "基于 Base UI Progress 的圆润线性进度条，支持三种轨道尺寸、六种语义色调、等宽百分比读数与不确定流光态。",
+    "圆润线性无障碍进度条，支持三种轨道尺寸、六种语义色调、等宽百分比读数与不确定流光态。",
   category: "display",
   registryName: "progress",
   dependencies: ["@base-ui/react"],

@@ -1,6 +1,6 @@
 {
   "name": "tabs",
   "title": "Tabs",
-  "description": "基于 Base UI Tabs 的平滑滑动指示器页签，支持胶囊分段、下划线与卡片三种风格。",
+  "description": "带平滑滑动指示器的无障碍页签，支持胶囊分段、下划线、卡片与内嵌四种风格。",
   "categories": ["navigation"]
 }

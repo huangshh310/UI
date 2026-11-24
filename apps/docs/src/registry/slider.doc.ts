@@ -7,7 +7,7 @@ export const SLIDER_DOC: ComponentDoc = {
   slug: "slider",
   name: "Slider",
   description:
-    "基于 Base UI Slider 的精密滑块与区间双滑块，支持 sm / md / lg 尺寸、default / signal / emerald 色调、浮动数值气泡与刻度标记。",
+    "精密单滑块与区间双滑块，支持 sm / md / lg 尺寸、default / signal / emerald 色调、浮动数值气泡与刻度标记。",
   category: "navigation",
   registryName: "slider",
   dependencies: ["@base-ui/react", "class-variance-authority"],

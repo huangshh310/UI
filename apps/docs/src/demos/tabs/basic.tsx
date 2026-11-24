@@ -20,7 +20,7 @@ export default function TabsBasicDemo() {
             label: "Registry",
             icon: <Layers className="size-3.5" />,
             badge: "54",
-            content: "通过 shadcn CLI 将扁平单文件源码直接安装到你的项目中。",
+            content: "通过 CLI 将扁平单文件源码直接安装到你的项目中。",
           },
           {
             value: "a11y",

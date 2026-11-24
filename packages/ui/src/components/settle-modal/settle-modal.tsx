@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * SettleModal：基于 Base UI Dialog 的居中模态框，提供磨砂浮层质感、阻尼落位动效与完整焦点管理。
+ * SettleModal：居中磨砂落位模态框，提供阻尼入场动效、焦点陷阱、滚动锁定与焦点恢复。
  */
 import { Dialog } from "@base-ui/react/dialog";
 import { cn } from "@matt-ui/utils";

@@ -32,8 +32,7 @@ export function Demo() {
     {
       slug: "stretch-switch-basic",
       name: "按压拉伸开关",
-      description:
-        "基于 Base UI Switch 与 motion 弹簧，展示 primary / signal / success 三种触感色调。",
+      description: "结合按压拉伸物理弹簧反馈，展示 primary / signal / success 三种触感色调。",
       file: "stretch-switch/basic.tsx",
       Demo: StretchSwitchBasic,
     },
@@ -93,7 +92,7 @@ export function Demo() {
     },
   ],
   accessibility: [
-    "语义与键盘操作由 Base UI Switch 提供，支持空格与回车切换及原生表单提交。",
+    "内置标准 switch 无障碍角色，完整支持空格与回车切换及原生表单提交。",
     "用户要求减少动态效果时关闭拉伸形变与弹簧过渡，直接切换状态。",
   ],
 };

@@ -12,7 +12,7 @@ export default function ContextBasicDemo() {
   return (
     <div className="flex flex-col items-start gap-2.5">
       <Context
-        modelName="claude-3.7-sonnet"
+        modelName="matt-pro"
         onCompact={(saved) =>
           setNotice(`已压缩历史与工具输出，释放 ${(saved / 1000).toFixed(1)}K Token`)
         }

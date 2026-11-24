@@ -35,7 +35,7 @@ export const ACTIVITY_DEFAULT_ITEMS: ActivityEntry[] = [
     actor: "周宁",
     initials: "周",
     title: "同步了 71 个 Registry 条目至私有分发仓",
-    detail: "全量 shadcn CLI 安装与 Vite 构建通过。",
+    detail: "全量 Registry 源码安装与独立构建验证通过。",
     time: "昨天 18:40",
     category: "deploy",
   },

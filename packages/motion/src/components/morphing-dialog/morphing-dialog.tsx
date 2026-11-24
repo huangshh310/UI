@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * MorphingDialog：基于 Base UI Dialog 与 motion 共享 layoutId 的磨砂卡片形变弹窗。
+ * MorphingDialog：基于共享布局过渡与完整焦点管理的磨砂卡片形变弹窗。
  */
 import { Dialog } from "@base-ui/react/dialog";
 import { cn } from "@matt-ui/utils";

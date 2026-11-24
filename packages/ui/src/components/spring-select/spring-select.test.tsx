@@ -1,7 +1,7 @@
 /**
  * SpringSelect 的行为规约。
  * 测试接缝：@matt-ui/ui 的公开入口。
- * 真实浏览器下的键盘空窗（Base UI 偏差 #3）、typeahead 与焦点恢复由展示站 E2E 覆盖。
+ * 真实浏览器下的按键时序、首字母检索与焦点恢复由展示站 E2E 覆盖。
  */
 import { cleanup, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -16,17 +16,17 @@ const OPTIONS = [
 
 const RICH_OPTIONS = [
   {
-    value: "gemini",
-    label: "Gemini 2.5 Pro",
+    value: "pro",
+    label: "Matt Pro 4",
     description: "复杂推理与长上下文",
     badge: "推荐",
     dot: "signal" as const,
-    icon: <span data-testid="icon-gemini">✦</span>,
+    icon: <span data-testid="icon-pro">✦</span>,
     group: "旗舰模型",
   },
   {
     value: "flash",
-    label: "Gemini 2.5 Flash",
+    label: "Matt Flash 3",
     description: "低延迟日常响应",
     badge: "高速",
     dot: "success" as const,
@@ -92,15 +92,15 @@ describe("SpringSelect", () => {
       <SpringSelect
         label="默认模型"
         options={RICH_OPTIONS}
-        defaultValue="gemini"
+        defaultValue="pro"
         popupHeader="选择推理引擎"
         popupFooter="随时可在工作台切换"
       />,
     );
 
     const trigger = screen.getByRole("combobox", { name: "默认模型" });
-    expect(trigger.textContent).toContain("Gemini 2.5 Pro");
-    expect(screen.getByTestId("icon-gemini")).toBeTruthy();
+    expect(trigger.textContent).toContain("Matt Pro 4");
+    expect(screen.getByTestId("icon-pro")).toBeTruthy();
 
     await userEvent.click(trigger);
     expect(await screen.findByText("旗舰模型")).toBeTruthy();

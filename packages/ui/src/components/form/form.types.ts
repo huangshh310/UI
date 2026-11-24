@@ -1,6 +1,6 @@
 /**
  * Form 模块化表单系统的类型定义。
- * 不对外暴露底层 Base UI 类型，保持接口可替换。
+ * 对外只暴露自有表单契约类型，保持底层交互实现可替换。
  */
 import type { ComponentProps, ReactNode } from "react";
 

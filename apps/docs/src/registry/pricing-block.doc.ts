@@ -35,7 +35,7 @@ export const PRICING_BLOCK_DOC: ComponentDoc = {
       slug: "spotlight",
       name: "品牌蓝描边聚光与美元计费",
       description:
-        '使用 variant="spotlight"、defaultCycle="yearly" 与 currency="$"，呈现 Stripe / Linear 风格聚光主推档。',
+        '使用 variant="spotlight"、defaultCycle="yearly" 与 currency="$"，呈现高对比聚光主推档。',
       file: "pricing-block/spotlight.tsx",
       Demo: PricingBlockSpotlightDemo,
       directory: false,

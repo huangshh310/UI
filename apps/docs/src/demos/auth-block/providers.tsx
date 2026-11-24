@@ -20,7 +20,7 @@ export default function AuthBlockProvidersDemo() {
       <AuthBlock
         variant="subtle"
         compact
-        brandName="Linear Cloud"
+        brandName="Studio Cloud"
         ssoProviders={PROVIDERS}
         showForgotPassword
         error={error}

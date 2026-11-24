@@ -13,7 +13,7 @@ const ITEMS = [
     shortcut: "T",
     meta: "@matt-ui/ui",
     icon: <Table2 className="size-3.5" />,
-    preview: "基于 TanStack Table v9 构建，内置排序、搜索、分页与行勾选状态。",
+    preview: "声明式数据表格，内置列排序、实时搜索、分页与行勾选状态。",
   },
   {
     id: "settle-modal",
@@ -23,7 +23,7 @@ const ITEMS = [
     shortcut: "M",
     meta: "@matt-ui/ui",
     icon: <Layers className="size-3.5" />,
-    preview: "基于 Base UI Dialog，支持焦点陷阱、滚动锁定与关闭后焦点恢复。",
+    preview: "居中磨砂模态框，支持焦点陷阱、滚动锁定与关闭后焦点恢复。",
   },
   {
     id: "prompt-input",

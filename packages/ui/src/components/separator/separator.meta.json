@@ -1,6 +1,6 @@
 {
   "name": "separator",
   "title": "Separator",
-  "description": "基于 Base UI Separator 的 1px 发丝分隔线，支持水平/垂直方向与居中标签文字。",
+  "description": "1px 发丝语义分隔线，支持水平/垂直方向、实线/虚线/渐变样式与标签文字。",
   "categories": ["display"]
 }

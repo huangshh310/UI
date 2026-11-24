@@ -9,7 +9,7 @@ import { useState } from "react";
 const TASKS = [
   { id: "t1", label: "确认暗黑模式主画布对比度", time: "10:30" },
   { id: "t2", label: "补齐 Lock Input 与 Draw Checkbox 示例", time: "14:00" },
-  { id: "t3", label: "生成最新 shadcn Registry 清单", time: "16:30" },
+  { id: "t3", label: "生成最新组件 Registry 清单", time: "16:30" },
   { id: "t4", label: "发布 v1.4.0 更新日志到社区", time: "18:00" },
 ];
 

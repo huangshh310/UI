@@ -9,7 +9,7 @@ const TASKS = [
   {
     id: "registry",
     title: "生成与验证 Registry",
-    subtitle: "shadcn CLI 真实安装",
+    subtitle: "CLI 真实拉取与编译安装",
     badge: "Step 3",
   },
   { id: "e2e", title: "双主题 E2E 与 axe 审计", subtitle: "Playwright Chromium", badge: "Step 4" },

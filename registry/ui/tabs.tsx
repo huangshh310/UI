@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * Tabs：基于 Base UI Tabs 的平滑滑动指示器页签，支持 pill / line / card / enclosed 四种风格与 sm / md / lg 尺寸。
+ * Tabs：平滑滑动指示器页签，支持 pill / line / card / enclosed 四种风格与 sm / md / lg 尺寸。
  */
 
 import { cn } from "@/lib/utils";

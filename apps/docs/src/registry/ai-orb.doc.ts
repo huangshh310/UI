@@ -14,7 +14,7 @@ export const AI_ORB_DOC: ComponentDoc = {
   usage: `import { AiOrb } from "@/components/ui/ai-orb";
 
 export function Example() {
-  return <AiOrb state="thinking" variant="aurora" pill badge="Claude" />;
+  return <AiOrb state="thinking" variant="aurora" pill badge="Pro" />;
 }`,
   specimens: [
     {

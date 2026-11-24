@@ -6,8 +6,7 @@ import type { ComponentDoc } from "./registry.types";
 export const SEPARATOR_DOC: ComponentDoc = {
   slug: "separator",
   name: "Separator",
-  description:
-    "基于 Base UI Separator 的 1px 发丝分隔线，支持水平/垂直方向、居中与左右对齐标签以及实线/虚线/渐变样式。",
+  description: "1px 发丝语义分隔线，支持水平/垂直方向、居中与左右对齐标签以及实线/虚线/渐变样式。",
   category: "display",
   registryName: "separator",
   dependencies: ["@base-ui/react"],
@@ -66,5 +65,5 @@ export const SEPARATOR_DOC: ComponentDoc = {
       description: "分隔线样式",
     },
   ],
-  accessibility: ['基于 Base UI Separator，自动输出 role="separator" 与 aria-orientation。'],
+  accessibility: ['自动输出标准 role="separator" 与 aria-orientation 无障碍属性。'],
 };

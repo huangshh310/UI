@@ -48,7 +48,7 @@ describe("AiChatThread", () => {
           {
             id: "s1",
             role: "assistant",
-            model: "Claude Opus",
+            model: "Matt Pro",
             meta: "0.8s · 96 tok",
             streaming: true,
             content: "正在分析组件树的可访问性焦点路径…",

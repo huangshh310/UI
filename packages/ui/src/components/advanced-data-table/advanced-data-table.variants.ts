@@ -30,7 +30,7 @@ export const ADV_FOCUS_RING =
 export const ADV_CTRL_BTN =
   "inline-flex h-8 shrink-0 cursor-pointer items-center gap-1.5 rounded-lg border border-solid border-border bg-card px-2.5 font-sans text-xs font-medium whitespace-nowrap text-foreground shadow-xs transition-[background-color,border-color,color] duration-(--ui-duration-fast) hover:border-foreground/20 hover:bg-accent/60 outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset dark:border-white/12 dark:bg-card/90 dark:hover:border-white/22 dark:hover:bg-accent";
 
-/** 分面筛选虚线触发按钮：对齐 shadcn/ui 与 Linear 工具栏范式 */
+/** 分面筛选虚线触发按钮样式 */
 export const ADV_FACET_BTN =
   "inline-flex h-8 shrink-0 cursor-pointer items-center gap-1.5 rounded-lg border border-dashed border-border bg-background px-2.5 font-sans text-xs font-medium whitespace-nowrap text-foreground shadow-xs transition-[background-color,border-color,color] duration-(--ui-duration-fast) hover:border-foreground/25 hover:bg-accent/55 outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset dark:border-white/15 dark:bg-card/75 dark:hover:border-white/25 dark:hover:bg-accent";
 

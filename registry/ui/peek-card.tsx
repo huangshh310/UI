@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * PeekCard：基于 Base UI PreviewCard 的磨砂悬停富内容预览卡片。
+ * PeekCard：支持悬停防抖与键盘聚焦触发的磨砂富内容链接预览卡片。
  */
 
 import { cn } from "@/lib/utils";

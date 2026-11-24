@@ -1,8 +1,8 @@
 "use client";
 
 /**
- * DatePicker：结合 Base UI Popover 与 Calendar 的日期/区间选择器，支持左侧快捷预设、毛玻璃浮层、校验反馈与一键清空。
- * 弹层定位、Escape 关闭与焦点恢复由 Base UI 的 Popover 提供。
+ * DatePicker：日期与区间选择器，支持左侧快捷预设、毛玻璃浮层、校验反馈与一键清空。
+ * 内置碰撞感知定位、Escape 关闭与关闭后焦点自动归位。
  */
 import { Popover } from "@base-ui/react/popover";
 import { cn } from "@matt-ui/utils";

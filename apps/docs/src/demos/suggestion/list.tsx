@@ -9,7 +9,7 @@ import { useState } from "react";
 const FOLLOW_UPS = [
   {
     id: "diff",
-    label: "对比 Base UI 与原生实现的键盘焦点差异",
+    label: "对比复合浮层组件与原生元素的键盘焦点管理",
     description: "聚焦顺序、Escape 退出与 aria-activedescendant 管理",
     badge: "深度",
   },

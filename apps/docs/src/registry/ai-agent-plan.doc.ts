@@ -14,7 +14,7 @@ export const AI_AGENT_PLAN_DOC: ComponentDoc = {
   usage: `import { AiAgentPlan } from "@/components/ui/ai-agent-plan";
 
 export function Example() {
-  return <AiAgentPlan subtitle="Claude Sonnet · Autonomous" />;
+  return <AiAgentPlan subtitle="Matt Pro · Autonomous" />;
 }`,
   specimens: [
     {

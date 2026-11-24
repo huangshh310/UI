@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * Slider：基于 Base UI Slider 的精密滑块与区间双滑块，支持三档尺寸、多色调、浮动读数气泡与刻度标记。
+ * Slider：精密单滑块与区间双滑块，支持三档尺寸、多语义色调、浮动读数气泡与刻度标记。
  */
 
 import { cn } from "@/lib/utils";

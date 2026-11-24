@@ -1,6 +1,6 @@
 {
   "name": "resizable-panels",
   "title": "Resizable Panels",
-  "description": "基于精确锁版本 UI SDK 的可拖拽分栏面板，支持最小/最大约束与键盘方向键无障碍调整。",
+  "description": "可拖拽分栏布局面板，支持水平/垂直切分、最小最大尺寸约束与键盘方向键无障碍调节。",
   "categories": ["navigation"]
 }

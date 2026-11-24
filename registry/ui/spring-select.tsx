@@ -3,7 +3,7 @@
 
 /**
  * SpringSelect：展开与收起带轻微回弹过冲的下选菜单，支持单选与多选芯片模式。
- * 交互行为、键盘导航、typeahead 与焦点管理由 Base UI 的 Select 提供。
+ * 内置完整的方向键导航、首字母快速检索、滚动锁定与关闭后焦点恢复。
  */
 
 import { cn } from "@/lib/utils";

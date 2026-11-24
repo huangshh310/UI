@@ -9,24 +9,24 @@ import { useState } from "react";
 
 const MODELS = [
   {
-    value: "gemini-pro",
-    label: "Gemini 2.5 Pro",
+    value: "matt-pro",
+    label: "Matt Pro 4",
     description: "深度推理、长文档与复杂编码",
     badge: "推荐",
     icon: <Sparkles className="size-3.5" />,
     group: "旗舰推理",
   },
   {
-    value: "claude-sonnet",
-    label: "Claude Sonnet",
-    description: "细腻文案与界面设计",
+    value: "matt-architect",
+    label: "Matt Architect",
+    description: "细腻文案与界面架构设计",
     badge: "Pro",
     icon: <Brain className="size-3.5" />,
     group: "旗舰推理",
   },
   {
-    value: "gemini-flash",
-    label: "Gemini 2.5 Flash",
+    value: "matt-flash",
+    label: "Matt Flash 3",
     description: "毫秒级响应与高并发问答",
     badge: "极速",
     icon: <Zap className="size-3.5" />,
@@ -43,7 +43,7 @@ const MODELS = [
 ];
 
 export default function SpringSelectModelPickerDemo() {
-  const [model, setModel] = useState<string | null>("gemini-pro");
+  const [model, setModel] = useState<string | null>("matt-pro");
 
   return (
     <div className="w-full max-w-80">

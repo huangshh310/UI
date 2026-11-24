@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Context：AI 上下文窗口环形微表盘与分段 Token 预算浮层检查器（对标 shadcn AI Elements Context + Linear 遥测美学）。
+ * Context：AI 上下文窗口环形微表盘与分段 Token 预算浮层检查器。
  */
 import { Popover } from "@base-ui/react/popover";
 import { cn } from "@matt-ui/utils";

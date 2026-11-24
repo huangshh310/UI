@@ -105,7 +105,7 @@ export function Example() {
     },
   ],
   accessibility: [
-    "配额进度条基于 Base UI Progress 暴露 aria-valuenow / aria-valuemax 语义。",
+    "配额进度条完整暴露 aria-valuenow / aria-valuemax 标准无障碍语义。",
     "超限预警同时提供告警图标、状态胶囊文案与百分比读数，不单独依赖颜色区分。",
     "历史账单表格保留 DataTable 的排序状态声明与键盘导航。",
   ],

@@ -1,0 +1,6 @@
+{
+  "name": "ai-surface",
+  "title": "AI Surface",
+  "description": "面向 Agent 的受限语义视图协议、JSON Schema 校验、rankWith 优先级渲染内核与纯文本降级容器。",
+  "categories": ["ai"]
+}

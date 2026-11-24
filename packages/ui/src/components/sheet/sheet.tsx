@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Sheet：基于 Base UI Dialog 的四方向磨砂边缘抽屉，页头与页脚吸顶/吸底，主体独立滚动。
+ * Sheet：四方向磨砂边缘抽屉，支持焦点陷阱、滚动锁定、吸顶页头页脚与独立滚动主体。
  */
 import { Dialog } from "@base-ui/react/dialog";
 import { cn } from "@matt-ui/utils";

@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * Suggestions / Suggestion：无外框灵感启动卡、垂直追问列表与流式追问胶囊组（对标 Vercel AI Elements / Linear）。
+ * Suggestions / Suggestion：无外框灵感启动卡、发丝分隔追问列表与流式追问胶囊组。
  */
 
 import { cn } from "@/lib/utils";

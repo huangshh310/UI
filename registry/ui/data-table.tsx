@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * DataTable：基于 TanStack Table v9 的声明式数据表格。
+ * DataTable：支持排序、全局搜索、分页、行选择与骨架态的声明式数据表格。
  * 支持点击排序（aria-sort）、全局搜索、客户端分页、行选择（复用 DrawCheckbox）、外观与密度变体、斑马纹、骨架加载与空状态。
  */
 

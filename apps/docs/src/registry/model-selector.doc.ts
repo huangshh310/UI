@@ -6,8 +6,7 @@ import type { ComponentDoc } from "./registry.types";
 export const MODEL_SELECTOR_DOC: ComponentDoc = {
   slug: "model-selector",
   name: "Model Selector",
-  description:
-    "基于 Base UI Popover 的紧凑模型、思考强度与联网能力毛玻璃浮层选择器，支持厂商分组与多触发器变体。",
+  description: "紧凑模型、思考强度与联网能力毛玻璃浮层选择器，支持系列分组与多触发器变体。",
   category: "ai",
   registryName: "model-selector",
   dependencies: [
@@ -82,7 +81,7 @@ export function Example() {
     },
   ],
   accessibility: [
-    "浮层定位、Escape 关闭与焦点归位由 Base UI Popover 接管。",
+    "内置弹层碰撞感知定位、Escape 键关闭与触发器焦点归位。",
     "所有模型项、思考强度分段与联网开关均暴露 aria-pressed，并采用统一单层内嵌焦点环。",
   ],
 };

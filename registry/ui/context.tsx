@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * Context：AI 上下文窗口环形微表盘与分段 Token 预算浮层检查器（对标 shadcn AI Elements Context + Linear 遥测美学）。
+ * Context：AI 上下文窗口环形微表盘与分段 Token 预算浮层检查器。
  */
 
 import { cn } from "@/lib/utils";
@@ -95,7 +95,7 @@ export interface ContextProps {
   costLabel?: string;
   /** 是否展示成本徽章，默认 true */
   showCost?: boolean;
-  /** 可选当前模型标识（展示于浮层头部，如 "claude-3.7-sonnet"） */
+  /** 可选当前模型标识（展示于浮层头部，如 "matt-pro"） */
   modelName?: string;
   /** 是否展示一键压缩按钮，默认 true */
   compactable?: boolean;

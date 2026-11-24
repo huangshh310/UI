@@ -15,7 +15,7 @@ export interface ModelOption {
   id: string;
   /** 模型显示名 */
   name: string;
-  /** 厂商或系列分组名（如 Anthropic / OpenAI / Google） */
+  /** 模型系列或提供方分组名（如 旗舰系列 / 高速系列） */
   provider?: string;
   /** 一句话场景定位 */
   description?: string;

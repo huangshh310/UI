@@ -23,7 +23,7 @@ describe("Message", () => {
     const onBranchChange = vi.fn<(branch: number) => void>();
 
     render(
-      <Message from="assistant" author="Matt AI" model="Claude 4.5" timestamp="14:22">
+      <Message from="assistant" author="Matt AI" model="Matt Pro 4" timestamp="14:22">
         <MessageBranch onBranchChange={onBranchChange}>
           <MessageBranchContent>
             <div key="v1">候选版本一：极简无框画布</div>
@@ -37,7 +37,7 @@ describe("Message", () => {
     );
 
     expect(screen.getByText("Matt AI")).toBeTruthy();
-    expect(screen.getByText("Claude 4.5")).toBeTruthy();
+    expect(screen.getByText("Matt Pro 4")).toBeTruthy();
     expect(screen.getByText("候选版本一：极简无框画布")).toBeTruthy();
     expect(screen.queryByText("候选版本二：统一轨迹线语法")).toBeNull();
     expect(screen.getByText("1 / 2")).toBeTruthy();

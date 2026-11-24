@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * AudioWaves：极简语音声波听写条与胶囊（对标 Superwhisper / ChatGPT Voice）。
+ * AudioWaves：极简实时语音声波听写条与悬浮胶囊。
  * 声波律动全部采用 GPU 合成 transform（scaleY / scale），零 layout 重排。
  */
 import { cn } from "@matt-ui/utils";

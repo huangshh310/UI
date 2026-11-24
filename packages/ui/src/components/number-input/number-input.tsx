@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * NumberInput：基于 Base UI NumberField 的精密数值输入框，支持 default / filled / stepper、前后缀、标签拖拽与校验态。
+ * NumberInput：精密数值步进输入框，支持 default / filled / stepper 变体、前后缀单位、标签拖拽微调与校验态。
  */
 import { NumberField } from "@base-ui/react/number-field";
 import { cn } from "@matt-ui/utils";

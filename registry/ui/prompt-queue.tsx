@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * PromptQueue：Cursor / Claude Code 风格的轻盈待发送消息停靠队列。
+ * PromptQueue：轻盈待发送消息停靠队列。
  * 队列消息随平滑动效入栈与退栈，支持整板折叠、暂停续发、立即插队发送、取回编辑与单条移除。
  */
 

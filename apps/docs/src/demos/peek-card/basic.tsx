@@ -11,7 +11,7 @@ export default function PeekCardBasicDemo() {
         href="#order-preview"
         title="ORD-2026-089"
         badge="PAID"
-        subtitle="Stripe Checkout"
+        subtitle="Checkout Gateway"
         value="¥1,290.00"
         identity={{ initials: "林", name: "林知远", meta: "zhiyuan@matt.dev" }}
         metrics={[

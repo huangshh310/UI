@@ -18,6 +18,8 @@ import { AI_IMAGE_REVEAL_DOC } from "./ai-image-reveal.doc";
 import { AI_ORB_DOC } from "./ai-orb.doc";
 import { AI_REASONING_DOC } from "./ai-reasoning.doc";
 import { AI_RESPONSE_DOC } from "./ai-response.doc";
+import { AI_SURFACE_AGENT_DOC } from "./ai-surface-agent.doc";
+import { AI_SURFACE_DOC } from "./ai-surface.doc";
 import { AI_TOOL_CALL_DOC } from "./ai-tool-call.doc";
 import { AI_VOICE_STAGE_DOC } from "./ai-voice-stage.doc";
 import { AI_WORKSPACE_BLOCK_DOC } from "./ai-workspace-block.doc";
@@ -196,6 +198,8 @@ export const COMPONENTS: ComponentDoc[] = [
   AI_CITATION_DOC,
   AI_ARTIFACT_DOC,
   AI_DIFF_REVIEW_DOC,
+  AI_SURFACE_DOC,
+  AI_SURFACE_AGENT_DOC,
   AUTH_BLOCK_DOC,
   PRICING_BLOCK_DOC,
   DASHBOARD_SHELL_BLOCK_DOC,
@@ -263,7 +267,7 @@ export const findComponent = (slug: string): ComponentDoc | undefined =>
 export const specimenHref = ({ specimen, component }: DirectoryEntry): string =>
   `/components/${component.slug}#${specimen.slug}`;
 
-/** 通过 shadcn CLI 安装组件的命令 */
+/** 通过 CLI 安装组件的命令 */
 export const cliCommand = ({ registryName }: ComponentDoc): string =>
   `pnpm dlx shadcn@latest add ${REGISTRY_ADDRESS}/${registryName}`;
 

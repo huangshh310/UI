@@ -13,7 +13,7 @@ export default function ConversationEmptyDemo() {
     <Conversation variant="surface" className="w-full max-w-2xl">
       <ConversationContent>
         <ConversationEmptyState
-          badge="Claude 4.5 Sonnet · 200K Context"
+          badge="Matt Pro 4 · 200K Context"
           title="今天想探索什么？"
           description="支持深度推理轨迹、代码审阅与多模型对比"
         >

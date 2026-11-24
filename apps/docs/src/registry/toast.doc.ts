@@ -5,8 +5,7 @@ import type { ComponentDoc } from "./registry.types";
 export const TOAST_DOC: ComponentDoc = {
   slug: "toast",
   name: "Toast",
-  description:
-    "基于 Base UI Toast 的磨砂悬浮堆叠通知，内置柔光状态图标、动作按钮、悬停暂停与多方位停靠。",
+  description: "磨砂悬浮堆叠通知系统，内置柔光状态图标、动作按钮、悬停暂停与多方位停靠。",
   category: "display",
   registryName: "toast",
   dependencies: ["@base-ui/react", "lucide-react"],
@@ -54,5 +53,5 @@ toast({ title: "已保存", description: "配置已同步至云端。", tone: "s
       description: "是否展示右侧关闭按钮",
     },
   ],
-  accessibility: ["基于 Base UI Toast，内置 ARIA 播报区域，关闭按钮带有明确的无障碍名称。"],
+  accessibility: ["内置 ARIA 实时播报区域，关闭按钮带有明确的无障碍名称。"],
 };

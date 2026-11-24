@@ -8,7 +8,7 @@ export const installPrompt = (component: ComponentDoc): string =>
   [
     `请在这个项目中安装并使用 matt-ui 的 ${component.name} 组件。`,
     "",
-    "1. 运行安装命令（需要项目已初始化 shadcn）：",
+    "1. 运行安装命令（需要项目已初始化组件配置文件 components.json）：",
     `   ${cliCommand(component)}`,
     `2. 组件会被写入 components/ui/${component.registryName}.tsx，从那里引入。`,
     "3. 参考下面的用法示例：",

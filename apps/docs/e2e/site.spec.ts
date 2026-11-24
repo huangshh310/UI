@@ -9,8 +9,8 @@ import { waitForEntranceAnimations } from "./support/animations";
 
 const CLI_COMMAND = "pnpm dlx shadcn@latest add huangshh310/UI/button";
 
-/** 目录中的代表性卡片总数：按钮 19，表单 13，浮层 11，展示 9，导航与布局 10，动效 5，AI 与智能体 22，区块 13 */
-const SPECIMEN_COUNT = 102;
+/** 目录中的代表性卡片总数：按钮 19，表单 13，浮层 11，展示 9，导航与布局 10，动效 5，AI 与智能体 24，区块 13 */
+const SPECIMEN_COUNT = 104;
 const BUTTON_SPECIMEN_COUNT = 19;
 const FORM_SPECIMEN_COUNT = 13;
 
@@ -246,8 +246,13 @@ test.describe("文档与机器可读的入口", () => {
     await expect(page.getByRole("main")).toContainText("shadcn@latest add huangshh310/UI/");
   });
 
-  test("llms.txt 与站点地图列出全部组件", async ({ request }) => {
-    expect(await (await request.get("/llms.txt")).text()).toContain("/components/button");
+  test("llms.txt 与站点地图列出全部组件及协议规范端点", async ({ request }) => {
+    const llmsText = await (await request.get("/llms.txt")).text();
+    expect(llmsText).toContain("/components/button");
+    expect(llmsText).toContain("/ai-surface-spec.txt");
+    expect(await (await request.get("/ai-surface-spec.txt")).text()).toContain(
+      "AI Surface 语义视图协议规范",
+    );
     expect(await (await request.get("/sitemap.xml")).text()).toContain("/components/button");
   });
 });

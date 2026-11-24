@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * AiAgentPlan：Linear Agent 风格的自主智能体多步任务规划与执行进度清单。
+ * AiAgentPlan：自主智能体多步任务规划与执行进度清单。
  */
 import { cn } from "@matt-ui/utils";
 import { AlertCircle, Check, Loader2, Minus, Play, RotateCcw } from "lucide-react";

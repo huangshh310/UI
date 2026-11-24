@@ -6,7 +6,7 @@ import { Context } from "@matt-ui/ui";
 export default function ContextInlineDemo() {
   return (
     <div className="w-full max-w-md">
-      <Context variant="inline" surface="default" modelName="gpt-5-codex" costLabel="~$0.031" />
+      <Context variant="inline" surface="default" modelName="matt-code" costLabel="~$0.031" />
     </div>
   );
 }

@@ -15,7 +15,7 @@ export default function IntroLoaderMinimalDemo() {
           active={active}
           fullscreen={false}
           durationMs={1400}
-          greetings={[{ text: "Design Tokens" }, { text: "Base UI" }, { text: "matt-ui" }]}
+          greetings={[{ text: "Design Tokens" }, { text: "A11y Primitives" }, { text: "matt-ui" }]}
           onComplete={() => setActive(false)}
         />
       </div>

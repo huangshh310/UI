@@ -31,7 +31,7 @@ export const CHAT_DEFAULT_MESSAGES: AiChatMessage[] = [
   {
     id: "m2",
     role: "assistant",
-    model: "Claude Sonnet",
+    model: "Matt Pro",
     timestamp: "09:41",
     meta: "1.2s · 164 tok",
     content:

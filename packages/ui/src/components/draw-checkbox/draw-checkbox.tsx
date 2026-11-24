@@ -2,7 +2,7 @@
 
 /**
  * DrawCheckbox：勾选时对勾沿 SVG 路径平滑绘制出来的复选框。
- * 交互行为与 ARIA 语义由 Base UI 的 Checkbox 提供，支持行内、卡片、胶囊、列表行与待办划线模式。
+ * 内置完整的无障碍复选框语义与键盘空格切换，支持行内、卡片、胶囊、列表行与待办划线模式。
  */
 import { Checkbox } from "@base-ui/react/checkbox";
 import { cn } from "@matt-ui/utils";

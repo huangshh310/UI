@@ -1,7 +1,7 @@
 /**
  * Combobox 的行为规约。
  * 测试接缝：@matt-ui/ui 的公开入口。
- * 真实浏览器下的键盘导航与浮层打开时 Base UI 偏差 #2（aria-hidden-focus）由展示站 E2E 覆盖。
+ * 真实浏览器下的键盘导航与浮层打开时的无障碍焦点审计由展示站 E2E 覆盖。
  */
 import { cleanup, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";

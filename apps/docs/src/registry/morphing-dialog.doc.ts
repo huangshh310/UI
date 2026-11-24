@@ -7,7 +7,7 @@ export const MORPHING_DIALOG_DOC: ComponentDoc = {
   slug: "morphing-dialog",
   name: "Morphing Dialog",
   description:
-    "共享 layoutId 磨砂卡片形变对话框，结合 Base UI 焦点陷阱与 motion 弹簧布局过渡，支持语义标签、徽章图标与三档宽度。",
+    "共享布局过渡的磨砂卡片形变对话框，结合完整焦点陷阱与弹簧物理动画，支持语义标签、徽章图标与三档宽度。",
   category: "overlays",
   registryName: "morphing-dialog",
   dependencies: ["@base-ui/react", "lucide-react", "motion"],
@@ -70,6 +70,6 @@ export const MORPHING_DIALOG_DOC: ComponentDoc = {
     { name: "footer", type: "ReactNode", defaultValue: "—", description: "展开后底部操作区" },
   ],
   accessibility: [
-    "遵守 prefers-reduced-motion，且完整继承 Base UI Dialog 的焦点管理与 Escape 关闭。",
+    "严格遵守 prefers-reduced-motion 减弱动态偏好，内置焦点陷阱、背景锁定与 Escape 关闭。",
   ],
 };

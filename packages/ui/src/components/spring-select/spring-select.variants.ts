@@ -1,5 +1,5 @@
 /**
- * SpringSelect 的样式定义：参考 shadcn/ui 极简发丝质感，支持单选与多选芯片。
+ * SpringSelect 的样式定义：极简 1px 发丝边框质感，支持单选与多选芯片。
  */
 import { cva } from "class-variance-authority";
 

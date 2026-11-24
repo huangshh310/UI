@@ -65,7 +65,7 @@ describe("Conversation", () => {
       <Conversation variant="glass" unreadCount={3}>
         <ConversationContent>
           <ConversationEmptyState
-            badge="Claude 4.5 · 200K"
+            badge="Matt Pro 4 · 200K"
             title="你好，今天想构建什么？"
             description="支持流式推理与代码审阅"
           >
@@ -76,7 +76,7 @@ describe("Conversation", () => {
       </Conversation>,
     );
 
-    expect(screen.getByText("Claude 4.5 · 200K")).toBeTruthy();
+    expect(screen.getByText("Matt Pro 4 · 200K")).toBeTruthy();
     expect(screen.getByText("你好，今天想构建什么？")).toBeTruthy();
     expect(screen.getByRole("button", { name: "示例提示词" })).toBeTruthy();
     const iconBtn = screen.getByRole("button", { name: "回到底部（3 条新消息）" });

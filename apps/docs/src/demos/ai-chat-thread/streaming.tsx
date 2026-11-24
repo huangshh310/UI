@@ -17,7 +17,7 @@ export default function AiChatThreadStreamingDemo() {
         {
           id: "c2",
           role: "assistant",
-          model: "Claude Sonnet · 200K",
+          model: "Matt Pro · 200K",
           meta: "0.9s · 184 tok",
           timestamp: "10:15",
           streaming: true,

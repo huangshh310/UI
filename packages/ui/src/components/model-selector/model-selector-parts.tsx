@@ -11,8 +11,8 @@ import { MODEL_SELECTOR_FOCUS_RING } from "./model-selector.variants.js";
 export const DEFAULT_MODELS: ModelOption[] = [
   {
     id: "pro",
-    name: "Claude 4.5 Sonnet",
-    provider: "Anthropic",
+    name: "Matt Pro 4",
+    provider: "旗舰系列",
     description: "深度架构推理与复杂智能体任务",
     contextWindow: "200K",
     badge: "推荐",
@@ -20,8 +20,8 @@ export const DEFAULT_MODELS: ModelOption[] = [
   },
   {
     id: "flash",
-    name: "Gemini 3 Flash",
-    provider: "Google",
+    name: "Matt Flash 3",
+    provider: "高速系列",
     description: "毫秒级首字响应，适合日常高频问答",
     contextWindow: "1M",
     speedHint: "极速",
@@ -29,8 +29,8 @@ export const DEFAULT_MODELS: ModelOption[] = [
   },
   {
     id: "deep",
-    name: "o4 Reasoning",
-    provider: "OpenAI",
+    name: "Matt Reasoner",
+    provider: "推理系列",
     description: "多步数理验证与长链路规划",
     contextWindow: "200K",
     capabilities: ["reasoning", "code"],

@@ -2,8 +2,8 @@
 "use client";
 
 /**
- * ModelSelector：紧凑型模型与推理深度浮层选择器（对标 Claude / Cursor / Vercel AI Elements）。
- * 基于 Base UI Popover 构建，提供利落浮层、两栏模型信息、思考强度与联网开关。
+ * ModelSelector：紧凑型模型与推理深度浮层选择器。
+ * 提供毛玻璃浮层、分组两栏模型列表、思考强度分段控制与联网开关。
  */
 
 import { cn } from "@/lib/utils";
@@ -54,7 +54,7 @@ export interface ModelOption {
   id: string;
   /** 模型显示名 */
   name: string;
-  /** 厂商或系列分组名（如 Anthropic / OpenAI / Google） */
+  /** 模型系列或提供方分组名（如 旗舰系列 / 高速系列） */
   provider?: string;
   /** 一句话场景定位 */
   description?: string;
@@ -111,8 +111,8 @@ export interface ModelSelectorProps {
 const DEFAULT_MODELS: ModelOption[] = [
   {
     id: "pro",
-    name: "Claude 4.5 Sonnet",
-    provider: "Anthropic",
+    name: "Matt Pro 4",
+    provider: "旗舰系列",
     description: "深度架构推理与复杂智能体任务",
     contextWindow: "200K",
     badge: "推荐",
@@ -120,8 +120,8 @@ const DEFAULT_MODELS: ModelOption[] = [
   },
   {
     id: "flash",
-    name: "Gemini 3 Flash",
-    provider: "Google",
+    name: "Matt Flash 3",
+    provider: "高速系列",
     description: "毫秒级首字响应，适合日常高频问答",
     contextWindow: "1M",
     speedHint: "极速",
@@ -129,8 +129,8 @@ const DEFAULT_MODELS: ModelOption[] = [
   },
   {
     id: "deep",
-    name: "o4 Reasoning",
-    provider: "OpenAI",
+    name: "Matt Reasoner",
+    provider: "推理系列",
     description: "多步数理验证与长链路规划",
     contextWindow: "200K",
     capabilities: ["reasoning", "code"],

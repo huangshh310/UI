@@ -1,0 +1,6 @@
+{
+  "name": "ai-surface-agent",
+  "title": "AiSurfaceAgent",
+  "description": "智能体高阶领域语义渲染包：将审批护栏、代码差异审阅、工具调用轨迹、生成产物画布、知识溯源、树形目录、交互式数据表与可搜索组合框注册进语义视图容器。",
+  "categories": ["ai"]
+}

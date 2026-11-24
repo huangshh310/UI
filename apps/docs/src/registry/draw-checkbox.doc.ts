@@ -13,7 +13,7 @@ export const DRAW_CHECKBOX_DOC: ComponentDoc = {
   slug: "draw-checkbox",
   name: "Draw Checkbox",
   description:
-    "基于 Base UI Checkbox，勾选时对勾沿 SVG 路径平滑绘制出来的复选框；支持 C 端卡片选项、胶囊标签、轻盈列表行、圆形几何与待办划线动效。",
+    "勾选时对勾沿 SVG 路径平滑绘制出来的复选框；支持卡片选项、胶囊标签、轻盈列表行、圆形几何与待办划线动效。",
   category: "forms",
   registryName: "draw-checkbox",
   dependencies: [
@@ -165,7 +165,7 @@ export function Demo() {
     },
   ],
   accessibility: [
-    "交互与隐藏表单输入由 Base UI Checkbox 提供，支持点击整卡/标签与空格键切换。",
+    "内置隐藏原生表单同步与标准无障碍复选语义，支持点击整卡/标签与空格键切换。",
     '半选状态正确声明 aria-checked="mixed"，错误态通过 aria-invalid 与 role="alert" 通知辅助技术。',
     "减少动态效果时路径绘制与按压缩放过渡自动压缩，不依赖动画传达状态。",
   ],

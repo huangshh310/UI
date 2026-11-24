@@ -40,7 +40,7 @@ export function Example() {
     {
       slug: "list",
       name: "回答末尾垂直追问列表",
-      description: "variant='list' 以发丝分割线呈现 Perplexity / ChatGPT 风格的上下文跟进建议。",
+      description: "variant='list' 以 1px 发丝分割线呈现紧凑的上下文追问建议列表。",
       file: "suggestion/list.tsx",
       Demo: SuggestionListDemo,
       directory: false,

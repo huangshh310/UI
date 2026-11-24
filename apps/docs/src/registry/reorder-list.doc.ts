@@ -7,7 +7,7 @@ export const REORDER_LIST_DOC: ComponentDoc = {
   slug: "reorder-list",
   name: "Reorder List",
   description:
-    "基于精确锁版本 UI SDK 与 motion 的拖拽与键盘双通道可重排列表，支持 cards / divided 变体、实时序号与紧凑密度。",
+    "拖拽与键盘双通道可重排列表，支持物理弹簧动画、cards / divided 变体、实时序号与紧凑密度。",
   category: "navigation",
   registryName: "reorder-list",
   dependencies: [
@@ -32,7 +32,7 @@ export const REORDER_LIST_DOC: ComponentDoc = {
       slug: "divided",
       name: "发丝分隔紧凑队列与实时序号",
       description:
-        '使用 variant="divided"、density="compact" 与 showIndex 呈现 Linear 风格优先级队列。',
+        '使用 variant="divided"、density="compact" 与 showIndex 呈现高密度分隔线优先级队列。',
       file: "reorder-list/divided.tsx",
       Demo: ReorderListDividedDemo,
       directory: false,

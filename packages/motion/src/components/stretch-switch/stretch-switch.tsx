@@ -2,7 +2,7 @@
 
 /**
  * StretchSwitch：按压时滑块沿目标方向弹性拉伸、松手后以弹簧回弹到位的开关。
- * 交互行为、键盘操作与表单语义由 Base UI 的 Switch 提供；拉伸与弹簧物理由 motion 驱动。
+ * 结合完整无障碍开关语义、键盘空格切换与按压拉伸弹簧物理反馈。
  */
 import { Switch } from "@base-ui/react/switch";
 import { cn } from "@matt-ui/utils";

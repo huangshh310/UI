@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * AiOrb：多模态 AI 状态球（对标 ChatGPT Advanced Voice / ElevenLabs / Apple Intelligence / Teenage Engineering）。
+ * AiOrb：多模态智能体视觉状态球与触感状态胶囊。
  * 支持流体光学球（aurora）、精密微型 OLED 矩阵（lattice）、双轨声纹光环（ring）与触感胶囊形态（pill）。
  */
 

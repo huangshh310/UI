@@ -13,7 +13,7 @@ interface CheckEntry {
 const INITIAL_CHECKS: CheckEntry[] = [
   { id: "c1", text: "浅色与深色对比度 >= 4.5:1" },
   { id: "c2", text: "所有交互原语单一底座隔离（ADR-001）" },
-  { id: "c3", text: "shadcn Registry 独立 Vite 消费构建通过" },
+  { id: "c3", text: "组件 Registry 独立消费方构建验证通过" },
 ];
 
 const EXTRA_CHECKS: CheckEntry[] = [

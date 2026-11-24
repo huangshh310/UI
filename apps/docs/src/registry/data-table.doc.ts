@@ -10,7 +10,7 @@ export const DATA_TABLE_DOC: ComponentDoc = {
   slug: "data-table",
   name: "Data Table",
   description:
-    "基于 TanStack Table v9 的极简声明式数据表格，支持列排序、全局搜索与一键清除、分页、行选择、外观与密度变体、斑马纹及骨架加载。",
+    "极简声明式数据表格，支持列排序、全局搜索与一键清除、分页、行选择、外观与密度变体、斑马纹及骨架加载。",
   category: "forms",
   registryName: "data-table",
   dependencies: [
@@ -58,7 +58,7 @@ export function Demo() {
       name: "columns",
       type: "DataTableColumn<TData>[]",
       defaultValue: "-",
-      description: "声明式列定义，不泄漏底层 TanStack 类型。",
+      description: "声明式列定义，隔离内部表格状态类型。",
     },
     {
       name: "variant / density / striped",

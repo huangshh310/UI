@@ -2,7 +2,7 @@
 
 /**
  * 组件目录的主体：轻盈胶囊分类页签、极简搜索框与无缝单体画廊网格。
- * 页签的键盘导航与 ARIA 语义由 Base UI 的 Tabs 提供。
+ * 分类页签内置完整的左右方向键切换与无障碍 tablist 语义。
  */
 import { Tabs } from "@base-ui/react/tabs";
 import { CaretLeftIcon, CaretRightIcon, MagnifyingGlassIcon } from "@phosphor-icons/react/dist/ssr";

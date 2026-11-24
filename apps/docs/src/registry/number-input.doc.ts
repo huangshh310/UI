@@ -7,7 +7,7 @@ export const NUMBER_INPUT_DOC: ComponentDoc = {
   slug: "number-input",
   name: "Number Input",
   description:
-    "基于 Base UI NumberField 的精密数值输入框，支持 default / filled / stepper 变体、三档尺寸、前后缀单位、标签拖拽微调与校验态。",
+    "精密数值步进输入框，支持 default / filled / stepper 变体、三档尺寸、前后缀单位、标签拖拽微调与校验态。",
   category: "navigation",
   registryName: "number-input",
   dependencies: ["@base-ui/react", "class-variance-authority", "lucide-react"],

@@ -20,7 +20,7 @@ const ITEMS = [
     description: "排序、搜索与分页表格",
     category: "数据",
     shortcut: "T",
-    preview: "基于 TanStack Table v9 构建。",
+    preview: "支持列排序、搜索过滤与分页。",
   },
 ];
 

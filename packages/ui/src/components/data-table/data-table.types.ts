@@ -1,5 +1,5 @@
 /**
- * DataTable 组件的类型定义（对外隐藏 TanStack Table 内部类型）。
+ * DataTable 组件的公开类型定义，隔离内部表格状态实现。
  */
 import type { ReactNode } from "react";
 

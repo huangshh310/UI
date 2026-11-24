@@ -15,7 +15,7 @@ export default function DashboardShellBlockInsetDemo() {
   return (
     <div className="flex w-full flex-col gap-2.5">
       <DashboardShellBlock
-        workspaceName="Linear Ops"
+        workspaceName="Studio Ops"
         workspaceTier="Enterprise · Multi-Region"
         variant="inset"
         primaryActionLabel="触发生产发布"

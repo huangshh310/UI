@@ -13,7 +13,7 @@ const STACKS = [
   { value: "astro", label: "Astro", group: "前端框架" },
   { value: "typescript", label: "TypeScript", group: "语言与样式" },
   { value: "tailwind", label: "Tailwind CSS", group: "语言与样式", badge: "v4" },
-  { value: "base-ui", label: "Base UI", group: "语言与样式" },
+  { value: "css-vars", label: "Design Tokens", group: "语言与样式" },
 ];
 
 const FAILOVER_NODES = [

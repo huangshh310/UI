@@ -14,7 +14,7 @@ export interface AiPlanStep {
 export interface AiAgentPlanProps {
   /** 任务计划标题 */
   title?: string;
-  /** 副标题或运行环境标识（如 "Claude Sonnet · Autonomous"） */
+  /** 副标题或运行环境标识（如 "Matt Pro · Autonomous"） */
   subtitle?: string;
   /** 视觉布局形态：标准卡片（card）、时间轴轨道（timeline）或紧凑面板（compact） */
   variant?: AiAgentPlanVariant;

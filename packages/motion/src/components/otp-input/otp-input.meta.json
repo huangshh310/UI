@@ -1,6 +1,6 @@
 {
   "name": "otp-input",
   "title": "OTP Input",
-  "description": "An accessible one-time-passcode input built on Base UI OTPField with spring pop feedback on entry.",
+  "description": "一次性验证码输入框，支持四种槽位形态、自动推进、整段粘贴与弹簧落位反馈。",
   "categories": ["forms"]
 }

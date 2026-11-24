@@ -19,7 +19,7 @@ export default function MessageStatesDemo() {
       </Message>
       <Message
         from="assistant"
-        model="Claude 4.5"
+        model="Matt Pro 4"
         status={retried ? "streaming" : "error"}
         errorMessage="上游推理服务响应超时（504）"
         onRetry={() => setRetried(true)}

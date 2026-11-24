@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Accordion：基于 Base UI Accordion 的精密折叠面板，支持 default / card / separated 变体与 chevron / plus 指示器。
+ * Accordion：精密无障碍折叠面板，支持 default / card / separated 变体与 chevron / plus 指示器。
  */
 import { Accordion as BaseAccordion } from "@base-ui/react/accordion";
 import { cn } from "@matt-ui/utils";

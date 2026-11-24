@@ -47,7 +47,7 @@ export const CHAT_DEFAULT_MESSAGES: AiChatMessage[] = [
   {
     id: "m2",
     role: "assistant",
-    model: "Claude Sonnet",
+    model: "Matt Pro",
     timestamp: "09:41",
     meta: "1.2s · 164 tok",
     content:
@@ -335,7 +335,7 @@ const createFollowUpTurn = (prompt: string, seq: number): AiChatMessage[] => [
   {
     id: `a-${seq}`,
     role: "assistant",
-    model: "Claude Sonnet",
+    model: "Matt Pro",
     timestamp: "刚刚",
     content: `好的，已按「${prompt}」为你整理好时间表与步行距离建议。`,
   },

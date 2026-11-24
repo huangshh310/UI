@@ -7,7 +7,7 @@ export const ACCORDION_DOC: ComponentDoc = {
   slug: "accordion",
   name: "Accordion",
   description:
-    "基于 Base UI Accordion 的精密折叠面板，支持 default / card / separated 变体、chevron / plus 指示器与单开/多开。",
+    "精密无障碍折叠面板，支持 default / card / separated 变体、chevron / plus 指示器与单开/多开。",
   category: "navigation",
   registryName: "accordion",
   dependencies: ["@base-ui/react", "class-variance-authority", "lucide-react"],

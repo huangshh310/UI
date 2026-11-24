@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * SpotlightSearch：基于 Base UI Dialog 与 motion 的磨砂聚焦搜索与分栏预览弹层。
+ * SpotlightSearch：磨砂聚焦搜索与分栏实时预览弹层，内置弹簧过渡与全键盘导航。
  */
 
 import { cn } from "@/lib/utils";

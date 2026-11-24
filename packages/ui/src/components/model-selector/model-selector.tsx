@@ -1,8 +1,8 @@
 "use client";
 
 /**
- * ModelSelector：紧凑型模型与推理深度浮层选择器（对标 Claude / Cursor / Vercel AI Elements）。
- * 基于 Base UI Popover 构建，提供利落浮层、两栏模型信息、思考强度与联网开关。
+ * ModelSelector：紧凑型模型与推理深度浮层选择器。
+ * 提供毛玻璃浮层、分组两栏模型列表、思考强度分段控制与联网开关。
  */
 import { Popover } from "@base-ui/react/popover";
 import { cn } from "@matt-ui/utils";

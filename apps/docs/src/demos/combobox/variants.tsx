@@ -6,9 +6,9 @@
 import { Combobox } from "@matt-ui/ui";
 
 const MODELS = [
-  { value: "gemini-pro", label: "Gemini 2.5 Pro", badge: "1M" },
-  { value: "gemini-flash", label: "Gemini 2.5 Flash", badge: "极速" },
-  { value: "claude-sonnet", label: "Claude Sonnet", badge: "编码" },
+  { value: "matt-pro", label: "Matt Pro 4", badge: "1M" },
+  { value: "matt-flash", label: "Matt Flash 3", badge: "极速" },
+  { value: "matt-coder", label: "Matt Coder", badge: "编码" },
 ];
 
 export default function ComboboxVariantsDemo() {
@@ -19,7 +19,7 @@ export default function ComboboxVariantsDemo() {
         variant="filled"
         radius="lg"
         showSearchIcon
-        defaultValue="gemini-pro"
+        defaultValue="matt-pro"
         options={MODELS}
         className="max-w-none"
       />

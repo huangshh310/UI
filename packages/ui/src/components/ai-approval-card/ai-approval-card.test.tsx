@@ -26,14 +26,14 @@ describe("AiApprovalCard", () => {
       <AiApprovalCard
         title="写入边缘配置"
         riskLevel="high"
-        agentName="Claude Code · Bash"
+        agentName="Core Agent · Bash"
         workingDir="~/work/UI"
         impact="影响 2 个节点 · 自动快照"
         onReject={onReject}
       />,
     );
 
-    expect(screen.getByText(/Claude Code · Bash/)).toBeTruthy();
+    expect(screen.getByText(/Core Agent · Bash/)).toBeTruthy();
     expect(screen.getByText("~/work/UI")).toBeTruthy();
     expect(screen.getByText("影响 2 个节点 · 自动快照")).toBeTruthy();
 

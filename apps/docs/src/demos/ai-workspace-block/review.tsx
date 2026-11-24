@@ -18,7 +18,7 @@ const REVIEW_THREADS = [
         id: "rm2",
         role: "assistant" as const,
         content:
-          "已确认：Sheet 基于 Base UI Dialog，支持滚锁与关闭焦点还原，四周圆角与 1px 细边框均符合规范。",
+          "已确认：Sheet 抽屉支持背景滚动锁定与关闭后焦点还原，四周圆角与 1px 细边框均符合规范。",
         timestamp: "14:20",
       },
     ],
@@ -32,7 +32,7 @@ export default function AiWorkspaceBlockReviewDemo() {
       initialThreads={REVIEW_THREADS}
       title="PR 审查副驾驶"
       variant="compact"
-      defaultModel="gemini-pro"
+      defaultModel="matt-flash"
     />
   );
 }

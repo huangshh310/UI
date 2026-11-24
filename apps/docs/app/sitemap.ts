@@ -9,6 +9,7 @@ const sitemap = (): MetadataRoute.Sitemap => [
   { url: SITE_URL, priority: 1 },
   { url: `${SITE_URL}/components`, priority: 0.9 },
   { url: `${SITE_URL}/docs`, priority: 0.8 },
+  { url: `${SITE_URL}/ai-surface-spec.txt`, priority: 0.75 },
   ...COMPONENTS.map(({ slug, createdAt }) => ({
     url: `${SITE_URL}/components/${slug}`,
     lastModified: createdAt,

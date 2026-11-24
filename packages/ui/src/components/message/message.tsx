@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Message：单回合对话复合组件（对标 Vercel AI Elements / ChatGPT / Claude 无框流式排版）。
+ * Message：单回合无框流式对话复合组件。
  * 支持元信息头（作者/模型微标/时间戳）、多版本分支切换、原位编辑与异常重试。
  */
 import { cn } from "@matt-ui/utils";

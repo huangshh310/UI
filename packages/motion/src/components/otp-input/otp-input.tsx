@@ -2,7 +2,7 @@
 
 /**
  * OtpInput：自动推进、支持整段粘贴与弹簧弹出反馈的一次性验证码输入组件。
- * 自动前进、Backspace 回退、粘贴分发与表单验证由 Base UI 的 OTPField 提供；
+ * 内置自动前进、退格回退、整段粘贴分发与原生表单校验；
  * 字符落位时的弹跳动效由 motion 驱动，减少动态效果时自动跳过。
  */
 import { OTPField } from "@base-ui/react/otp-field";

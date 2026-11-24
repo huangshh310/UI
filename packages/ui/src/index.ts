@@ -10,6 +10,8 @@ export * from "./components/ai-artifact/index.js";
 export * from "./components/ai-chat-thread/index.js";
 export * from "./components/ai-citation/index.js";
 export * from "./components/ai-diff-review/index.js";
+export * from "./components/ai-surface/index.js";
+export * from "./components/ai-surface-agent/index.js";
 export * from "./components/ai-tool-call/index.js";
 export * from "./components/ai-workspace-block/index.js";
 export * from "./components/alert/index.js";

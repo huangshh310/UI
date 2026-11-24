@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * AdvancedDataTable 分面筛选弹层部件：采用 shadcn/ui 与 Linear 的虚线触发按钮 + 多选计数 Popover 模式。
+ * AdvancedDataTable 分面筛选弹层部件：采用虚线胶囊触发按钮与多选计数浮层模式。
  */
 import { Popover } from "@base-ui/react/popover";
 import { cn } from "@matt-ui/utils";

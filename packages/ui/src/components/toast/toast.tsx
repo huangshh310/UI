@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Toast：基于 Base UI Toast 的磨砂悬浮堆叠通知系统与 useToast 钩子，隔离底座内部类型。
+ * Toast：磨砂悬浮堆叠通知系统与 useToast 钩子，支持多方位停靠与无障碍实时播报。
  */
 import { Toast as BaseToast } from "@base-ui/react/toast";
 import { cn } from "@matt-ui/utils";

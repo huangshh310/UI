@@ -16,7 +16,7 @@ export default function OtpInputVariantsDemo() {
         defaultValue="482"
       />
       <OtpInput
-        label="shadcn 连体分组（Grouped）"
+        label="紧凑连体分组（Grouped）"
         variant="grouped"
         length={6}
         separatorAt={3}

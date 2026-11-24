@@ -73,5 +73,5 @@ export const ORIGIN_DROPDOWN_DOC: ComponentDoc = {
       description: "展开方向、对齐方式与触发器间距",
     },
   ],
-  accessibility: ["基于 Base UI Menu，支持方向键移动、Enter/Space 激活与 Escape 退出并恢复焦点。"],
+  accessibility: ["完整支持上下方向键移动、Enter/Space 激活与 Escape 退出并恢复触发器焦点。"],
 };

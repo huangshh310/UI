@@ -18,8 +18,8 @@ export default function ConversationVariantsDemo() {
         </Message>
         <Message from="assistant">
           <MessageContent>
-            将 ConversationScrollButton 设置为 variant=&quot;icon&quot; 即可切换为 ChatGPT
-            风格的极简圆形悬浮按钮，并自动在右上角挂载未读计数徽章。
+            将 ConversationScrollButton 设置为 variant=&quot;icon&quot;
+            即可切换为极简圆形悬浮按钮，并自动在右上角挂载未读计数徽章。
           </MessageContent>
         </Message>
       </ConversationContent>

@@ -1,14 +1,14 @@
 "use client";
 
 /**
- * 安装说明：「CLI」页签是一行 shadcn 命令，「手动」页签列出依赖与复制源码的步骤。
+ * 安装说明：「CLI」页签是一行源码分发命令，「手动」页签列出依赖与复制源码的步骤。
  */
 import { Tabs } from "@base-ui/react/tabs";
 import { CopyButton } from "./copy-button";
 import { TAB_CLASSES, TAB_LIST_CLASSES } from "./panel-tabs";
 
 interface InstallBlockProps {
-  /** shadcn CLI 的安装命令 */
+  /** CLI 安装命令 */
   command: string;
   /** 手动安装时需要的 npm 依赖 */
   dependencies: string[];
@@ -70,9 +70,7 @@ export const InstallBlock = ({ command, dependencies, targetPath }: InstallBlock
         </Tabs.List>
       </div>
       <Tabs.Panel value="cli" className="outline-none">
-        <p className="mb-3 text-sm text-muted-foreground">
-          通过 shadcn CLI 把组件源码直接加入你的项目：
-        </p>
+        <p className="mb-3 text-sm text-muted-foreground">通过 CLI 把组件源码直接加入你的项目：</p>
         <CommandLine command={command} label="复制安装命令" />
       </Tabs.Panel>
       <Tabs.Panel value="manual" className="outline-none">

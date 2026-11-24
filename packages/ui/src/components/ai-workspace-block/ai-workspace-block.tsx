@@ -53,7 +53,7 @@ const useWorkspaceState = (props: AiWorkspaceBlockProps) => {
   const initial = props.initialThreads ?? AI_WORKSPACE_DEFAULT_THREADS;
   const [threads, setThreads] = useState(initial);
   const [activeId, setActiveId] = useState(initial[0]?.id ?? "t1");
-  const [model, setModel] = useState(props.defaultModel ?? "claude-sonnet");
+  const [model, setModel] = useState(props.defaultModel ?? "matt-pro");
   const [draft, setDraft] = useState("");
   const activeThread = threads.find((t) => t.id === activeId) ?? threads[0];
 

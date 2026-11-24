@@ -7,7 +7,7 @@ export default function AiApprovalCardBasicDemo() {
     <AiApprovalCard
       className="w-full max-w-xl"
       title="授权执行 Registry 发布校验"
-      agentName="Claude Code · Bash"
+      agentName="Core Agent · Bash"
       workingDir="~/work/UI"
     />
   );

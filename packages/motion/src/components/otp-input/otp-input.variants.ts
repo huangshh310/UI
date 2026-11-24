@@ -1,5 +1,5 @@
 /**
- * OtpInput 的样式定义：四种槽位形态（独立描边 / shadcn 连体分组 / 柔灰填充 / 极简下划线）与三档尺寸。
+ * OtpInput 的样式定义：四种槽位形态（独立描边 / 紧凑连体分组 / 柔灰填充 / 极简下划线）与三档尺寸。
  */
 import type { OtpInputSize, OtpInputStatus, OtpInputVariant } from "./otp-input.types.js";
 

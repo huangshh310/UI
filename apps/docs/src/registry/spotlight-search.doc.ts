@@ -68,6 +68,6 @@ export const SPOTLIGHT_SEARCH_DOC: ComponentDoc = {
     { name: "onSelect", type: "(item) => void", defaultValue: "—", description: "选中条目回调" },
   ],
   accessibility: [
-    "采用 Base UI Dialog 管理焦点与 Escape 退出，搜索输入框支持 ↑↓ 方向键切换高亮与 Enter 确认。",
+    "内置模态焦点陷阱与 Escape 退出，搜索输入框支持上下方向键切换高亮与 Enter 确认。",
   ],
 };

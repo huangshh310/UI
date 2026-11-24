@@ -7,8 +7,7 @@ import type { ComponentDoc } from "./registry.types";
 export const SETTLE_MODAL_DOC: ComponentDoc = {
   slug: "settle-modal",
   name: "Settle Modal",
-  description:
-    "基于 Base UI Dialog 的磨砂落位模态框，支持语义色调、标题徽章图标、四档宽度与完整焦点管理。",
+  description: "磨砂阻尼落位模态框，支持语义色调、标题徽章图标、四档宽度与完整焦点管理。",
   category: "overlays",
   registryName: "settle-modal",
   dependencies: ["@base-ui/react", "class-variance-authority", "lucide-react"],
@@ -98,7 +97,7 @@ export const SETTLE_MODAL_DOC: ComponentDoc = {
     },
   ],
   accessibility: [
-    '基于 Base UI Dialog，提供 role="dialog"、aria-labelledby 与滚动锁定。',
+    '内置完整焦点陷阱，自动关联 role="dialog"、aria-labelledby 与背景滚动锁定。',
     "按 Escape 关闭弹窗并自动把焦点还给触发按钮，关闭按钮具备清晰的中文无障碍标签。",
   ],
 };

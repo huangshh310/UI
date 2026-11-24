@@ -11,14 +11,14 @@ import { MessageSquare, Plus } from "lucide-react";
 import { useState } from "react";
 
 export const AI_WORKSPACE_MODELS = [
-  { id: "claude-sonnet", label: "Claude Sonnet" },
-  { id: "gemini-pro", label: "Gemini Pro" },
-  { id: "gpt-4o", label: "GPT-4o" },
+  { id: "matt-pro", label: "Matt Pro" },
+  { id: "matt-flash", label: "Matt Flash" },
+  { id: "matt-reasoner", label: "Matt Reasoner" },
 ];
 
 export const AI_WORKSPACE_SUGGESTIONS = [
   "检查浅色与深色对比度",
-  "生成 shadcn Registry 命令",
+  "生成组件 Registry 清单",
   "审查表单键盘焦点顺序",
 ];
 
@@ -334,7 +334,7 @@ const useWorkspaceState = (props: AiWorkspaceBlockProps) => {
   const initial = props.initialThreads ?? AI_WORKSPACE_DEFAULT_THREADS;
   const [threads, setThreads] = useState(initial);
   const [activeId, setActiveId] = useState(initial[0]?.id ?? "t1");
-  const [model, setModel] = useState(props.defaultModel ?? "claude-sonnet");
+  const [model, setModel] = useState(props.defaultModel ?? "matt-pro");
   const [draft, setDraft] = useState("");
   const activeThread = threads.find((t) => t.id === activeId) ?? threads[0];
 

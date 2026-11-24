@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * AiReasoning：Claude / Vercel AI Elements 风格的极简深度思考与思维链可折叠推理流。
+ * AiReasoning：极简深度思考与可折叠思维链推理流组件。
  */
 import { cn } from "@matt-ui/utils";
 import { ChevronDown, Loader2, Sparkles } from "lucide-react";

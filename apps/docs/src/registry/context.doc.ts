@@ -21,7 +21,7 @@ export const CONTEXT_DOC: ComponentDoc = {
   usage: `import { Context } from "@/components/ui/context";
 
 export function Example() {
-  return <Context modelName="claude-3.7-sonnet" />;
+  return <Context modelName="matt-pro" />;
 }`,
   specimens: [
     {

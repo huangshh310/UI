@@ -3,8 +3,8 @@
 /**
  * 命令面板的搜索区：输入框与结果列表。
  *
- * 使用 Base UI 的 Autocomplete 的内联模式：列表始终可见，焦点留在输入框，
- * 方向键移动高亮，combobox 与 listbox 的 ARIA 语义由 Base UI 提供。
+ * 采用内联自动完成模式：列表始终可见，焦点留在输入框，
+ * 支持方向键移动高亮与完整的 combobox / listbox 无障碍语义。
  */
 import { Autocomplete } from "@base-ui/react/autocomplete";
 import { MagnifyingGlassIcon } from "@phosphor-icons/react/dist/ssr";

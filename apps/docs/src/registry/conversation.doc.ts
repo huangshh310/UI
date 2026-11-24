@@ -45,7 +45,7 @@ export function Example() {
     {
       slug: "variants",
       name: "圆形极简悬浮归位按钮",
-      description: "通过 variant='icon' 呈现 ChatGPT 风格的毛玻璃圆形向下箭头与未读数字角标。",
+      description: "通过 variant='icon' 呈现极简毛玻璃圆形向下箭头与未读数字角标。",
       file: "conversation/variants.tsx",
       Demo: ConversationVariantsDemo,
       directory: false,

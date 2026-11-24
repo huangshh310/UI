@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * AiArtifact：Claude Artifacts / v0 风格的 AI 生成产物画布，支持版本切换、语法高亮源码与实时交互预览。
+ * AiArtifact：智能生成产物独立画布，支持多版本切换、语法高亮源码与实时交互预览。
  */
 
 import { cn } from "@/lib/utils";

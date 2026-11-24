@@ -8,7 +8,7 @@ export const TABS_DOC: ComponentDoc = {
   slug: "tabs",
   name: "Tabs",
   description:
-    "基于 Base UI Tabs 的精密滑动指示器页签，支持 pill / line / card / enclosed 四种风格、三档尺寸与等宽分布。",
+    "精密滑动指示器页签，支持 pill / line / card / enclosed 四种风格、三档尺寸与等宽分布。",
   category: "navigation",
   registryName: "tabs",
   dependencies: ["@base-ui/react", "class-variance-authority"],
@@ -28,7 +28,7 @@ export const TABS_DOC: ComponentDoc = {
       slug: "enclosed",
       name: "围合等宽与紧凑底线页签",
       description:
-        '使用 variant="enclosed" 与 fullWidth 呈现 Linear 风格等宽切换，并展示 sm 尺寸底线页签。',
+        '使用 variant="enclosed" 与 fullWidth 呈现紧凑内嵌等宽切换，并展示 sm 尺寸底线页签。',
       file: "tabs/enclosed.tsx",
       Demo: TabsEnclosedDemo,
       directory: false,
@@ -84,7 +84,5 @@ export const TABS_DOC: ComponentDoc = {
       description: "切换回调",
     },
   ],
-  accessibility: [
-    "基于 Base UI Tabs，完整支持左右方向键、Home/End 切换及标准 tablist/tab/tabpanel 语义。",
-  ],
+  accessibility: ["完整支持左右方向键、Home/End 切换及标准 tablist / tab / tabpanel 无障碍语义。"],
 };

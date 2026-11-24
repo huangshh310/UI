@@ -11,15 +11,16 @@ export default function AccordionBasicDemo() {
       items={[
         {
           value: "engine",
-          title: "为什么区分 Base UI 与 UI SDK？",
-          subtitle: "ADR-001 交互底座策略",
+          title: "如何保证交互组件的键盘与无障碍一致性？",
+          subtitle: "单一交互底座策略",
           content:
-            "通用交互组件统一由 Base UI 驱动，Base UI 缺失的 Tree、排序、命令与分栏由精确锁版本的 UI SDK 补齐。",
+            "每个交互组件的键盘导航、焦点陷阱与 ARIA 属性只由单一无样式交互底座提供，并通过端到端测试持续守护。",
         },
         {
           value: "registry",
           title: "源码分发会影响升级吗？",
-          content: "通过 shadcn Registry 安装后源码归你所有，同时支持从 npm 包按版本整体升级。",
+          content:
+            "通过源码分发 Registry 安装后代码完全归项目所有，同时支持从 npm 包按版本整体升级。",
         },
         {
           value: "motion",

@@ -6,7 +6,7 @@ export const SITE_NAME = "matt-ui";
 
 export const REPOSITORY_URL = "https://github.com/huangshh310/UI";
 
-/** shadcn GitHub Registry 的地址：GitHub 用户名 / 仓库名 */
+/** 远程源码 Registry 地址：GitHub 用户名 / 仓库名 */
 export const REGISTRY_ADDRESS = "huangshh310/UI";
 
 /** 站点的公开地址，用于站点地图与 llms.txt。部署时通过环境变量 SITE_URL 指定 */

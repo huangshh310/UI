@@ -79,5 +79,5 @@ export const PEEK_CARD_DOC: ComponentDoc = {
       description: "预览卡片宽度规格",
     },
   ],
-  accessibility: ["基于 Base UI PreviewCard，保留原生链接语义，支持悬停防抖与键盘聚焦预览。"],
+  accessibility: ["完整保留原生链接语义，同时支持鼠标悬停防抖与键盘聚焦展开预览。"],
 };

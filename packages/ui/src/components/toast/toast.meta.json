@@ -1,6 +1,6 @@
 {
   "name": "toast",
   "title": "Toast",
-  "description": "基于 Base UI Toast 的堆叠通知系统，支持多方位停靠、语义色调、撤销动作与悬停暂停。",
+  "description": "磨砂悬浮堆叠通知系统，支持多方位停靠、语义色调、动作按钮与悬停暂停。",
   "categories": ["display"]
 }

@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * AiVoiceStage：全模态实时语音交互舞台（对标 ChatGPT Advanced Voice / ElevenLabs / Apple Intelligence），
+ * AiVoiceStage：全模态实时语音交互舞台，
  * 融合光学流体状态球、1px 发丝声纹涟漪、微声波指示条、居中实时字幕流与悬浮通话控制岛。
  */
 import { cn } from "@matt-ui/utils";

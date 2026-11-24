@@ -10,7 +10,7 @@ const buildActionGroups = (onLog: (msg: string) => void): CommandMenuGroup[] => 
     items: [
       {
         id: "reg",
-        label: "重新生成 shadcn Registry",
+        label: "重新生成组件 Registry",
         description: "同步全部 71 个组件清单与源码文件",
         icon: <PackageCheck className="size-3.5" />,
         shortcut: "G R",

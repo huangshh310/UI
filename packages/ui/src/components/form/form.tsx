@@ -2,7 +2,7 @@
 
 /**
  * Form：模块化、可组合的表单系统，涵盖字段、标签、输入框、多行文本框、单选组、分组与操作栏。
- * 校验生命周期、字段关联与单选键盘导航均由 Base UI 的 Form / Field / Radio 提供。
+ * 内置完整的校验生命周期、无障碍字段描述关联与单选组方向键导航。
  */
 import { Field } from "@base-ui/react/field";
 import { Form as BaseForm } from "@base-ui/react/form";

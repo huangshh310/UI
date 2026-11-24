@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * AiCitation：Perplexity / Claude Search 风格的现代行内角标与分层来源溯源卡。
+ * AiCitation：现代行内引用角标、来源胶囊条与分层溯源预览卡片。
  */
 
 import { cn } from "@/lib/utils";
@@ -36,8 +36,7 @@ export const CITATION_DEFAULT_SOURCES: AiCitationSource[] = [
     badge: "ADR",
     score: "98% 匹配",
     publishedAt: "2026-11",
-    snippet:
-      "一个组件的交互行为只来自一个交互底座；Base UI 缺口组件采用精确锁版本的 @ui-sdk/react。",
+    snippet: "一个组件的交互行为只来自一个交互底座；对外统一暴露自有类型接口，保持底层实现可替换。",
   },
   {
     id: "wcag",
@@ -52,7 +51,7 @@ export const CITATION_DEFAULT_SOURCES: AiCitationSource[] = [
   {
     id: "reg",
     index: 3,
-    title: "shadcn Registry 源码扁平化器",
+    title: "组件 Registry 源码扁平化器",
     domain: "scripts/registry",
     badge: "CODE",
     score: "91% 匹配",

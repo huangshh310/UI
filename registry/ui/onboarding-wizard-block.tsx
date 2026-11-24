@@ -307,7 +307,7 @@ const StepSummary = ({
       </span>
       <p className="m-0 text-base font-semibold tracking-tight text-foreground">工作区已就绪</p>
       <p className="m-0 max-w-md text-xs leading-relaxed text-muted-foreground">
-        「{workspace}」已部署至 {region}，可立即通过 shadcn CLI 安装组件。
+        「{workspace}」已部署至 {region}，可立即通过 CLI 拉取并安装组件源码。
       </p>
     </div>
   ) : (

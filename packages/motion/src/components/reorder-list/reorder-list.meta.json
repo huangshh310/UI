@@ -1,6 +1,6 @@
 {
   "name": "reorder-list",
   "title": "Reorder List",
-  "description": "基于精确锁版本 UI SDK 与 motion 的拖拽与键盘双通道可重排列表，支持 Space 拿起/方向键换位/Esc 取消。",
+  "description": "拖拽与键盘双通道可重排列表，支持物理弹簧落位、Space 拿起、方向键换位与 Esc 取消。",
   "categories": ["navigation"]
 }

@@ -55,8 +55,8 @@ const AI_PARAMETERS = [
   {
     name: "model",
     label: "模型 Model",
-    defaultValue: "gemini-2.5-pro",
-    options: ["gemini-2.5-pro", "claude-4-sonnet", "gpt-5"],
+    defaultValue: "matt-pro",
+    options: ["matt-pro", "matt-balanced", "matt-mini"],
   },
   {
     name: "temperature",

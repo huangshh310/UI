@@ -1,6 +1,6 @@
 {
   "name": "stretch-switch",
   "title": "Stretch Switch",
-  "description": "A tactile switch built on Base UI whose thumb stretches while pressed and snaps across with spring physics.",
+  "description": "按压时滑块弹性拉伸并以物理弹簧归位的触感无障碍开关。",
   "categories": ["forms"]
 }

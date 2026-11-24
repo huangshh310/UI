@@ -2,7 +2,7 @@
 
 /**
  * 命令面板：页头的搜索触发胶囊，以及 Cmd/Ctrl+K 打开的搜索对话框。
- * 对话框的焦点陷阱、Escape 关闭与焦点恢复由 Base UI 的 Dialog 提供。
+ * 对话框内置完整的焦点陷阱、Escape 关闭与关闭后焦点恢复。
  */
 import { Dialog } from "@base-ui/react/dialog";
 import { MagnifyingGlassIcon } from "@phosphor-icons/react/dist/ssr";

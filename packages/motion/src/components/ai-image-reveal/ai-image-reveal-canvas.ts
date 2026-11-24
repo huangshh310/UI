@@ -7,7 +7,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import type { AiImageRevealPhase } from "./ai-image-reveal.types.js";
 import { averageCells, createParticleField, type ParticleField } from "./particle-field.js";
 
-/** 低饱和中性微光灰阶 + 克制品牌蓝点缀（对标 Midjourney / OpenAI 柔光显影） */
+/** 低饱和中性微光灰阶与克制信号色点缀的柔光显影色板 */
 const DARK_PALETTE = ["#e4e4e7", "#a1a1aa", "#71717a", "#cbd5e1", "#60a5fa"];
 const LIGHT_PALETTE = ["#71717a", "#a1a1aa", "#52525b", "#94a3b8", "#3b82f6"];
 

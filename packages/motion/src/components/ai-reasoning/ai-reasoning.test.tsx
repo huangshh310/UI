@@ -25,13 +25,13 @@ describe("AiReasoning", () => {
       <AiReasoning
         status="thinking"
         variant="ghost"
-        title="Claude 深度分析中…"
+        title="深度推理分析中…"
         tokensLabel="486 tok"
       />,
     );
     const root = container.querySelector('[data-slot="ai-reasoning"]');
     expect(root?.getAttribute("data-variant")).toBe("ghost");
-    expect(screen.getByText("Claude 深度分析中…")).toBeTruthy();
+    expect(screen.getByText("深度推理分析中…")).toBeTruthy();
     expect(screen.getByText("486 tok")).toBeTruthy();
   });
 });

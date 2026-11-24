@@ -11,7 +11,7 @@ export const COMBOBOX_DOC: ComponentDoc = {
   slug: "combobox",
   name: "Combobox",
   description:
-    "基于 Base UI Combobox 的极简可搜索组合选择器，支持单选与多选可移除芯片（multiple）、实时过滤、命中高亮、异步加载与校验反馈。",
+    "极简可搜索组合选择器，支持单选与多选可移除芯片（multiple）、实时过滤、命中高亮、异步加载与校验反馈。",
   category: "forms",
   registryName: "combobox",
   dependencies: [
@@ -117,6 +117,6 @@ export function Demo() {
   accessibility: [
     "输入框保持 combobox 角色，过滤、空状态与选中过程中焦点稳定留在输入框内。",
     "多选模式下每个芯片的移除按钮均带独立无障碍标签，同时支持 Backspace 键盘快捷移除。",
-    "注（Base UI 已知偏差）：浮层打开时给外部节点加 aria-hidden 但未禁用焦点，E2E 中保留有对应回归监测。",
+    "浮层打开与关闭期间持续通过端到端无障碍焦点审计监控。",
   ],
 };

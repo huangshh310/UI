@@ -20,14 +20,14 @@ describe("AiWorkspaceBlock", () => {
     await user.type(textbox, "生成 Sheet 悬浮样式代码");
     await user.keyboard("{Enter}");
 
-    expect(onSend).toHaveBeenCalledWith("生成 Sheet 悬浮样式代码", "claude-sonnet");
+    expect(onSend).toHaveBeenCalledWith("生成 Sheet 悬浮样式代码", "matt-pro");
     expect(screen.getByText("生成 Sheet 悬浮样式代码")).toBeTruthy();
   });
 
   it("支持 compact 变体、自定义默认模型与新建对话", async () => {
     const user = userEvent.setup();
     const { container } = render(
-      <AiWorkspaceBlock variant="compact" defaultModel="gemini-pro" title="代码审查助手" />,
+      <AiWorkspaceBlock variant="compact" defaultModel="matt-flash" title="代码审查助手" />,
     );
 
     const root = container.querySelector('[data-slot="ai-workspace-block"]');

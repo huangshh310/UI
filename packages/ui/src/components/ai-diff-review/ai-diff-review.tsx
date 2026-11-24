@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * AiDiffReview：Cursor / Copilot 风格的 AI 代码与配置变更行级审阅卡片，支持自适应语义表面与曜石暗色主题、逐行勾选与应用变更。
+ * AiDiffReview：智能代码与配置变更行级审阅卡片，支持自适应语义表面与曜石暗色主题、逐行勾选与应用变更。
  */
 import { cn } from "@matt-ui/utils";
 import { Check } from "lucide-react";

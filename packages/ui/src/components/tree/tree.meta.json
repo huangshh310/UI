@@ -1,6 +1,6 @@
 {
   "name": "tree",
   "title": "Tree",
-  "description": "基于精确锁版本 UI SDK 的层级树形视图，带缩进参考线、分支展开与完整 WAI-ARIA 键盘导航。",
+  "description": "层级树形视图，带缩进参考线、分支展开折叠与完整 WAI-ARIA 键盘导航。",
   "categories": ["navigation"]
 }

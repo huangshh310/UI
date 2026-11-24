@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * AiAgentPlan：Linear Agent 风格的自主智能体多步任务规划与执行进度清单。
+ * AiAgentPlan：自主智能体多步任务规划与执行进度清单。
  */
 
 import { cn } from "@/lib/utils";
@@ -92,7 +92,7 @@ export interface AiPlanStep {
 export interface AiAgentPlanProps {
   /** 任务计划标题 */
   title?: string;
-  /** 副标题或运行环境标识（如 "Claude Sonnet · Autonomous"） */
+  /** 副标题或运行环境标识（如 "Matt Pro · Autonomous"） */
   subtitle?: string;
   /** 视觉布局形态：标准卡片（card）、时间轴轨道（timeline）或紧凑面板（compact） */
   variant?: AiAgentPlanVariant;

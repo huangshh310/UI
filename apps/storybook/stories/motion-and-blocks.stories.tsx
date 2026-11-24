@@ -24,6 +24,8 @@ import {
   AiChatThread,
   AiCitation,
   AiDiffReview,
+  AiSurface,
+  AiSurfaceAgent,
   AiToolCall,
   AiWorkspaceBlock,
   AuthBlock,
@@ -98,6 +100,40 @@ export const AiAndTactileComponents: StoryObj = {
         preview={<div className="text-xs text-muted-foreground">实时组件预览</div>}
       />
       <AiDiffReview />
+    </div>
+  ),
+};
+
+export const SemanticSurfaces: StoryObj = {
+  render: () => (
+    <div className="flex max-w-xl flex-col gap-6">
+      <AiSurface
+        uischema={{
+          main: {
+            kind: "card",
+            head: { title: "语义视图摘要", status: "done" },
+            children: [
+              {
+                kind: "stats",
+                items: [
+                  { label: "协议节点数", value: "23" },
+                  { label: "降级模式", value: "纯文本就绪", tone: "success" },
+                ],
+              },
+            ],
+          },
+        }}
+      />
+      <AiSurfaceAgent
+        uischema={{
+          main: {
+            kind: "tool-call",
+            toolName: "validate_surface_contract",
+            status: "done",
+            summary: "高阶智能体领域渲染器挂载就绪",
+          },
+        }}
+      />
     </div>
   ),
 };

@@ -33,7 +33,7 @@ export default function TabsUnderlineDemo() {
             label: "CLI 分发",
             content: (
               <p className="m-0 text-xs text-muted-foreground">
-                单条 shadcn CLI 命令即可把组件源码直接装进项目。
+                单条 CLI 命令即可把组件源码直接装进项目。
               </p>
             ),
           },

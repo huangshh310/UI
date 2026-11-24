@@ -1,5 +1,5 @@
 /**
- * Combobox 的样式定义：参考 shadcn/ui 极简发丝质感，支持单选输入与多选可移除芯片。
+ * Combobox 的样式定义：极简 1px 发丝边框质感，支持单选输入与多选可移除芯片。
  */
 import { cva } from "class-variance-authority";
 

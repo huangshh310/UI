@@ -41,8 +41,12 @@ export const ControlsAndNavigation: StoryObj = {
         <Accordion
           variant="boxed"
           items={[
-            { value: "1", title: "交互底座", content: "Base UI + 锁版本 UI SDK。" },
-            { value: "2", title: "双通道分发", content: "支持 npm 与 shadcn Registry。" },
+            {
+              value: "1",
+              title: "交互底座",
+              content: "单一无样式交互底座，内置完整键盘与 ARIA 支持。",
+            },
+            { value: "2", title: "双通道分发", content: "支持 npm 包与单文件源码 Registry。" },
           ]}
         />
         <Slider label="阈值区间" defaultValue={[25, 75]} showValue />

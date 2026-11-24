@@ -57,7 +57,7 @@ export function Demo() {
     {
       slug: "elevated",
       name: "双层浮雕画框与 Token 调试",
-      description: "Linear / Apple 风格的双层外框，适合浅色文档页展示主题与配置文件。",
+      description: "精致双层微边框外框，适合浅色文档页展示主题与配置文件。",
       file: "code-snippet-deck/elevated.tsx",
       Demo: CodeSnippetDeckElevatedDemo,
       directory: false,
@@ -143,7 +143,7 @@ export function Demo() {
     },
   ],
   accessibility: [
-    "语言页签的键盘导航与 ARIA 语义由 Base UI 的 Tabs 提供。",
+    "语言切换页签支持完整的方向键导航与标准 tablist 无障碍语义。",
     "所有参数输入框都有显式关联标签，支持键盘聚焦并联动高亮代码中的对应片段。",
     "行号槽标注 aria-hidden，复制内容与屏幕阅读器均不受行号干扰，复制结果通过状态区域播报。",
   ],

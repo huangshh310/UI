@@ -7,7 +7,7 @@ export const RESIZABLE_PANELS_DOC: ComponentDoc = {
   slug: "resizable-panels",
   name: "Resizable Panels",
   description:
-    "基于精确锁版本 UI SDK 的可拖拽分栏面板，支持水平/垂直方向、card / flush 容器、pill / line / dots 三种手柄风格与方向键调节。",
+    "可拖拽分栏面板，支持水平/垂直方向、card / flush 容器、pill / line / dots 三种手柄风格与键盘方向键调节。",
   category: "navigation",
   registryName: "resizable-panels",
   dependencies: ["@ui-sdk/react@0.1.0-beta.13", "class-variance-authority", "lucide-react"],

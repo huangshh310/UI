@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * AdvancedDataTable：在 TanStack Table v9 之上扩展多选分面筛选弹层、毛玻璃列显隐（Base UI Popover）、
+ * AdvancedDataTable：内置多选分面筛选弹层、毛玻璃列显隐控制、
  * 行密度切换、斑马纹、多列骨架态、批量操作栏与 CSV 导出钩子的高级数据表格。
  */
 import { cn } from "@matt-ui/utils";

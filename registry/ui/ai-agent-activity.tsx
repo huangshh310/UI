@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * AiAgentActivity：Cursor / Linear 风格的 AI 智能体工具调用轨迹与推理时间线，支持卡片/无框/毛玻璃变体、整板平滑折叠与单步明细抽屉。
+ * AiAgentActivity：智能体工具调用轨迹与执行时间线，支持卡片/无框/毛玻璃变体、整板平滑折叠与单步明细抽屉。
  */
 
 import { cn } from "@/lib/utils";

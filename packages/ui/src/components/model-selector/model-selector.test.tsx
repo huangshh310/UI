@@ -47,8 +47,8 @@ describe("ModelSelector", () => {
     expect(trigger.getAttribute("data-variant")).toBe("ghost");
     await user.click(trigger);
 
-    expect(screen.getByText("Anthropic")).toBeTruthy();
-    expect(screen.getByText("Google")).toBeTruthy();
+    expect(screen.getByText("旗舰系列")).toBeTruthy();
+    expect(screen.getByText("高速系列")).toBeTruthy();
 
     await user.click(screen.getByRole("button", { name: "联网" }));
     expect(onValueChange).toHaveBeenLastCalledWith(

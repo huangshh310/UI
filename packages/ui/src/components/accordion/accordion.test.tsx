@@ -6,7 +6,7 @@ import { Accordion } from "../../index.js";
 afterEach(cleanup);
 
 const ITEMS = [
-  { value: "q1", title: "如何安装组件？", content: "通过 shadcn CLI 或 npm 包按需引入。" },
+  { value: "q1", title: "如何安装组件？", content: "通过 Registry CLI 或 npm 包按需引入。" },
   { value: "q2", title: "是否支持深色主题？", content: "在任意祖先节点添加 .dark 类即可切换。" },
 ];
 
@@ -17,7 +17,7 @@ describe("Accordion", () => {
 
     const q1 = screen.getByRole("button", { name: "如何安装组件？" });
     expect(q1.getAttribute("aria-expanded")).toBe("true");
-    expect(screen.getByText("通过 shadcn CLI 或 npm 包按需引入。")).toBeTruthy();
+    expect(screen.getByText("通过 Registry CLI 或 npm 包按需引入。")).toBeTruthy();
 
     const q2 = screen.getByRole("button", { name: "是否支持深色主题？" });
     await user.click(q2);

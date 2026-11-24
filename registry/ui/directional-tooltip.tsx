@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * DirectionalTooltip：基于 Base UI Tooltip 的方向感知磨砂提示气泡，支持快捷键键帽与反色变体。
+ * DirectionalTooltip：方向感知磨砂提示气泡，支持方位自适应动效、快捷键键帽与反色变体。
  */
 
 import { cn } from "@/lib/utils";

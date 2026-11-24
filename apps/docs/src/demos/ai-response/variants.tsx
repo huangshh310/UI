@@ -25,7 +25,7 @@ export default function AiResponseVariantsDemo() {
             id: "g1",
             title: "ADR-001 交互底座选型",
             url: "https://matt-ui.dev/adr/001",
-            snippet: "Base UI 与轻量原生组件边界说明",
+            snippet: "无样式交互底座与原生语义元素边界说明",
           },
           {
             id: "g2",

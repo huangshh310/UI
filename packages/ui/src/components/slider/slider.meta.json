@@ -1,6 +1,6 @@
 {
   "name": "slider",
   "title": "Slider",
-  "description": "基于 Base UI Slider 的单滑块与区间双滑块，带钴蓝激活轨道、刻度标记与键盘微调。",
+  "description": "精密单滑块与区间双滑块，支持激活轨道色调、刻度标记、浮动读数与键盘微调。",
   "categories": ["navigation"]
 }

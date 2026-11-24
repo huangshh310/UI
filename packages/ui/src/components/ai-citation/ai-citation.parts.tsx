@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * AiCitation 内部子部件：正文行内角标、Perplexity 风格横向来源条与分层引文预览卡。
+ * AiCitation 内部子部件：正文行内角标、紧凑横向来源条与分层引文预览卡。
  */
 import { cn } from "@matt-ui/utils";
 import { ArrowUpRight, BookOpen, FileText, Globe } from "lucide-react";

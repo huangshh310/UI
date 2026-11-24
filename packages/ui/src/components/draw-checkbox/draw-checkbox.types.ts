@@ -23,7 +23,7 @@ export interface DrawCheckboxProps {
   value?: string;
   /** 容器外观：行内默认、C 端服务卡片、胶囊标签或轻盈列表行 */
   variant?: DrawCheckboxVariant;
-  /** 复选框几何形状：圆角方块、全圆（Things/iOS 风格）或利落方角 */
+  /** 复选框几何形状：圆角方块、全圆胶囊或利落方角 */
   shape?: DrawCheckboxShape;
   /** 复选框与文案尺寸 */
   size?: DrawCheckboxSize;

@@ -2,7 +2,7 @@
 "use client";
 
 /**
- * AvatarStack：基于 Base UI Avatar 并复用 DirectionalTooltip 的叠放头像组。
+ * AvatarStack：支持在线状态指示、溢出计数与方向感知悬停提示的叠放头像组。
  */
 
 import {

@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * OriginDropdown：基于 Base UI Menu 的锚点缩放磨砂下拉菜单。
+ * OriginDropdown：带锚点缩放动效、分组快捷键与完整键盘导航的磨砂下拉菜单。
  */
 import { Menu } from "@base-ui/react/menu";
 import { cn } from "@matt-ui/utils";

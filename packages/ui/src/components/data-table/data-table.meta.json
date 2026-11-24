@@ -1,6 +1,6 @@
 {
   "name": "data-table",
   "title": "Data Table",
-  "description": "基于 TanStack Table 的声明式数据表格，支持排序、全局搜索、分页、行选择、骨架加载与空状态。",
+  "description": "声明式数据表格，支持列排序、全局搜索、分页、行选择、骨架加载与空状态提示。",
   "categories": ["forms"]
 }

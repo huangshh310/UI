@@ -56,7 +56,7 @@ export function Example() {
     {
       name: "defaultModel",
       type: "string",
-      defaultValue: '"claude-sonnet"',
+      defaultValue: '"matt-pro"',
       description: "默认选中的推理模型标识",
     },
     {

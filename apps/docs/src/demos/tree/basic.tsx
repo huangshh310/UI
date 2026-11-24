@@ -14,7 +14,7 @@ const FILES = [
         label: "ui",
         children: [
           { id: "packages/ui/button.tsx", label: "button.tsx", badge: "TSX" },
-          { id: "packages/ui/tree.tsx", label: "tree.tsx", badge: "UI SDK" },
+          { id: "packages/ui/tree.tsx", label: "tree.tsx", badge: "A11y" },
         ],
       },
       { id: "packages/tokens", label: "tokens", badge: "CSS" },

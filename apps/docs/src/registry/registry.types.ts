@@ -44,7 +44,7 @@ export interface ComponentDoc {
   name: string;
   description: string;
   category: CategoryId;
-  /** 在 shadcn Registry 中的条目名，也是 CLI 安装命令的最后一段 */
+  /** 在源码分发 Registry 中的条目名，也是 CLI 安装命令的最后一段 */
   registryName: string;
   /** 手动安装时需要的 npm 依赖 */
   dependencies: string[];

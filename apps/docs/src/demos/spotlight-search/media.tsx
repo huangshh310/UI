@@ -28,7 +28,7 @@ const ASSETS = [
   {
     id: "adr",
     title: "ADR-001-interaction-engine.md",
-    description: "Base UI 与 UI SDK 交互底座选型记录",
+    description: "无样式交互底座与可访问性验证选型记录",
     category: "文档",
     shortcut: "3",
     meta: "4.1 KB · 已归档",
@@ -38,7 +38,7 @@ const ASSETS = [
   {
     id: "cli",
     title: "generate-registry.mjs",
-    description: "shadcn Registry 自动生成脚本",
+    description: "组件 Registry 单文件自动生成脚本",
     category: "脚本",
     shortcut: "4",
     meta: "Node 22 · ESM",

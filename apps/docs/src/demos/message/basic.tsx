@@ -51,7 +51,7 @@ export default function MessageBasicDemo() {
   return (
     <div className="flex w-full max-w-2xl flex-col gap-5">
       <UserEditableTurn />
-      <Message from="assistant" author="Matt AI" model="Claude 4.5" timestamp="14:20">
+      <Message from="assistant" author="Matt AI" model="Matt Pro 4" timestamp="14:20">
         <MessageBranch>
           <MessageBranchContent>
             <MessageContent key="v1">

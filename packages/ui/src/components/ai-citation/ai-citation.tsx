@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * AiCitation：Perplexity / Claude Search 风格的现代行内角标与分层来源溯源卡。
+ * AiCitation：现代行内引用角标、来源胶囊条与分层溯源预览卡片。
  */
 import { cn } from "@matt-ui/utils";
 import { useState } from "react";

@@ -10,7 +10,7 @@ export const DATE_PICKER_DOC: ComponentDoc = {
   slug: "date-picker",
   name: "Date Picker",
   description:
-    "基于 Base UI Popover 与 Calendar 组合的极简日期/区间选择器，内置毛玻璃浮层、左侧快捷预设、视觉变体、校验提示与一键清空。",
+    "极简日期与日期区间选择器，内置毛玻璃浮层、左侧快捷预设、视觉变体、校验提示与一键清空。",
   category: "forms",
   registryName: "date-picker",
   dependencies: [
@@ -90,7 +90,7 @@ export function Demo() {
     },
   ],
   accessibility: [
-    "弹层开关、碰撞翻转、Escape 关闭与关闭后焦点恢复由 Base UI Popover 统一管理。",
+    "内置弹层碰撞翻转定位、Escape 关闭与关闭后焦点自动恢复。",
     "清除按钮独立于触发按钮之外，避免嵌套交互元素违反 HTML 规范。",
     "传入 error 时自动为触发器附加 aria-invalid 并通过 aria-describedby 关联错误说明。",
   ],

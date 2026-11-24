@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Conversation：流式对话滚动容器原语（对标 Vercel AI Elements / ChatGPT / Claude 贴底锚定）。
+ * Conversation：支持贴底自动跟随与上滚解绑的流式对话滚动容器原语。
  * 流式输出时若视口处于底部则自动跟随，用户上滚阅读时立即解绑并浮现克制回到底部按钮。
  */
 import { cn } from "@matt-ui/utils";

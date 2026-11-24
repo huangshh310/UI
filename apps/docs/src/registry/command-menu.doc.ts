@@ -7,7 +7,7 @@ export const COMMAND_MENU_DOC: ComponentDoc = {
   slug: "command-menu",
   name: "Command Menu",
   description:
-    "基于 UI SDK 的磨砂全局命令面板，支持模糊匹配高亮、分组命令、多键帽快捷键、底部键盘提示与多级子页面栈。",
+    "磨砂全局命令面板，支持模糊匹配高亮、分组命令、多键帽快捷键、底部键盘提示与多级子页面栈。",
   category: "overlays",
   registryName: "command-menu",
   dependencies: ["@ui-sdk/react@0.1.0-beta.13", "class-variance-authority", "lucide-react"],
@@ -34,7 +34,7 @@ export const COMMAND_MENU_DOC: ComponentDoc = {
     {
       slug: "workspace",
       name: "宽幅工作区命令面板",
-      description: '采用 size="lg" 规格展示带副标题、徽章与成员指派子页面的 Linear 风格命令流。',
+      description: '采用 size="lg" 规格展示带副标题、徽章与成员指派子页面的多级命令流。',
       file: "command-menu/workspace.tsx",
       Demo: CommandMenuWorkspaceDemo,
       directory: false,

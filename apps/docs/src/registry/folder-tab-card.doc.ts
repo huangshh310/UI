@@ -7,7 +7,7 @@ export const FOLDER_TAB_CARD_DOC: ComponentDoc = {
   slug: "folder-tab-card",
   name: "Folder Tab Card",
   description:
-    "Apple / Linear 风格的立体多层文件夹标签切换卡片，结合共享 layoutId 弹簧页签、顶部微指示条、标签图标徽标与底部等宽指标区。",
+    "立体多层文件夹标签切换卡片，结合共享弹簧页签过渡、顶部微指示条、标签图标徽标与底部等宽指标区。",
   category: "motion",
   registryName: "folder-tab-card",
   dependencies: ["motion", "clsx", "tailwind-merge"],

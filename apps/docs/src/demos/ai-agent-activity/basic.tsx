@@ -20,7 +20,7 @@ const ACTIVITIES: AiAgentActivityItemData[] = [
     id: "compile-ui",
     type: "code_execution",
     title: "生成 ThinkingOrb 与 AiResponse",
-    description: "输出单文件 shadcn Registry 产物与类型声明",
+    description: "输出单文件组件 Registry 产物与类型声明",
     status: "running",
     duration: "1.2s",
     details: {

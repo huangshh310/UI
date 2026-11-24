@@ -1,6 +1,6 @@
 {
   "name": "combobox",
   "title": "Combobox",
-  "description": "A searchable combobox built on Base UI with highlighted match text, clear trigger, and async loading state.",
+  "description": "可搜索组合选择器，支持单选与多选芯片、命中高亮、一键清空及远程异步加载态。",
   "categories": ["forms"]
 }
