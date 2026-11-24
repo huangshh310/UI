@@ -7,7 +7,7 @@ export const THINKING_ORB_DOC: ComponentDoc = {
   slug: "thinking-orb",
   name: "ThinkingOrb",
   description:
-    "纯单色 3D 球面粒子思考球，基于 Canvas 黄金螺旋采样实现 9 种 AI 认知状态，支持玻璃表圈、光晕变体与实时状态胶囊。",
+    "3D 光学水晶星尘思考球，基于 Canvas 分层光学渲染实现 9 种 AI 认知态的色温与形态平滑演进，支持精密刻度表圈、双环氛围光晕与微光状态胶囊。",
   category: "ai",
   registryName: "thinking-orb",
   dependencies: ["class-variance-authority", "clsx", "tailwind-merge"],

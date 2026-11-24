@@ -1,15 +1,15 @@
 "use client";
 
 /**
- * AiImageReveal 画布驱动与图像预加载 Hook。
+ * AiImageReveal 画布驱动与图像预加载 Hook：
+ * 等待态渲染 AICSS 风格径向呼吸点阵矩阵，图像就绪后平滑过渡至柔焦采样凝聚与高清显影。
  */
 import { useEffect, useLayoutEffect, useState } from "react";
 import type { AiImageRevealPhase } from "./ai-image-reveal.types.js";
 import { averageCells, createParticleField, type ParticleField } from "./particle-field.js";
 
-/** 低饱和中性微光灰阶与克制信号色点缀的柔光显影色板 */
-const DARK_PALETTE = ["#e4e4e7", "#a1a1aa", "#71717a", "#cbd5e1", "#60a5fa"];
-const LIGHT_PALETTE = ["#71717a", "#a1a1aa", "#52525b", "#94a3b8", "#7a5ee4"];
+const DARK_PALETTE = ["#e4e4e7", "#a1a1aa", "#71717a", "#d4d4d8"];
+const LIGHT_PALETTE = ["#27272a", "#52525b", "#71717a", "#3f3f46"];
 
 export interface RevealEngineState {
   field: ParticleField | null;
@@ -25,6 +25,49 @@ const isDarkDocument = () => {
   if (el.getAttribute("data-theme") === "dark" || el.classList.contains("dark")) return true;
   if (el.getAttribute("data-theme") === "light" || el.classList.contains("light")) return false;
   return window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
+};
+
+/** 绘制对标 AICSS Image Processing 的精密径向呼吸圆点矩阵 */
+const drawRadialDotMatrix = (
+  ctx: CanvasRenderingContext2D,
+  w: number,
+  h: number,
+  t: number,
+  dark: boolean,
+) => {
+  ctx.clearRect(0, 0, w, h);
+  const pad = Math.min(w, h) * 0.06;
+  const innerW = Math.max(1, w - pad * 2);
+  const innerH = Math.max(1, h - pad * 2);
+  const step = Math.max(11, Math.min(18, Math.round(Math.min(w, h) / 17)));
+  const cols = Math.max(6, Math.floor(innerW / step));
+  const rows = Math.max(6, Math.floor(innerH / step));
+  const startX = (w - (cols - 1) * step) / 2;
+  const startY = (h - (rows - 1) * step) / 2;
+  const cx = w / 2;
+  const cy = h / 2;
+  const maxDist = Math.hypot(innerW / 2, innerH / 2) || 1;
+  const rgb = dark ? "244, 244, 245" : "24, 24, 27";
+
+  for (let r = 0; r < rows; r += 1) {
+    const y = startY + r * step;
+    for (let c = 0; c < cols; c += 1) {
+      const x = startX + c * step;
+      const normDist = Math.hypot(x - cx, y - cy) / maxDist;
+      const radial = Math.exp(-(normDist * normDist) * 3.4);
+      const wave = 0.5 + 0.5 * Math.sin(normDist * 7.2 - t * 3.1);
+      const pulse = 0.5 + 0.5 * Math.sin(t * 1.9 + c * 0.35 + r * 0.35);
+      const alpha = Math.min(
+        0.92,
+        Math.max(0.055, radial * (0.36 + wave * 0.54) + 0.045 + pulse * 0.04 * radial),
+      );
+      const dotR = Math.max(0.85, (0.9 + radial * (0.75 + wave * 0.55)) * (step / 15));
+      ctx.beginPath();
+      ctx.arc(x, y, dotR, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${rgb}, ${alpha})`;
+      ctx.fill();
+    }
+  }
 };
 
 const sampleImageCells = (img: HTMLImageElement, w: number, h: number, cell: number) => {
@@ -72,11 +115,11 @@ const stepGatherFrame = (
   opts: { now: number; t: number; duration: number; onRefine: () => void },
 ): boolean => {
   if (eng.gatherStart < 0) eng.gatherStart = opts.now;
-  const dur = opts.duration * 0.55;
+  const dur = opts.duration * 0.44;
   const elapsed = (opts.now - eng.gatherStart) / 1000;
   const done = field.draw(buf, opts.t, elapsed, dur);
   ctx.putImageData(imgData, 0, 0);
-  if (!eng.refined && (done || elapsed >= dur * 0.9)) {
+  if (!eng.refined && (done || elapsed >= dur * 0.88)) {
     eng.refined = true;
     opts.onRefine();
   }
@@ -89,7 +132,7 @@ const startParticleAnimation = (
   field: ParticleField,
   imgData: ImageData,
   eng: RevealEngineState,
-  opts: { durationRef: React.RefObject<number>; onRefine: () => void },
+  opts: { w: number; h: number; durationRef: React.RefObject<number>; onRefine: () => void },
 ) => {
   const buf = new Uint32Array(imgData.data.buffer);
   let raf = 0;
@@ -105,9 +148,7 @@ const startParticleAnimation = (
     last = now;
     t += dt;
     if (eng.mode === "idle") {
-      field.stepIdle(dt, t);
-      field.draw(buf, t, null, 0);
-      ctx.putImageData(imgData, 0, 0);
+      drawRadialDotMatrix(ctx, opts.w, opts.h, t, isDarkDocument());
     } else if (eng.mode === "gather") {
       const done = stepGatherFrame(eng, field, buf, ctx, imgData, {
         now,

@@ -6,7 +6,7 @@ export const AI_CHAT_THREAD_DOC: ComponentDoc = {
   slug: "ai-chat-thread",
   name: "AI Chat Thread",
   description:
-    "C 端 AI 对话消息流，支持用户/助手气泡、流式生成态、多版本回复分支切换、复制反馈与快捷追问。",
+    "对标 HextaUI Chat Thread 的 C 端 AI 对话消息流，支持模型切换分隔线、可折叠思考轨迹、联网搜索摘要、行内引用胶囊、结构化对比表、右侧检查点导航、多版本分支切换与底部悬浮追问输入条。",
   category: "ai",
   registryName: "ai-chat-thread",
   dependencies: ["class-variance-authority", "lucide-react"],
@@ -51,7 +51,26 @@ export function Example() {
       name: "initialMessages",
       type: "AiChatMessage[]",
       defaultValue: "内置示例对话",
-      description: "初始消息列表（支持 variants / meta / streaming 字段）",
+      description:
+        "初始消息列表（支持 divider / thinking / webSearch / citations / table / variants / streaming）",
+    },
+    {
+      name: "showComposer",
+      type: "boolean",
+      defaultValue: "true",
+      description: "是否显示底部胶囊追问输入条与模型/深度/上下文占用底栏",
+    },
+    {
+      name: "modelName / effortLabel / contextUsage",
+      type: "string / string / number",
+      defaultValue: '"Nova 3" / "Medium" / 7',
+      description: "底栏展示的当前模型名、思考深度标签与环形上下文占用百分比",
+    },
+    {
+      name: "showCheckpoints",
+      type: "boolean",
+      defaultValue: "true",
+      description: "是否在右侧边缘显示对话轮次检查点刻度线",
     },
     {
       name: "followUps",

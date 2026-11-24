@@ -1,0 +1,6 @@
+{
+  "name": "agent-screen",
+  "title": "Agent Screen",
+  "description": "对标 BeautifulUI 21 Agent Screen 的智能体实时操作屏幕视口容器，支持连接中加载态、实况画面与底栏状态切换。",
+  "categories": ["ai"]
+}

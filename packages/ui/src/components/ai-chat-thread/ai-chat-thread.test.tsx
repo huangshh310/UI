@@ -61,4 +61,22 @@ describe("AiChatThread", () => {
     expect(screen.getByText("生成中")).toBeTruthy();
     expect(screen.getByText("0.8s · 96 tok")).toBeTruthy();
   });
+
+  it("支持思考轨迹折叠、来源微胶囊、对比表格与底部追问输入提交", async () => {
+    const user = userEvent.setup();
+    render(<AiChatThread />);
+
+    const thinkingToggle = screen.getByRole("button", { name: /已思考 3s/ });
+    expect(thinkingToggle.getAttribute("aria-expanded")).toBe("true");
+    await user.click(thinkingToggle);
+    expect(thinkingToggle.getAttribute("aria-expanded")).toBe("false");
+
+    expect(screen.getByText("MDN")).toBeTruthy();
+    expect(screen.getByText("Debounce")).toBeTruthy();
+
+    const input = screen.getByPlaceholderText("继续追问…");
+    await user.type(input, "如何结合 AbortController？");
+    await user.click(screen.getByRole("button", { name: "发送追问" }));
+    expect(screen.getByText(/已按「如何结合 AbortController？」/)).toBeTruthy();
+  });
 });

@@ -1,0 +1,6 @@
+{
+  "name": "selection-actions",
+  "title": "Selection Actions",
+  "description": "对标 BeautifulUI 20 Selection Actions 的划词选中文本 AI 浮动微编辑条，支持自然语言行内指令与快捷动作。",
+  "categories": ["ai"]
+}

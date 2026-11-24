@@ -1,148 +1,141 @@
 "use client";
 
 /**
- * ThinkingOrb：极简纯单色 3D 球面粒子思考球，支持 9 种 AI 认知状态、玻璃表圈/光晕变体、状态胶囊与离屏暂停。
+ * ThinkingOrb：3D 光学水晶星尘思考球，支持 9 种 AI 认知态平滑形变、精密刻度玻璃表圈、双环氛围光晕与微光状态胶囊。
  */
 import { cn } from "@matt-ui/utils";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import {
   createOrbParticles,
   orbParticleCountForSize,
-  renderOrbFrame,
   type OrbParticle,
-} from "./thinking-orb-engine.js";
-import type { ThinkingOrbProps, ThinkingOrbState } from "./thinking-orb.types.js";
+} from "./thinking-orb-field.js";
+import { useAutoDarkTheme, useOrbCanvasLoop } from "./thinking-orb-runtime.js";
+import type {
+  ThinkingOrbLabelPlacement,
+  ThinkingOrbProps,
+  ThinkingOrbState,
+  ThinkingOrbVariant,
+} from "./thinking-orb.types.js";
 import {
+  ORB_STATE_ACCENTS,
   THINKING_ORB_STATE_LABELS,
   thinkingOrbFrameVariants,
   thinkingOrbLabelVariants,
   thinkingOrbRootVariants,
 } from "./thinking-orb.variants.js";
 
-const readDarkTheme = (): boolean => {
-  if (typeof document === "undefined") return false;
-  const root = document.documentElement;
-  if (root.getAttribute("data-theme") === "dark" || root.classList.contains("dark")) return true;
-  if (root.getAttribute("data-theme") === "light" || root.classList.contains("light")) return false;
-  return window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
-};
+const DIAL_TICK_ANGLES = Array.from({ length: 36 }, (_, i) => i * 10);
 
-const useAutoDarkTheme = (darkProp: boolean | undefined) => {
-  const [detected, setDetected] = useState(readDarkTheme);
-
-  useEffect(() => {
-    if (darkProp !== undefined || typeof document === "undefined") return;
-    const sync = () => setDetected(readDarkTheme());
-    sync();
-    const observer = new MutationObserver(sync);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class", "data-theme"],
-    });
-    return () => observer.disconnect();
-  }, [darkProp]);
-
-  return darkProp ?? detected;
-};
-
-const usePrefersReducedMotion = () => {
-  const ref = useRef(false);
-  useEffect(() => {
-    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return;
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => {
-      ref.current = media.matches;
-    };
-    sync();
-    media.addEventListener("change", sync);
-    return () => media.removeEventListener("change", sync);
-  }, []);
-  return ref;
-};
-
-const watchCanvasVisibility = (canvas: HTMLCanvasElement, onChange: (visible: boolean) => void) => {
-  if (typeof IntersectionObserver !== "function") return undefined;
-  const observer = new IntersectionObserver(
-    ([entry]) => onChange(entry ? entry.isIntersecting || entry.intersectionRatio > 0 : true),
-    { rootMargin: "100px 0px" },
-  );
-  observer.observe(canvas);
-  return observer;
-};
-
-const mountOrbLoop = (
-  canvas: HTMLCanvasElement,
-  ctx: CanvasRenderingContext2D,
-  particlesRef: React.RefObject<OrbParticle[]>,
-  timers: {
-    timeRef: React.RefObject<number>;
-    lastRef: React.RefObject<number>;
-    reducedRef: React.RefObject<boolean>;
-  },
-  opts: { state: ThinkingOrbState; size: number; speed: number; isDark: boolean; paused: boolean },
-) => {
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  canvas.width = opts.size * dpr;
-  canvas.height = opts.size * dpr;
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-  let rafId: number | null = null;
-  let visible = true;
-  const canTick = () => visible && !opts.paused && !timers.reducedRef.current;
-
-  const drawFrame = (ts: number) => {
-    const dt =
-      timers.lastRef.current === 0 ? 0.016 : Math.min(ts - timers.lastRef.current, 40) / 1000;
-    timers.lastRef.current = ts;
-    if (!opts.paused && !timers.reducedRef.current) timers.timeRef.current += dt * opts.speed;
-    renderOrbFrame(ctx, particlesRef.current, {
-      state: opts.state,
-      size: opts.size,
-      time: timers.timeRef.current,
-      isDark: opts.isDark,
-    });
-    rafId = canTick() ? window.requestAnimationFrame(drawFrame) : null;
-  };
-
-  const observer = watchCanvasVisibility(canvas, (nextVisible) => {
-    visible = nextVisible;
-    if (canTick() && rafId === null) rafId = window.requestAnimationFrame(drawFrame);
-    else if (!visible && rafId !== null) {
-      window.cancelAnimationFrame(rafId);
-      rafId = null;
-    }
-  });
-
-  drawFrame(performance.now());
-  return () => {
-    observer?.disconnect();
-    if (rafId !== null) window.cancelAnimationFrame(rafId);
-    timers.lastRef.current = 0;
-  };
-};
-
-const useOrbCanvasLoop = (
-  canvasRef: React.RefObject<HTMLCanvasElement | null>,
-  particlesRef: React.RefObject<OrbParticle[]>,
-  opts: { state: ThinkingOrbState; size: number; speed: number; isDark: boolean; paused: boolean },
-) => {
-  const timeRef = useRef(0);
-  const lastRef = useRef(0);
-  const reducedRef = usePrefersReducedMotion();
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-    if (!canvas || !ctx) return;
-    return mountOrbLoop(canvas, ctx, particlesRef, { timeRef, lastRef, reducedRef }, opts);
-  }, [canvasRef, particlesRef, opts, reducedRef]);
-};
-
-const ThinkingOrbCaption = ({ label }: { label: string }) => (
-  <span data-slot="thinking-orb-label" className={thinkingOrbLabelVariants()}>
-    {label}
-  </span>
+const OrbDialTicks = () => (
+  <svg
+    aria-hidden="true"
+    viewBox="0 0 100 100"
+    className="pointer-events-none absolute inset-0 size-full text-foreground/22 dark:text-white/22"
+  >
+    <circle
+      cx="50"
+      cy="50"
+      r="47.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="0.45"
+      strokeOpacity="0.45"
+    />
+    {DIAL_TICK_ANGLES.map((deg) => {
+      const major = deg % 90 === 0;
+      return (
+        <line
+          key={deg}
+          x1="50"
+          y1={major ? "2.6" : "3.2"}
+          x2="50"
+          y2={major ? "6.2" : "5.1"}
+          stroke="currentColor"
+          strokeWidth={major ? "0.9" : "0.55"}
+          strokeLinecap="round"
+          strokeOpacity={major ? "0.95" : "0.52"}
+          transform={`rotate(${deg} 50 50)`}
+        />
+      );
+    })}
+  </svg>
 );
+
+const ThinkingOrbDecor = ({
+  variant,
+  state,
+  size,
+}: {
+  variant: ThinkingOrbVariant;
+  state: ThinkingOrbState;
+  size: number;
+}) => {
+  if (variant === "minimal") return null;
+  const accent = ORB_STATE_ACCENTS[state] ?? ORB_STATE_ACCENTS.working;
+  return (
+    <>
+      {variant === "halo" && (
+        <>
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-3 rounded-full blur-md transition-colors duration-500"
+            style={{
+              background: `radial-gradient(circle, ${accent.haloTint} 0%, transparent 70%)`,
+            }}
+          />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-1.5 rounded-full border border-solid border-foreground/[0.07] dark:border-white/[0.09]"
+          />
+        </>
+      )}
+      {size >= 44 && <OrbDialTicks />}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-[1px] rounded-full bg-gradient-to-b from-white/60 via-transparent to-transparent dark:from-white/[0.09]"
+      />
+    </>
+  );
+};
+
+const ThinkingOrbCaption = ({
+  label,
+  state,
+  placement,
+  paused,
+}: {
+  label: string;
+  state: ThinkingOrbState;
+  placement: ThinkingOrbLabelPlacement;
+  paused: boolean;
+}) => {
+  const accent = ORB_STATE_ACCENTS[state] ?? ORB_STATE_ACCENTS.working;
+  return (
+    <span data-slot="thinking-orb-label" className={thinkingOrbLabelVariants({ placement })}>
+      <span
+        data-slot="thinking-orb-indicator"
+        aria-hidden="true"
+        className="relative flex size-2 shrink-0 items-center justify-center"
+      >
+        {!paused && (
+          <span
+            className="absolute inline-flex size-full animate-ping rounded-full opacity-55"
+            style={{ backgroundColor: accent.dot }}
+          />
+        )}
+        <span
+          className="relative inline-flex size-1.5 rounded-full transition-colors duration-300"
+          style={{
+            backgroundColor: accent.dot,
+            boxShadow: `0 0 8px ${accent.glow}`,
+          }}
+        />
+      </span>
+      <span>{label}</span>
+    </span>
+  );
+};
 
 const resolveOrbDefaults = (props: ThinkingOrbProps) => ({
   state: props.state ?? "working",
@@ -154,6 +147,12 @@ const resolveOrbDefaults = (props: ThinkingOrbProps) => ({
   labelPlacement: props.labelPlacement ?? "bottom",
   interactive: props.interactive ?? false,
 });
+
+const resolveFrameSize = (size: number, variant: ThinkingOrbVariant): number => {
+  if (variant === "minimal") return size;
+  const ratio = variant === "halo" ? 0.18 : 0.14;
+  return size + Math.max(variant === "halo" ? 14 : 10, Math.round(size * ratio));
+};
 
 interface ThinkingOrbViewProps {
   opts: ReturnType<typeof resolveOrbDefaults>;
@@ -168,6 +167,13 @@ interface ThinkingOrbViewProps {
 }
 
 const ThinkingOrbView = (p: ThinkingOrbViewProps) => {
+  const frameInner = (
+    <>
+      <ThinkingOrbDecor variant={p.opts.variant} state={p.opts.state} size={p.opts.size} />
+      {p.canvasNode}
+    </>
+  );
+
   if (!p.hasVisibleLabel) {
     return (
       <output
@@ -178,7 +184,7 @@ const ThinkingOrbView = (p: ThinkingOrbViewProps) => {
         className={cn(p.frameClass, p.className)}
         style={{ width: p.frameSize, height: p.frameSize, ...p.style }}
       >
-        {p.canvasNode}
+        {frameInner}
       </output>
     );
   }
@@ -199,9 +205,14 @@ const ThinkingOrbView = (p: ThinkingOrbViewProps) => {
         className={p.frameClass}
         style={{ width: p.frameSize, height: p.frameSize }}
       >
-        {p.canvasNode}
+        {frameInner}
       </span>
-      <ThinkingOrbCaption label={p.resolvedLabel} />
+      <ThinkingOrbCaption
+        label={p.resolvedLabel}
+        state={p.opts.state}
+        placement={p.opts.labelPlacement}
+        paused={p.opts.paused}
+      />
     </output>
   );
 };
@@ -227,7 +238,7 @@ export const ThinkingOrb = (props: ThinkingOrbProps) => {
   });
 
   const resolvedLabel = props.label ?? THINKING_ORB_STATE_LABELS[opts.state];
-  const frameSize = opts.variant === "minimal" ? opts.size : opts.size + 12;
+  const frameSize = resolveFrameSize(opts.size, opts.variant);
   return (
     <ThinkingOrbView
       opts={opts}
@@ -245,7 +256,7 @@ export const ThinkingOrb = (props: ThinkingOrbProps) => {
         <canvas
           ref={canvasRef}
           aria-hidden="true"
-          className="block"
+          className="relative block"
           style={{ width: opts.size, height: opts.size }}
         />
       }

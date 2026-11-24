@@ -7,7 +7,7 @@ export const AI_IMAGE_REVEAL_DOC: ComponentDoc = {
   slug: "ai-image-reveal",
   name: "AiImageReveal",
   description:
-    "AI 图像生成显影组件，模拟粒子云呼吸等待、像素采样聚拢降噪马赛克到高清柔焦显影，支持画廊相框、毛玻璃角标与内联重播。",
+    "C 端 AI 图像生成显影组件，以克制的胶片光雾等待、柔焦银盐采样凝聚、纯净光学渐进光幕与美术馆级毛玻璃浮层呈现成图过程。",
   category: "ai",
   registryName: "ai-image-reveal",
   dependencies: ["motion", "lucide-react", "clsx", "tailwind-merge"],

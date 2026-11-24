@@ -2,7 +2,8 @@
 "use client";
 
 /**
- * AiImageReveal：AI 图像生成显影组件，呈现粒子云呼吸等待、聚拢降噪马赛克到高清柔焦显影的完整过程。
+ * AiImageReveal：对标 AICSS 极简单色语言的 AI 图像生成显影组件，
+ * 呈现径向呼吸点阵等待、扫光状态标题、柔焦凝聚与渐进式光学显影。
  */
 
 import { cn } from "@/lib/utils";
@@ -23,21 +24,30 @@ import {
 export const REVEAL_FOCUS_RING =
   "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset";
 
-export const REVEAL_EASE_OUT = [0.22, 1, 0.36, 1] as const;
+/** 电影级指数缓出曲线，模拟光学镜头精准合焦 */
+export const REVEAL_EASE_OUT = [0.16, 1, 0.3, 1] as const;
 
 export const REVEAL_SHELL_VARIANT: Record<AiImageRevealVariant, string> = {
-  default: "",
+  default: "group",
   framed:
-    "rounded-xl border border-solid border-border bg-card p-1.5 shadow-sm dark:border-white/10",
+    "group rounded-2xl border border-solid border-border bg-card p-2 shadow-xs dark:border-white/[0.08] dark:bg-card",
   glass:
-    "rounded-xl border border-solid border-border bg-card/85 p-1.5 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-card/80",
+    "group rounded-2xl border border-solid border-border/80 bg-card/75 p-2 shadow-xs backdrop-blur-md dark:border-white/[0.09] dark:bg-white/[0.03]",
 };
 
 export const REVEAL_STAGE_RADIUS: Record<AiImageRevealRadius, string> = {
-  md: "rounded-lg",
-  lg: "rounded-lg",
-  xl: "rounded-xl",
+  md: "rounded-xl",
+  lg: "rounded-2xl",
+  xl: "rounded-[18px]",
 };
+
+/** 成图上的中性微透深炭胶囊：零偏色且满足高对比度，适配任意明暗摄影作品 */
+export const REVEAL_MEDIA_CHIP =
+  "border border-solid border-white/15 bg-neutral-950/76 text-white backdrop-blur-md";
+
+/** 等待态画布内的极简等宽角标（对标 AICSS 1024 × 1024 微标） */
+export const REVEAL_WAIT_CHIP =
+  "border border-solid border-black/[0.06] bg-white/90 text-neutral-700 backdrop-blur-sm dark:border-white/[0.08] dark:bg-white/[0.08] dark:text-neutral-300";
 export type AiImageRevealPhase = "idle" | "gather" | "refine" | "done" | "error";
 
 export type AiImageRevealVariant = "default" | "framed" | "glass";
@@ -82,9 +92,8 @@ export interface AiImageRevealProps extends Omit<HTMLAttributes<HTMLElement>, "c
   onReveal?: () => void;
   onImageError?: () => void;
 }
-/** 低饱和中性微光灰阶与克制信号色点缀的柔光显影色板 */
-const DARK_PALETTE = ["#e4e4e7", "#a1a1aa", "#71717a", "#cbd5e1", "#60a5fa"];
-const LIGHT_PALETTE = ["#71717a", "#a1a1aa", "#52525b", "#94a3b8", "#7a5ee4"];
+const DARK_PALETTE = ["#e4e4e7", "#a1a1aa", "#71717a", "#d4d4d8"];
+const LIGHT_PALETTE = ["#27272a", "#52525b", "#71717a", "#3f3f46"];
 
 interface RevealEngineState {
   field: ParticleField | null;
@@ -100,6 +109,49 @@ const isDarkDocument = () => {
   if (el.getAttribute("data-theme") === "dark" || el.classList.contains("dark")) return true;
   if (el.getAttribute("data-theme") === "light" || el.classList.contains("light")) return false;
   return window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
+};
+
+/** 绘制对标 AICSS Image Processing 的精密径向呼吸圆点矩阵 */
+const drawRadialDotMatrix = (
+  ctx: CanvasRenderingContext2D,
+  w: number,
+  h: number,
+  t: number,
+  dark: boolean,
+) => {
+  ctx.clearRect(0, 0, w, h);
+  const pad = Math.min(w, h) * 0.06;
+  const innerW = Math.max(1, w - pad * 2);
+  const innerH = Math.max(1, h - pad * 2);
+  const step = Math.max(11, Math.min(18, Math.round(Math.min(w, h) / 17)));
+  const cols = Math.max(6, Math.floor(innerW / step));
+  const rows = Math.max(6, Math.floor(innerH / step));
+  const startX = (w - (cols - 1) * step) / 2;
+  const startY = (h - (rows - 1) * step) / 2;
+  const cx = w / 2;
+  const cy = h / 2;
+  const maxDist = Math.hypot(innerW / 2, innerH / 2) || 1;
+  const rgb = dark ? "244, 244, 245" : "24, 24, 27";
+
+  for (let r = 0; r < rows; r += 1) {
+    const y = startY + r * step;
+    for (let c = 0; c < cols; c += 1) {
+      const x = startX + c * step;
+      const normDist = Math.hypot(x - cx, y - cy) / maxDist;
+      const radial = Math.exp(-(normDist * normDist) * 3.4);
+      const wave = 0.5 + 0.5 * Math.sin(normDist * 7.2 - t * 3.1);
+      const pulse = 0.5 + 0.5 * Math.sin(t * 1.9 + c * 0.35 + r * 0.35);
+      const alpha = Math.min(
+        0.92,
+        Math.max(0.055, radial * (0.36 + wave * 0.54) + 0.045 + pulse * 0.04 * radial),
+      );
+      const dotR = Math.max(0.85, (0.9 + radial * (0.75 + wave * 0.55)) * (step / 15));
+      ctx.beginPath();
+      ctx.arc(x, y, dotR, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${rgb}, ${alpha})`;
+      ctx.fill();
+    }
+  }
 };
 
 const sampleImageCells = (img: HTMLImageElement, w: number, h: number, cell: number) => {
@@ -147,11 +199,11 @@ const stepGatherFrame = (
   opts: { now: number; t: number; duration: number; onRefine: () => void },
 ): boolean => {
   if (eng.gatherStart < 0) eng.gatherStart = opts.now;
-  const dur = opts.duration * 0.55;
+  const dur = opts.duration * 0.44;
   const elapsed = (opts.now - eng.gatherStart) / 1000;
   const done = field.draw(buf, opts.t, elapsed, dur);
   ctx.putImageData(imgData, 0, 0);
-  if (!eng.refined && (done || elapsed >= dur * 0.9)) {
+  if (!eng.refined && (done || elapsed >= dur * 0.88)) {
     eng.refined = true;
     opts.onRefine();
   }
@@ -164,7 +216,7 @@ const startParticleAnimation = (
   field: ParticleField,
   imgData: ImageData,
   eng: RevealEngineState,
-  opts: { durationRef: React.RefObject<number>; onRefine: () => void },
+  opts: { w: number; h: number; durationRef: React.RefObject<number>; onRefine: () => void },
 ) => {
   const buf = new Uint32Array(imgData.data.buffer);
   let raf = 0;
@@ -180,9 +232,7 @@ const startParticleAnimation = (
     last = now;
     t += dt;
     if (eng.mode === "idle") {
-      field.stepIdle(dt, t);
-      field.draw(buf, t, null, 0);
-      ctx.putImageData(imgData, 0, 0);
+      drawRadialDotMatrix(ctx, opts.w, opts.h, t, isDarkDocument());
     } else if (eng.mode === "gather") {
       const done = stepGatherFrame(eng, field, buf, ctx, imgData, {
         now,
@@ -286,43 +336,109 @@ const useImageLoaderEffect = (
     };
   }, [engineRef, src, waiting, runId, w, h, crossOrigin, reduce, onPhase, onError]);
 };
-const OVERLAY_CHIP =
-  "border border-solid border-border/70 bg-background/80 text-foreground backdrop-blur-md dark:border-white/12 dark:bg-neutral-950/75 dark:text-neutral-100";
-
-const RevealStatusPill = ({ label }: { label: string }) => (
-  <motion.div
-    key="reveal-status"
-    initial={{ opacity: 0, y: 4 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: 3, transition: { duration: 0.18 } }}
-    transition={{ duration: 0.24, ease: REVEAL_EASE_OUT }}
-    className={cn(
-      "absolute bottom-2.5 left-2.5 inline-flex h-7 items-center gap-2 rounded-full px-2.5 text-[11px] font-medium shadow-xs",
-      OVERLAY_CHIP,
+/** 纯净单色点阵承载底板（彻底去除廉价彩色光晕） */
+const RevealAuroraBackdrop = ({ visible, reduce }: { visible: boolean; reduce: boolean }) => (
+  <AnimatePresence initial={false}>
+    {visible && (
+      <motion.div
+        key="reveal-surface"
+        data-slot="ai-image-reveal-aurora"
+        aria-hidden="true"
+        initial={{ opacity: 1 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0, transition: { duration: 0.45, ease: REVEAL_EASE_OUT } }}
+        className="pointer-events-none absolute inset-0 bg-neutral-50 dark:bg-[#161618]"
+      >
+        {reduce && (
+          <div className="absolute inset-0 animate-pulse bg-foreground/[0.03] dark:bg-white/[0.03]" />
+        )}
+      </motion.div>
     )}
-  >
-    <span aria-hidden="true" className="size-1.5 rounded-full bg-signal" />
-    <span>{label}</span>
-  </motion.div>
+  </AnimatePresence>
+);
+
+/** 纯净光学白光显影前沿 */
+const RevealScanCurtain = ({
+  phase,
+  reduce,
+  refineSec,
+}: {
+  phase: AiImageRevealPhase;
+  reduce: boolean;
+  refineSec: number;
+}) => {
+  if (reduce) return null;
+  return (
+    <AnimatePresence>
+      {phase === "refine" && (
+        <motion.div
+          key="reveal-curtain"
+          aria-hidden="true"
+          initial={{ y: "-12%", opacity: 0 }}
+          animate={{ y: "108%", opacity: [0, 0.85, 0.75, 0] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: Math.max(0.5, refineSec * 0.96), ease: REVEAL_EASE_OUT }}
+          className="pointer-events-none absolute inset-x-0 top-0 h-12"
+        >
+          <div
+            className="h-px w-full"
+            style={{
+              background:
+                "linear-gradient(90deg, transparent 6%, rgba(255,255,255,0.8) 50%, transparent 94%)",
+              boxShadow: "0 0 12px 1px rgba(255,255,255,0.35)",
+            }}
+          />
+          <div
+            className="h-10 w-full"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.03) 55%, transparent 100%)",
+            }}
+          />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+/** 对标 AICSS / BeautifulUI 的流光扫字状态文案 */
+const RevealShimmerHeading = ({ label, reduce }: { label: string; reduce: boolean }) => (
+  <span className="relative inline-block text-sm font-medium tracking-tight text-foreground">
+    {reduce ? (
+      <span>{label}</span>
+    ) : (
+      <motion.span
+        className="inline-block bg-clip-text text-transparent"
+        style={{
+          backgroundImage:
+            "linear-gradient(110deg, var(--ui-muted-foreground) 32%, var(--ui-foreground) 50%, var(--ui-muted-foreground) 68%)",
+          backgroundSize: "240% 100%",
+        }}
+        animate={{ backgroundPosition: ["120% 0%", "-120% 0%"] }}
+        transition={{ duration: 2.2, repeat: Infinity, ease: "linear" }}
+      >
+        {label}
+      </motion.span>
+    )}
+  </span>
 );
 
 const RevealErrorOverlay = ({ onRetry }: { onRetry: () => void }) => (
   <div
     role="alert"
-    className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-background/85 px-6 text-center backdrop-blur-md"
+    className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-background/90 px-6 text-center backdrop-blur-md dark:bg-[#161618]/92"
   >
-    <p className="m-0 rounded-lg border border-solid border-destructive/30 bg-destructive/8 px-3 py-1.5 text-xs text-foreground dark:border-destructive/40 dark:bg-destructive/14">
-      图像加载失败，请重试。
-    </p>
+    <p className="m-0 text-xs font-medium text-muted-foreground">图像加载失败，请重试</p>
     <button
       type="button"
       onClick={onRetry}
       className={cn(
-        "h-8 cursor-pointer rounded-lg border border-solid border-transparent bg-primary px-3.5 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-opacity hover:opacity-90",
+        "inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-full border border-solid border-border bg-foreground px-4 font-sans text-xs font-medium text-background transition-opacity hover:opacity-90",
         REVEAL_FOCUS_RING,
       )}
     >
-      重新生成
+      <RotateCcw aria-hidden="true" className="size-3.5" />
+      <span>重新生成</span>
     </button>
   </div>
 );
@@ -343,8 +459,8 @@ const RevealDoneControls = ({
         aria-label="重播显影动画"
         onClick={onRetry}
         className={cn(
-          "absolute top-2.5 right-2.5 inline-flex h-6 cursor-pointer items-center gap-1 rounded-full px-2 font-sans text-[11px] font-medium transition-colors hover:bg-background/95 dark:hover:bg-neutral-900/90",
-          OVERLAY_CHIP,
+          "absolute top-2.5 right-2.5 inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-full px-2.5 font-sans text-[11px] font-medium transition-all hover:bg-neutral-950/90 active:scale-[0.98]",
+          REVEAL_MEDIA_CHIP,
           REVEAL_FOCUS_RING,
         )}
       >
@@ -361,7 +477,6 @@ const RevealDoneControls = ({
 interface RevealOverlaysProps {
   phase: AiImageRevealPhase;
   reduce: boolean;
-  generatingLabel: string;
   badge?: string;
   showReplayButton: boolean;
   actions?: ReactNode;
@@ -375,8 +490,9 @@ const RevealOverlays = (p: RevealOverlaysProps) => {
       {p.badge && (
         <span
           className={cn(
-            "pointer-events-none absolute top-2.5 left-2.5 inline-flex h-6 items-center rounded-full px-2 font-mono text-[10px] font-medium",
-            OVERLAY_CHIP,
+            "pointer-events-none absolute top-2.5 inline-flex h-6 items-center rounded-md px-2 font-mono text-[10.5px] font-medium tracking-tight tabular-nums",
+            pending ? "right-2.5" : "left-2.5 rounded-full px-2.5",
+            pending ? REVEAL_WAIT_CHIP : REVEAL_MEDIA_CHIP,
           )}
         >
           {p.badge}
@@ -389,13 +505,52 @@ const RevealOverlays = (p: RevealOverlaysProps) => {
           onRetry={p.onRetry}
         />
       )}
-      {p.reduce && pending && (
-        <div aria-hidden="true" className="absolute inset-0 animate-pulse bg-foreground/[0.06]" />
-      )}
-      <AnimatePresence initial={false}>
-        {pending && <RevealStatusPill label={p.generatingLabel} />}
-      </AnimatePresence>
       {p.phase === "error" && <RevealErrorOverlay onRetry={p.onRetry} />}
+    </>
+  );
+};
+
+const RevealCaption = ({
+  prompt,
+  variant,
+  phase,
+  alt,
+  generatingLabel,
+  reduce,
+}: {
+  prompt?: string;
+  variant: AiImageRevealVariant;
+  phase: AiImageRevealPhase;
+  alt: string;
+  generatingLabel: string;
+  reduce: boolean;
+}) => {
+  const pending = phase === "idle" || phase === "gather";
+  return (
+    <>
+      {(pending || Boolean(prompt)) && (
+        <figcaption
+          className={cn(
+            "flex flex-col gap-0.5",
+            variant === "default" ? "mt-3 px-0.5" : "mt-2.5 px-1.5 pb-1",
+          )}
+        >
+          {pending && <RevealShimmerHeading label={generatingLabel} reduce={reduce} />}
+          {prompt && (
+            <span
+              className={cn(
+                "text-xs leading-relaxed text-muted-foreground",
+                pending && "before:content-['“'] after:content-['”']",
+              )}
+            >
+              {prompt}
+            </span>
+          )}
+        </figcaption>
+      )}
+      <output className="sr-only" aria-live="polite">
+        {phase === "done" ? `图像已生成：${alt}` : generatingLabel}
+      </output>
     </>
   );
 };
@@ -529,7 +684,7 @@ const useImageRevealController = (
     onPhase: handlePhase,
     onError: handleError,
   });
-  useRefineFinishEffect(phase, (input.reduce ? 0.3 : input.duration * 0.4) * 1000, handleDone);
+  useRefineFinishEffect(phase, (input.reduce ? 0.3 : input.duration * 0.5) * 1000, handleDone);
 
   return { phase, loadedSrc, replay };
 };
@@ -845,35 +1000,87 @@ const averageCells = (data: ArrayLike<number>, w: number, h: number, cell: numbe
   }
   return out;
 };
+const HIDDEN_SHARP_IMG = {
+  opacity: 0,
+  clipPath: "inset(0% 0% 100% 0%)",
+  filter: "blur(16px)",
+  scale: 1.03,
+};
+
+const SHOWN_SHARP_IMG = {
+  opacity: 1,
+  clipPath: "inset(0% 0% 0% 0%)",
+  filter: "blur(0px)",
+  scale: 1,
+};
+
+const RevealBlurBackdrop = ({
+  src,
+  shown,
+  gathering,
+  refineSec,
+}: {
+  src: string;
+  shown: boolean;
+  gathering: boolean;
+  refineSec: number;
+}) => {
+  const opacity = shown ? 1 : gathering ? 0.48 : 0;
+  return (
+    <motion.img
+      src={src}
+      alt=""
+      aria-hidden="true"
+      draggable={false}
+      className="pointer-events-none absolute inset-0 size-full object-cover"
+      initial={{ opacity: 0, filter: "blur(24px)", scale: 1.06 }}
+      animate={{
+        opacity,
+        filter: shown ? "blur(12px)" : "blur(24px)",
+        scale: shown ? 1.015 : 1.06,
+      }}
+      transition={{ duration: shown ? refineSec * 0.85 : 0.4, ease: REVEAL_EASE_OUT }}
+    />
+  );
+};
+
 const RevealImageLayer = ({
   loadedSrc,
   alt,
-  shown,
+  phase,
   reduce,
   refineSec,
 }: {
   loadedSrc: string | null;
   alt: string;
-  shown: boolean;
+  phase: AiImageRevealPhase;
   reduce: boolean;
   refineSec: number;
 }) => {
   if (!loadedSrc) return null;
-  const hidden = {
-    opacity: 0,
-    filter: reduce ? "blur(0px)" : "blur(20px)",
-    scale: reduce ? 1 : 1.04,
-  };
+  const shown = phase === "refine" || phase === "done";
+  const hiddenTarget = reduce ? { opacity: 0 } : HIDDEN_SHARP_IMG;
+
   return (
-    <motion.img
-      src={loadedSrc}
-      alt={shown ? alt : ""}
-      draggable={false}
-      className="absolute inset-0 size-full object-cover"
-      initial={false}
-      animate={shown ? { opacity: 1, filter: "blur(0px)", scale: 1 } : hidden}
-      transition={{ duration: shown ? refineSec : 0.25, ease: REVEAL_EASE_OUT }}
-    />
+    <>
+      {!reduce && (
+        <RevealBlurBackdrop
+          src={loadedSrc}
+          shown={shown}
+          gathering={phase === "gather"}
+          refineSec={refineSec}
+        />
+      )}
+      <motion.img
+        src={loadedSrc}
+        alt={shown ? alt : ""}
+        draggable={false}
+        className="absolute inset-0 size-full object-cover"
+        initial={hiddenTarget}
+        animate={shown ? SHOWN_SHARP_IMG : hiddenTarget}
+        transition={{ duration: shown ? refineSec : 0.22, ease: REVEAL_EASE_OUT }}
+      />
+    </>
   );
 };
 
@@ -883,7 +1090,6 @@ interface RevealStageBodyProps {
   phase: AiImageRevealPhase;
   reduce: boolean;
   refineSec: number;
-  generatingLabel: string;
   badge?: string;
   showReplayButton: boolean;
   actions?: ReactNode;
@@ -893,35 +1099,42 @@ interface RevealStageBodyProps {
 
 const RevealStageBody = ({ canvasRef, ...p }: RevealStageBodyProps) => {
   const shown = p.phase === "refine" || p.phase === "done";
+  const gathering = p.phase === "gather";
+
   return (
     <>
+      <RevealAuroraBackdrop visible={!shown} reduce={p.reduce} />
       <RevealImageLayer
         loadedSrc={p.loadedSrc}
         alt={p.alt}
-        shown={shown}
+        phase={p.phase}
         reduce={p.reduce}
         refineSec={p.refineSec}
       />
       <motion.canvas
         ref={canvasRef}
         aria-hidden="true"
-        style={{
-          imageRendering: "pixelated",
-          visibility: p.phase === "done" || p.reduce ? "hidden" : "visible",
-        }}
+        style={{ visibility: p.phase === "done" || p.reduce ? "hidden" : "visible" }}
         initial={false}
-        animate={{ opacity: shown ? 0 : 1 }}
-        transition={{ duration: shown ? p.refineSec * 0.85 : 0.25, ease: "easeOut" }}
-        className="absolute inset-0 size-full"
+        animate={{
+          opacity: shown ? 0 : 1,
+          filter: gathering ? "blur(8px)" : "blur(0px)",
+        }}
+        transition={{ duration: shown ? p.refineSec * 0.7 : 0.3, ease: "easeOut" }}
+        className="pointer-events-none absolute inset-0 size-full"
       />
+      <RevealScanCurtain phase={p.phase} reduce={p.reduce} refineSec={p.refineSec} />
       <RevealOverlays
         phase={p.phase}
         reduce={p.reduce}
-        generatingLabel={p.generatingLabel}
         badge={p.badge}
         showReplayButton={p.showReplayButton}
         actions={p.actions}
         onRetry={p.onRetry}
+      />
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 rounded-[inherit] ring-1 ring-inset ring-black/[0.06] dark:ring-white/[0.08]"
       />
     </>
   );
@@ -939,10 +1152,10 @@ const extractRevealOptions = (props: AiImageRevealProps) => {
     actions,
     aspectRatio = 1,
     prompt,
-    generatingLabel = "正在生成图像…",
+    generatingLabel = "正在生成图像",
     colors,
     density = 1,
-    duration = 2.8,
+    duration = 2.4,
     crossOrigin = "anonymous",
     onReveal,
     onImageError,
@@ -970,32 +1183,10 @@ const extractRevealOptions = (props: AiImageRevealProps) => {
 
 type RevealViewOptions = ReturnType<typeof extractRevealOptions>["view"];
 
-const RevealCaption = ({
-  prompt,
-  phase,
-  alt,
-  generatingLabel,
-}: {
-  prompt?: string;
-  phase: AiImageRevealPhase;
-  alt: string;
-  generatingLabel: string;
-}) => (
-  <>
-    {prompt && (
-      <figcaption className="mt-2.5 px-1.5 pb-0.5 text-xs leading-snug text-muted-foreground">
-        {prompt}
-      </figcaption>
-    )}
-    <output className="sr-only" aria-live="polite">
-      {phase === "done" ? `图像已生成：${alt}` : generatingLabel}
-    </output>
-  </>
-);
-
-const buildStageClass = (radius: RevealViewOptions["radius"]) =>
+const buildStageClass = (radius: RevealViewOptions["radius"], variant: AiImageRevealVariant) =>
   cn(
-    "relative w-full overflow-hidden border border-solid border-border/70 bg-muted/50 dark:border-white/10 dark:bg-white/[0.03]",
+    "relative w-full overflow-hidden bg-neutral-50 dark:bg-[#161618]",
+    variant === "default" && "shadow-xs",
     REVEAL_STAGE_RADIUS[radius],
   );
 
@@ -1023,15 +1214,14 @@ export const AiImageReveal = forwardRef<AiImageRevealHandle, AiImageRevealProps>
         <div
           ref={boxRef}
           style={{ aspectRatio: String(view.aspectRatio) }}
-          className={buildStageClass(view.radius)}
+          className={buildStageClass(view.radius, view.variant)}
         >
           <RevealStageBody
             loadedSrc={loadedSrc}
             alt={view.alt}
             phase={phase}
             reduce={reduce}
-            refineSec={reduce ? 0.3 : view.duration * 0.4}
-            generatingLabel={view.generatingLabel}
+            refineSec={reduce ? 0.3 : view.duration * 0.5}
             badge={view.badge}
             showReplayButton={view.showReplayButton}
             actions={view.actions}
@@ -1041,9 +1231,11 @@ export const AiImageReveal = forwardRef<AiImageRevealHandle, AiImageRevealProps>
         </div>
         <RevealCaption
           prompt={view.prompt}
+          variant={view.variant}
           phase={phase}
           alt={view.alt}
           generatingLabel={view.generatingLabel}
+          reduce={reduce}
         />
       </figure>
     );

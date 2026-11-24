@@ -1,0 +1,6 @@
+{
+  "name": "ai-stack-trace",
+  "title": "AI Stack Trace",
+  "description": "对标 HextaUI Stack Trace 的智能体错误堆栈与源码上下文面板，支持命令退出码条、高亮源码行、框架帧折叠、Caused by 根因链与一键请求修复。",
+  "categories": ["ai"]
+}

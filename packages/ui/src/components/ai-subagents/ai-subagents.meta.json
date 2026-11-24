@@ -1,0 +1,6 @@
+{
+  "name": "ai-subagents",
+  "title": "AI Subagents",
+  "description": "对标 HextaUI Subagents 的并行子代理执行面板，展示发光运行微球、排队态、工具调用次数、模型标签与逐条/批量停止操作。",
+  "categories": ["ai"]
+}

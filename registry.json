@@ -182,6 +182,60 @@
       }
     },
     {
+      "name": "agent-screen",
+      "type": "registry:ui",
+      "title": "Agent Screen",
+      "description": "对标 BeautifulUI 21 Agent Screen 的智能体实时操作屏幕视口容器，支持连接中加载态、实况画面与底栏状态切换。",
+      "categories": ["ai"],
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/agent-screen.tsx",
+          "type": "registry:ui",
+          "target": "@ui/agent-screen.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "#6547d4",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
+        },
+        "dark": {
+          "signal": "#6547d4",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "ai-agent-activity",
       "type": "registry:ui",
       "title": "AI Agent Activity",
@@ -622,7 +676,7 @@
       "name": "ai-image-reveal",
       "type": "registry:ui",
       "title": "AI Image Reveal",
-      "description": "AI 图像生成显影组件，从呼吸粒子云聚拢为像素马赛克再柔焦解析至高清成图，支持重播与减弱动效降级。",
+      "description": "C 端 AI 图像生成显影组件，以克制的胶片暗房光雾等待、柔焦银盐凝聚、纯净光学渐进光幕与美术馆级毛玻璃浮层呈现成图过程。",
       "categories": ["ai", "motion"],
       "dependencies": ["lucide-react", "motion"],
       "registryDependencies": ["utils"],
@@ -631,6 +685,60 @@
           "path": "registry/ui/ai-image-reveal.tsx",
           "type": "registry:ui",
           "target": "@ui/ai-image-reveal.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "#6547d4",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
+        },
+        "dark": {
+          "signal": "#6547d4",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-loading-state",
+      "type": "registry:ui",
+      "title": "AI Loading State",
+      "description": "对标 BeautifulUI 的 3×3 像素矩阵智能体加载状态器，内置 drive、dots、orbit、surfer 四种单色编排与实时等宽计时器。",
+      "categories": ["ai"],
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/ai-loading-state.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-loading-state.tsx"
         }
       ],
       "cssVars": {
@@ -835,6 +943,114 @@
       }
     },
     {
+      "name": "ai-stack-trace",
+      "type": "registry:ui",
+      "title": "AI Stack Trace",
+      "description": "对标 HextaUI Stack Trace 的智能体错误堆栈与源码上下文面板，支持命令退出码条、高亮源码行、框架帧折叠、Caused by 根因链与一键请求修复。",
+      "categories": ["ai"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/ai-stack-trace.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-stack-trace.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "#6547d4",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
+        },
+        "dark": {
+          "signal": "#6547d4",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-subagents",
+      "type": "registry:ui",
+      "title": "AI Subagents",
+      "description": "对标 HextaUI Subagents 的并行子代理执行面板，展示发光运行微球、排队态、工具调用次数、模型标签与逐条/批量停止操作。",
+      "categories": ["ai"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/ai-subagents.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-subagents.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "#6547d4",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
+        },
+        "dark": {
+          "signal": "#6547d4",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "ai-surface",
       "type": "registry:ui",
       "title": "AI Surface",
@@ -926,6 +1142,60 @@
           "path": "registry/ui/ai-surface-agent.tsx",
           "type": "registry:ui",
           "target": "@ui/ai-surface-agent.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "#6547d4",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
+        },
+        "dark": {
+          "signal": "#6547d4",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "ai-test-results",
+      "type": "registry:ui",
+      "title": "AI Test Results",
+      "description": "对标 HextaUI Test Results 的智能体测试报告面板，支持通过/失败/跳过汇总、状态筛选、文件级分组与失败断言 Expected/Received Diff。",
+      "categories": ["ai"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/ai-test-results.tsx",
+          "type": "registry:ui",
+          "target": "@ui/ai-test-results.tsx"
         }
       ],
       "cssVars": {
@@ -4034,6 +4304,60 @@
       }
     },
     {
+      "name": "reasoning-effort",
+      "type": "registry:ui",
+      "title": "Reasoning Effort",
+      "description": "对标 AICSS Reasoning Effort 的极简单色推理深度选择器，内置 4 档阶梯信号柱、分段胶囊与卡片双变体。",
+      "categories": ["ai"],
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/reasoning-effort.tsx",
+          "type": "registry:ui",
+          "target": "@ui/reasoning-effort.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "#6547d4",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
+        },
+        "dark": {
+          "signal": "#6547d4",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "reorder-list",
       "type": "registry:ui",
       "title": "Reorder List",
@@ -4159,6 +4483,60 @@
           "path": "registry/ui/segmented-control.tsx",
           "type": "registry:ui",
           "target": "@ui/segmented-control.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "#6547d4",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
+        },
+        "dark": {
+          "signal": "#6547d4",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "selection-actions",
+      "type": "registry:ui",
+      "title": "Selection Actions",
+      "description": "对标 BeautifulUI 20 Selection Actions 的划词选中文本 AI 浮动微编辑条，支持自然语言行内指令与快捷动作。",
+      "categories": ["ai"],
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/selection-actions.tsx",
+          "type": "registry:ui",
+          "target": "@ui/selection-actions.tsx"
         }
       ],
       "cssVars": {
@@ -5248,7 +5626,7 @@
       "name": "thinking-orb",
       "type": "registry:ui",
       "title": "Thinking Orb",
-      "description": "极简单色 3D 球面粒子思考球，内置 9 种 AI 认知状态与明暗极性自适应，纯 Canvas 驱动零动画库依赖。",
+      "description": "3D 光学水晶星尘思考球，内置 9 种 AI 认知态平滑形变、体积极光丝带、精密刻度表圈与动态色温微光胶囊，纯 Canvas 驱动零动画库依赖。",
       "categories": ["ai"],
       "dependencies": ["class-variance-authority"],
       "registryDependencies": ["utils"],

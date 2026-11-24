@@ -142,7 +142,7 @@ export const useImageRevealController = (
     onPhase: handlePhase,
     onError: handleError,
   });
-  useRefineFinishEffect(phase, (input.reduce ? 0.3 : input.duration * 0.4) * 1000, handleDone);
+  useRefineFinishEffect(phase, (input.reduce ? 0.3 : input.duration * 0.5) * 1000, handleDone);
 
   return { phase, loadedSrc, replay };
 };

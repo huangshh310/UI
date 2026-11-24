@@ -1,0 +1,6 @@
+{
+  "name": "ai-test-results",
+  "title": "AI Test Results",
+  "description": "对标 HextaUI Test Results 的智能体测试报告面板，支持通过/失败/跳过汇总、状态筛选、文件级分组与失败断言 Expected/Received Diff。",
+  "categories": ["ai"]
+}

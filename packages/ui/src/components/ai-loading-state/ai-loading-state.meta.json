@@ -1,0 +1,6 @@
+{
+  "name": "ai-loading-state",
+  "title": "AI Loading State",
+  "description": "对标 BeautifulUI 的 3×3 像素矩阵智能体加载状态器，内置 drive、dots、orbit、surfer 四种单色编排与实时等宽计时器。",
+  "categories": ["ai"]
+}

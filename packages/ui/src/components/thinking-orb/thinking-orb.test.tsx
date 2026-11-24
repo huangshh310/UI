@@ -22,7 +22,7 @@ describe("ThinkingOrb", () => {
     expect(screen.getByRole("status", { name: "语音聆听中" })).toBeTruthy();
   });
 
-  it("支持 framed/halo 变体与状态文案胶囊展示", () => {
+  it("支持 framed/halo 变体、状态文案胶囊与脉冲指示点", () => {
     render(
       <ThinkingOrb
         state="solving"
@@ -36,6 +36,23 @@ describe("ThinkingOrb", () => {
 
     const orb = screen.getByRole("status", { name: "智能体状态球：求解中" });
     expect(orb.getAttribute("data-variant")).toBe("framed");
-    expect(orb.querySelector('[data-slot="thinking-orb-label"]')?.textContent).toContain("求解中");
+    expect(orb.querySelector('[data-slot="thinking-orb-frame"]')).toBeTruthy();
+    const label = orb.querySelector('[data-slot="thinking-orb-label"]');
+    expect(label?.textContent).toContain("求解中");
+    expect(orb.querySelector('[data-slot="thinking-orb-indicator"]')).toBeTruthy();
+  });
+
+  it("在切换认知状态与 halo 变体时保持画布节点稳定并更新状态属性", () => {
+    const { rerender } = render(<ThinkingOrb state="working" variant="halo" size={96} paused />);
+
+    const orb = screen.getByRole("status", { name: "智能体状态球：处理中" });
+    const canvasBefore = orb.querySelector("canvas");
+    expect(orb.getAttribute("data-variant")).toBe("halo");
+
+    rerender(<ThinkingOrb state="shaping" variant="halo" size={96} paused />);
+
+    const updated = screen.getByRole("status", { name: "智能体状态球：构思塑形" });
+    expect(updated.getAttribute("data-state")).toBe("shaping");
+    expect(updated.querySelector("canvas")).toBe(canvasBefore);
   });
 });

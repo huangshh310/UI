@@ -1,6 +1,6 @@
 {
   "name": "ai-image-reveal",
   "title": "AI Image Reveal",
-  "description": "AI 图像生成显影组件，从呼吸粒子云聚拢为像素马赛克再柔焦解析至高清成图，支持重播与减弱动效降级。",
+  "description": "C 端 AI 图像生成显影组件，以克制的胶片暗房光雾等待、柔焦银盐凝聚、纯净光学渐进光幕与美术馆级毛玻璃浮层呈现成图过程。",
   "categories": ["ai", "motion"]
 }
