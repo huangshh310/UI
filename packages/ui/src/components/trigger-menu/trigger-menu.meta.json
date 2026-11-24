@@ -1,0 +1,6 @@
+{
+  "name": "trigger-menu",
+  "title": "TriggerMenu",
+  "description": "光标跟随式上下文与指令触发浮层：键入 @、/ 或 # 时在输入光标处实时检索文件引用、斜杠指令与参数补全，可直接挂载于 PromptInput。",
+  "categories": ["ai", "forms"]
+}

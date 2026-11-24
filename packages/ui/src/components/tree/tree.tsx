@@ -30,7 +30,7 @@ const TreeBranch = ({
       const hasChildren = Boolean(node.children && node.children.length > 0);
       return (
         <TreeItem key={node.id} value={node.id} disabled={node.disabled} className="outline-none">
-          <div data-slot="tree-row" className={treeRowVariants({ density })}>
+          <TreeItemLabel data-slot="tree-row" className={treeRowVariants({ density })}>
             {hasChildren ? (
               <TreeItemIndicator className="inline-flex size-4 shrink-0 items-center justify-center text-muted-foreground transition-transform duration-(--ui-duration-fast) group-hover:text-foreground data-[expanded]:rotate-90 motion-reduce:transition-none">
                 <ChevronRight aria-hidden="true" className="size-3.5" />
@@ -45,15 +45,15 @@ const TreeBranch = ({
               {node.icon ??
                 (hasChildren ? <Folder className="size-3.5" /> : <FileText className="size-3.5" />)}
             </span>
-            <TreeItemLabel className="flex min-w-0 flex-1 items-center justify-between gap-2">
+            <span className="flex min-w-0 flex-1 items-center justify-between gap-2">
               <span className="truncate">{node.label}</span>
               {node.badge && (
                 <span className="shrink-0 rounded-md bg-secondary/85 px-1.5 py-0.5 font-mono text-[10px] leading-none text-muted-foreground dark:bg-white/[0.08]">
                   {node.badge}
                 </span>
               )}
-            </TreeItemLabel>
-          </div>
+            </span>
+          </TreeItemLabel>
           {hasChildren && (
             <TreeGroup className={treeGroupVariants({ showGuides })}>
               <TreeBranch nodes={node.children!} density={density} showGuides={showGuides} />

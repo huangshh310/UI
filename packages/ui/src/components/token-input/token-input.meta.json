@@ -1,0 +1,6 @@
+{
+  "name": "token-input",
+  "title": "TokenInput",
+  "description": "结构化上下文标签输入框：在自然语言编辑流中内联混排文件、技能与实体胶囊，支持一键移除、多模式退格与触发菜单联动。",
+  "categories": ["ai", "forms"]
+}

@@ -141,7 +141,7 @@ const ArtifactSummaryPreview = ({ node }: { node: SurfaceArtifactNode }) => (
     {node.summary && (
       <p className="m-0 text-xs leading-relaxed text-muted-foreground">{node.summary}</p>
     )}
-    <pre className="m-0 max-h-36 overflow-auto rounded-lg bg-muted/50 p-2.5 font-mono text-[11px] leading-relaxed text-foreground">
+    <pre className="m-0 rounded-lg bg-muted/50 p-2.5 font-mono text-[11px] leading-relaxed whitespace-pre-wrap break-words text-foreground">
       {node.content}
     </pre>
   </div>

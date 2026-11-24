@@ -49,7 +49,7 @@ export const SurfaceKvView = ({ node, nodeId }: SurfaceRendererProps) => {
       data-node-id={nodeId}
       className={cn(
         "m-0 grid gap-x-6 gap-y-2 rounded-lg border border-solid border-border/75 bg-muted/25 px-3.5 py-2.5 text-xs",
-        twoCols ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1",
+        twoCols ? "grid-cols-1 @sm:grid-cols-2" : "grid-cols-1",
       )}
     >
       {node.items.map((item, idx) => (
@@ -73,15 +73,20 @@ export const SurfaceKvView = ({ node, nodeId }: SurfaceRendererProps) => {
   );
 };
 
+const STATS_GRID_BY_COUNT: Record<number, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-2",
+  3: "grid-cols-1 @xs:grid-cols-3",
+  4: "grid-cols-2 @xl:grid-cols-4",
+};
+
 export const SurfaceStatsView = ({ node, nodeId }: SurfaceRendererProps) => {
   if (node.kind !== "stats") return null;
+  const visible = node.items.slice(0, 4);
+  const gridCols = STATS_GRID_BY_COUNT[visible.length] ?? "grid-cols-2";
   return (
-    <div
-      data-slot="surface-stats"
-      data-node-id={nodeId}
-      className="grid grid-cols-2 gap-2.5 sm:grid-cols-4"
-    >
-      {node.items.slice(0, 4).map((stat, idx) => (
+    <div data-slot="surface-stats" data-node-id={nodeId} className={cn("grid gap-2.5", gridCols)}>
+      {visible.map((stat, idx) => (
         <div
           key={stat.key ?? `${stat.label}-${idx}`}
           className="flex flex-col gap-1 rounded-lg border border-solid border-border/75 bg-card px-3 py-2.5"

@@ -1,0 +1,6 @@
+{
+  "name": "waterfall",
+  "title": "Waterfall",
+  "description": "智能体多步调用耗时火焰图与嵌套追踪瀑布流，支持树表键盘导航、里程碑标记与时间窗口缩放。",
+  "categories": ["ai", "data-display"]
+}

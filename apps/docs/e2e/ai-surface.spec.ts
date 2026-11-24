@@ -37,7 +37,7 @@ test.describe("AiSurface 与 AiSurfaceAgent 详情页交互", () => {
     );
 
     const upgradeBlock = page.locator("#data-upgrade");
-    await upgradeBlock.getByPlaceholder(/搜索/).fill("eu");
+    await upgradeBlock.getByRole("searchbox", { name: "搜索表格" }).fill("eu");
     await expect(upgradeBlock.getByText("worker-eu-01")).toBeVisible();
     await expect(upgradeBlock.getByText("worker-ap-01")).toHaveCount(0);
   });

@@ -45,6 +45,7 @@ import { BUTTON_DOC } from "./button.doc";
 import { CALENDAR_DOC } from "./calendar.doc";
 import { CARD_DOC } from "./card.doc";
 import { CODE_SNIPPET_DECK_DOC } from "./code-snippet-deck.doc";
+import { COLOR_PICKER_DOC } from "./color-picker.doc";
 import { COMBOBOX_DOC } from "./combobox.doc";
 import { COMMAND_MENU_DOC } from "./command-menu.doc";
 import { DASHBOARD_SHELL_BLOCK_DOC } from "./dashboard-shell-block.doc";
@@ -99,8 +100,11 @@ import { STRETCH_SWITCH_DOC } from "./stretch-switch.doc";
 import { TABS_DOC } from "./tabs.doc";
 import { TEAM_MEMBERS_BLOCK_DOC } from "./team-members-block.doc";
 import { TOAST_DOC } from "./toast.doc";
+import { TOKEN_INPUT_DOC } from "./token-input.doc";
 import { TREE_DOC } from "./tree.doc";
+import { TRIGGER_MENU_DOC } from "./trigger-menu.doc";
 import { TYPEWRITER_BUTTON_DOC } from "./typewriter-button.doc";
+import { WATERFALL_DOC } from "./waterfall.doc";
 import type { Category, ComponentDoc, Specimen } from "./registry.types";
 
 export const CATEGORIES: Category[] = [
@@ -137,6 +141,7 @@ export const COMPONENTS: ComponentDoc[] = [
   FORM_DOC,
   CALENDAR_DOC,
   DATE_PICKER_DOC,
+  COLOR_PICKER_DOC,
   ANIMATED_FILE_UPLOAD_DOC,
   PROMPT_INPUT_DOC,
   DATA_TABLE_DOC,
@@ -200,6 +205,9 @@ export const COMPONENTS: ComponentDoc[] = [
   AI_DIFF_REVIEW_DOC,
   AI_SURFACE_DOC,
   AI_SURFACE_AGENT_DOC,
+  TRIGGER_MENU_DOC,
+  TOKEN_INPUT_DOC,
+  WATERFALL_DOC,
   AUTH_BLOCK_DOC,
   PRICING_BLOCK_DOC,
   DASHBOARD_SHELL_BLOCK_DOC,

@@ -655,6 +655,12 @@ const handleSlashKey = (
   return false;
 };
 
+const isExternalMenuHandlingKey = (event: KeyboardEvent<HTMLTextAreaElement>): boolean =>
+  event.nativeEvent.isComposing ||
+  event.defaultPrevented ||
+  event.nativeEvent.defaultPrevented ||
+  event.currentTarget.getAttribute("aria-expanded") === "true";
+
 const dispatchPromptAction = (
   props: PromptInputProps,
   trimmed: string,
@@ -701,7 +707,7 @@ const usePromptController = (props: PromptInputProps) => {
     dispatchPromptAction(props, trimmed, canQueue, canSubmit, () => setInner(""));
 
   const onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.nativeEvent.isComposing) return;
+    if (isExternalMenuHandlingKey(event)) return;
     if (handleSlashKey(event, matchedSlash, safeSlashIdx, setSlashIdx, applySlash)) return;
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();

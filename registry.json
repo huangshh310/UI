@@ -1492,6 +1492,48 @@
       }
     },
     {
+      "name": "color-picker",
+      "type": "registry:ui",
+      "title": "Color Picker",
+      "description": "多色彩空间拾色器，支持二维色盘、OKLCH 色域画布、色相与透明度滑轨、预设色板及色值输入。",
+      "categories": ["forms"],
+      "dependencies": ["@ui-sdk/react@0.1.0-beta.13", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/color-picker.tsx",
+          "type": "registry:ui",
+          "target": "@ui/color-picker.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
+        },
+        "dark": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "combobox",
       "type": "registry:ui",
       "title": "Combobox",
@@ -4147,6 +4189,48 @@
       }
     },
     {
+      "name": "token-input",
+      "type": "registry:ui",
+      "title": "TokenInput",
+      "description": "结构化上下文标签输入框：在自然语言编辑流中内联混排文件、技能与实体胶囊，支持一键移除、多模式退格与触发菜单联动。",
+      "categories": ["ai", "forms"],
+      "dependencies": ["class-variance-authority", "@ui-sdk/react@0.1.0-beta.13", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/token-input.tsx",
+          "type": "registry:ui",
+          "target": "@ui/token-input.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
+        },
+        "dark": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "tree",
       "type": "registry:ui",
       "title": "Tree",
@@ -4189,6 +4273,48 @@
       }
     },
     {
+      "name": "trigger-menu",
+      "type": "registry:ui",
+      "title": "TriggerMenu",
+      "description": "光标跟随式上下文与指令触发浮层：键入 @、/ 或 # 时在输入光标处实时检索文件引用、斜杠指令与参数补全，可直接挂载于 PromptInput。",
+      "categories": ["ai", "forms"],
+      "dependencies": ["class-variance-authority", "@ui-sdk/react@0.1.0-beta.13", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/trigger-menu.tsx",
+          "type": "registry:ui",
+          "target": "@ui/trigger-menu.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
+        },
+        "dark": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
       "name": "typewriter-button",
       "type": "registry:ui",
       "title": "Typewriter Button",
@@ -4201,6 +4327,48 @@
           "path": "registry/ui/typewriter-button.tsx",
           "type": "registry:ui",
           "target": "@ui/typewriter-button.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#ffffff"
+        },
+        "dark": {
+          "signal": "#155dfc",
+          "signal-foreground": "#ffffff",
+          "destructive-foreground": "#0a0a0a"
+        }
+      },
+      "css": {
+        "@layer base": {
+          ":root": {
+            "--ui-duration-instant": "80ms",
+            "--ui-duration-fast": "140ms",
+            "--ui-duration-normal": "220ms",
+            "--ui-duration-slow": "360ms",
+            "--ui-ease-standard": "cubic-bezier(0.2, 0, 0, 1)",
+            "--ui-ease-out": "cubic-bezier(0.16, 1, 0.3, 1)",
+            "--ui-ease-in": "cubic-bezier(0.7, 0, 0.84, 0)",
+            "--ui-ease-in-out": "cubic-bezier(0.65, 0, 0.35, 1)"
+          }
+        }
+      }
+    },
+    {
+      "name": "waterfall",
+      "type": "registry:ui",
+      "title": "Waterfall",
+      "description": "智能体多步调用耗时火焰图与嵌套追踪瀑布流，支持树表键盘导航、里程碑标记与时间窗口缩放。",
+      "categories": ["ai", "data-display"],
+      "dependencies": ["class-variance-authority", "@ui-sdk/react@0.1.0-beta.13", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/waterfall.tsx",
+          "type": "registry:ui",
+          "target": "@ui/waterfall.tsx"
         }
       ],
       "cssVars": {

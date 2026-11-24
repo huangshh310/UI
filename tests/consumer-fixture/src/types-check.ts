@@ -9,7 +9,15 @@ import type {
   MorphingButtonProps,
   MorphingButtonStatus,
 } from "@matt-ui/motion";
-import type { ButtonProps, ButtonSize, ButtonVariant } from "@matt-ui/ui";
+import type {
+  ButtonProps,
+  ButtonSize,
+  ButtonVariant,
+  ColorPickerProps,
+  TokenInputProps,
+  TriggerMenuProps,
+  WaterfallProps,
+} from "@matt-ui/ui";
 
 const variant: ButtonVariant = "signal";
 const size: ButtonSize = "icon";
@@ -26,4 +34,16 @@ export const motionProps: {
   toggle: { defaultChecked: true, "aria-label": "Toggle" },
   magnetic: { strength: 0.4, children: "Launch" },
   morphing: { status },
+};
+
+export const extraUiProps: {
+  trigger: TriggerMenuProps;
+  token: TokenInputProps;
+  waterfall: WaterfallProps;
+  color: ColorPickerProps;
+} = {
+  trigger: { triggers: [{ char: "@", items: [{ value: "a", label: "a" }] }] },
+  token: { defaultValue: ["hello"] },
+  waterfall: { items: [{ value: "root", label: "root", start: 0, duration: 100 }] },
+  color: { defaultValue: "#2563eb", space: "hsv" },
 };

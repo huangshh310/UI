@@ -1,0 +1,6 @@
+{
+  "name": "color-picker",
+  "title": "Color Picker",
+  "description": "多色彩空间拾色器，支持二维色盘、OKLCH 色域画布、色相与透明度滑轨、预设色板及色值输入。",
+  "categories": ["forms"]
+}

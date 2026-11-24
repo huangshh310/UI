@@ -28,10 +28,10 @@ import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import { type ComponentType, type ReactNode, useEffect, useId, useState } from "react";
 
-export const surfaceRootVariants = cva("flex w-full flex-col gap-4 text-foreground", {
+export const surfaceRootVariants = cva("flex w-full min-w-0 flex-col gap-3.5 text-foreground", {
   variants: {
     hasDock: {
-      true: "lg:grid lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start lg:gap-5",
+      true: "@2xl:grid @2xl:grid-cols-[minmax(0,1fr)_16rem] @2xl:items-start @2xl:gap-5",
       false: "",
     },
   },
@@ -43,10 +43,10 @@ export const surfaceRootVariants = cva("flex w-full flex-col gap-4 text-foregrou
 export const SURFACE_TONE_TEXT: Record<SurfaceTone, string> = {
   neutral: "text-foreground",
   signal: "text-signal",
-  success: "text-emerald-600 dark:text-emerald-400",
-  warning: "text-amber-600 dark:text-amber-400",
+  success: "text-emerald-700 dark:text-emerald-400",
+  warning: "text-amber-700 dark:text-amber-400",
   danger: "text-destructive",
-  info: "text-sky-600 dark:text-sky-400",
+  info: "text-sky-700 dark:text-sky-400",
 };
 
 export const SURFACE_STATUS_TEXT: Record<SurfaceStatus, string> = {
@@ -124,9 +124,9 @@ export const STACK_ALIGN_CLASS = {
 
 export const GRID_COLS_CLASS = {
   1: "grid-cols-1",
-  2: "grid-cols-1 sm:grid-cols-2",
-  3: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
-  4: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
+  2: "grid-cols-1 @sm:grid-cols-2",
+  3: "grid-cols-1 @sm:grid-cols-2 @2xl:grid-cols-3",
+  4: "grid-cols-1 @sm:grid-cols-2 @2xl:grid-cols-4",
 } as const;
 
 export const CONTROL_INPUT_CLASS =
@@ -1453,7 +1453,7 @@ const SurfaceKvView = ({ node, nodeId }: SurfaceRendererProps) => {
       data-node-id={nodeId}
       className={cn(
         "m-0 grid gap-x-6 gap-y-2 rounded-lg border border-solid border-border/75 bg-muted/25 px-3.5 py-2.5 text-xs",
-        twoCols ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1",
+        twoCols ? "grid-cols-1 @sm:grid-cols-2" : "grid-cols-1",
       )}
     >
       {node.items.map((item, idx) => (
@@ -1477,15 +1477,20 @@ const SurfaceKvView = ({ node, nodeId }: SurfaceRendererProps) => {
   );
 };
 
+const STATS_GRID_BY_COUNT: Record<number, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-2",
+  3: "grid-cols-1 @xs:grid-cols-3",
+  4: "grid-cols-2 @xl:grid-cols-4",
+};
+
 const SurfaceStatsView = ({ node, nodeId }: SurfaceRendererProps) => {
   if (node.kind !== "stats") return null;
+  const visible = node.items.slice(0, 4);
+  const gridCols = STATS_GRID_BY_COUNT[visible.length] ?? "grid-cols-2";
   return (
-    <div
-      data-slot="surface-stats"
-      data-node-id={nodeId}
-      className="grid grid-cols-2 gap-2.5 sm:grid-cols-4"
-    >
-      {node.items.slice(0, 4).map((stat, idx) => (
+    <div data-slot="surface-stats" data-node-id={nodeId} className={cn("grid gap-2.5", gridCols)}>
+      {visible.map((stat, idx) => (
         <div
           key={stat.key ?? `${stat.label}-${idx}`}
           className="flex flex-col gap-1 rounded-lg border border-solid border-border/75 bg-card px-3 py-2.5"
@@ -2118,14 +2123,16 @@ export const AiSurface = (props: AiSurfaceProps) => {
     <div
       data-slot="ai-surface"
       data-streaming={streaming ? "true" : undefined}
-      className={cn(surfaceRootVariants({ hasDock: dockNodes.length > 0 }), props.className)}
+      className={cn("@container w-full min-w-0", props.className)}
     >
-      <SurfaceRegions
-        mainNodes={normalizeSurfaceNodes(derivedView.main)}
-        dockNodes={dockNodes}
-        layerNodes={normalizeSurfaceNodes(derivedView.layer)}
-        renderNode={renderNode}
-      />
+      <div className={surfaceRootVariants({ hasDock: dockNodes.length > 0 })}>
+        <SurfaceRegions
+          mainNodes={normalizeSurfaceNodes(derivedView.main)}
+          dockNodes={dockNodes}
+          layerNodes={normalizeSurfaceNodes(derivedView.layer)}
+          renderNode={renderNode}
+        />
+      </div>
     </div>
   );
 };

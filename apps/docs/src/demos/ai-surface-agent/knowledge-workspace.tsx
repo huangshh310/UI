@@ -21,7 +21,10 @@ const WORKSPACE_VIEW: NonNullable<AiSurfaceAgentProps["uischema"]> = {
         "  sustainedRps: number;",
         "}",
         "",
-        "export const defaultPolicy: RatePolicy = { burst: 240, sustainedRps: 120 };",
+        "export const defaultPolicy: RatePolicy = {",
+        "  burst: 240,",
+        "  sustainedRps: 120,",
+        "};",
       ].join("\n"),
     },
     {
@@ -35,7 +38,6 @@ const WORKSPACE_VIEW: NonNullable<AiSurfaceAgentProps["uischema"]> = {
   dock: {
     kind: "tree",
     title: "关联服务模块",
-    defaultExpandedIds: ["gateway"],
     selectActionId: "select-module",
     items: [
       {

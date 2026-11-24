@@ -133,14 +133,16 @@ export const AiSurface = (props: AiSurfaceProps) => {
     <div
       data-slot="ai-surface"
       data-streaming={streaming ? "true" : undefined}
-      className={cn(surfaceRootVariants({ hasDock: dockNodes.length > 0 }), props.className)}
+      className={cn("@container w-full min-w-0", props.className)}
     >
-      <SurfaceRegions
-        mainNodes={normalizeSurfaceNodes(derivedView.main)}
-        dockNodes={dockNodes}
-        layerNodes={normalizeSurfaceNodes(derivedView.layer)}
-        renderNode={renderNode}
-      />
+      <div className={surfaceRootVariants({ hasDock: dockNodes.length > 0 })}>
+        <SurfaceRegions
+          mainNodes={normalizeSurfaceNodes(derivedView.main)}
+          dockNodes={dockNodes}
+          layerNodes={normalizeSurfaceNodes(derivedView.layer)}
+          renderNode={renderNode}
+        />
+      </div>
     </div>
   );
 };

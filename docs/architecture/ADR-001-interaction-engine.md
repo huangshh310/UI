@@ -169,7 +169,7 @@ POC 于 2026-11-22 执行，代码在 `poc/interaction-engine/`，可用 `pnpm p
 
 **问题一：Base UI 能否作为 P0 组件的唯一底座？** 能。三类共用用例的功能全部通过，三处偏差都是瞬时或边缘情况。维持 P0 采用 Base UI 的决策。
 
-**问题二：P1 缺口由谁填补？** 用 UI SDK。用户已于 2026-11-22 确认，适用于 Tree、排序、Command、Resizable 等 Base UI 没有的组件：
+**问题二：P1 缺口由谁填补？** 用 UI SDK。用户已于 2026-11-22 确认适用于 Tree、排序、Command、Resizable，并于 2026-11-24 进一步批准扩展至 TriggerMenu、TokenInput、Waterfall、ColorPicker 等 Base UI 未覆盖的组件：
 
 - Tree 与 Reorder 的全部用例通过，SSR 与 axe 无问题，用到的 API 在抽样的三个 beta 之间稳定。
 - 采用条件：版本精确锁定；每个组件都包在本项目自己的 Props 之后；键盘与 ARIA 行为测试随组件一起提交，作为升级时的保护。

@@ -6,10 +6,10 @@ import type { ProgressTone } from "../progress/index.js";
 import type { SurfaceButtonIntent } from "./ai-surface-0-nodes.js";
 import type { SurfaceStatus, SurfaceTone } from "./ai-surface.types.js";
 
-export const surfaceRootVariants = cva("flex w-full flex-col gap-4 text-foreground", {
+export const surfaceRootVariants = cva("flex w-full min-w-0 flex-col gap-3.5 text-foreground", {
   variants: {
     hasDock: {
-      true: "lg:grid lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start lg:gap-5",
+      true: "@2xl:grid @2xl:grid-cols-[minmax(0,1fr)_16rem] @2xl:items-start @2xl:gap-5",
       false: "",
     },
   },
@@ -21,10 +21,10 @@ export const surfaceRootVariants = cva("flex w-full flex-col gap-4 text-foregrou
 export const SURFACE_TONE_TEXT: Record<SurfaceTone, string> = {
   neutral: "text-foreground",
   signal: "text-signal",
-  success: "text-emerald-600 dark:text-emerald-400",
-  warning: "text-amber-600 dark:text-amber-400",
+  success: "text-emerald-700 dark:text-emerald-400",
+  warning: "text-amber-700 dark:text-amber-400",
   danger: "text-destructive",
-  info: "text-sky-600 dark:text-sky-400",
+  info: "text-sky-700 dark:text-sky-400",
 };
 
 export const SURFACE_STATUS_TEXT: Record<SurfaceStatus, string> = {
@@ -102,9 +102,9 @@ export const STACK_ALIGN_CLASS = {
 
 export const GRID_COLS_CLASS = {
   1: "grid-cols-1",
-  2: "grid-cols-1 sm:grid-cols-2",
-  3: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
-  4: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
+  2: "grid-cols-1 @sm:grid-cols-2",
+  3: "grid-cols-1 @sm:grid-cols-2 @2xl:grid-cols-3",
+  4: "grid-cols-1 @sm:grid-cols-2 @2xl:grid-cols-4",
 } as const;
 
 export const CONTROL_INPUT_CLASS =

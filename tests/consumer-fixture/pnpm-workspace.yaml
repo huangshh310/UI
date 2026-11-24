@@ -4,6 +4,10 @@
 # 与仓库相同的供应链策略：只安装发布满 7 天的版本
 minimumReleaseAge: 10080
 
+# 与根工作区同步的用户已批准豁免（2026-11-24 确认同步）：精确锁版本的交互底座包发布未满 7 天
+minimumReleaseAgeExclude:
+  - "@ui-sdk/*"
+
 overrides:
   # @matt-ui/ui 依赖的 @matt-ui/utils 尚未发布到 npm，指向本地打包出的 tarball
   "@matt-ui/utils": "file:./.tarballs/utils.tgz"
