@@ -8,7 +8,7 @@ const SidebarPane = () => (
       Canvas Layers
     </p>
     <div className="flex flex-col gap-1">
-      <span className="rounded-lg bg-blue-500/12 px-2.5 py-1 text-xs font-medium text-blue-800 dark:bg-blue-400/15 dark:text-blue-200">
+      <span className="rounded-lg bg-signal/12 px-2.5 py-1 text-xs font-medium text-info dark:bg-signal/22">
         AI Orb
       </span>
       <span className="rounded-lg px-2.5 py-1 text-xs text-muted-foreground">Prompt Dock</span>

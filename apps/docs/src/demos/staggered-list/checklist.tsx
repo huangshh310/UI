@@ -32,7 +32,7 @@ const CheckRow = ({
 }) => (
   <div className="flex items-center justify-between gap-2.5 rounded-2xl border border-solid border-border/90 bg-card px-3.5 py-2.5 text-xs text-foreground shadow-xs">
     <span className="inline-flex items-center gap-2.5">
-      <Check aria-hidden="true" className="size-3.5 shrink-0 text-signal dark:text-blue-400" />
+      <Check aria-hidden="true" className="size-3.5 shrink-0 text-info" />
       <span>{item.text}</span>
     </span>
     {canRemove && (

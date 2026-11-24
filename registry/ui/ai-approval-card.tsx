@@ -12,7 +12,7 @@ import { Check, Copy, RotateCcw, ShieldAlert, ShieldCheck, Terminal, X } from "l
 import { useEffect, useRef, useState } from "react";
 
 export const approvalCardVariants = cva(
-  "flex w-full flex-col overflow-hidden rounded-xl border border-solid border-border bg-card text-card-foreground shadow-xs dark:border-white/10",
+  "flex w-full flex-col overflow-hidden rounded-2xl border border-solid border-border bg-card text-card-foreground shadow-xs",
   {
     variants: {
       variant: {
@@ -42,26 +42,21 @@ export const APPROVAL_RISK_META: Record<
   low: {
     label: "低风险",
     dotClass: "bg-emerald-600 dark:bg-emerald-400",
-    badgeClass:
-      "border-emerald-600/20 bg-emerald-500/12 text-emerald-800 dark:border-emerald-400/25 dark:bg-emerald-500/15 dark:text-emerald-200",
+    badgeClass: "bg-emerald-500/12 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-200",
     iconWrapClass:
-      "border-emerald-600/20 bg-emerald-500/10 text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-500/15 dark:text-emerald-300",
+      "bg-emerald-500/10 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300",
   },
   medium: {
     label: "需确认",
     dotClass: "bg-amber-600 dark:bg-amber-400",
-    badgeClass:
-      "border-amber-600/25 bg-amber-500/12 text-amber-900 dark:border-amber-400/25 dark:bg-amber-500/15 dark:text-amber-200",
-    iconWrapClass:
-      "border-amber-600/20 bg-amber-500/10 text-amber-800 dark:border-amber-400/20 dark:bg-amber-500/15 dark:text-amber-300",
+    badgeClass: "bg-amber-500/12 text-amber-900 dark:bg-amber-500/15 dark:text-amber-200",
+    iconWrapClass: "bg-amber-500/10 text-amber-800 dark:bg-amber-500/15 dark:text-amber-300",
   },
   high: {
     label: "高危操作",
     dotClass: "bg-rose-600 dark:bg-rose-400",
-    badgeClass:
-      "border-rose-600/25 bg-rose-500/12 text-rose-800 dark:border-rose-400/25 dark:bg-rose-500/15 dark:text-rose-200",
-    iconWrapClass:
-      "border-rose-600/20 bg-rose-500/10 text-rose-700 dark:border-rose-400/20 dark:bg-rose-500/15 dark:text-rose-300",
+    badgeClass: "bg-rose-500/12 text-rose-800 dark:bg-rose-500/15 dark:text-rose-200",
+    iconWrapClass: "bg-rose-500/10 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300",
   },
 };
 export type AiApprovalRisk = "low" | "medium" | "high";
@@ -106,7 +101,7 @@ const CMD_OPERATORS = new Set(["&&", "||", "|", ";", ">", ">>"]);
 
 const classifyCmdToken = (token: string, expectCmd: boolean): string => {
   if (CMD_OPERATORS.has(token)) return "font-semibold text-emerald-400";
-  if (expectCmd) return "font-medium text-sky-300";
+  if (expectCmd) return "font-medium text-[#b49eff]";
   if (token.startsWith("-")) return "text-amber-300";
   if (/^["'].*["']$/.test(token)) return "text-emerald-300";
   return "text-zinc-100";
@@ -176,20 +171,19 @@ const ApprovalCommandTerminal = ({
 }) => {
   const { copied, copy } = useCopyCommand(command);
   return (
-    <div className="overflow-hidden rounded-lg border border-solid border-zinc-800/90 bg-zinc-950 text-zinc-100 shadow-xs">
-      <div className="flex items-center justify-between gap-2 border-b border-solid border-zinc-800/80 bg-zinc-900/85 px-3 py-1.5">
-        <div className="flex min-w-0 items-center gap-2 font-mono text-[11px] text-zinc-300">
-          <span aria-hidden="true" className="flex shrink-0 items-center gap-1">
-            <span className="size-2 rounded-full bg-zinc-700" />
-            <span className="size-2 rounded-full bg-zinc-700" />
-            <span className="size-2 rounded-full bg-zinc-700" />
-          </span>
+    <div className="overflow-hidden rounded-xl bg-zinc-950 text-zinc-100">
+      <div className="flex items-center justify-between gap-2 px-3.5 pt-2.5 pb-1">
+        <div className="flex min-w-0 items-center gap-2 font-mono text-[11px] text-zinc-400">
           <Terminal aria-hidden="true" className="size-3 shrink-0 text-emerald-400" />
           <span className="truncate">{workingDir ?? "shell"}</span>
         </div>
         <TerminalCopyButton copied={copied} onCopy={copy} />
       </div>
-      <div className="overflow-x-auto px-3.5 py-2.5">
+      <div
+        // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+        tabIndex={0}
+        className="overflow-x-auto px-3.5 pt-1 pb-3 outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset"
+      >
         <div className="flex min-w-max items-center gap-2 font-mono text-xs leading-relaxed">
           <span aria-hidden="true" className="select-none font-semibold text-emerald-400">
             $
@@ -223,20 +217,16 @@ const ApprovalOptionList = ({
           aria-pressed={active}
           onClick={() => onSelect(opt.id)}
           className={cn(
-            "flex w-full cursor-pointer items-start gap-2.5 rounded-lg border border-solid px-3 py-2.5 text-left transition-colors",
+            "flex w-full cursor-pointer items-start gap-2.5 rounded-xl px-3.5 py-2.5 text-left transition-colors",
             APPROVAL_FOCUS_RING,
-            active
-              ? "border-foreground/30 bg-muted/40 text-foreground shadow-2xs dark:border-white/25 dark:bg-white/[0.06]"
-              : "border-border/75 bg-transparent text-foreground hover:border-foreground/20 hover:bg-muted/25 dark:border-white/10 dark:hover:bg-white/[0.03]",
+            active ? "bg-accent text-foreground" : "bg-muted/45 text-foreground hover:bg-muted/80",
           )}
         >
           <span
             aria-hidden="true"
             className={cn(
               "mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-full border border-solid transition-colors",
-              active
-                ? "border-foreground bg-foreground text-background"
-                : "border-muted-foreground/45 bg-transparent",
+              active ? "border-primary bg-primary text-primary-foreground" : "border-input bg-card",
             )}
           >
             {active && <span className="size-1.5 rounded-full bg-current" />}
@@ -330,7 +320,7 @@ const ApprovalRiskBadge = ({ riskLevel }: { riskLevel: AiApprovalRisk }) => {
   return (
     <span
       className={cn(
-        "inline-flex shrink-0 items-center gap-1 rounded-md border border-solid px-1.5 py-0.5 text-[11px] font-medium leading-none",
+        "inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium leading-none",
         risk.badgeClass,
       )}
     >
@@ -347,15 +337,15 @@ const ApprovalHeader = (p: ApprovalHeaderProps) => {
   return (
     <div
       className={cn(
-        "flex items-start justify-between gap-3 border-b border-solid border-border/75 bg-muted/35 dark:border-white/8 dark:bg-white/[0.025]",
-        p.compact ? "px-3.5 py-2.5" : "px-4 py-3",
+        "flex items-start justify-between gap-3",
+        p.compact ? "px-3.5 pt-3 pb-1" : "px-4 pt-4 pb-1",
       )}
     >
       <div className="flex min-w-0 flex-1 items-start gap-2.5">
         <span
           aria-hidden="true"
           className={cn(
-            "mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-lg border border-solid",
+            "mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-lg",
             risk.iconWrapClass,
           )}
         >
@@ -372,7 +362,7 @@ const ApprovalHeader = (p: ApprovalHeaderProps) => {
         </div>
       </div>
       {p.agentName && (
-        <span className="inline-flex shrink-0 rounded-md border border-solid border-border/75 bg-card px-2 py-0.5 font-mono text-[11px] text-muted-foreground tabular-nums dark:border-white/10 dark:bg-white/[0.04]">
+        <span className="inline-flex shrink-0 rounded-md bg-secondary px-2 py-0.5 font-mono text-[11px] text-muted-foreground tabular-nums">
           {p.agentName}
         </span>
       )}
@@ -387,7 +377,7 @@ const ApprovalFooter = ({
   onReject,
   onApprove,
 }: {
-  impact: string;
+  impact?: string;
   riskLevel: AiApprovalRisk;
   compact: boolean;
   onReject: () => void;
@@ -395,16 +385,19 @@ const ApprovalFooter = ({
 }) => (
   <div
     className={cn(
-      "flex flex-wrap items-center justify-between gap-2.5 border-t border-solid border-border/75 bg-muted/25 dark:border-white/8 dark:bg-white/[0.02]",
-      compact ? "px-3.5 py-2.5" : "px-4 py-3",
+      "flex flex-wrap items-center gap-2.5",
+      impact ? "justify-between" : "justify-end",
+      compact ? "px-3.5 pt-1 pb-3" : "px-4 pt-1 pb-4",
     )}
   >
-    <div className="flex min-w-0 items-center gap-1.5 text-muted-foreground">
-      <ShieldCheck aria-hidden="true" className="size-3.5 shrink-0 text-foreground/70" />
-      <span className="truncate font-mono text-[11px] tabular-nums">{impact}</span>
-    </div>
+    {impact && (
+      <div className="flex min-w-0 items-center gap-1.5 text-muted-foreground">
+        <ShieldCheck aria-hidden="true" className="size-3.5 shrink-0 text-foreground/70" />
+        <span className="truncate font-mono text-[11px] tabular-nums">{impact}</span>
+      </div>
+    )}
     <div className="flex items-center gap-2">
-      <Button size="sm" variant="outline" className="h-8 rounded-lg" onClick={onReject}>
+      <Button size="sm" variant="secondary" className="h-8 rounded-lg" onClick={onReject}>
         <X aria-hidden="true" className="size-3.5" />
         <span>拒绝</span>
       </Button>
@@ -426,7 +419,7 @@ const resolveApprovalDefaults = (props: AiApprovalCardProps) => ({
   command: props.command ?? "pnpm registry:generate && pnpm test:registry",
   riskLevel: props.riskLevel ?? ("medium" as AiApprovalRisk),
   variant: props.variant ?? ("card" as AiApprovalCardVariant),
-  impact: props.impact ?? "护栏保护 · 可回滚",
+  impact: props.impact,
   options: props.options ?? APPROVAL_DEFAULT_OPTIONS,
 });
 

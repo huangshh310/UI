@@ -49,7 +49,7 @@ const ARTWORKS = [
         </linearGradient>
         <radialGradient id="glow2" cx="64%" cy="24%" r="48%">
           <stop offset="0%" stop-color="#93c5fd" stop-opacity="0.45"/>
-          <stop offset="55%" stop-color="#3b82f6" stop-opacity="0.16"/>
+          <stop offset="55%" stop-color="#7a5ee4" stop-opacity="0.18"/>
           <stop offset="100%" stop-color="#18181b" stop-opacity="0"/>
         </radialGradient>
         <linearGradient id="plane" x1="0" y1="0" x2="0" y2="1">

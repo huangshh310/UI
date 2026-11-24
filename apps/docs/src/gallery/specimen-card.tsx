@@ -45,7 +45,7 @@ const CardFooter = ({ href, title, isNew, heading }: CardFooterProps) => {
         <Heading className="truncate text-[15px] font-semibold tracking-tight text-foreground">
           <Link
             href={href}
-            className="outline-none after:absolute after:inset-0 after:rounded-[26px] focus-visible:after:outline-2 focus-visible:after:outline-ring"
+            className="outline-none after:absolute after:inset-0 after:rounded-3xl focus-visible:after:outline-2 focus-visible:after:outline-ring"
           >
             {title}
           </Link>
@@ -76,12 +76,12 @@ export const SpecimenCard = ({
     <article
       data-testid="specimen-card"
       style={{ "--i": Math.min(index, 5) } as CSSProperties}
-      className={`rise group relative flex min-w-0 flex-col rounded-[26px] bg-(--site-stage) p-2 transition-colors duration-(--ui-duration-normal) ${
+      className={`rise group relative flex min-w-0 flex-col rounded-3xl bg-(--site-tile) p-2.5 transition-colors duration-(--ui-duration-normal) ${
         wide ? "md:col-span-2 xl:col-span-3" : ""
       }`}
     >
       {/* 右上角快捷复制安装命令：静息隐藏，悬停/聚焦/触摸设备可见 */}
-      <div className="absolute top-3.5 right-3.5 z-20 rounded-[10px] border border-border/75 bg-(--site-surface)/92 opacity-0 shadow-xs backdrop-blur-md transition-opacity duration-(--ui-duration-fast) group-focus-within:opacity-100 group-hover:opacity-100 pointer-coarse:opacity-100">
+      <div className="absolute top-3.5 right-3.5 z-20 rounded-xl bg-(--site-surface)/92 opacity-0 shadow-sm backdrop-blur-md transition-opacity duration-(--ui-duration-fast) group-focus-within:opacity-100 group-hover:opacity-100 pointer-coarse:opacity-100">
         <CopyButton text={cliCommand(component)} label={`复制 ${component.name} 的安装命令`} />
       </div>
 

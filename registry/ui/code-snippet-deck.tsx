@@ -135,13 +135,13 @@ export const deckInputVariants = cva(
     variants: {
       variant: {
         default:
-          "border-input/55 bg-secondary/30 text-foreground shadow-xs hover:border-input/85 focus-visible:bg-card dark:border-border dark:bg-secondary/45",
+          "border-input bg-secondary/50 text-foreground shadow-xs hover:border-foreground/22 focus-visible:bg-card",
         terminal:
           "border-white/12 bg-[#1f1f26] text-[#fafafa] placeholder:text-[#71717a] hover:border-white/25",
         elevated:
-          "border-input/55 bg-secondary/30 text-foreground shadow-xs hover:border-input/85 focus-visible:bg-card dark:border-border dark:bg-secondary/45",
+          "border-input bg-secondary/50 text-foreground shadow-xs hover:border-foreground/22 focus-visible:bg-card",
         minimal:
-          "border-input/55 bg-secondary/40 text-foreground hover:border-input/85 focus-visible:bg-card dark:border-border",
+          "border-input bg-secondary/60 text-foreground hover:border-foreground/22 focus-visible:bg-card",
       },
     },
     defaultVariants: {
@@ -244,12 +244,11 @@ const FEEDBACK_MS = 1600;
 
 const copyButtonClass = (isTerminal: boolean, copied: boolean) =>
   cn(
-    "inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-full border border-solid px-2.5 font-mono text-[11px] font-medium transition-colors duration-(--ui-duration-fast) outline-none focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-solid",
+    "inline-flex size-7 cursor-pointer items-center justify-center rounded-full transition-colors duration-(--ui-duration-fast) outline-none focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-solid",
     isTerminal
-      ? "border-white/12 bg-white/5 text-[#d4d4d8] hover:bg-white/12 hover:text-[#fafafa]"
-      : "border-border bg-card text-muted-foreground hover:border-foreground/20 hover:text-foreground",
-    copied &&
-      (isTerminal ? "border-signal/60 text-[#fafafa]" : "border-foreground/25 text-foreground"),
+      ? "bg-white/8 text-[#d4d4d8] hover:bg-white/14 hover:text-[#fafafa]"
+      : "bg-card text-muted-foreground shadow-2xs hover:bg-accent hover:text-foreground",
+    copied && (isTerminal ? "text-emerald-400" : "text-emerald-700 dark:text-emerald-400"),
   );
 
 const SnippetCopyButton = ({
@@ -294,7 +293,6 @@ const SnippetCopyButton = ({
       ) : (
         <Copy aria-hidden="true" className="size-3.5" />
       )}
-      <span aria-hidden="true">{copied ? "已复制" : "复制"}</span>
       <span aria-live="polite" className="sr-only">
         {copied ? "Copied" : ""}
       </span>
@@ -474,9 +472,7 @@ const HeaderBadge = ({
         <span
           className={cn(
             "shrink-0 rounded-md px-1.5 py-0.5 text-[10px] leading-none font-semibold tracking-wider uppercase",
-            isTerminal
-              ? "bg-signal/22 text-[#b4c8ff]"
-              : "bg-card text-signal ring-1 ring-signal/25 dark:bg-signal/22 dark:text-[#b4c8ff] dark:ring-signal/35",
+            isTerminal ? "bg-signal/22 text-[#c4b5fd]" : "bg-signal/12 text-info dark:bg-signal/22",
           )}
         >
           {badge}
@@ -500,7 +496,7 @@ const wrapButtonClass = (isTerminal: boolean, active: boolean) =>
     active &&
       (isTerminal
         ? "border-signal/60 bg-signal/20 text-[#fafafa]"
-        : "border-signal/55 bg-card text-signal dark:bg-signal/20 dark:text-[#b4c8ff]"),
+        : "border-signal/55 bg-card text-info dark:bg-signal/20"),
   );
 
 interface DeckHeaderProps {
@@ -559,8 +555,8 @@ const paramMarkClass = (isTerminal: boolean, active: boolean) => {
     return "rounded bg-signal px-1 py-0.5 font-medium text-signal-foreground transition-colors duration-(--ui-duration-fast)";
   }
   return isTerminal
-    ? "rounded bg-signal/22 px-1 py-0.5 font-medium text-[#b4c8ff] transition-colors duration-(--ui-duration-fast)"
-    : "rounded bg-signal/10 px-1 py-0.5 font-medium text-signal transition-colors duration-(--ui-duration-fast) dark:bg-signal/22 dark:text-[#b4c8ff]";
+    ? "rounded bg-signal/22 px-1 py-0.5 font-medium text-[#c4b5fd] transition-colors duration-(--ui-duration-fast)"
+    : "rounded bg-signal/12 px-1 py-0.5 font-medium text-info transition-colors duration-(--ui-duration-fast) dark:bg-signal/22";
 };
 
 const LineGutter = ({ lineCount, isTerminal }: { lineCount: number; isTerminal: boolean }) => (

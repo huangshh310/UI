@@ -5,12 +5,12 @@ import { cva } from "class-variance-authority";
 import type { AiToolCallStatus } from "./ai-tool-call.types.js";
 
 export const toolCallShellVariants = cva(
-  "w-full overflow-hidden rounded-xl border border-solid transition-colors",
+  "w-full overflow-hidden rounded-2xl border border-solid transition-colors",
   {
     variants: {
       variant: {
-        card: "border-border bg-card text-card-foreground shadow-xs dark:border-white/10",
-        compact: "border-border bg-card text-card-foreground dark:border-white/10",
+        card: "border-border bg-card text-card-foreground shadow-xs",
+        compact: "border-border bg-card text-card-foreground",
         obsidian: "[color-scheme:dark] border-zinc-800 bg-zinc-950 text-zinc-100 shadow-xs",
       },
     },

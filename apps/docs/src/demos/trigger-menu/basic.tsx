@@ -31,7 +31,7 @@ export const TriggerMenuBasic = () => {
   const [draft, setDraft] = useState("请核对 ");
 
   return (
-    <div className="flex w-full max-w-md flex-col gap-2">
+    <div className="w-full max-w-md">
       <TriggerMenu
         ariaLabel="任务备注输入"
         value={draft}
@@ -39,9 +39,6 @@ export const TriggerMenuBasic = () => {
         placeholder="键入 @ 引用文件或 # 添加分类标签…"
         triggers={MULTI_TRIGGERS}
       />
-      <span className="font-mono text-[11px] text-muted-foreground">
-        当前字符数：{draft.length}
-      </span>
     </div>
   );
 };

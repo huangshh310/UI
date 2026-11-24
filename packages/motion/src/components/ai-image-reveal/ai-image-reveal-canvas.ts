@@ -9,7 +9,7 @@ import { averageCells, createParticleField, type ParticleField } from "./particl
 
 /** 低饱和中性微光灰阶与克制信号色点缀的柔光显影色板 */
 const DARK_PALETTE = ["#e4e4e7", "#a1a1aa", "#71717a", "#cbd5e1", "#60a5fa"];
-const LIGHT_PALETTE = ["#71717a", "#a1a1aa", "#52525b", "#94a3b8", "#3b82f6"];
+const LIGHT_PALETTE = ["#71717a", "#a1a1aa", "#52525b", "#94a3b8", "#7a5ee4"];
 
 export interface RevealEngineState {
   field: ParticleField | null;

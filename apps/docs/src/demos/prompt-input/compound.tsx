@@ -54,7 +54,7 @@ export default function PromptInputCompoundDemo() {
         onStop={() => setQueue([])}
       >
         <PromptInputHeader>
-          <span className="inline-flex items-center gap-1 rounded-md bg-signal/10 px-2 py-0.5 font-mono text-[11px] font-medium text-signal">
+          <span className="inline-flex items-center gap-1 rounded-md bg-signal/12 px-2 py-0.5 font-mono text-[11px] font-medium text-info dark:bg-signal/22">
             正在生成回答 · 继续输入可直接入队
           </span>
         </PromptInputHeader>

@@ -20,14 +20,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -69,14 +81,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -120,14 +144,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -162,14 +198,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -211,14 +259,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -252,14 +312,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -294,14 +366,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -336,14 +420,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -377,14 +473,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -419,14 +527,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -461,14 +581,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -503,14 +635,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -545,14 +689,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -587,14 +743,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -629,14 +797,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -683,14 +863,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -738,14 +930,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -780,14 +984,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -821,14 +1037,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -863,14 +1091,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -905,14 +1145,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -947,14 +1199,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -989,14 +1253,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1031,14 +1307,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1079,14 +1367,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1121,14 +1421,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1163,14 +1475,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1214,14 +1538,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1256,14 +1592,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1298,14 +1646,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1340,14 +1700,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1382,14 +1754,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1424,14 +1808,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1466,14 +1862,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1508,14 +1916,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1550,14 +1970,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1592,14 +2024,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1634,14 +2078,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1676,14 +2132,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1726,14 +2194,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1768,14 +2248,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1810,14 +2302,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1852,14 +2356,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1894,14 +2410,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1936,14 +2464,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -1978,14 +2518,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2024,14 +2576,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2066,14 +2630,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2108,14 +2684,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2157,14 +2745,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2199,14 +2799,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2241,14 +2853,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2283,14 +2907,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2325,14 +2961,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2367,14 +3015,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2409,14 +3069,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2451,14 +3123,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2493,14 +3177,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2535,14 +3231,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2577,14 +3285,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2619,14 +3339,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2661,14 +3393,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2703,14 +3447,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2750,14 +3506,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2792,14 +3560,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2834,14 +3614,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2876,14 +3668,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2918,14 +3722,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -2960,14 +3776,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3006,14 +3834,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3048,14 +3888,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3090,14 +3942,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3132,14 +3996,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3179,14 +4055,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3221,14 +4109,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3263,14 +4163,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3305,14 +4217,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3347,14 +4271,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3398,14 +4334,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3440,14 +4388,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3482,14 +4442,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3524,14 +4496,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3566,14 +4550,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3608,14 +4604,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3650,14 +4658,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3692,14 +4712,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3734,14 +4766,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3776,14 +4820,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3818,14 +4874,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3860,14 +4928,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3902,14 +4982,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3944,14 +5036,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -3986,14 +5090,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -4028,14 +5144,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -4079,14 +5207,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -4121,14 +5261,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -4163,14 +5315,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -4205,14 +5369,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -4247,14 +5423,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -4289,14 +5477,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -4331,14 +5531,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {
@@ -4373,14 +5585,26 @@
       ],
       "cssVars": {
         "light": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#ffffff"
+          "destructive-foreground": "#ffffff",
+          "success": "#16a34a",
+          "success-foreground": "#131418",
+          "warning": "#d97706",
+          "warning-foreground": "#131418",
+          "info": "#6547d4",
+          "info-foreground": "#ffffff"
         },
         "dark": {
-          "signal": "#155dfc",
+          "signal": "#6547d4",
           "signal-foreground": "#ffffff",
-          "destructive-foreground": "#0a0a0a"
+          "destructive-foreground": "#111216",
+          "success": "#34d399",
+          "success-foreground": "#111216",
+          "warning": "#fbbf24",
+          "warning-foreground": "#111216",
+          "info": "#b49eff",
+          "info-foreground": "#111216"
         }
       },
       "css": {

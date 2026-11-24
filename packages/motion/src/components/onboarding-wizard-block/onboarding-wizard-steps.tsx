@@ -33,13 +33,13 @@ const StepBadgeItem = ({
     aria-current={active ? "step" : undefined}
     onClick={onSelect}
     className={cn(
-      "flex items-center gap-2.5 rounded-xl border border-solid px-3 py-2.5 text-left text-xs transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default",
-      canJump && "cursor-pointer hover:border-foreground/25 dark:hover:border-white/25",
+      "flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-xs transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-default",
+      canJump && "cursor-pointer hover:bg-accent",
       active
-        ? "border-foreground/25 bg-secondary/75 text-foreground shadow-xs dark:border-white/20 dark:bg-secondary/50"
+        ? "bg-secondary text-foreground"
         : done
-          ? "border-border/80 bg-secondary/35 text-foreground dark:border-white/10"
-          : "border-border/65 bg-transparent text-muted-foreground dark:border-white/10",
+          ? "bg-muted/75 text-foreground"
+          : "bg-muted/40 text-muted-foreground",
     )}
   >
     <span
@@ -49,7 +49,7 @@ const StepBadgeItem = ({
           ? "bg-emerald-600 text-white dark:bg-emerald-500 dark:text-zinc-950"
           : active
             ? "bg-primary text-primary-foreground"
-            : "bg-secondary text-muted-foreground",
+            : "bg-background text-muted-foreground",
       )}
     >
       {done ? <Check aria-hidden="true" className="size-3.5" /> : item.id + 1}
@@ -84,13 +84,13 @@ interface StepHeaderProps {
 }
 
 export const StepHeader = (p: StepHeaderProps) => (
-  <div className="flex flex-col gap-4 border-b border-solid border-border/75 pb-5 dark:border-white/10">
+  <div className="flex flex-col gap-4">
     <div className="flex flex-wrap items-center justify-between gap-2">
       <div>
         <p className="m-0 text-base font-semibold tracking-tight text-foreground">{p.title}</p>
         <p className="m-0 mt-0.5 text-xs text-muted-foreground">{p.description}</p>
       </div>
-      <div className="flex items-center gap-1.5 rounded-full border border-solid border-border/80 bg-secondary/50 px-3 py-1 dark:border-white/10 dark:bg-secondary/35">
+      <div className="flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1">
         <span className="text-xs text-muted-foreground">完成度</span>
         <NumberFlow value={p.pct} suffix="%" className="text-xs font-semibold text-foreground" />
       </div>
@@ -130,8 +130,8 @@ const RegionCard = ({
     className={cn(
       "flex cursor-pointer flex-col gap-1.5 rounded-xl border border-solid px-3.5 py-2.5 text-left text-xs font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring",
       selected
-        ? "border-primary bg-secondary/75 text-foreground shadow-xs dark:bg-secondary/50"
-        : "border-border/80 bg-background text-muted-foreground hover:border-foreground/20 hover:text-foreground dark:border-white/10 dark:bg-card",
+        ? "border-primary bg-primary/8 text-foreground"
+        : "border-transparent bg-secondary/75 text-muted-foreground hover:bg-accent hover:text-foreground",
     )}
   >
     <span className="flex items-center justify-between gap-2">
@@ -168,7 +168,7 @@ export const StepProfile = ({
           value={workspace}
           onChange={(event) => onWorkspaceChange(event.target.value)}
           placeholder="例如：matt-ui Studio"
-          className="h-9.5 max-w-md rounded-xl border border-solid border-border/80 bg-background px-3 text-sm text-foreground outline-none transition-[border-color,box-shadow] focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset dark:border-white/12 dark:bg-card"
+          className="h-9.5 max-w-md rounded-xl border border-solid border-input bg-background px-3 text-sm text-foreground outline-none transition-[border-color,box-shadow] focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset"
         />
       </div>
       <div className="flex flex-col gap-2">
@@ -205,7 +205,7 @@ export const StepSecurity = ({
 }) => (
   <div className="flex flex-col gap-4">
     <p className="m-0 text-sm font-semibold text-foreground">安全与发布策略</p>
-    <div className="flex flex-col gap-3 rounded-2xl border border-solid border-border/80 bg-secondary/25 p-4 dark:border-white/10 dark:bg-secondary/20">
+    <div className="flex flex-col gap-3.5 rounded-2xl bg-muted/55 p-4">
       <div className="flex items-center justify-between gap-3">
         <div>
           <p className="m-0 text-xs font-medium text-foreground">强制企业单点登录（SSO）</p>
@@ -215,7 +215,7 @@ export const StepSecurity = ({
         </div>
         <StretchSwitch aria-label="强制企业单点登录" checked={sso} onCheckedChange={onSsoChange} />
       </div>
-      <div className="flex items-center justify-between gap-3 border-t border-solid border-border/75 pt-3 dark:border-white/10">
+      <div className="flex items-center justify-between gap-3">
         <div>
           <p className="m-0 text-xs font-medium text-foreground">自动无障碍巡检门禁</p>
           <p className="m-0 text-[11px] text-muted-foreground">
@@ -251,7 +251,7 @@ export const StepSummary = ({
 }) =>
   completed ? (
     <div className="flex flex-col items-center gap-2.5 py-6 text-center">
-      <span className="inline-flex size-12 items-center justify-center rounded-full border border-solid border-emerald-600/25 bg-emerald-500/12 text-emerald-700 dark:border-emerald-400/25 dark:bg-emerald-500/16 dark:text-emerald-300">
+      <span className="inline-flex size-12 items-center justify-center rounded-full bg-emerald-500/12 text-emerald-700 dark:bg-emerald-500/16 dark:text-emerald-300">
         <CheckCircle2 aria-hidden="true" className="size-6" />
       </span>
       <p className="m-0 text-base font-semibold tracking-tight text-foreground">工作区已就绪</p>
@@ -265,7 +265,7 @@ export const StepSummary = ({
         <ShieldCheck aria-hidden="true" className="size-4 text-foreground" />
         <p className="m-0 text-sm font-semibold text-foreground">确认并启动工作区</p>
       </div>
-      <div className="grid grid-cols-1 gap-3 rounded-2xl border border-solid border-border/80 bg-secondary/25 p-4 text-xs sm:grid-cols-3 dark:border-white/10 dark:bg-secondary/20">
+      <div className="grid grid-cols-1 gap-3 rounded-2xl bg-muted/55 p-4 text-xs sm:grid-cols-3">
         <div>
           <p className="m-0 text-muted-foreground">工作区名称</p>
           <p className="m-0 mt-1 font-medium text-foreground">{workspace || "matt-ui Studio"}</p>

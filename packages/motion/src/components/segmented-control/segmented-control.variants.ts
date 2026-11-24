@@ -21,7 +21,7 @@ export const SEGMENTED_THUMB_VARIANTS: Record<SegmentedControlVariant, string> =
   glass:
     "pointer-events-none absolute inset-0 rounded-full bg-background/95 shadow-[0_2px_8px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.7)] ring-1 ring-border/75 dark:bg-card/90 dark:ring-white/18 dark:shadow-[0_2px_10px_rgba(0,0,0,0.35)]",
   signal:
-    "pointer-events-none absolute inset-0 rounded-full bg-signal shadow-[0_1px_3px_rgba(21,93,252,0.35),inset_0_1px_0_rgba(255,255,255,0.22)]",
+    "pointer-events-none absolute inset-0 rounded-full bg-signal shadow-[0_1px_3px_rgba(101,71,212,0.35),inset_0_1px_0_rgba(255,255,255,0.22)]",
 };
 
 export const SEGMENTED_BUTTON_BASE =

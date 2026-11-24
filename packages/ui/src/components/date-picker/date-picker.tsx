@@ -41,7 +41,7 @@ const PresetRail = ({
   range: DateRange;
   onPick: (preset: DatePickerPreset) => void;
 }) => (
-  <div className="flex flex-wrap gap-1 border-b border-solid border-border/75 p-2 sm:w-32 sm:flex-col sm:border-r sm:border-b-0 dark:border-white/10">
+  <div className="flex flex-wrap gap-1 p-2 sm:w-32 sm:flex-col">
     {presets.map((preset) => {
       const active = isPresetActive(preset, mode, value, range);
       return (
@@ -153,7 +153,7 @@ const TriggerField = ({
         {!label && ariaLabel && <span className="sr-only">{ariaLabel} </span>}
         <span
           id={valueId}
-          className={cn("truncate tabular-nums", !display && "text-muted-foreground/75")}
+          className={cn("truncate tabular-nums", !display && "text-muted-foreground")}
         >
           {display ?? placeholder}
         </span>

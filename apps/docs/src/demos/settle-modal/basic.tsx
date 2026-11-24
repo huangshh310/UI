@@ -36,7 +36,7 @@ export default function SettleModalBasicDemo() {
             id="release-tag"
             type="text"
             defaultValue="v0.4.0"
-            className="h-9 rounded-lg border border-solid border-input/50 bg-background px-3 font-mono text-sm text-foreground outline-none transition-colors focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset dark:border-white/12 dark:bg-card"
+            className="h-9 rounded-lg border border-solid border-input bg-card px-3 font-mono text-sm text-foreground outline-none transition-colors focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset"
           />
         </div>
         <div className="flex items-center justify-between rounded-xl border border-solid border-border/75 bg-secondary/40 px-3 py-2 text-xs dark:border-white/8 dark:bg-white/[0.03]">

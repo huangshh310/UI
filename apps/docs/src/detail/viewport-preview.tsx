@@ -29,7 +29,7 @@ export const ViewportSwitcher = ({
 }) => (
   <fieldset
     aria-label="预览视口宽度"
-    className="m-0 hidden items-center gap-0.5 rounded-full border border-border/80 bg-(--site-stage) p-0.5 md:inline-flex"
+    className="m-0 hidden items-center gap-0.5 rounded-full bg-(--site-stage) p-1 md:inline-flex"
   >
     {VIEWPORTS.map(({ id, label }) => (
       <button
@@ -39,9 +39,9 @@ export const ViewportSwitcher = ({
         aria-pressed={value === id}
         title={label}
         onClick={() => onChange(id)}
-        className={`inline-flex size-7 cursor-pointer items-center justify-center rounded-full border border-transparent transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+        className={`inline-flex size-7 cursor-pointer items-center justify-center rounded-full transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring ${
           value === id
-            ? "border-border bg-(--site-surface) text-foreground shadow-xs"
+            ? "bg-(--site-surface) text-foreground shadow-xs"
             : "text-muted-foreground hover:text-foreground"
         }`}
       >
@@ -63,9 +63,7 @@ export const ViewportFrame = ({
   return (
     <div
       className={`mx-auto flex justify-center transition-[max-width] duration-(--ui-duration-normal) ${widthClass} ${
-        constrained
-          ? "rounded-xl border border-dashed border-border/90 bg-background/70 p-3 shadow-xs"
-          : ""
+        constrained ? "rounded-2xl bg-(--site-surface)/75 p-3 shadow-xs" : ""
       }`}
     >
       {children}

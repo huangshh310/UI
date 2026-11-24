@@ -128,7 +128,7 @@ const dayButtonClass = (
 ) =>
   cn(
     calendarDayVariants({ size, radius }),
-    outside && !state.selected && "text-muted-foreground/65",
+    outside && !state.selected && "text-muted-foreground",
     state.inRange && "rounded-none hover:bg-accent",
     state.selected && SELECTED_CLASSES,
   );

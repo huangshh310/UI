@@ -8,8 +8,8 @@
  * 使用 inline：工具类直接引用 var(--ui-*)，而不是经由 Tailwind 的中间变量，
  * 这样在局部切换主题时工具类才会取到当前作用域内的值。
  *
- * 颜色命名与 shadcn 的约定保持一致，便于与 shadcn Registry 生态的组件混用；
- * signal 是本项目独有的信号色。
+ * 颜色命名与通用主题约定保持一致，便于源码分发组件直接融入宿主应用主题；
+ * signal 是本项目独有的全系统统一信号色。
  *
  * 时长与层级在 Tailwind 中没有对应的主题命名空间，
  * 组件中用任意值语法引用，例如 duration-(--ui-duration-fast)、z-(--ui-z-modal)。
@@ -39,14 +39,31 @@
   --color-border: var(--ui-border);
   --color-input: var(--ui-input);
   --color-ring: var(--ui-ring);
+  --color-destructive: var(--ui-destructive);
+  --color-destructive-foreground: var(--ui-destructive-foreground);
   --color-success: var(--ui-success);
   --color-success-foreground: var(--ui-success-foreground);
   --color-warning: var(--ui-warning);
   --color-warning-foreground: var(--ui-warning-foreground);
-  --color-destructive: var(--ui-destructive);
-  --color-destructive-foreground: var(--ui-destructive-foreground);
   --color-info: var(--ui-info);
   --color-info-foreground: var(--ui-info-foreground);
+
+  /* 图表序列色 */
+  --color-chart-1: var(--ui-chart-1);
+  --color-chart-2: var(--ui-chart-2);
+  --color-chart-3: var(--ui-chart-3);
+  --color-chart-4: var(--ui-chart-4);
+  --color-chart-5: var(--ui-chart-5);
+
+  /* 侧栏语义色 */
+  --color-sidebar: var(--ui-sidebar);
+  --color-sidebar-foreground: var(--ui-sidebar-foreground);
+  --color-sidebar-primary: var(--ui-sidebar-primary);
+  --color-sidebar-primary-foreground: var(--ui-sidebar-primary-foreground);
+  --color-sidebar-accent: var(--ui-sidebar-accent);
+  --color-sidebar-accent-foreground: var(--ui-sidebar-accent-foreground);
+  --color-sidebar-border: var(--ui-sidebar-border);
+  --color-sidebar-ring: var(--ui-sidebar-ring);
 
   /* 字体族 */
   --font-sans: var(--ui-font-sans);
@@ -87,6 +104,8 @@
   --radius-lg: var(--ui-radius-lg);
   --radius-xl: var(--ui-radius-xl);
   --radius-2xl: var(--ui-radius-2xl);
+  --radius-3xl: var(--ui-radius-3xl);
+  --radius-4xl: var(--ui-radius-4xl);
 
   /* 阴影 */
   --shadow-xs: var(--ui-shadow-xs);

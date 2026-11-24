@@ -12,11 +12,10 @@ export const promptShellVariants = cva(
     variants: {
       variant: {
         default:
-          "border-input/55 bg-background shadow-[0_2px_10px_-3px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.04)] hover:border-foreground/22 hover:bg-card dark:border-white/12 dark:bg-card/85 dark:hover:border-white/22 dark:hover:bg-card",
+          "border-input bg-card shadow-xs hover:border-foreground/20 dark:hover:border-white/20",
         filled:
-          "border-transparent bg-secondary/75 hover:bg-secondary focus-within:bg-card dark:bg-white/7 dark:hover:bg-white/11",
-        elevated:
-          "border-border/80 bg-card shadow-[0_12px_32px_-10px_rgba(0,0,0,0.12),0_2px_6px_-1px_rgba(0,0,0,0.04)] hover:border-foreground/20 dark:border-white/12 dark:shadow-[0_18px_40px_-10px_rgba(0,0,0,0.65)]",
+          "border-transparent bg-secondary/80 hover:bg-secondary focus-within:bg-card dark:bg-secondary dark:hover:bg-accent",
+        elevated: "border-border bg-card shadow-md hover:border-input",
       },
       size: {
         sm: "p-2",

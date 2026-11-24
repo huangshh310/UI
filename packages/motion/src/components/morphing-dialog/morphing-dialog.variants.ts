@@ -15,7 +15,7 @@ export const MORPHING_TAG_MAP: Record<MorphingDialogTagTone, { pill: string; dot
     dot: "bg-muted-foreground",
   },
   signal: {
-    pill: "border-signal/25 bg-signal/10 text-blue-800 dark:border-signal/35 dark:bg-signal/20 dark:text-blue-200",
+    pill: "border-transparent bg-signal/12 text-info dark:bg-signal/22",
     dot: "bg-signal",
   },
   success: {

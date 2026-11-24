@@ -151,7 +151,7 @@ const CalendarFooter = ({
 }) => {
   if (!showTodayButton && !footer) return null;
   return (
-    <div className="mt-2.5 flex items-center justify-between gap-2 border-t border-solid border-border/65 pt-2.5 dark:border-white/8">
+    <div className="mt-2 flex items-center justify-between gap-2 pt-1">
       {showTodayButton ? (
         <button
           type="button"

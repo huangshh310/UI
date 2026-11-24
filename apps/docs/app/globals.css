@@ -1,7 +1,7 @@
 /*
  * 展示站的全局样式。
  *
- * 站点自己就是组件库的使用者：颜色、圆角、时长全部来自 @matt-ui/tokens，
+ * 站点自己就是组件库的使用者：颜色、圆角、字体与时长全部来自 @matt-ui/tokens，
  * 组件的样式由本站的 Tailwind 扫描 @matt-ui/ui 与 @matt-ui/motion 的产物后统一生成。
  */
 @import "tailwindcss";
@@ -13,24 +13,18 @@
 @source "../node_modules/@matt-ui/motion/dist";
 
 :root {
-  /* 把 Token 的字体栈接到本站加载的 Geist 字体上；中文回退到系统字体 */
-  --ui-font-sans:
-    var(--font-geist-sans), "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui,
-    sans-serif;
-  --ui-font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-
-  /* 站点纯白画布 + 无边框柔灰单体画廊卡片，让交互组件本身成为唯一视觉焦点 */
-  --site-canvas: #ffffff;
+  /* 画布与卡片利用冷灰/纯白明度自然分层，去线留白 */
+  --site-canvas: var(--ui-background);
   --site-surface: var(--ui-card);
-  --site-stage: #f1f1f2;
-  --site-tile: var(--site-stage);
+  --site-stage: var(--ui-background);
+  --site-tile: #e8eaf1;
 }
 
 [data-theme="dark"] {
-  --site-canvas: #111113;
+  --site-canvas: var(--ui-background);
   --site-surface: var(--ui-card);
-  --site-stage: #18181b;
-  --site-tile: var(--site-stage);
+  --site-stage: var(--ui-background);
+  --site-tile: #161820;
 }
 
 html {
@@ -44,7 +38,7 @@ html {
   }
 }
 
-/* 预览舞台：纯净中性画布，无杂乱点阵与紫晕 */
+/* 预览舞台：纯净冷灰画布，靠表面层次衬托组件 */
 .stage-grid {
   background-color: var(--site-stage);
 }

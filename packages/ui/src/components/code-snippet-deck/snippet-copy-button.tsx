@@ -13,12 +13,11 @@ const FEEDBACK_MS = 1600;
 
 const copyButtonClass = (isTerminal: boolean, copied: boolean) =>
   cn(
-    "inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-full border border-solid px-2.5 font-mono text-[11px] font-medium transition-colors duration-(--ui-duration-fast) outline-none focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-solid",
+    "inline-flex size-7 cursor-pointer items-center justify-center rounded-full transition-colors duration-(--ui-duration-fast) outline-none focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-solid",
     isTerminal
-      ? "border-white/12 bg-white/5 text-[#d4d4d8] hover:bg-white/12 hover:text-[#fafafa]"
-      : "border-border bg-card text-muted-foreground hover:border-foreground/20 hover:text-foreground",
-    copied &&
-      (isTerminal ? "border-signal/60 text-[#fafafa]" : "border-foreground/25 text-foreground"),
+      ? "bg-white/8 text-[#d4d4d8] hover:bg-white/14 hover:text-[#fafafa]"
+      : "bg-card text-muted-foreground shadow-2xs hover:bg-accent hover:text-foreground",
+    copied && (isTerminal ? "text-emerald-400" : "text-emerald-700 dark:text-emerald-400"),
   );
 
 export const SnippetCopyButton = ({
@@ -63,7 +62,6 @@ export const SnippetCopyButton = ({
       ) : (
         <Copy aria-hidden="true" className="size-3.5" />
       )}
-      <span aria-hidden="true">{copied ? "已复制" : "复制"}</span>
       <span aria-live="polite" className="sr-only">
         {copied ? "Copied" : ""}
       </span>

@@ -82,20 +82,22 @@ const BasketCounter = ({
   onSelectAll?: () => void;
 }) => (
   <div className="flex items-center gap-2 text-xs">
-    <motion.span
-      key={count}
-      initial={{ scale: 0.72 }}
-      animate={{ scale: 1 }}
-      transition={{ type: "spring", stiffness: 460, damping: 24 }}
-      className={cn(
-        "inline-flex size-6 items-center justify-center rounded-full font-mono text-xs font-semibold tabular-nums",
-        variant === "inverted"
-          ? "bg-signal text-signal-foreground"
-          : "bg-primary text-primary-foreground",
-      )}
-    >
-      {count}
-    </motion.span>
+    <AnimatePresence mode="popLayout" initial={false}>
+      <motion.span
+        key={count}
+        initial={{ scale: 0.72 }}
+        animate={{ scale: 1 }}
+        transition={{ type: "spring", stiffness: 460, damping: 24 }}
+        className={cn(
+          "inline-flex size-6 items-center justify-center rounded-full font-mono text-xs font-semibold tabular-nums",
+          variant === "inverted"
+            ? "bg-signal text-signal-foreground"
+            : "bg-primary text-primary-foreground",
+        )}
+      >
+        {count}
+      </motion.span>
+    </AnimatePresence>
     <span className="font-medium">已选 {count} 项</span>
     {totalCount !== undefined && onSelectAll && count < totalCount && (
       <button
@@ -126,8 +128,6 @@ const BasketDock = ({
     "count" | "totalCount" | "actions" | "onSelectAll" | "onClear" | "className"
   >) => {
   const offsetY = position === "top" ? -18 : 20;
-  const dividerClass =
-    variant === "inverted" ? "bg-white/20 dark:bg-black/15" : "bg-border/80 dark:bg-white/12";
 
   return (
     <motion.div
@@ -153,7 +153,6 @@ const BasketDock = ({
         variant={variant}
         onSelectAll={onSelectAll}
       />
-      <span aria-hidden="true" className={cn("h-5 w-px", dividerClass)} />
       <BasketActionRow actions={actions} variant={variant} size={size} onClear={onClear} />
     </motion.div>
   );
@@ -175,7 +174,7 @@ export const SelectionBasket = ({
     <div aria-live="polite" className="sr-only">
       {count > 0 ? `已选择 ${count} 项` : ""}
     </div>
-    <AnimatePresence>
+    <AnimatePresence initial={false}>
       {count > 0 && (
         <BasketDock
           count={count}

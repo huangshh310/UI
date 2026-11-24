@@ -43,13 +43,13 @@ export const FOLDER_PANEL_VARIANTS: Record<FolderTabCardVariant, string> = {
 export const FOLDER_INDICATOR_VARIANTS: Record<FolderTabCardVariant, string> = {
   default: "bg-foreground/75",
   elevated: "bg-foreground/85",
-  tinted: "bg-signal dark:bg-blue-400",
+  tinted: "bg-signal dark:bg-info",
 };
 
 export const FOLDER_BADGE_ACTIVE: Record<FolderTabCardVariant, string> = {
   default: "bg-secondary text-foreground",
   elevated: "bg-secondary text-foreground",
-  tinted: "bg-signal/12 text-blue-700 dark:bg-signal/24 dark:text-blue-300",
+  tinted: "bg-signal/12 text-info dark:bg-signal/24",
 };
 
 export const FOLDER_BADGE_INACTIVE = "bg-card/80 text-muted-foreground dark:bg-card/60";

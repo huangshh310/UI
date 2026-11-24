@@ -28,7 +28,7 @@ export const liquidRippleButtonVariants = cva(BASE_CLASSES, {
       primary:
         "bg-primary text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.08)] hover:bg-primary/92 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_1px_2px_rgba(0,0,0,0.3)]",
       signal:
-        "bg-signal text-signal-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.24),0_1px_2px_rgba(21,93,252,0.28)] hover:bg-signal/92",
+        "bg-signal text-signal-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_1px_2px_rgba(101,71,212,0.28)] hover:bg-signal/92",
       secondary:
         "border-border/60 bg-secondary text-secondary-foreground shadow-xs hover:border-border hover:bg-accent",
       outline:

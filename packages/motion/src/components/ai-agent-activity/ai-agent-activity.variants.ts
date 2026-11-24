@@ -23,8 +23,7 @@ export const ACTIVITY_SHELL_VARIANT: Record<AiAgentActivityVariant, string> = {
 };
 
 export const ACTIVITY_STATUS_CIRCLE: Record<AiAgentActivityStatus, string> = {
-  running:
-    "border border-solid border-signal/35 bg-signal/10 text-signal dark:border-signal/40 dark:bg-signal/15",
+  running: "bg-signal/12 text-info dark:bg-signal/20",
   success:
     "border border-solid border-emerald-500/25 bg-emerald-500/10 text-emerald-600 dark:border-emerald-400/25 dark:bg-emerald-500/15 dark:text-emerald-400",
   error:

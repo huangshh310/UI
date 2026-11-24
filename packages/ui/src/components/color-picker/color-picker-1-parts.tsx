@@ -52,25 +52,12 @@ const CHANNEL_SHORT_LABEL: Record<string, string> = {
   alpha: "A",
 };
 
-export const PickerHeader = ({
-  label,
-  labelId,
-  space,
-}: {
-  label?: string;
-  labelId: string;
-  space: ColorSpaceMode;
-}) => {
+export const PickerHeader = ({ label, labelId }: { label?: string; labelId: string }) => {
   if (!label) return null;
   return (
-    <div className="flex items-center justify-between gap-2">
-      <span id={labelId} className="text-xs font-medium text-foreground">
-        {label}
-      </span>
-      <span className="rounded bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground uppercase">
-        {space}
-      </span>
-    </div>
+    <span id={labelId} className="text-xs font-medium text-foreground">
+      {label}
+    </span>
   );
 };
 

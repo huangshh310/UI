@@ -10,8 +10,8 @@ import { peekCardPopupVariants, peekCardStatusDotVariants } from "./peek-card.va
 
 const TRIGGER_LINK_CLASS = cn(
   "inline-flex items-center gap-1 rounded-md font-medium text-foreground underline decoration-foreground/25 decoration-1 underline-offset-4 outline-none",
-  "transition-colors duration-(--ui-duration-fast) hover:text-signal hover:decoration-signal",
-  "focus-visible:ring-2 focus-visible:ring-ring dark:hover:text-blue-300 dark:hover:decoration-blue-300",
+  "transition-colors duration-(--ui-duration-fast) hover:text-info hover:decoration-info",
+  "focus-visible:ring-2 focus-visible:ring-ring",
 );
 
 const PeekIdentityCard = ({ identity }: { identity: NonNullable<PeekCardProps["identity"]> }) => (

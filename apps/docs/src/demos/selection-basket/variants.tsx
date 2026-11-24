@@ -5,7 +5,7 @@ import { Download, Share2, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 export default function SelectionBasketVariantsDemo() {
-  const [log, setLog] = useState("点击不同风格浮舱体验操作反馈");
+  const [log, setLog] = useState("");
 
   const makeActions = (tag: string) => [
     {
@@ -49,7 +49,7 @@ export default function SelectionBasketVariantsDemo() {
         onClear={() => setLog("glass：已清空选择")}
         actions={makeActions("glass")}
       />
-      <span className="font-mono text-xs text-muted-foreground">{log}</span>
+      {log && <span className="font-mono text-xs text-muted-foreground">{log}</span>}
     </div>
   );
 }

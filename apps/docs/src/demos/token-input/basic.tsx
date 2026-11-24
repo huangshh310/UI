@@ -43,19 +43,18 @@ export const TokenInputBasic = () => {
   const [serialized, setSerialized] = useState(() => serializeTokenValue(INITIAL_SEGMENTS));
 
   return (
-    <div className="flex w-full max-w-xl flex-col gap-2.5">
+    <div className="flex w-full max-w-xl flex-col gap-2">
       <TokenInput
-        label="结构化任务上下文"
+        ariaLabel="结构化任务上下文"
         defaultValue={INITIAL_SEGMENTS}
         triggers={CONTEXT_TRIGGERS}
-        hint="键入 @ 插入文件胶囊，点击胶囊右侧 × 可单独移除"
         onValueChange={(_, text) => setSerialized(text)}
       />
       <div
         data-testid="token-serialized-output"
-        className="rounded-xl border border-solid border-border/75 bg-muted/35 px-3 py-2 font-mono text-xs text-muted-foreground"
+        className="px-1 font-mono text-xs text-muted-foreground"
       >
-        序列化输出：{serialized || "（空）"}
+        {serialized || "—"}
       </div>
     </div>
   );

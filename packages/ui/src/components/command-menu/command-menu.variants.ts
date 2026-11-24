@@ -37,7 +37,7 @@ export const commandMenuItemVariants = cva([
   "transition-colors duration-(--ui-duration-instant)",
   "data-[highlighted]:bg-accent/90 data-[highlighted]:text-accent-foreground dark:data-[highlighted]:bg-white/10",
   "data-[disabled]:pointer-events-none data-[disabled]:opacity-45",
-  "[&_mark]:rounded [&_mark]:bg-signal/15 [&_mark]:px-0.5 [&_mark]:font-medium [&_mark]:text-foreground [&_mark]:dark:bg-signal/25 [&_mark]:dark:text-blue-200",
+  "[&_mark]:rounded [&_mark]:bg-signal/15 [&_mark]:px-0.5 [&_mark]:font-medium [&_mark]:text-foreground [&_mark]:dark:bg-signal/25 [&_mark]:dark:text-info",
 ]);
 
 export const commandMenuKbdVariants = cva(

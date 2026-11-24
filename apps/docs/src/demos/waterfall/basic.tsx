@@ -65,7 +65,7 @@ export const WaterfallBasic = () => {
   const [selected, setSelected] = useState<WaterfallSpan | undefined>(TRACE_SPANS[0]);
 
   return (
-    <div className="flex w-full max-w-2xl flex-col gap-2.5">
+    <div className="flex w-full max-w-2xl flex-col gap-2">
       <Waterfall
         title="多步工具编排追踪"
         showControls
@@ -77,12 +77,10 @@ export const WaterfallBasic = () => {
       />
       <div
         data-testid="waterfall-selected-span"
-        className="flex items-center justify-between rounded-xl border border-solid border-border/75 bg-muted/35 px-3 py-2 font-mono text-xs text-muted-foreground"
+        className="flex items-center justify-between px-1.5 font-mono text-xs text-muted-foreground tabular-nums"
       >
-        <span>当前选中：{selected ? selected.label : "未选中"}</span>
-        <span>
-          {selected ? `+${selected.start}ms · 耗时 ${selected.duration}ms` : "点击任一行查看详情"}
-        </span>
+        <span>{selected ? selected.label : "—"}</span>
+        <span>{selected ? `+${selected.start}ms · ${selected.duration}ms` : ""}</span>
       </div>
     </div>
   );

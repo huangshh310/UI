@@ -60,7 +60,7 @@ const TONE_STYLE: Record<ToastTone, { Icon: typeof Info; badgeClass: string }> =
   default: { Icon: Info, badgeClass: "bg-secondary text-muted-foreground" },
   signal: {
     Icon: Info,
-    badgeClass: "bg-signal/12 text-blue-700 dark:bg-signal/20 dark:text-blue-300",
+    badgeClass: "bg-signal/12 text-info dark:bg-signal/22",
   },
   success: {
     Icon: CheckCircle2,
@@ -142,6 +142,7 @@ const ToastCard = ({ item }: { item: ManagedToast }) => {
 
 const ToastList = ({ placement }: { placement: ToastPlacement }) => {
   const { toasts } = BaseToast.useToastManager<ToastData>();
+  if (toasts.length === 0) return null;
   return (
     <BaseToast.Portal>
       <BaseToast.Viewport

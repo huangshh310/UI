@@ -19,7 +19,7 @@ export const typewriterButtonVariants = cva(BASE_CLASSES, {
       primary:
         "border-transparent bg-primary text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.08)] hover:bg-primary/90 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_1px_2px_rgba(0,0,0,0.3)]",
       signal:
-        "border-transparent bg-signal text-signal-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.24),0_1px_2px_rgba(21,93,252,0.28)] hover:bg-signal/92",
+        "border-transparent bg-signal text-signal-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_1px_2px_rgba(101,71,212,0.28)] hover:bg-signal/92",
       terminal:
         "border-neutral-800 bg-neutral-950 text-neutral-50 shadow-sm hover:border-neutral-700 hover:bg-neutral-900 dark:border-neutral-700/80 dark:bg-neutral-900 dark:hover:bg-neutral-800",
     },

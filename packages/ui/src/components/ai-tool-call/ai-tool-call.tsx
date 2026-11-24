@@ -20,7 +20,7 @@ const StatusIcon = ({ status, obsidian }: { status: AiToolCallStatus; obsidian: 
         aria-hidden="true"
         className={cn(
           "size-3.5 shrink-0 animate-spin motion-reduce:animate-none",
-          obsidian ? "text-sky-400" : "text-signal",
+          obsidian ? "text-[#b49eff]" : "text-info",
         )}
       />
     );

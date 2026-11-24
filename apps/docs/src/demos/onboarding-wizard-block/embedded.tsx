@@ -7,7 +7,7 @@ export default function OnboardingWizardBlockEmbeddedDemo() {
     <OnboardingWizardBlock
       variant="embedded"
       title="快速创建子工作区"
-      description="扁平发丝边框与低阴影表面，适合内嵌在弹窗或设置分栏。"
+      description="面向弹窗或分栏场景的紧凑子工作区引导。"
       defaultWorkspace="Design Systems Lab"
       className="max-w-3xl"
     />

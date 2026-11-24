@@ -117,10 +117,12 @@ test.describe("组件详情页", () => {
     await expect(main.locator('[data-slot="button"]').first()).toBeVisible();
 
     await main.getByRole("tab", { name: "用法" }).click();
-    await expect(main.getByRole("tabpanel")).toContainText('from "@/components/ui/button"');
+    await expect(main.getByRole("tabpanel", { name: "用法" })).toContainText(
+      'from "@/components/ui/button"',
+    );
 
     await main.getByRole("tab", { name: "代码" }).click();
-    await expect(main.getByRole("tabpanel")).toContainText("export const Button");
+    await expect(main.getByRole("tabpanel", { name: "代码" })).toContainText("export const Button");
   });
 
   test("每个示例可以在预览与它自己的源码之间切换", async ({ page }) => {
@@ -129,7 +131,9 @@ test.describe("组件详情页", () => {
 
     await block.getByRole("tab", { name: "代码" }).click();
 
-    await expect(block.getByRole("tabpanel")).toContainText('from "@/components/ui/button"');
+    await expect(block.getByRole("tabpanel", { name: "代码" })).toContainText(
+      'from "@/components/ui/button"',
+    );
     await expect(block.locator('[data-slot="button"]')).toHaveCount(0);
   });
 
@@ -295,7 +299,7 @@ test.describe("窄屏", () => {
       expect((await link.boundingBox())!.height).toBeLessThan(40);
     }
 
-    const tablist = page.getByRole("tablist");
+    const tablist = page.getByRole("tablist", { name: "组件分类" });
     expect((await tablist.boundingBox())!.height).toBeLessThanOrEqual(44);
     for (const tab of await tablist.getByRole("tab").all()) {
       expect((await tab.boundingBox())!.height).toBeLessThan(40);
@@ -318,7 +322,7 @@ test.describe("中等宽度屏幕", () => {
 
   test("目录分类胶囊保持单行且不折行挤压", async ({ page }) => {
     await page.goto("/components");
-    const tablist = page.getByRole("tablist");
+    const tablist = page.getByRole("tablist", { name: "组件分类" });
 
     expect((await tablist.boundingBox())!.height).toBeLessThanOrEqual(44);
     for (const tab of await tablist.getByRole("tab").all()) {

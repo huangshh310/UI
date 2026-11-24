@@ -84,7 +84,7 @@ export interface AiImageRevealProps extends Omit<HTMLAttributes<HTMLElement>, "c
 }
 /** 低饱和中性微光灰阶与克制信号色点缀的柔光显影色板 */
 const DARK_PALETTE = ["#e4e4e7", "#a1a1aa", "#71717a", "#cbd5e1", "#60a5fa"];
-const LIGHT_PALETTE = ["#71717a", "#a1a1aa", "#52525b", "#94a3b8", "#3b82f6"];
+const LIGHT_PALETTE = ["#71717a", "#a1a1aa", "#52525b", "#94a3b8", "#7a5ee4"];
 
 interface RevealEngineState {
   field: ParticleField | null;
@@ -392,7 +392,9 @@ const RevealOverlays = (p: RevealOverlaysProps) => {
       {p.reduce && pending && (
         <div aria-hidden="true" className="absolute inset-0 animate-pulse bg-foreground/[0.06]" />
       )}
-      <AnimatePresence>{pending && <RevealStatusPill label={p.generatingLabel} />}</AnimatePresence>
+      <AnimatePresence initial={false}>
+        {pending && <RevealStatusPill label={p.generatingLabel} />}
+      </AnimatePresence>
       {p.phase === "error" && <RevealErrorOverlay onRetry={p.onRetry} />}
     </>
   );

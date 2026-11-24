@@ -80,10 +80,9 @@ export const TIER_CTA_STANDARD =
   "border-border/80 bg-secondary/75 text-foreground hover:border-foreground/20 hover:bg-accent dark:border-white/10 dark:bg-white/[0.06] dark:hover:bg-white/[0.11]";
 
 export const TIER_BADGE_STYLE: Record<PricingBlockVariant, string> = {
-  default: "bg-primary-foreground/15 text-primary-foreground",
-  spotlight:
-    "border border-solid border-signal/25 bg-signal/10 text-blue-700 dark:border-signal/35 dark:bg-signal/20 dark:text-blue-300",
-  minimal: "border border-solid border-border/80 bg-secondary text-foreground dark:border-white/12",
+  default: "bg-black/22 text-primary-foreground",
+  spotlight: "bg-signal/12 text-info dark:bg-signal/22",
+  minimal: "bg-secondary text-foreground",
 };
 export type BillingCycle = "monthly" | "yearly";
 export type PricingBlockVariant = "default" | "spotlight" | "minimal";
@@ -134,10 +133,8 @@ const FeatureList = ({
 }) => (
   <ul
     className={cn(
-      "m-0 flex flex-1 list-none flex-col gap-2.5 border-t border-solid p-0 pt-5 text-[13px]",
-      inverted
-        ? "border-primary-foreground/15 text-primary-foreground/85"
-        : "border-border/80 text-muted-foreground dark:border-white/10",
+      "m-0 flex flex-1 list-none flex-col gap-2.5 p-0 pt-2 text-[13px]",
+      inverted ? "text-primary-foreground" : "text-muted-foreground",
     )}
   >
     {features.map((feat) => (
@@ -147,10 +144,10 @@ const FeatureList = ({
           className={cn(
             "mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-full",
             inverted
-              ? "bg-primary-foreground/15 text-primary-foreground"
+              ? "bg-black/22 text-primary-foreground"
               : spotlightFeatured
-                ? "bg-signal/12 text-blue-700 dark:bg-signal/22 dark:text-blue-300"
-                : "bg-secondary text-foreground/80 dark:bg-white/10",
+                ? "bg-signal/12 text-info dark:bg-signal/22"
+                : "bg-secondary text-foreground/80",
           )}
         >
           <Check className="size-2.5 stroke-[2.5]" />
@@ -200,7 +197,7 @@ const TierHeader = ({
       <p
         className={cn(
           "m-0 mt-1.5 text-xs leading-relaxed",
-          inverted ? "text-primary-foreground/78" : "text-muted-foreground",
+          inverted ? "text-primary-foreground" : "text-muted-foreground",
         )}
       >
         {tier.description}
@@ -256,7 +253,7 @@ const TierPriceBlock = ({
     <p
       className={cn(
         "m-0 text-[11px]",
-        inverted ? "text-primary-foreground/75" : "text-muted-foreground",
+        inverted ? "text-primary-foreground" : "text-muted-foreground",
       )}
     >
       {note}
@@ -332,7 +329,7 @@ const BillingToggleBar = ({
         className={cn(
           "rounded-full border border-solid px-2.5 py-0.5 text-[11px] font-medium transition-colors",
           yearly
-            ? "border-signal/25 bg-signal/10 text-blue-700 dark:border-signal/35 dark:bg-signal/20 dark:text-blue-300"
+            ? "border-transparent bg-signal/12 text-info dark:bg-signal/22"
             : "border-border/80 bg-background text-muted-foreground dark:border-white/10 dark:bg-card",
         )}
       >

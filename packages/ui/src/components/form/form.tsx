@@ -263,7 +263,7 @@ export const FormRadioGroup = ({
 );
 
 const RADIO_CIRCLE_CLASSES = cn(
-  "mt-0.5 inline-flex size-[17px] shrink-0 items-center justify-center rounded-full border border-solid border-input/70 bg-background transition-colors duration-(--ui-duration-fast) dark:border-white/22 dark:bg-card",
+  "mt-0.5 inline-flex size-[17px] shrink-0 items-center justify-center rounded-full border border-solid border-input bg-card transition-colors duration-(--ui-duration-fast)",
   "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset",
   "data-checked:border-signal data-checked:bg-signal data-checked:shadow-[inset_0_1px_0_rgba(255,255,255,0.22)]",
 );

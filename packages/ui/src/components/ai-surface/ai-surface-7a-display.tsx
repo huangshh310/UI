@@ -48,7 +48,7 @@ export const SurfaceKvView = ({ node, nodeId }: SurfaceRendererProps) => {
       data-slot="surface-kv"
       data-node-id={nodeId}
       className={cn(
-        "m-0 grid gap-x-6 gap-y-2 rounded-lg border border-solid border-border/75 bg-muted/25 px-3.5 py-2.5 text-xs",
+        "m-0 grid gap-x-6 gap-y-2 rounded-xl bg-card px-4 py-3 text-xs shadow-2xs",
         twoCols ? "grid-cols-1 @sm:grid-cols-2" : "grid-cols-1",
       )}
     >
@@ -89,7 +89,7 @@ export const SurfaceStatsView = ({ node, nodeId }: SurfaceRendererProps) => {
       {visible.map((stat, idx) => (
         <div
           key={stat.key ?? `${stat.label}-${idx}`}
-          className="flex flex-col gap-1 rounded-lg border border-solid border-border/75 bg-card px-3 py-2.5"
+          className="flex flex-col gap-1 rounded-xl bg-muted/55 px-3.5 py-2.5"
         >
           <span className="text-[11px] text-muted-foreground">{stat.label}</span>
           <div className="flex items-baseline gap-1.5">
@@ -152,15 +152,15 @@ export const SurfaceCodeView = ({ node, nodeId }: SurfaceRendererProps) => {
     <div
       data-slot="surface-code"
       data-node-id={nodeId}
-      className="overflow-hidden rounded-xl border border-solid border-border bg-muted/35"
+      className="overflow-hidden rounded-xl bg-muted/60"
     >
       {(node.title || node.language) && (
-        <div className="flex items-center justify-between border-b border-solid border-border/75 px-3 py-1.5 font-mono text-[11px] text-muted-foreground">
+        <div className="flex items-center justify-between px-3.5 pt-2.5 pb-1 font-mono text-[11px] text-muted-foreground">
           <span>{node.title ?? ""}</span>
           {node.language && <span>{node.language}</span>}
         </div>
       )}
-      <pre className="m-0 overflow-x-auto p-3 font-mono text-xs leading-relaxed text-foreground">
+      <pre className="m-0 overflow-x-auto p-3.5 pt-2 font-mono text-xs leading-relaxed text-foreground">
         <code>{node.code}</code>
       </pre>
     </div>

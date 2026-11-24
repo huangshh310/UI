@@ -9,7 +9,7 @@ export const selectTriggerVariants = cva(
     variants: {
       variant: {
         default:
-          "border-input/50 bg-background shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:border-foreground/25 hover:bg-card data-popup-open:border-ring dark:border-white/12 dark:bg-card/85 dark:hover:border-white/22 dark:hover:bg-card",
+          "border-input bg-card shadow-2xs hover:border-foreground/22 data-popup-open:border-ring dark:hover:border-white/22",
         filled:
           "border-transparent bg-secondary/75 hover:bg-secondary data-popup-open:border-ring data-popup-open:bg-card focus-visible:bg-card dark:bg-white/7 dark:hover:bg-white/11",
         elevated:
@@ -64,7 +64,7 @@ export const selectItemVariants = cva(
         default:
           "text-foreground data-highlighted:bg-accent data-highlighted:text-accent-foreground",
         signal:
-          "text-foreground data-highlighted:bg-accent data-highlighted:text-accent-foreground data-selected:text-signal dark:data-selected:text-[#93b4ff]",
+          "text-foreground data-highlighted:bg-accent data-highlighted:text-accent-foreground data-selected:text-info",
       },
     },
     defaultVariants: {
@@ -79,7 +79,7 @@ export const selectCheckVariants = cva(
     variants: {
       tone: {
         default: "text-foreground",
-        signal: "text-signal dark:text-[#93b4ff]",
+        signal: "text-info",
       },
     },
     defaultVariants: {
@@ -89,7 +89,7 @@ export const selectCheckVariants = cva(
 );
 
 export const selectMultiBoxVariants = cva(
-  "inline-flex size-4 shrink-0 items-center justify-center rounded-[5px] border border-solid border-input/70 bg-transparent transition-colors duration-(--ui-duration-instant)",
+  "inline-flex size-4 shrink-0 items-center justify-center rounded-[5px] border border-solid border-input bg-transparent transition-colors duration-(--ui-duration-instant)",
   {
     variants: {
       tone: {

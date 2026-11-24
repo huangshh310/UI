@@ -4,17 +4,16 @@ import { cva } from "class-variance-authority";
 import { type HTMLAttributes } from "react";
 
 export const cardVariants = cva(
-  "relative flex flex-col rounded-[22px] border border-solid text-card-foreground",
+  "relative flex flex-col rounded-2xl border border-solid text-card-foreground",
   {
     variants: {
       variant: {
-        default: "border-border/90 bg-card shadow-xs dark:border-border/80",
-        elevated: "border-border/80 bg-card shadow-md dark:border-foreground/[0.09]",
+        default: "border-border bg-card shadow-xs",
+        elevated: "border-border bg-card shadow-md",
         interactive:
-          "border-border/90 bg-card shadow-xs transition-[border-color,box-shadow,transform] duration-(--ui-duration-fast) ease-out hover:-translate-y-0.5 hover:border-foreground/20 hover:shadow-md active:translate-y-0 motion-reduce:transform-none dark:border-border/80 dark:hover:border-foreground/22",
-        glass:
-          "border-border/70 bg-card/72 shadow-sm backdrop-blur-xl backdrop-saturate-150 dark:border-foreground/12 dark:bg-card/65",
-        subtle: "border-border/65 bg-muted/55 shadow-none dark:border-border/70 dark:bg-muted/45",
+          "border-border bg-card shadow-xs transition-[border-color,box-shadow,transform] duration-(--ui-duration-fast) ease-out hover:-translate-y-0.5 hover:border-input hover:shadow-md active:translate-y-0 motion-reduce:transform-none",
+        glass: "border-border bg-card/76 shadow-sm backdrop-blur-xl backdrop-saturate-150",
+        subtle: "border-transparent bg-muted/65 shadow-none",
       },
     },
     defaultVariants: {
@@ -89,8 +88,7 @@ export const CardFooter = ({ muted = false, className, ...props }: CardFooterPro
     data-slot="card-footer"
     className={cn(
       "mt-auto flex items-center justify-between gap-2 px-6 py-4",
-      muted &&
-        "rounded-b-[21px] border-t border-solid border-border/75 bg-muted/55 py-3.5 dark:bg-secondary/45",
+      muted && "rounded-b-2xl bg-muted/50 py-3.5",
       className,
     )}
     {...props}

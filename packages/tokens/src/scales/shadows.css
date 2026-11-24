@@ -1,8 +1,8 @@
 /*
- * 阴影刻度（BoardUI × Watermelon 轻盈 C 端漫射微影体系）。
+ * 阴影刻度（轻盈漫射微影体系）。
  *
- * 摒弃厚重浑浊的多层深影与硬唇边，采用极柔和的接地漫射微影与细腻顶边高光配合，
- * 让 C 端控件与卡片通透悬浮而不显油腻。
+ * 摒弃厚重浑浊的多层深影与硬唇边，采用柔和的接地漫射微影与细腻顶边高光配合，
+ * 让桌面与 Web 控件在冷灰画布上通透悬浮而不显厚重。
  */
 :root,
 .light,
@@ -17,7 +17,7 @@
     0 1px 2px 0 color-mix(in srgb, var(--ui-shadow-color) 5%, transparent),
     0 2px 6px -2px color-mix(in srgb, var(--ui-shadow-color) 4%, transparent);
 
-  /* 柔和抬升阴影：用于 C 端主卡片与器物面板 */
+  /* 柔和抬升阴影：用于主卡片与器物面板 */
   --ui-shadow-md:
     inset 0 1px 0 0 var(--ui-specular, transparent),
     0 1px 2px 0 color-mix(in srgb, var(--ui-shadow-color) 4%, transparent),
@@ -29,7 +29,7 @@
     0 4px 12px -2px color-mix(in srgb, var(--ui-shadow-color) 6%, transparent),
     0 18px 38px -10px color-mix(in srgb, var(--ui-shadow-color) 13%, transparent);
 
-  /* 高阶悬浮：用于悬浮 Sheet、模态框与命令面板 */
+  /* 高阶悬浮：用于悬浮抽屉、模态框与命令面板 */
   --ui-shadow-xl:
     inset 0 1px 0 0 var(--ui-specular, transparent),
     0 8px 20px -4px color-mix(in srgb, var(--ui-shadow-color) 8%, transparent),

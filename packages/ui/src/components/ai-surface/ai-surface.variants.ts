@@ -20,11 +20,11 @@ export const surfaceRootVariants = cva("flex w-full min-w-0 flex-col gap-3.5 tex
 
 export const SURFACE_TONE_TEXT: Record<SurfaceTone, string> = {
   neutral: "text-foreground",
-  signal: "text-signal",
+  signal: "text-info",
   success: "text-emerald-700 dark:text-emerald-400",
   warning: "text-amber-700 dark:text-amber-400",
   danger: "text-destructive",
-  info: "text-sky-700 dark:text-sky-400",
+  info: "text-info",
 };
 
 export const SURFACE_STATUS_TEXT: Record<SurfaceStatus, string> = {

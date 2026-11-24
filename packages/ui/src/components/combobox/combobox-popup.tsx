@@ -27,7 +27,7 @@ const HighlightMatch = ({ text, query }: { text: string; query: string }) => {
   return (
     <>
       {text.slice(0, index)}
-      <mark className="rounded bg-signal/15 px-0.5 font-medium text-foreground dark:bg-signal/25 dark:text-[#b4c8ff]">
+      <mark className="rounded bg-signal/15 px-0.5 font-medium text-foreground dark:bg-signal/25 dark:text-info">
         {text.slice(index, index + needle.length)}
       </mark>
       {text.slice(index + needle.length)}
@@ -40,7 +40,7 @@ const OptionLeading = ({ item, multiple }: { item: ComboboxOption; multiple: boo
     {multiple && (
       <span
         aria-hidden="true"
-        className="inline-flex size-4 shrink-0 items-center justify-center rounded-[5px] border border-solid border-input/70 bg-transparent transition-colors duration-(--ui-duration-instant) group-data-selected/item:border-signal group-data-selected/item:bg-signal group-data-selected/item:text-signal-foreground"
+        className="inline-flex size-4 shrink-0 items-center justify-center rounded-[5px] border border-solid border-input bg-transparent transition-colors duration-(--ui-duration-instant) group-data-selected/item:border-signal group-data-selected/item:bg-signal group-data-selected/item:text-signal-foreground"
       >
         <BaseCombobox.ItemIndicator className="inline-flex items-center justify-center">
           <Check aria-hidden="true" className="size-2.5 stroke-[2.75]" />
@@ -88,7 +88,7 @@ const ComboboxOptionItem = ({
         </span>
       )}
       {!multiple && (
-        <BaseCombobox.ItemIndicator className="inline-flex shrink-0 text-signal dark:text-[#93b4ff]">
+        <BaseCombobox.ItemIndicator className="inline-flex shrink-0 text-info">
           <Check aria-hidden="true" className="size-3.5 stroke-[2.25]" />
         </BaseCombobox.ItemIndicator>
       )}

@@ -18,9 +18,9 @@ main {
   gap: 16px;
   padding: 24px;
   margin-bottom: 24px;
+  border-radius: var(--ui-radius-2xl);
   background: var(--ui-background);
   color: var(--ui-foreground);
-  border: 1px solid var(--ui-border);
 }
 
 .panel h2 {

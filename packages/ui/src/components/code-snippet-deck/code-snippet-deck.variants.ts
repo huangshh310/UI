@@ -124,13 +124,13 @@ export const deckInputVariants = cva(
     variants: {
       variant: {
         default:
-          "border-input/55 bg-secondary/30 text-foreground shadow-xs hover:border-input/85 focus-visible:bg-card dark:border-border dark:bg-secondary/45",
+          "border-input bg-secondary/50 text-foreground shadow-xs hover:border-foreground/22 focus-visible:bg-card",
         terminal:
           "border-white/12 bg-[#1f1f26] text-[#fafafa] placeholder:text-[#71717a] hover:border-white/25",
         elevated:
-          "border-input/55 bg-secondary/30 text-foreground shadow-xs hover:border-input/85 focus-visible:bg-card dark:border-border dark:bg-secondary/45",
+          "border-input bg-secondary/50 text-foreground shadow-xs hover:border-foreground/22 focus-visible:bg-card",
         minimal:
-          "border-input/55 bg-secondary/40 text-foreground hover:border-input/85 focus-visible:bg-card dark:border-border",
+          "border-input bg-secondary/60 text-foreground hover:border-foreground/22 focus-visible:bg-card",
       },
     },
     defaultVariants: {

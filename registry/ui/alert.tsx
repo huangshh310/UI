@@ -36,25 +36,25 @@ export const alertVariants = cva(
         appearance: ["soft", "banner"],
         variant: "info",
         class:
-          "border-signal/25 bg-signal/6 text-foreground [&_[data-slot=alert-icon]]:text-blue-700 dark:bg-signal/12 dark:[&_[data-slot=alert-icon]]:text-blue-400",
+          "border-transparent bg-signal/8 text-foreground [&_[data-slot=alert-icon]]:text-info dark:bg-signal/16",
       },
       {
         appearance: ["soft", "banner"],
         variant: "success",
         class:
-          "border-emerald-600/25 bg-emerald-500/8 text-foreground [&_[data-slot=alert-icon]]:text-emerald-700 dark:bg-emerald-500/12 dark:[&_[data-slot=alert-icon]]:text-emerald-400",
+          "border-transparent bg-emerald-500/10 text-foreground [&_[data-slot=alert-icon]]:text-emerald-700 dark:bg-emerald-500/14 dark:[&_[data-slot=alert-icon]]:text-emerald-400",
       },
       {
         appearance: ["soft", "banner"],
         variant: "warning",
         class:
-          "border-amber-600/25 bg-amber-500/10 text-foreground [&_[data-slot=alert-icon]]:text-amber-700 dark:bg-amber-500/14 dark:[&_[data-slot=alert-icon]]:text-amber-400",
+          "border-transparent bg-amber-500/12 text-foreground [&_[data-slot=alert-icon]]:text-amber-700 dark:bg-amber-500/15 dark:[&_[data-slot=alert-icon]]:text-amber-400",
       },
       {
         appearance: ["soft", "banner"],
         variant: "destructive",
         class:
-          "border-destructive/25 bg-destructive/6 text-foreground [&_[data-slot=alert-icon]]:text-destructive dark:bg-destructive/12",
+          "border-transparent bg-destructive/8 text-foreground [&_[data-slot=alert-icon]]:text-destructive dark:bg-destructive/14",
       },
       // accent：干净卡片底配 3px 左侧语义强调条
       {
@@ -65,8 +65,7 @@ export const alertVariants = cva(
       {
         appearance: "accent",
         variant: "info",
-        class:
-          "border-l-signal [&_[data-slot=alert-icon]]:text-blue-700 dark:[&_[data-slot=alert-icon]]:text-blue-400",
+        class: "border-l-signal [&_[data-slot=alert-icon]]:text-info",
       },
       {
         appearance: "accent",

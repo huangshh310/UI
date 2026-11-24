@@ -148,7 +148,7 @@ export const SurfaceGroupView = ({ node, nodeId, disabled, renderNode }: Surface
     <section
       data-slot="surface-group"
       data-node-id={nodeId}
-      className="flex flex-col gap-3 rounded-xl border border-solid border-border/80 bg-muted/20 p-4"
+      className="flex flex-col gap-3 rounded-2xl bg-muted/55 p-4"
     >
       {(node.title || node.end) && (
         <div className="flex items-start justify-between gap-3">
@@ -171,7 +171,7 @@ export const SurfaceGroupView = ({ node, nodeId, disabled, renderNode }: Surface
         {node.children.map((c, i) => renderNode(c, c.id ?? `${nodeId}.${i}`, disabled))}
       </div>
       {node.foot && (
-        <div className="flex items-center justify-end gap-2 border-t border-solid border-border/70 pt-3">
+        <div className="flex items-center justify-end gap-2 pt-1">
           {renderSlotNodes(node.foot, `${nodeId}.foot`, disabled, renderNode)}
         </div>
       )}

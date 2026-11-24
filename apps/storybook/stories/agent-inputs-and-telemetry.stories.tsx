@@ -108,8 +108,8 @@ export const MultiSpaceColorPicker: Story = {
     <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
       <ColorPicker
         label="品牌信号色"
-        defaultValue="#2563eb"
-        presets={["#2563eb", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6"]}
+        defaultValue="#7a5ee4"
+        presets={["#7a5ee4", "#6547d4", "#10b981", "#f59e0b", "#ef4444"]}
       />
       <ColorPicker
         label="感知均匀色盘"

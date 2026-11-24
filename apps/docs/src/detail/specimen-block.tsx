@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * 详情页中的一个示例：双层卡片结构，顶栏承载标题、说明、响应式宽度切换器与「预览 / 代码」切换。
+ * 详情页中的一个示例：无框线卡片承载标题、视口宽度切换与「预览 / 代码」面板。
  */
 import { Tabs } from "@base-ui/react/tabs";
 import { useState, type ReactNode } from "react";
@@ -21,25 +21,20 @@ interface SpecimenBlockProps {
 const SpecimenHeader = ({
   id,
   name,
-  description,
   responsive,
   viewport,
   onViewportChange,
 }: {
   id: string;
   name: string;
-  description: string;
   responsive: boolean;
   viewport: PreviewViewport;
   onViewportChange: (next: PreviewViewport) => void;
 }) => (
-  <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/75 px-5 py-4">
-    <div>
-      <h3 id={`${id}-title`} className="text-base font-semibold tracking-tight">
-        {name}
-      </h3>
-      <p className="mt-1 text-xs text-muted-foreground">{description}</p>
-    </div>
+  <div className="flex flex-wrap items-center justify-between gap-4 px-3 pt-1.5 pb-3">
+    <h3 id={`${id}-title`} className="text-[15px] font-semibold tracking-tight">
+      {name}
+    </h3>
     <div className="flex items-center gap-2">
       {responsive && <ViewportSwitcher value={viewport} onChange={onViewportChange} />}
       <Tabs.List className={TAB_LIST_CLASSES}>
@@ -57,7 +52,6 @@ const SpecimenHeader = ({
 export const SpecimenBlock = ({
   id,
   name,
-  description,
   preview,
   codeHtml,
   responsive = false,
@@ -67,18 +61,17 @@ export const SpecimenBlock = ({
   return (
     <section id={id} data-testid="specimen-block" aria-labelledby={`${id}-title`}>
       <Tabs.Root defaultValue="preview">
-        <div className="overflow-hidden rounded-2xl border border-border bg-(--site-surface) shadow-xs">
+        <div className="overflow-hidden rounded-3xl bg-(--site-surface) p-3 shadow-xs">
           <SpecimenHeader
             id={id}
             name={name}
-            description={description}
             responsive={responsive}
             viewport={viewport}
             onViewportChange={setViewport}
           />
-          <Tabs.Panel value="preview" className="p-2.5 outline-none">
+          <Tabs.Panel value="preview" className="outline-none">
             <SpecimenStage
-              className={`${responsive ? "min-h-80 p-4 sm:p-7" : "min-h-68"} rounded-xl border border-border/65`}
+              className={`${responsive ? "min-h-80 p-4 sm:p-7" : "min-h-68"} rounded-2xl`}
             >
               {responsive ? <ViewportFrame viewport={viewport}>{preview}</ViewportFrame> : preview}
             </SpecimenStage>

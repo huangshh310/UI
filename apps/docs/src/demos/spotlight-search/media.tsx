@@ -13,7 +13,8 @@ const ASSETS = [
     shortcut: "1",
     meta: "2.4 KB · 刚刚更新",
     icon: <FileCode2 className="size-3.5" />,
-    preview: "定义画布 #fafafa、纯白卡片 #ffffff 与品牌蓝 #155dfc，全部配对通过 WCAG AA 校验。",
+    preview:
+      "定义冷灰画布 #f2f3f7、纯白卡片 #ffffff 与鸢尾紫主色 #7a5ee4，全部配对通过 WCAG AA 校验。",
   },
   {
     id: "hero",

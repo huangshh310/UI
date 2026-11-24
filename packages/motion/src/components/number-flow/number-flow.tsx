@@ -33,7 +33,7 @@ interface DigitSlotProps {
 
 const DigitSlot = ({ char, slotKey, direction, reduced }: DigitSlotProps) => {
   if (!/\d/.test(char)) {
-    return <span className="inline-block opacity-85">{char}</span>;
+    return <span className="inline-block">{char}</span>;
   }
   const enterY = reduced ? "0%" : direction >= 0 ? "72%" : "-72%";
   const exitY = reduced ? "0%" : direction >= 0 ? "-72%" : "72%";

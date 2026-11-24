@@ -62,7 +62,7 @@ export const ACTIVITY_CATEGORY_META: Record<
   deploy: {
     label: "部署",
     variant: "soft",
-    nodeTone: "border-signal/30 bg-signal/10 text-blue-700 dark:text-blue-300",
+    nodeTone: "border-transparent bg-signal/12 text-info dark:bg-signal/20",
   },
   security: {
     label: "安全",

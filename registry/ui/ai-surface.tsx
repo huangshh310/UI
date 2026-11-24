@@ -42,11 +42,11 @@ export const surfaceRootVariants = cva("flex w-full min-w-0 flex-col gap-3.5 tex
 
 export const SURFACE_TONE_TEXT: Record<SurfaceTone, string> = {
   neutral: "text-foreground",
-  signal: "text-signal",
+  signal: "text-info",
   success: "text-emerald-700 dark:text-emerald-400",
   warning: "text-amber-700 dark:text-amber-400",
   danger: "text-destructive",
-  info: "text-sky-700 dark:text-sky-400",
+  info: "text-info",
 };
 
 export const SURFACE_STATUS_TEXT: Record<SurfaceStatus, string> = {
@@ -1371,7 +1371,7 @@ const SurfaceGroupView = ({ node, nodeId, disabled, renderNode }: SurfaceRendere
     <section
       data-slot="surface-group"
       data-node-id={nodeId}
-      className="flex flex-col gap-3 rounded-xl border border-solid border-border/80 bg-muted/20 p-4"
+      className="flex flex-col gap-3 rounded-2xl bg-muted/55 p-4"
     >
       {(node.title || node.end) && (
         <div className="flex items-start justify-between gap-3">
@@ -1394,7 +1394,7 @@ const SurfaceGroupView = ({ node, nodeId, disabled, renderNode }: SurfaceRendere
         {node.children.map((c, i) => renderNode(c, c.id ?? `${nodeId}.${i}`, disabled))}
       </div>
       {node.foot && (
-        <div className="flex items-center justify-end gap-2 border-t border-solid border-border/70 pt-3">
+        <div className="flex items-center justify-end gap-2 pt-1">
           {renderSlotNodes(node.foot, `${nodeId}.foot`, disabled, renderNode)}
         </div>
       )}
@@ -1452,7 +1452,7 @@ const SurfaceKvView = ({ node, nodeId }: SurfaceRendererProps) => {
       data-slot="surface-kv"
       data-node-id={nodeId}
       className={cn(
-        "m-0 grid gap-x-6 gap-y-2 rounded-lg border border-solid border-border/75 bg-muted/25 px-3.5 py-2.5 text-xs",
+        "m-0 grid gap-x-6 gap-y-2 rounded-xl bg-card px-4 py-3 text-xs shadow-2xs",
         twoCols ? "grid-cols-1 @sm:grid-cols-2" : "grid-cols-1",
       )}
     >
@@ -1493,7 +1493,7 @@ const SurfaceStatsView = ({ node, nodeId }: SurfaceRendererProps) => {
       {visible.map((stat, idx) => (
         <div
           key={stat.key ?? `${stat.label}-${idx}`}
-          className="flex flex-col gap-1 rounded-lg border border-solid border-border/75 bg-card px-3 py-2.5"
+          className="flex flex-col gap-1 rounded-xl bg-muted/55 px-3.5 py-2.5"
         >
           <span className="text-[11px] text-muted-foreground">{stat.label}</span>
           <div className="flex items-baseline gap-1.5">
@@ -1556,15 +1556,15 @@ const SurfaceCodeView = ({ node, nodeId }: SurfaceRendererProps) => {
     <div
       data-slot="surface-code"
       data-node-id={nodeId}
-      className="overflow-hidden rounded-xl border border-solid border-border bg-muted/35"
+      className="overflow-hidden rounded-xl bg-muted/60"
     >
       {(node.title || node.language) && (
-        <div className="flex items-center justify-between border-b border-solid border-border/75 px-3 py-1.5 font-mono text-[11px] text-muted-foreground">
+        <div className="flex items-center justify-between px-3.5 pt-2.5 pb-1 font-mono text-[11px] text-muted-foreground">
           <span>{node.title ?? ""}</span>
           {node.language && <span>{node.language}</span>}
         </div>
       )}
-      <pre className="m-0 overflow-x-auto p-3 font-mono text-xs leading-relaxed text-foreground">
+      <pre className="m-0 overflow-x-auto p-3.5 pt-2 font-mono text-xs leading-relaxed text-foreground">
         <code>{node.code}</code>
       </pre>
     </div>
@@ -1666,10 +1666,7 @@ const SurfaceTableRows = ({
               ? () => onTriggerAction(actionId, nodeId, undefined, row)
               : undefined
           }
-          className={cn(
-            "border-b border-solid border-border/50 last:border-b-0",
-            clickable && "cursor-pointer transition-colors hover:bg-accent/60",
-          )}
+          className={cn("transition-colors", clickable && "cursor-pointer hover:bg-accent/60")}
         >
           {node.columns.map((col) => (
             <td key={col.key} className={cn("px-3.5 py-2.5", COL_ALIGN_CLASS[col.align ?? "left"])}>
@@ -1689,10 +1686,10 @@ const SurfaceTableView = ({ node, nodeId, disabled, onTriggerAction }: SurfaceRe
     <div
       data-slot="surface-table"
       data-node-id={nodeId}
-      className="overflow-hidden rounded-xl border border-solid border-border bg-card"
+      className="overflow-hidden rounded-xl bg-muted/45 p-1"
     >
       {node.title && (
-        <div className="border-b border-solid border-border/75 px-3.5 py-2.5">
+        <div className="px-3 pt-2 pb-1.5">
           <p className="m-0 text-xs font-semibold text-foreground">{node.title}</p>
           {node.description && (
             <p className="m-0 mt-0.5 text-[11px] text-muted-foreground">{node.description}</p>
@@ -1702,11 +1699,11 @@ const SurfaceTableView = ({ node, nodeId, disabled, onTriggerAction }: SurfaceRe
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-xs">
           <thead>
-            <tr className="border-b border-solid border-border/75 bg-muted/35 text-muted-foreground">
+            <tr className="text-muted-foreground">
               {node.columns.map((col) => (
                 <th
                   key={col.key}
-                  className={cn("px-3.5 py-2 font-medium", COL_ALIGN_CLASS[col.align ?? "left"])}
+                  className={cn("px-3 py-2 font-medium", COL_ALIGN_CLASS[col.align ?? "left"])}
                 >
                   {col.header}
                 </th>

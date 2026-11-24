@@ -19,7 +19,7 @@ beforeAll(() => {
 
 afterEach(cleanup);
 
-const PRESET_SWATCHES = ["#ef4444", "#22c55e", "#2563eb", "#a855f7"];
+const PRESET_SWATCHES = ["#ef4444", "#22c55e", "#7a5ee4", "#a855f7"];
 
 describe("ColorPicker", () => {
   it("渲染预设色板与色值输入框，点击预设色块或输入合法色值回车后触发变更与确认回调", async () => {
@@ -30,7 +30,7 @@ describe("ColorPicker", () => {
     const { container } = render(
       <ColorPicker
         label="品牌主色"
-        defaultValue="#2563eb"
+        defaultValue="#7a5ee4"
         presets={PRESET_SWATCHES}
         onValueChange={onValueChange}
         onValueCommit={onValueCommit}
@@ -53,14 +53,14 @@ describe("ColorPicker", () => {
   it("在输入框键入非法色值字符串并回车时自动回退至上一个有效颜色", async () => {
     const user = userEvent.setup();
 
-    render(<ColorPicker ariaLabel="主题强调色" defaultValue="#2563eb" />);
+    render(<ColorPicker ariaLabel="主题强调色" defaultValue="#7a5ee4" />);
 
     const hexInput = screen.getByRole("textbox", { name: "颜色值输入" }) as HTMLInputElement;
-    expect(hexInput.value.toLowerCase()).toBe("#2563eb");
+    expect(hexInput.value.toLowerCase()).toBe("#7a5ee4");
 
     await user.clear(hexInput);
     await user.type(hexInput, "not-a-valid-color{Enter}");
-    expect(hexInput.value.toLowerCase()).toBe("#2563eb");
+    expect(hexInput.value.toLowerCase()).toBe("#7a5ee4");
   });
 
   it("支持 oklch 色彩空间画布挂载与透明度滑轨开关", () => {

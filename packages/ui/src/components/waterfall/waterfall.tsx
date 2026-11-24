@@ -101,7 +101,7 @@ const WaterfallTableHeader = ({
   >
     <WaterfallColumnHeader className="px-3 py-2">{nameHeader ?? "调用步骤"}</WaterfallColumnHeader>
     {hasMeta && (
-      <WaterfallColumnHeader className="border-x border-solid border-border/60 px-2.5 py-2 text-right">
+      <WaterfallColumnHeader className="px-2.5 py-2 text-right">
         {metaHeader ?? "指标"}
       </WaterfallColumnHeader>
     )}

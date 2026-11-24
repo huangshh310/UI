@@ -24,7 +24,7 @@ const resolveAriaLabel = (label?: string, ariaLabel?: string) => {
 
 const resolveDefaultValue = (value?: string, defaultValue?: string) => {
   if (value !== undefined) return undefined;
-  return defaultValue ?? "#2563eb";
+  return defaultValue ?? "#7a5ee4";
 };
 
 export const ColorPicker = (props: ColorPickerProps) => {
@@ -49,7 +49,7 @@ export const ColorPicker = (props: ColorPickerProps) => {
       onValueCommit={(next) => props.onValueCommit?.(next)}
       className={cn(COLOR_PICKER_SHELL_CLASS, props.className)}
     >
-      <PickerHeader label={props.label} labelId={labelId} space={space} />
+      <PickerHeader label={props.label} labelId={labelId} />
       <PickerSurfaceAndSliders space={space} showAlpha={props.showAlpha} />
       <PickerValueRow showInput={showInput} showEyeDropper={props.showEyeDropper} />
       {props.showChannelInputs && <PickerChannelGrid space={space} showAlpha={props.showAlpha} />}

@@ -39,9 +39,7 @@ const HeaderBadge = ({
         <span
           className={cn(
             "shrink-0 rounded-md px-1.5 py-0.5 text-[10px] leading-none font-semibold tracking-wider uppercase",
-            isTerminal
-              ? "bg-signal/22 text-[#b4c8ff]"
-              : "bg-card text-signal ring-1 ring-signal/25 dark:bg-signal/22 dark:text-[#b4c8ff] dark:ring-signal/35",
+            isTerminal ? "bg-signal/22 text-[#c4b5fd]" : "bg-signal/12 text-info dark:bg-signal/22",
           )}
         >
           {badge}
@@ -65,7 +63,7 @@ const wrapButtonClass = (isTerminal: boolean, active: boolean) =>
     active &&
       (isTerminal
         ? "border-signal/60 bg-signal/20 text-[#fafafa]"
-        : "border-signal/55 bg-card text-signal dark:bg-signal/20 dark:text-[#b4c8ff]"),
+        : "border-signal/55 bg-card text-info dark:bg-signal/20"),
   );
 
 export interface DeckHeaderProps {
@@ -124,8 +122,8 @@ const paramMarkClass = (isTerminal: boolean, active: boolean) => {
     return "rounded bg-signal px-1 py-0.5 font-medium text-signal-foreground transition-colors duration-(--ui-duration-fast)";
   }
   return isTerminal
-    ? "rounded bg-signal/22 px-1 py-0.5 font-medium text-[#b4c8ff] transition-colors duration-(--ui-duration-fast)"
-    : "rounded bg-signal/10 px-1 py-0.5 font-medium text-signal transition-colors duration-(--ui-duration-fast) dark:bg-signal/22 dark:text-[#b4c8ff]";
+    ? "rounded bg-signal/22 px-1 py-0.5 font-medium text-[#c4b5fd] transition-colors duration-(--ui-duration-fast)"
+    : "rounded bg-signal/12 px-1 py-0.5 font-medium text-info transition-colors duration-(--ui-duration-fast) dark:bg-signal/22";
 };
 
 const LineGutter = ({ lineCount, isTerminal }: { lineCount: number; isTerminal: boolean }) => (

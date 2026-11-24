@@ -7,33 +7,30 @@ import { ColorPicker } from "@matt-ui/ui";
 import { useState } from "react";
 
 const BRAND_PRESETS = [
-  "#2563eb",
-  "#0ea5e9",
+  "#7a5ee4",
+  "#6547d4",
   "#10b981",
   "#f59e0b",
   "#ef4444",
-  "#8b5cf6",
   "#ec4899",
-  "#0f172a",
+  "#0ea5e9",
+  "#131418",
 ];
 
 export const ColorPickerBasic = () => {
-  const [color, setColor] = useState("#2563eb");
+  const [color, setColor] = useState("#7a5ee4");
 
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-col items-center">
       <ColorPicker
-        label="品牌主题信号色"
+        ariaLabel="品牌主题信号色"
         value={color}
         onValueChange={setColor}
         presets={BRAND_PRESETS}
       />
-      <p
-        data-testid="color-picker-output"
-        className="m-0 font-mono text-xs text-muted-foreground tabular-nums"
-      >
-        当前色值：{color}
-      </p>
+      <output data-testid="color-picker-output" className="sr-only">
+        {color}
+      </output>
     </div>
   );
 };

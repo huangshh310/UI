@@ -154,13 +154,7 @@ const StepTimeline = ({
     transition={reduced ? { duration: 0 } : REASONING_COLLAPSE_TRANSITION}
     className="overflow-hidden"
   >
-    <div
-      className={cn(
-        variant === "inline"
-          ? "pt-1.5 pb-1 pl-2"
-          : "border-t border-solid border-border/75 px-4 py-3 dark:border-white/10",
-      )}
-    >
+    <div className={cn(variant === "inline" ? "pt-1.5 pb-1 pl-2" : "px-4 pt-1 pb-3.5")}>
       <ol className="m-0 flex list-none flex-col p-0">
         {steps.map((step, idx) => (
           <TimelineStepItem

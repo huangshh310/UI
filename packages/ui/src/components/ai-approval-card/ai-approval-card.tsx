@@ -36,7 +36,7 @@ const ApprovalRiskBadge = ({ riskLevel }: { riskLevel: AiApprovalRisk }) => {
   return (
     <span
       className={cn(
-        "inline-flex shrink-0 items-center gap-1 rounded-md border border-solid px-1.5 py-0.5 text-[11px] font-medium leading-none",
+        "inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium leading-none",
         risk.badgeClass,
       )}
     >
@@ -53,15 +53,15 @@ const ApprovalHeader = (p: ApprovalHeaderProps) => {
   return (
     <div
       className={cn(
-        "flex items-start justify-between gap-3 border-b border-solid border-border/75 bg-muted/35 dark:border-white/8 dark:bg-white/[0.025]",
-        p.compact ? "px-3.5 py-2.5" : "px-4 py-3",
+        "flex items-start justify-between gap-3",
+        p.compact ? "px-3.5 pt-3 pb-1" : "px-4 pt-4 pb-1",
       )}
     >
       <div className="flex min-w-0 flex-1 items-start gap-2.5">
         <span
           aria-hidden="true"
           className={cn(
-            "mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-lg border border-solid",
+            "mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-lg",
             risk.iconWrapClass,
           )}
         >
@@ -78,7 +78,7 @@ const ApprovalHeader = (p: ApprovalHeaderProps) => {
         </div>
       </div>
       {p.agentName && (
-        <span className="inline-flex shrink-0 rounded-md border border-solid border-border/75 bg-card px-2 py-0.5 font-mono text-[11px] text-muted-foreground tabular-nums dark:border-white/10 dark:bg-white/[0.04]">
+        <span className="inline-flex shrink-0 rounded-md bg-secondary px-2 py-0.5 font-mono text-[11px] text-muted-foreground tabular-nums">
           {p.agentName}
         </span>
       )}
@@ -93,7 +93,7 @@ const ApprovalFooter = ({
   onReject,
   onApprove,
 }: {
-  impact: string;
+  impact?: string;
   riskLevel: AiApprovalRisk;
   compact: boolean;
   onReject: () => void;
@@ -101,16 +101,19 @@ const ApprovalFooter = ({
 }) => (
   <div
     className={cn(
-      "flex flex-wrap items-center justify-between gap-2.5 border-t border-solid border-border/75 bg-muted/25 dark:border-white/8 dark:bg-white/[0.02]",
-      compact ? "px-3.5 py-2.5" : "px-4 py-3",
+      "flex flex-wrap items-center gap-2.5",
+      impact ? "justify-between" : "justify-end",
+      compact ? "px-3.5 pt-1 pb-3" : "px-4 pt-1 pb-4",
     )}
   >
-    <div className="flex min-w-0 items-center gap-1.5 text-muted-foreground">
-      <ShieldCheck aria-hidden="true" className="size-3.5 shrink-0 text-foreground/70" />
-      <span className="truncate font-mono text-[11px] tabular-nums">{impact}</span>
-    </div>
+    {impact && (
+      <div className="flex min-w-0 items-center gap-1.5 text-muted-foreground">
+        <ShieldCheck aria-hidden="true" className="size-3.5 shrink-0 text-foreground/70" />
+        <span className="truncate font-mono text-[11px] tabular-nums">{impact}</span>
+      </div>
+    )}
     <div className="flex items-center gap-2">
-      <Button size="sm" variant="outline" className="h-8 rounded-lg" onClick={onReject}>
+      <Button size="sm" variant="secondary" className="h-8 rounded-lg" onClick={onReject}>
         <X aria-hidden="true" className="size-3.5" />
         <span>拒绝</span>
       </Button>
@@ -132,7 +135,7 @@ const resolveApprovalDefaults = (props: AiApprovalCardProps) => ({
   command: props.command ?? "pnpm registry:generate && pnpm test:registry",
   riskLevel: props.riskLevel ?? ("medium" as AiApprovalRisk),
   variant: props.variant ?? ("card" as AiApprovalCardVariant),
-  impact: props.impact ?? "护栏保护 · 可回滚",
+  impact: props.impact,
   options: props.options ?? APPROVAL_DEFAULT_OPTIONS,
 });
 

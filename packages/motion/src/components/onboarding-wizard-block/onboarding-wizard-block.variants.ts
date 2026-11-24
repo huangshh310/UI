@@ -24,7 +24,7 @@ export const WIZARD_REGIONS: WizardRegionOption[] = [
 ];
 
 export const WIZARD_SURFACE_CLASS: Record<OnboardingWizardVariant, string> = {
-  card: "rounded-[24px] border-border/80 bg-card p-6 shadow-xs dark:border-white/10",
-  embedded: "rounded-2xl border-border/75 bg-card/85 p-5 shadow-none dark:border-white/10",
-  elevated: "rounded-[24px] border-border/80 bg-card p-6 shadow-md dark:border-white/12",
+  card: "rounded-3xl border border-solid border-border bg-card p-6 shadow-xs",
+  embedded: "rounded-2xl bg-card p-5 shadow-none",
+  elevated: "rounded-3xl border border-solid border-border bg-card p-6 shadow-md",
 };

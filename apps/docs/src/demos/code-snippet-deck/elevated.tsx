@@ -29,8 +29,8 @@ const THEME_PARAMETERS = [
   {
     name: "accent",
     label: "信号色 Accent",
-    defaultValue: "#2563eb",
-    options: ["#2563eb", "#7c3aed", "#059669", "#ea580c"],
+    defaultValue: "#7a5ee4",
+    options: ["#7a5ee4", "#6547d4", "#059669", "#ea580c"],
   },
   {
     name: "radius",

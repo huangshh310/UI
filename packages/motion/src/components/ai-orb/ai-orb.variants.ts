@@ -64,16 +64,16 @@ export const ORB_LATTICE_PADDING: Record<AiOrbSize, string> = {
 
 /** 立体流体光学球配色：冰白高光核心 → 澄澈亮彩过渡 → 饱和主色 → 深邃边缘与同色接地影 */
 const AURORA_SIGNAL: AuroraPalette = {
-  base: "radial-gradient(circle at 34% 26%, #f0f9ff 0%, #38bdf8 26%, #155dfc 60%, #1e3a8a 88%, #0f172a 100%)",
+  base: "radial-gradient(circle at 34% 26%, #f5f3ff 0%, #a78bfa 26%, #7a5ee4 60%, #4c1d95 88%, #17122b 100%)",
   cloudA:
-    "radial-gradient(circle at 44% 48%, rgba(29,78,216,0.92) 0%, rgba(30,58,138,0.58) 50%, transparent 72%)",
+    "radial-gradient(circle at 44% 48%, rgba(101,71,212,0.92) 0%, rgba(76,29,149,0.58) 50%, transparent 72%)",
   cloudB:
-    "radial-gradient(circle at 58% 40%, rgba(56,189,248,0.92) 0%, rgba(125,211,252,0.46) 46%, transparent 72%)",
+    "radial-gradient(circle at 58% 40%, rgba(167,139,250,0.92) 0%, rgba(196,181,253,0.46) 46%, transparent 72%)",
   cloudC:
-    "radial-gradient(circle at 50% 50%, rgba(240,249,255,0.94) 0%, rgba(186,230,253,0.42) 44%, transparent 68%)",
-  bounce: "radial-gradient(ellipse 72% 36% at 54% 92%, rgba(125,211,252,0.58) 0%, transparent 70%)",
-  shadow: "0 12px 28px -8px rgba(21,93,252,0.46), 0 3px 10px -3px rgba(15,23,42,0.28)",
-  shadowSm: "0 3px 9px -2px rgba(21,93,252,0.42)",
+    "radial-gradient(circle at 50% 50%, rgba(245,243,255,0.94) 0%, rgba(221,214,254,0.42) 44%, transparent 68%)",
+  bounce: "radial-gradient(ellipse 72% 36% at 54% 92%, rgba(180,158,255,0.58) 0%, transparent 70%)",
+  shadow: "0 12px 28px -8px rgba(101,71,212,0.46), 0 3px 10px -3px rgba(19,20,24,0.28)",
+  shadowSm: "0 3px 9px -2px rgba(101,71,212,0.42)",
 };
 
 const AURORA_LISTENING: AuroraPalette = {
@@ -157,10 +157,10 @@ export const ORB_AURORA_BY_TONE: Record<Exclude<AiOrbTone, "auto">, AuroraPalett
 
 /** 精密深黑曜石 OLED 矩阵发光点配色：中心最亮，边点次之，角点柔和衰减 */
 const LATTICE_SIGNAL: LatticePalette = {
-  dotClass: "bg-sky-300",
-  centerGlow: "0 0 8px rgba(56,189,248,0.9), 0 0 2px rgba(240,249,255,0.95)",
-  edgeGlow: "0 0 5px rgba(56,189,248,0.58)",
-  cornerGlow: "0 0 3px rgba(56,189,248,0.28)",
+  dotClass: "bg-violet-300",
+  centerGlow: "0 0 8px rgba(167,139,250,0.9), 0 0 2px rgba(245,243,255,0.95)",
+  edgeGlow: "0 0 5px rgba(167,139,250,0.58)",
+  cornerGlow: "0 0 3px rgba(167,139,250,0.28)",
 };
 
 const LATTICE_LISTENING: LatticePalette = {
@@ -207,11 +207,11 @@ export const ORB_LATTICE_BY_TONE: Record<Exclude<AiOrbTone, "auto">, LatticePale
 
 /** 精密双轨天文/声纹光环渐变色：渐变流光主弧 + 内圈细弧 + 悬浮光学核点 */
 const RING_SIGNAL: RingPalette = {
-  tail: "#38bdf8",
-  head: "#155dfc",
-  inner: "#60a5fa",
-  core: "radial-gradient(circle at 34% 28%, #f0f9ff 0%, #38bdf8 46%, #155dfc 100%)",
-  coreShadow: "0 0 10px rgba(21,93,252,0.5)",
+  tail: "#b49eff",
+  head: "#6547d4",
+  inner: "#8b73f2",
+  core: "radial-gradient(circle at 34% 28%, #f5f3ff 0%, #b49eff 46%, #6547d4 100%)",
+  coreShadow: "0 0 10px rgba(101,71,212,0.5)",
 };
 
 const RING_LISTENING: RingPalette = {

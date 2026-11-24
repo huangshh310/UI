@@ -20,7 +20,7 @@ import {
 
 const AVATAR_TONES = [
   "bg-zinc-900/10 text-zinc-900 dark:bg-zinc-100/15 dark:text-zinc-100",
-  "bg-blue-500/14 text-blue-900 dark:bg-blue-400/20 dark:text-blue-100",
+  "bg-signal/14 text-info dark:bg-signal/22",
   "bg-emerald-500/14 text-emerald-900 dark:bg-emerald-400/20 dark:text-emerald-100",
   "bg-amber-500/15 text-amber-900 dark:bg-amber-400/20 dark:text-amber-100",
   "bg-violet-500/14 text-violet-900 dark:bg-violet-400/20 dark:text-violet-100",

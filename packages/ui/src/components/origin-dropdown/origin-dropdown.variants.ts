@@ -62,8 +62,7 @@ export const originDropdownItemVariants = cva(
       tone: {
         default:
           "text-foreground data-highlighted:bg-accent/85 data-highlighted:text-accent-foreground dark:data-highlighted:bg-white/10",
-        signal:
-          "text-signal data-highlighted:bg-signal/12 dark:text-blue-300 dark:data-highlighted:bg-signal/20",
+        signal: "text-info data-highlighted:bg-signal/12 dark:data-highlighted:bg-signal/20",
         destructive:
           "text-destructive data-highlighted:bg-destructive/10 dark:data-highlighted:bg-destructive/18",
       },

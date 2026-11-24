@@ -5,11 +5,11 @@ import { cva } from "class-variance-authority";
 import type { AiDiffLine, AiDiffLineType, AiDiffReviewTheme } from "./ai-diff-review.types.js";
 
 export const diffReviewShellVariants = cva(
-  "w-full overflow-hidden rounded-xl border border-solid shadow-xs",
+  "w-full overflow-hidden rounded-2xl border border-solid shadow-xs",
   {
     variants: {
       theme: {
-        adaptive: "border-border bg-card text-card-foreground dark:border-white/10",
+        adaptive: "border-border bg-card text-card-foreground",
         obsidian: "[color-scheme:dark] border-zinc-800 bg-zinc-950 text-zinc-100",
       },
     },

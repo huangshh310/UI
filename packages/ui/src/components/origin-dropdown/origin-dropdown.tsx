@@ -43,7 +43,7 @@ const ActionRow = ({
             item.tone === "destructive"
               ? "text-destructive"
               : item.tone === "signal"
-                ? "text-signal dark:text-blue-300"
+                ? "text-info"
                 : "text-muted-foreground group-data-highlighted/item:text-foreground",
           )}
         >
@@ -89,7 +89,7 @@ const CheckboxRow = ({
           "inline-flex size-4 shrink-0 items-center justify-center rounded-[5px] border border-solid transition-colors duration-(--ui-duration-instant)",
           item.checked
             ? "border-signal bg-signal text-signal-foreground"
-            : "border-input/70 bg-background text-transparent dark:border-white/20 dark:bg-card",
+            : "border-input bg-card text-transparent",
         )}
       >
         <Menu.CheckboxItemIndicator className="inline-flex items-center justify-center">

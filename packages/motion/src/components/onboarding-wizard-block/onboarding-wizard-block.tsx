@@ -4,7 +4,7 @@
  * OnboardingWizardBlock：由 StretchSwitch、OtpInput 与 NumberFlow 组合的三步工作区初始化引导区块。
  */
 import { cn } from "@matt-ui/utils";
-import { motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState, type ReactNode } from "react";
 import { StepHeader, StepProfile, StepSecurity, StepSummary } from "./onboarding-wizard-steps.js";
 import type { OnboardingWizardBlockProps } from "./onboarding-wizard-block.types.js";
@@ -25,12 +25,12 @@ const WizardFooter = ({
   onBack: () => void;
   onNext: () => void;
 }) => (
-  <div className="flex flex-wrap items-center justify-between gap-2 border-t border-solid border-border/75 pt-4 dark:border-white/10">
+  <div className="flex flex-wrap items-center justify-between gap-2 pt-2">
     <button
       type="button"
       disabled={step === 0 && !completed}
       onClick={onBack}
-      className="inline-flex h-8.5 cursor-pointer items-center rounded-xl border border-solid border-border/80 bg-background px-3.5 font-sans text-xs font-medium text-foreground transition-colors hover:bg-accent outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-40 dark:border-white/12 dark:bg-card"
+      className="inline-flex h-8.5 cursor-pointer items-center rounded-xl bg-secondary px-3.5 font-sans text-xs font-medium text-secondary-foreground transition-colors outline-none hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-40"
     >
       {completed ? "重新配置" : "上一步"}
     </button>
@@ -44,7 +44,7 @@ const WizardFooter = ({
         <button
           type="button"
           onClick={onNext}
-          className="inline-flex h-9 cursor-pointer items-center rounded-full border border-solid border-primary bg-primary px-4 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-[opacity,transform] hover:opacity-92 active:scale-[0.98] outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+          className="inline-flex h-9 cursor-pointer items-center rounded-full bg-primary px-4 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-[background-color,transform] outline-none hover:bg-primary/92 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 active:scale-[0.98]"
         >
           {step === WIZARD_STEPS.length - 1 ? "完成初始化" : "下一步"}
         </button>
@@ -62,14 +62,16 @@ const StepMotionPanel = ({
   reduced: boolean | null;
   children: ReactNode;
 }) => (
-  <motion.div
-    key={panelKey}
-    initial={reduced ? false : { opacity: 0, y: 6 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.16 }}
-  >
-    {children}
-  </motion.div>
+  <AnimatePresence mode="wait" initial={false}>
+    <motion.div
+      key={panelKey}
+      initial={reduced ? false : { opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.16 }}
+    >
+      {children}
+    </motion.div>
+  </AnimatePresence>
 );
 
 interface WizardFormState {
@@ -160,7 +162,7 @@ export const OnboardingWizardBlock = ({
       data-slot="onboarding-wizard-block"
       data-variant={variant}
       className={cn(
-        "flex w-full max-w-4xl flex-col gap-5 border border-solid",
+        "flex w-full max-w-4xl flex-col gap-5",
         WIZARD_SURFACE_CLASS[variant],
         className,
       )}

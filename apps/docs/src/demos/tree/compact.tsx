@@ -27,15 +27,8 @@ const OUTLINE = [
 
 export default function TreeCompactDemo() {
   return (
-    <div className="w-full max-w-xs rounded-2xl border border-solid border-border/80 bg-secondary/35 p-2 dark:border-white/12 dark:bg-white/[0.03]">
-      <Tree
-        ariaLabel="侧栏紧凑文件树"
-        variant="ghost"
-        density="compact"
-        defaultExpanded={["tokens", "components"]}
-        defaultValue="tokens/dark"
-        nodes={OUTLINE}
-      />
+    <div className="w-full max-w-xs rounded-2xl bg-card p-2 shadow-2xs">
+      <Tree ariaLabel="侧栏紧凑文件树" variant="ghost" density="compact" nodes={OUTLINE} />
     </div>
   );
 }

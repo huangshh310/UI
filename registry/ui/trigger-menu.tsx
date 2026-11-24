@@ -192,7 +192,7 @@ const toTriggerDefinitions = (sources: TriggerMenuSource[]): TriggerDefinition[]
   }));
 
 const DefaultTriggerIcon = ({ triggerChar }: { triggerChar?: string }) => {
-  if (triggerChar === "/") return <Terminal className="size-3.5 text-signal" />;
+  if (triggerChar === "/") return <Terminal className="size-3.5 text-info" />;
   if (triggerChar === "#") return <Hash className="size-3.5 text-muted-foreground" />;
   return <FileCode2 className="size-3.5 text-muted-foreground" />;
 };
@@ -219,7 +219,7 @@ const SuggestionRowContent = ({
       </div>
     </div>
     {meta?.badge && (
-      <span className="shrink-0 rounded-md border border-solid border-border/75 bg-muted/50 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
+      <span className="shrink-0 rounded-md bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
         {meta.badge}
       </span>
     )}

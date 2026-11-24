@@ -44,7 +44,7 @@ export const SWITCH_GEOMETRY: Record<StretchSwitchSize, SwitchGeometry> = {
 };
 
 export const SWITCH_TRACK_BASE =
-  "relative m-0 box-border inline-flex shrink-0 cursor-pointer appearance-none items-center rounded-full border border-solid border-input/45 bg-secondary shadow-[inset_0_1px_2px_rgba(0,0,0,0.06)] transition-[background-color,border-color,box-shadow] duration-(--ui-duration-normal) outline-none hover:border-foreground/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid data-disabled:pointer-events-none data-disabled:opacity-50 dark:border-white/12 dark:bg-white/12";
+  "relative m-0 box-border inline-flex shrink-0 cursor-pointer appearance-none items-center rounded-full border border-solid border-input bg-secondary shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)] transition-[background-color,border-color,box-shadow] duration-(--ui-duration-normal) outline-none hover:border-foreground/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid data-disabled:pointer-events-none data-disabled:opacity-50";
 
 export const SWITCH_TONE_CLASSES: Record<StretchSwitchTone, string> = {
   primary: "data-checked:border-transparent data-checked:bg-primary data-checked:shadow-none",

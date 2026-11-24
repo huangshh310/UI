@@ -59,8 +59,7 @@ export const CardFooter = ({ muted = false, className, ...props }: CardFooterPro
     data-slot="card-footer"
     className={cn(
       "mt-auto flex items-center justify-between gap-2 px-6 py-4",
-      muted &&
-        "rounded-b-[21px] border-t border-solid border-border/75 bg-muted/55 py-3.5 dark:bg-secondary/45",
+      muted && "rounded-b-2xl bg-muted/50 py-3.5",
       className,
     )}
     {...props}

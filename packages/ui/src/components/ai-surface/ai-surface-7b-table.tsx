@@ -66,10 +66,7 @@ const SurfaceTableRows = ({
               ? () => onTriggerAction(actionId, nodeId, undefined, row)
               : undefined
           }
-          className={cn(
-            "border-b border-solid border-border/50 last:border-b-0",
-            clickable && "cursor-pointer transition-colors hover:bg-accent/60",
-          )}
+          className={cn("transition-colors", clickable && "cursor-pointer hover:bg-accent/60")}
         >
           {node.columns.map((col) => (
             <td key={col.key} className={cn("px-3.5 py-2.5", COL_ALIGN_CLASS[col.align ?? "left"])}>
@@ -94,10 +91,10 @@ export const SurfaceTableView = ({
     <div
       data-slot="surface-table"
       data-node-id={nodeId}
-      className="overflow-hidden rounded-xl border border-solid border-border bg-card"
+      className="overflow-hidden rounded-xl bg-muted/45 p-1"
     >
       {node.title && (
-        <div className="border-b border-solid border-border/75 px-3.5 py-2.5">
+        <div className="px-3 pt-2 pb-1.5">
           <p className="m-0 text-xs font-semibold text-foreground">{node.title}</p>
           {node.description && (
             <p className="m-0 mt-0.5 text-[11px] text-muted-foreground">{node.description}</p>
@@ -107,11 +104,11 @@ export const SurfaceTableView = ({
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-xs">
           <thead>
-            <tr className="border-b border-solid border-border/75 bg-muted/35 text-muted-foreground">
+            <tr className="text-muted-foreground">
               {node.columns.map((col) => (
                 <th
                   key={col.key}
-                  className={cn("px-3.5 py-2 font-medium", COL_ALIGN_CLASS[col.align ?? "left"])}
+                  className={cn("px-3 py-2 font-medium", COL_ALIGN_CLASS[col.align ?? "left"])}
                 >
                   {col.header}
                 </th>

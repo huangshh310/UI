@@ -12,11 +12,11 @@ import { Check, FileDiff, RotateCcw, X } from "lucide-react";
 import { useState } from "react";
 
 export const diffReviewShellVariants = cva(
-  "w-full overflow-hidden rounded-xl border border-solid shadow-xs",
+  "w-full overflow-hidden rounded-2xl border border-solid shadow-xs",
   {
     variants: {
       theme: {
-        adaptive: "border-border bg-card text-card-foreground dark:border-white/10",
+        adaptive: "border-border bg-card text-card-foreground",
         obsidian: "[color-scheme:dark] border-zinc-800 bg-zinc-950 text-zinc-100",
       },
     },
@@ -138,11 +138,11 @@ const DiffStats = ({
       type="button"
       onClick={onToggleAll}
       className={cn(
-        "inline-flex h-7 cursor-pointer items-center rounded-md border border-solid px-2 font-sans text-[11px] font-medium transition-colors",
+        "inline-flex h-7 cursor-pointer items-center rounded-md px-2 font-sans text-[11px] font-medium transition-colors",
         FOCUS_RING,
         obsidian
-          ? "border-zinc-800 bg-zinc-900 text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100"
-          : "border-border/75 bg-transparent text-muted-foreground hover:bg-accent hover:text-foreground dark:border-white/8",
+          ? "bg-zinc-900 text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100"
+          : "bg-secondary text-muted-foreground hover:bg-accent hover:text-foreground",
       )}
     >
       {allSelected ? "全不选" : "全选"}
@@ -155,10 +155,8 @@ const DiffHeader = (p: DiffHeaderProps) => {
   return (
     <div
       className={cn(
-        "flex flex-wrap items-center justify-between gap-2 border-b border-solid px-4 py-2.5",
-        p.obsidian
-          ? "border-zinc-800 bg-zinc-900/60"
-          : "border-border/75 bg-card dark:border-white/8",
+        "flex flex-wrap items-center justify-between gap-2 px-4 py-3",
+        p.obsidian ? "bg-zinc-900/60" : "bg-card",
       )}
     >
       <div className="flex min-w-0 items-center gap-2">
@@ -247,10 +245,8 @@ const DiffFooterActions = (p: Omit<DiffFooterProps, "totalCount">) => {
 const DiffFooter = (p: DiffFooterProps) => (
   <div
     className={cn(
-      "flex flex-wrap items-center justify-between gap-2 border-t border-solid px-4 py-2.5",
-      p.obsidian
-        ? "border-zinc-800 bg-zinc-900/60"
-        : "border-border/75 bg-card dark:border-white/8",
+      "flex flex-wrap items-center justify-between gap-2 px-4 py-3",
+      p.obsidian ? "bg-zinc-900/60" : "bg-card",
     )}
   >
     <span

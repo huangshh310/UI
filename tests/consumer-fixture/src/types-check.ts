@@ -45,5 +45,5 @@ export const extraUiProps: {
   trigger: { triggers: [{ char: "@", items: [{ value: "a", label: "a" }] }] },
   token: { defaultValue: ["hello"] },
   waterfall: { items: [{ value: "root", label: "root", start: 0, duration: 100 }] },
-  color: { defaultValue: "#2563eb", space: "hsv" },
+  color: { defaultValue: "#7a5ee4", space: "hsv" },
 };

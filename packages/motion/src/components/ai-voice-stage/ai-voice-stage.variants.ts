@@ -28,7 +28,7 @@ export const VOICE_STAGE_SURFACE: Record<AiVoiceStageVariant, string> = {
 export const VOICE_AMBIENT_CARD: Record<AiOrbState, string> = {
   idle: "radial-gradient(ellipse 68% 54% at 50% 0%, rgba(148,163,184,0.08), transparent 72%)",
   listening: "radial-gradient(ellipse 68% 54% at 50% 0%, rgba(14,165,233,0.1), transparent 72%)",
-  thinking: "radial-gradient(ellipse 68% 54% at 50% 0%, rgba(21,93,252,0.1), transparent 72%)",
+  thinking: "radial-gradient(ellipse 68% 54% at 50% 0%, rgba(122,94,228,0.12), transparent 72%)",
   speaking: "radial-gradient(ellipse 68% 54% at 50% 0%, rgba(16,185,129,0.1), transparent 72%)",
 };
 
@@ -36,7 +36,7 @@ export const VOICE_AMBIENT_CARD: Record<AiOrbState, string> = {
 export const VOICE_AMBIENT_OBSIDIAN: Record<AiOrbState, string> = {
   idle: "radial-gradient(circle at 50% 42%, rgba(255,255,255,0.055), transparent 62%)",
   listening: "radial-gradient(circle at 50% 42%, rgba(34,211,238,0.14), transparent 62%)",
-  thinking: "radial-gradient(circle at 50% 42%, rgba(56,189,248,0.14), transparent 62%)",
+  thinking: "radial-gradient(circle at 50% 42%, rgba(139,115,242,0.16), transparent 62%)",
   speaking: "radial-gradient(circle at 50% 42%, rgba(52,211,153,0.14), transparent 62%)",
 };
 
@@ -44,14 +44,14 @@ export const VOICE_AMBIENT_OBSIDIAN: Record<AiOrbState, string> = {
 export const VOICE_RIPPLE_BORDER: Record<AiOrbState, string> = {
   idle: "border-foreground/15 dark:border-white/15",
   listening: "border-sky-500/35 dark:border-cyan-400/35",
-  thinking: "border-signal/35 dark:border-sky-400/35",
+  thinking: "border-signal/35 dark:border-info/35",
   speaking: "border-emerald-600/35 dark:border-emerald-400/35",
 };
 
 export const VOICE_LIVE_DOT: Record<AiOrbState, string> = {
   idle: "bg-muted-foreground/50",
   listening: "bg-sky-500 dark:bg-cyan-400",
-  thinking: "bg-signal dark:bg-sky-400",
+  thinking: "bg-signal dark:bg-info",
   speaking: "bg-emerald-600 dark:bg-emerald-400",
 };
 

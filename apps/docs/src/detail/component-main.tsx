@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * 详情页的主面板：统一顶栏承载「预览 / 用法 / 代码」页签、响应式宽度切换器与「复制提示词」操作。
+ * 详情页的主面板：无框线卡片承载「预览 / 用法 / 代码」页签、视口切换器与复制提示词按钮。
  */
 import { Tabs } from "@base-ui/react/tabs";
 import { useState, type ReactNode } from "react";
@@ -29,7 +29,7 @@ const MainToolbar = ({
   viewport: PreviewViewport;
   onViewportChange: (next: PreviewViewport) => void;
 }) => (
-  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/75 px-4 py-3">
+  <div className="flex flex-wrap items-center justify-between gap-3 px-2 pt-1 pb-3">
     <Tabs.List className={TAB_LIST_CLASSES}>
       <Tabs.Tab value="preview" className={TAB_CLASSES}>
         预览
@@ -41,10 +41,9 @@ const MainToolbar = ({
         代码
       </Tabs.Tab>
     </Tabs.List>
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1.5">
       {responsive && <ViewportSwitcher value={viewport} onChange={onViewportChange} />}
-      <div className="inline-flex items-center gap-1 rounded-full border border-border bg-(--site-stage) pl-3 text-xs text-muted-foreground">
-        <span>复制提示词</span>
+      <div className="rounded-full bg-(--site-stage)">
         <CopyButton text={prompt} label="复制提示词" />
       </div>
     </div>
@@ -62,16 +61,16 @@ export const ComponentMain = ({
 
   return (
     <Tabs.Root defaultValue="preview" data-testid="component-main">
-      <div className="overflow-hidden rounded-2xl border border-border bg-(--site-surface) shadow-xs">
+      <div className="overflow-hidden rounded-3xl bg-(--site-surface) p-3 shadow-xs">
         <MainToolbar
           prompt={prompt}
           responsive={responsive}
           viewport={viewport}
           onViewportChange={setViewport}
         />
-        <Tabs.Panel value="preview" className="p-2.5 outline-none">
+        <Tabs.Panel value="preview" className="outline-none">
           <SpecimenStage
-            className={`${responsive ? "min-h-[420px] p-4 sm:p-7" : "min-h-[400px]"} rounded-xl border border-border/65`}
+            className={`${responsive ? "min-h-[420px] p-4 sm:p-7" : "min-h-[400px]"} rounded-2xl`}
           >
             {responsive ? <ViewportFrame viewport={viewport}>{preview}</ViewportFrame> : preview}
           </SpecimenStage>

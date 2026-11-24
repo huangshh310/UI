@@ -9,11 +9,11 @@ export const numberGroupVariants = cva(
     variants: {
       variant: {
         default:
-          "border-input/50 bg-background shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:border-foreground/25 dark:border-white/12 dark:bg-card/85 dark:hover:border-white/22",
+          "border-input bg-card shadow-2xs hover:border-foreground/22 dark:hover:border-white/22",
         filled:
           "border-transparent bg-secondary/75 hover:bg-secondary focus-within:bg-background dark:bg-white/[0.07] dark:hover:bg-white/[0.11] dark:focus-within:bg-card",
         stepper:
-          "border-input/50 bg-background shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:border-foreground/25 dark:border-white/12 dark:bg-card/85 dark:hover:border-white/22",
+          "border-input bg-card shadow-2xs hover:border-foreground/22 dark:hover:border-white/22",
       },
       size: {
         sm: "h-8 rounded-lg",

@@ -20,12 +20,12 @@ import {
 import { useEffect, useRef, useState } from "react";
 
 export const toolCallShellVariants = cva(
-  "w-full overflow-hidden rounded-xl border border-solid transition-colors",
+  "w-full overflow-hidden rounded-2xl border border-solid transition-colors",
   {
     variants: {
       variant: {
-        card: "border-border bg-card text-card-foreground shadow-xs dark:border-white/10",
-        compact: "border-border bg-card text-card-foreground dark:border-white/10",
+        card: "border-border bg-card text-card-foreground shadow-xs",
+        compact: "border-border bg-card text-card-foreground",
         obsidian: "[color-scheme:dark] border-zinc-800 bg-zinc-950 text-zinc-100 shadow-xs",
       },
     },
@@ -211,7 +211,7 @@ const StatusIcon = ({ status, obsidian }: { status: AiToolCallStatus; obsidian: 
         aria-hidden="true"
         className={cn(
           "size-3.5 shrink-0 animate-spin motion-reduce:animate-none",
-          obsidian ? "text-sky-400" : "text-signal",
+          obsidian ? "text-[#b49eff]" : "text-info",
         )}
       />
     );

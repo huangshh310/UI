@@ -1,6 +1,5 @@
 /**
- * 详情页底部：同分类的相关组件，以及上一个 / 下一个组件的翻页。
- * 没有相关组件或前后组件时，对应的部分不显示。
+ * 详情页底部：同分类的相关组件与前后组件翻页，利用左右对齐与箭头方向直接表达关系。
  */
 import { ArrowLeftIcon, ArrowRightIcon, ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
@@ -8,11 +7,11 @@ import { neighbours, relatedComponents } from "@/registry/registry";
 import type { ComponentDoc } from "@/registry/registry.types";
 
 const CARD_CLASSES =
-  "rounded-2xl border border-border bg-(--site-surface) p-5 shadow-xs transition-[border-color,box-shadow] duration-(--ui-duration-fast) hover:border-foreground/25 hover:shadow-md";
+  "rounded-2xl bg-(--site-surface) p-5 shadow-xs transition-shadow duration-(--ui-duration-fast) hover:shadow-md";
 
 const RelatedList = ({ items }: { items: ComponentDoc[] }) => (
   <section aria-labelledby="related-title">
-    <h2 id="related-title" className="mb-4 text-lg font-semibold tracking-tight">
+    <h2 id="related-title" className="mb-4 px-1 text-lg font-semibold tracking-tight">
       相关组件
     </h2>
     <ul className="grid gap-4 md:grid-cols-3">
@@ -56,10 +55,7 @@ export const ComponentFooterNav = ({ component }: { component: ComponentDoc }) =
                 className="size-4 text-muted-foreground transition-transform duration-(--ui-duration-fast) group-hover:-translate-x-0.5 group-hover:text-foreground"
                 aria-hidden="true"
               />
-              <div>
-                <span className="block font-mono text-[11px] text-muted-foreground">上一个</span>
-                <span className="font-medium text-foreground">{previous.name}</span>
-              </div>
+              <span className="font-medium text-foreground">{previous.name}</span>
             </Link>
           )}
           {next && (
@@ -67,10 +63,7 @@ export const ComponentFooterNav = ({ component }: { component: ComponentDoc }) =
               href={`/components/${next.slug}`}
               className={`group flex items-center justify-end gap-3 text-right md:col-start-2 ${CARD_CLASSES}`}
             >
-              <div>
-                <span className="block font-mono text-[11px] text-muted-foreground">下一个</span>
-                <span className="font-medium text-foreground">{next.name}</span>
-              </div>
+              <span className="font-medium text-foreground">{next.name}</span>
               <ArrowRightIcon
                 weight="bold"
                 className="size-4 text-muted-foreground transition-transform duration-(--ui-duration-fast) group-hover:translate-x-0.5 group-hover:text-foreground"

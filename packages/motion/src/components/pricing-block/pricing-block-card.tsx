@@ -28,10 +28,8 @@ const FeatureList = ({
 }) => (
   <ul
     className={cn(
-      "m-0 flex flex-1 list-none flex-col gap-2.5 border-t border-solid p-0 pt-5 text-[13px]",
-      inverted
-        ? "border-primary-foreground/15 text-primary-foreground/85"
-        : "border-border/80 text-muted-foreground dark:border-white/10",
+      "m-0 flex flex-1 list-none flex-col gap-2.5 p-0 pt-2 text-[13px]",
+      inverted ? "text-primary-foreground" : "text-muted-foreground",
     )}
   >
     {features.map((feat) => (
@@ -41,10 +39,10 @@ const FeatureList = ({
           className={cn(
             "mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-full",
             inverted
-              ? "bg-primary-foreground/15 text-primary-foreground"
+              ? "bg-black/22 text-primary-foreground"
               : spotlightFeatured
-                ? "bg-signal/12 text-blue-700 dark:bg-signal/22 dark:text-blue-300"
-                : "bg-secondary text-foreground/80 dark:bg-white/10",
+                ? "bg-signal/12 text-info dark:bg-signal/22"
+                : "bg-secondary text-foreground/80",
           )}
         >
           <Check className="size-2.5 stroke-[2.5]" />
@@ -94,7 +92,7 @@ const TierHeader = ({
       <p
         className={cn(
           "m-0 mt-1.5 text-xs leading-relaxed",
-          inverted ? "text-primary-foreground/78" : "text-muted-foreground",
+          inverted ? "text-primary-foreground" : "text-muted-foreground",
         )}
       >
         {tier.description}
@@ -150,7 +148,7 @@ const TierPriceBlock = ({
     <p
       className={cn(
         "m-0 text-[11px]",
-        inverted ? "text-primary-foreground/75" : "text-muted-foreground",
+        inverted ? "text-primary-foreground" : "text-muted-foreground",
       )}
     >
       {note}

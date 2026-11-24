@@ -1,59 +1,76 @@
 /*
  * 深色主题的语义色。变量名与 light.css 一一对应。
  *
- * 采用 BoardUI 纯中性深黑曜石三阶梯（#121212 → #1a1a1a → #262626），
- * 零发蓝发紫偏色，清晰拉开底布、卡片与浮层的明度层次。
+ * 采用深邃冷碳岩板阶梯（#111216 画布 → #15161b 侧栏 → #191a20 卡片 → #1e1f26 次级面 → #262831 交互面），
+ * 搭配高饱和紫系品牌色与细腻微光发丝描边，清晰拉开不同层级容器的明度关系。
  *
- * 可访问性约束与 light.css 相同。
+ * 可访问性约束与 light.css 相同，所有 前景/表面 配对的对比度均不低于 4.5:1。
  */
 .dark,
 [data-theme="dark"] {
   color-scheme: dark;
 
-  /* 页面底色与正文：BoardUI neutral-925 纯中性黑曜石画布（对比度 17.95:1） */
-  --ui-background: #121212;
-  --ui-foreground: #fafafa;
+  /* 页面底色与正文：深冷岩板画布配柔白正文（对比度 17.05:1） */
+  --ui-background: #111216;
+  --ui-foreground: #f4f4f7;
 
-  /* 抬升的表面：深色下逐级清晰抬亮 */
-  --ui-card: #1a1a1a;
-  --ui-card-foreground: #fafafa;
-  --ui-popover: #262626;
-  --ui-popover-foreground: #fafafa;
+  /* 抬升的表面：深色下清晰抬亮的卡片与浮层（对比度 15.81:1） */
+  --ui-card: #191a20;
+  --ui-card-foreground: #f4f4f7;
+  --ui-popover: #191a20;
+  --ui-popover-foreground: #f4f4f7;
 
-  /* 主要操作：极浅纯白实底 */
-  --ui-primary: #fafafa;
-  --ui-primary-foreground: #121212;
+  /* 主要操作：清透鸢尾紫实底配纯白前景（对比度 4.77:1） */
+  --ui-primary: #765ae8;
+  --ui-primary-foreground: #ffffff;
 
-  /* 次要操作与柔暗凹槽表面 */
-  --ui-secondary: #222222;
-  --ui-secondary-foreground: #fafafa;
+  /* 次要操作与柔暗次级表面 */
+  --ui-secondary: #1e1f26;
+  --ui-secondary-foreground: #f4f4f7;
 
-  /* 弱化的表面与辅助文字（BoardUI neutral-400，相对背景 7.25:1，相对 card 6.74:1） */
-  --ui-muted: #1e1e1e;
-  --ui-muted-foreground: #a1a1a1;
+  /* 弱化的表面与辅助文字（相对背景 7.72:1，相对 card 7.16:1，相对 accent 6.06:1） */
+  --ui-muted: #1e1f26;
+  --ui-muted-foreground: #a3a6b3;
 
   /* 交互反馈表面 */
-  --ui-accent: #2a2a2a;
-  --ui-accent-foreground: #fafafa;
+  --ui-accent: #262831;
+  --ui-accent-foreground: #f4f4f7;
 
-  /* 信号色：与浅色保持同一个 BoardUI 品牌蓝（accent-600），对白字 5.25:1 */
-  --ui-signal: #155dfc;
+  /* 信号色：与浅色保持同一个深邃鸢尾紫，对白字对比度 6.17:1 */
+  --ui-signal: #6547d4;
   --ui-signal-foreground: #ffffff;
 
-  /* 边线：纯中性微光发丝边框，input 对背景 3.52:1，ring 对背景 5.09:1 */
-  --ui-border: #2a2a2a;
-  --ui-input: #6b6b6b;
-  --ui-ring: #3b82f6;
+  /* 边线与焦点环：半透明微光发丝描边，焦点环对画布对比度 5.20:1 */
+  --ui-border: rgba(255, 255, 255, 0.075);
+  --ui-input: rgba(255, 255, 255, 0.13);
+  --ui-ring: #8b73f2;
 
-  /* 状态色 */
-  --ui-success: #10b981;
-  --ui-success-foreground: #0a0a0a;
-  --ui-warning: #fbbf24;
-  --ui-warning-foreground: #0a0a0a;
+  /* 状态色（均满足 >= 6.7:1 前景/表面对比度） */
   --ui-destructive: #f87171;
-  --ui-destructive-foreground: #0a0a0a;
-  --ui-info: #60a5fa;
-  --ui-info-foreground: #0a0a0a;
+  --ui-destructive-foreground: #111216;
+  --ui-success: #34d399;
+  --ui-success-foreground: #111216;
+  --ui-warning: #fbbf24;
+  --ui-warning-foreground: #111216;
+  --ui-info: #b49eff;
+  --ui-info-foreground: #111216;
+
+  /* 图表序列色 */
+  --ui-chart-1: #8b73f2;
+  --ui-chart-2: #b49eff;
+  --ui-chart-3: #34d399;
+  --ui-chart-4: #fbbf24;
+  --ui-chart-5: #f87171;
+
+  /* 侧栏语义色 */
+  --ui-sidebar: #15161b;
+  --ui-sidebar-foreground: #f4f4f7;
+  --ui-sidebar-primary: #765ae8;
+  --ui-sidebar-primary-foreground: #ffffff;
+  --ui-sidebar-accent: #262831;
+  --ui-sidebar-accent-foreground: #f4f4f7;
+  --ui-sidebar-border: rgba(255, 255, 255, 0.075);
+  --ui-sidebar-ring: #8b73f2;
 
   /* 阴影基色与极微弱顶边高光 */
   --ui-shadow-color: #000000;

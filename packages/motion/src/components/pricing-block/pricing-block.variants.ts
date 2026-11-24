@@ -72,8 +72,7 @@ export const TIER_CTA_STANDARD =
   "border-border/80 bg-secondary/75 text-foreground hover:border-foreground/20 hover:bg-accent dark:border-white/10 dark:bg-white/[0.06] dark:hover:bg-white/[0.11]";
 
 export const TIER_BADGE_STYLE: Record<PricingBlockVariant, string> = {
-  default: "bg-primary-foreground/15 text-primary-foreground",
-  spotlight:
-    "border border-solid border-signal/25 bg-signal/10 text-blue-700 dark:border-signal/35 dark:bg-signal/20 dark:text-blue-300",
-  minimal: "border border-solid border-border/80 bg-secondary text-foreground dark:border-white/12",
+  default: "bg-black/22 text-primary-foreground",
+  spotlight: "bg-signal/12 text-info dark:bg-signal/22",
+  minimal: "bg-secondary text-foreground",
 };

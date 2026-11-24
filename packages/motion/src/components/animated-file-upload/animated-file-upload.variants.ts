@@ -8,7 +8,7 @@ export const DROPZONE_BASE =
 
 export const DROPZONE_VARIANT_CLASSES: Record<AnimatedFileUploadVariant, string> = {
   default:
-    "border-dashed border-input/65 bg-background/80 hover:border-foreground/30 hover:bg-card dark:border-white/14 dark:bg-card/60 dark:hover:border-white/25",
+    "border-dashed border-input bg-card/85 hover:border-foreground/25 hover:bg-card dark:hover:border-white/25",
   filled:
     "border-solid border-transparent bg-secondary/70 hover:bg-secondary dark:bg-white/7 dark:hover:bg-white/11",
   minimal:

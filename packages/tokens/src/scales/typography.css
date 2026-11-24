@@ -1,17 +1,16 @@
 /*
  * 字体排印刻度：字体族、字号、字重、行高、字距。
  *
- * 字体族只声明回退栈，不打包任何字体文件。
- * 栈首的 Geist / Geist Mono 需要宿主应用自行加载；未加载时回退到系统字体。
- * 等宽字体除了代码，也用于标签与数据，是本设计方向的排版特征。
+ * 字体族直接采用跨平台系统原生无衬线与中文黑体回退栈，不打包任何外部字体文件，
+ * 首屏零字体闪烁；等宽字体用于代码、数值指标与结构化标签。
  */
 :root {
   /* 字体族 */
   --ui-font-sans:
-    "Geist", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", "PingFang SC",
-    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", Roboto, "Helvetica Neue", Arial, sans-serif;
   --ui-font-mono:
-    "Geist Mono", "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    "SF Mono", "JetBrains Mono", "Fira Code", Consolas, "Liberation Mono", Menlo, monospace;
 
   /* 字号 */
   --ui-text-xs: 0.75rem;

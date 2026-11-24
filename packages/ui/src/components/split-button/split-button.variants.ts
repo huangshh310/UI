@@ -68,7 +68,7 @@ export const splitGroupVariants = cva("inline-flex items-stretch", {
     variant: {
       primary:
         "shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.08)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.3)]",
-      signal: "shadow-[inset_0_1px_0_rgba(255,255,255,0.24),0_1px_3px_rgba(21,93,252,0.26)]",
+      signal: "shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_1px_3px_rgba(101,71,212,0.26)]",
       secondary: "shadow-xs",
       outline: "shadow-xs",
       destructive: "shadow-[0_1px_2px_rgba(0,0,0,0.08)]",

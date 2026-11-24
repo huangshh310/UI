@@ -1,17 +1,20 @@
 /*
- * 圆角刻度（C 端亲和圆润比例）。
+ * 圆角刻度（精炼利落比例）。
  *
- * 基准 --ui-radius = 10px（对齐 BoardUI 2lg 与现代消费级应用控件曲率），
- * sm = 5px（复选框与微标签），md = 7.5px（紧凑菜单行），lg = 10px（按钮与输入框），
- * xl = 15px（弹层与内嵌块），2xl = 20px（卡片与对话框）。
+ * 基准 --ui-radius = 0.5rem（8px）：
+ * sm = 4.8px（复选框与微标签），md = 6.4px（紧凑菜单行），lg = 8px（按钮与输入框），
+ * xl = 11.2px（弹层与内嵌块），2xl = 14.4px（卡片与对话框），
+ * 3xl = 17.6px（大号面板），4xl = 20.8px（舞台容器）。
  */
 :root {
-  --ui-radius: 0.625rem;
+  --ui-radius: 0.5rem;
 
-  --ui-radius-sm: calc(var(--ui-radius) * 0.5);
-  --ui-radius-md: calc(var(--ui-radius) * 0.75);
+  --ui-radius-sm: calc(var(--ui-radius) * 0.6);
+  --ui-radius-md: calc(var(--ui-radius) * 0.8);
   --ui-radius-lg: var(--ui-radius);
-  --ui-radius-xl: calc(var(--ui-radius) * 1.5);
-  --ui-radius-2xl: calc(var(--ui-radius) * 2);
+  --ui-radius-xl: calc(var(--ui-radius) * 1.4);
+  --ui-radius-2xl: calc(var(--ui-radius) * 1.8);
+  --ui-radius-3xl: calc(var(--ui-radius) * 2.2);
+  --ui-radius-4xl: calc(var(--ui-radius) * 2.6);
   --ui-radius-full: 9999px;
 }

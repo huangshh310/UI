@@ -736,9 +736,7 @@ const FacetOptionRow = ({
         aria-hidden="true"
         className={cn(
           "inline-flex size-3.5 shrink-0 items-center justify-center rounded-[4px] border border-solid transition-colors duration-(--ui-duration-instant)",
-          checked
-            ? "border-signal bg-signal text-signal-foreground"
-            : "border-input/70 bg-background dark:border-white/25",
+          checked ? "border-signal bg-signal text-signal-foreground" : "border-input bg-card",
         )}
       >
         {checked && <Check className="size-2.5 stroke-[2.75]" />}

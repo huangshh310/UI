@@ -42,9 +42,9 @@ import {
 
 const ChipLeadIcon = ({ type, status }: { type: string; status?: string }) => {
   if (status === "loading") return <Loader2 aria-hidden="true" className="size-3 animate-spin" />;
-  if (status === "done") return <Check aria-hidden="true" className="size-3 text-signal" />;
+  if (status === "done") return <Check aria-hidden="true" className="size-3 text-info" />;
   if (type === "skill" || type === "command") {
-    return <Terminal aria-hidden="true" className="size-3 text-signal" />;
+    return <Terminal aria-hidden="true" className="size-3 text-info" />;
   }
   return <FileCode2 aria-hidden="true" className="size-3 text-muted-foreground" />;
 };
@@ -136,9 +136,7 @@ const TokenEditorBox = ({ p, labelId }: { p: TokenInputProps; labelId: string })
         className={TOKEN_EDITOR_CLASS}
       />
       {p.footer && (
-        <div className="flex items-center justify-between gap-2 border-t border-solid border-border/60 px-3 py-1.5">
-          {p.footer}
-        </div>
+        <div className="flex items-center justify-between gap-2 px-3 pt-0 pb-2">{p.footer}</div>
       )}
     </div>
   );

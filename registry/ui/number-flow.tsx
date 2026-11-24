@@ -36,11 +36,10 @@ export const NUMBER_FLOW_TREND_CLASSES: Record<NumberFlowTrend, string> = {
 export const NUMBER_FLOW_DIGIT_SLOT_CLASS =
   "relative inline-flex h-[1.18em] w-[0.62em] items-center justify-center overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_14%,black_86%,transparent)]";
 
-export const NUMBER_FLOW_PREFIX_CLASS =
-  "mr-[0.06em] font-sans text-[0.76em] font-medium opacity-75";
+export const NUMBER_FLOW_PREFIX_CLASS = "mr-[0.06em] font-sans text-[0.76em] font-medium";
 
 export const NUMBER_FLOW_SUFFIX_CLASS =
-  "ml-[0.16em] font-sans text-[0.52em] font-medium tracking-normal opacity-70";
+  "ml-[0.16em] font-sans text-[0.52em] font-medium tracking-normal";
 export type NumberFlowSize = "sm" | "md" | "lg" | "xl";
 
 /** 数值变化趋势语义色 */
@@ -79,7 +78,7 @@ interface DigitSlotProps {
 
 const DigitSlot = ({ char, slotKey, direction, reduced }: DigitSlotProps) => {
   if (!/\d/.test(char)) {
-    return <span className="inline-block opacity-85">{char}</span>;
+    return <span className="inline-block">{char}</span>;
   }
   const enterY = reduced ? "0%" : direction >= 0 ? "72%" : "-72%";
   const exitY = reduced ? "0%" : direction >= 0 ? "-72%" : "72%";

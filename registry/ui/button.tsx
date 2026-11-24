@@ -40,25 +40,24 @@ const BASE_CLASSES = [
 export const buttonVariants = cva(BASE_CLASSES, {
   variants: {
     variant: {
-      // 主要操作：高对比纯黑/纯白实底，极微顶边高光与轻盈接地微影
+      // 主要操作：鸢尾紫品牌实底配纯白前景，带细腻顶边高光与轻盈微影
       primary:
-        "bg-primary text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_rgba(0,0,0,0.08)] hover:bg-primary/90 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_1px_2px_rgba(0,0,0,0.3)]",
-      // 次要操作：柔和纯中性浅灰配极细发丝描边
-      secondary:
-        "border-border/60 bg-secondary text-secondary-foreground shadow-xs hover:border-border hover:bg-accent",
-      // 描边：纯白/黑曜石卡片底配 1px 丝滑发丝线
+        "bg-primary text-primary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_1px_2px_rgba(19,20,24,0.1)] hover:bg-primary/90 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_1px_2px_rgba(0,0,0,0.3)]",
+      // 次要操作：柔和次级表面，无冗余硬描边
+      secondary: "bg-secondary text-secondary-foreground hover:bg-accent",
+      // 描边：卡片实底配细腻半透明描边
       outline:
-        "border-border bg-card text-foreground shadow-xs hover:border-foreground/22 hover:bg-accent/70 dark:bg-card/85 dark:hover:bg-accent",
+        "border-input bg-card text-foreground shadow-xs hover:bg-accent/70 dark:bg-card/90 dark:hover:bg-accent",
       // 幽灵：静置态无底色，悬停切入柔和反馈面
-      ghost: "bg-transparent text-foreground hover:bg-accent/80",
+      ghost: "bg-transparent text-foreground hover:bg-accent",
       // 破坏性操作：浅深主题均保证高对比前景
       destructive:
         "bg-destructive text-destructive-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_1px_2px_rgba(0,0,0,0.08)] hover:bg-destructive/90",
-      // 链接外观：下划线在悬停时加粗
-      link: "bg-transparent text-foreground underline decoration-border decoration-1 underline-offset-4 hover:decoration-foreground",
-      // 信号：克制纯粹的 BoardUI 品牌蓝，带微光顶边与轻盈投影
+      // 链接外观：下划线在悬停时清晰显现
+      link: "bg-transparent text-foreground underline decoration-input decoration-1 underline-offset-4 hover:decoration-foreground",
+      // 信号：全系统统一的深邃紫信号色，带微光顶边与轻盈投影
       signal:
-        "bg-signal text-signal-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.24),0_1px_2px_rgba(21,93,252,0.28)] hover:bg-signal/92",
+        "bg-signal text-signal-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_1px_2px_rgba(101,71,212,0.28)] hover:bg-signal/92",
     },
     size: {
       sm: "h-8 px-3 text-xs",

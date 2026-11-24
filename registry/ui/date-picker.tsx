@@ -19,7 +19,7 @@ export const datePickerTriggerVariants = cva(
     variants: {
       variant: {
         default:
-          "border-input/50 bg-background shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:border-foreground/25 hover:bg-card dark:border-white/12 dark:bg-card/85 dark:hover:border-white/22 dark:hover:bg-card",
+          "border-input bg-card shadow-2xs hover:border-foreground/22 dark:hover:border-white/22",
         filled:
           "border-transparent bg-secondary/75 hover:bg-secondary data-popup-open:bg-card dark:bg-white/7 dark:hover:bg-white/11",
         elevated:
@@ -183,7 +183,7 @@ const PresetRail = ({
   range: DateRange;
   onPick: (preset: DatePickerPreset) => void;
 }) => (
-  <div className="flex flex-wrap gap-1 border-b border-solid border-border/75 p-2 sm:w-32 sm:flex-col sm:border-r sm:border-b-0 dark:border-white/10">
+  <div className="flex flex-wrap gap-1 p-2 sm:w-32 sm:flex-col">
     {presets.map((preset) => {
       const active = isPresetActive(preset, mode, value, range);
       return (
@@ -295,7 +295,7 @@ const TriggerField = ({
         {!label && ariaLabel && <span className="sr-only">{ariaLabel} </span>}
         <span
           id={valueId}
-          className={cn("truncate tabular-nums", !display && "text-muted-foreground/75")}
+          className={cn("truncate tabular-nums", !display && "text-muted-foreground")}
         >
           {display ?? placeholder}
         </span>

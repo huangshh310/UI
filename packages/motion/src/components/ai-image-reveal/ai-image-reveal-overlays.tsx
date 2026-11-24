@@ -116,7 +116,9 @@ export const RevealOverlays = (p: RevealOverlaysProps) => {
       {p.reduce && pending && (
         <div aria-hidden="true" className="absolute inset-0 animate-pulse bg-foreground/[0.06]" />
       )}
-      <AnimatePresence>{pending && <RevealStatusPill label={p.generatingLabel} />}</AnimatePresence>
+      <AnimatePresence initial={false}>
+        {pending && <RevealStatusPill label={p.generatingLabel} />}
+      </AnimatePresence>
       {p.phase === "error" && <RevealErrorOverlay onRetry={p.onRetry} />}
     </>
   );

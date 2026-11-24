@@ -47,7 +47,7 @@ const REVIEW_VIEW: NonNullable<AiSurfaceAgentProps["uischema"]> = {
 };
 
 export const AiSurfaceAgentBasic = () => {
-  const [log, setLog] = useState("等待审阅差异或确认授权策略…");
+  const [log, setLog] = useState("");
 
   return (
     <div className="flex w-full flex-col gap-3">
@@ -62,12 +62,14 @@ export const AiSurfaceAgentBasic = () => {
           }
         }}
       />
-      <div
-        data-testid="agent-surface-log"
-        className="rounded-xl border border-solid border-border/75 bg-muted/35 px-3.5 py-2.5 font-mono text-xs text-foreground"
-      >
-        {log}
-      </div>
+      {log && (
+        <div
+          data-testid="agent-surface-log"
+          className="rounded-xl bg-card px-3.5 py-2.5 font-mono text-xs text-foreground shadow-2xs"
+        >
+          {log}
+        </div>
+      )}
     </div>
   );
 };

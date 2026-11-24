@@ -34,7 +34,7 @@ const BillingToggleBar = ({
         className={cn(
           "rounded-full border border-solid px-2.5 py-0.5 text-[11px] font-medium transition-colors",
           yearly
-            ? "border-signal/25 bg-signal/10 text-blue-700 dark:border-signal/35 dark:bg-signal/20 dark:text-blue-300"
+            ? "border-transparent bg-signal/12 text-info dark:bg-signal/22"
             : "border-border/80 bg-background text-muted-foreground dark:border-white/10 dark:bg-card",
         )}
       >

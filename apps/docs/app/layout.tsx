@@ -1,11 +1,9 @@
 /**
- * 根布局：字体、主题、页头与页脚。
+ * 根布局：系统字体、主题、页头与页脚。
  *
  * 主题跟随系统。<head> 中的内联脚本在首次绘制前确定主题（用户选择过则以选择为准），
  * 它会改写 <html> 的 data-theme，所以这里需要 suppressHydrationWarning。
  */
-import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { SITE_NAME, THEME_INIT_SCRIPT } from "@/site/constants";
@@ -40,13 +38,7 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = ({ children }: { children: ReactNode }) => (
-  <html
-    lang="zh-CN"
-    data-theme="light"
-    data-scroll-behavior="smooth"
-    className={`${GeistSans.variable} ${GeistMono.variable}`}
-    suppressHydrationWarning
-  >
+  <html lang="zh-CN" data-theme="light" data-scroll-behavior="smooth" suppressHydrationWarning>
     <head>
       <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
     </head>

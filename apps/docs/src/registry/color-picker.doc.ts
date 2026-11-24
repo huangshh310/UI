@@ -16,7 +16,7 @@ export const COLOR_PICKER_DOC: ComponentDoc = {
   usage: `import { ColorPicker } from "@/components/ui/color-picker";
 
 export function Example() {
-  return <ColorPicker label="主题色" defaultValue="#2563eb" />;
+  return <ColorPicker label="主题色" defaultValue="#7a5ee4" />;
 }`,
   createdAt: "2026-11-24",
   specimens: [
@@ -41,7 +41,7 @@ export function Example() {
     {
       name: "value / defaultValue",
       type: "string",
-      defaultValue: '"#2563eb"',
+      defaultValue: '"#7a5ee4"',
       description: "受控或非受控 CSS 颜色字符串",
     },
     {

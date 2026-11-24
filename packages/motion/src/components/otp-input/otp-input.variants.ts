@@ -14,13 +14,13 @@ export const OTP_SIZE_CLASSES: Record<OtpInputSize, string> = {
 
 export const OTP_VARIANT_CLASSES: Record<OtpInputVariant, string> = {
   default:
-    "rounded-xl border-input/55 bg-card shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:border-foreground/30 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset data-filled:border-foreground/35 dark:border-white/14 dark:hover:border-white/25",
+    "rounded-xl border-input bg-card shadow-2xs hover:border-foreground/25 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset data-filled:border-foreground/30 dark:hover:border-white/25",
   grouped:
-    "rounded-none border-input/55 bg-card shadow-[0_1px_2px_rgba(0,0,0,0.03)] hover:border-foreground/28 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset data-filled:bg-secondary/30 dark:border-white/14",
+    "rounded-none border-input bg-card shadow-2xs hover:border-foreground/25 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset data-filled:bg-secondary/40",
   filled:
-    "rounded-xl border-transparent bg-secondary/80 hover:bg-secondary focus-visible:border-ring focus-visible:bg-card focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset data-filled:bg-secondary dark:bg-white/8 dark:hover:bg-white/12",
+    "rounded-xl border-transparent bg-secondary/80 hover:bg-secondary focus-visible:border-ring focus-visible:bg-card focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset data-filled:bg-secondary",
   underline:
-    "rounded-none border-x-0 border-t-0 border-b-2 border-input/60 bg-transparent hover:border-foreground/45 focus-visible:border-ring data-filled:border-foreground",
+    "rounded-none border-x-0 border-t-0 border-b-2 border-input bg-transparent hover:border-foreground/45 focus-visible:border-ring data-filled:border-foreground",
 };
 
 export const OTP_STATUS_CLASSES: Record<OtpInputStatus, string> = {

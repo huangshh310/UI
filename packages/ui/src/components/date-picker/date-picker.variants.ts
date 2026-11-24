@@ -11,7 +11,7 @@ export const datePickerTriggerVariants = cva(
     variants: {
       variant: {
         default:
-          "border-input/50 bg-background shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:border-foreground/25 hover:bg-card dark:border-white/12 dark:bg-card/85 dark:hover:border-white/22 dark:hover:bg-card",
+          "border-input bg-card shadow-2xs hover:border-foreground/22 dark:hover:border-white/22",
         filled:
           "border-transparent bg-secondary/75 hover:bg-secondary data-popup-open:bg-card dark:bg-white/7 dark:hover:bg-white/11",
         elevated:

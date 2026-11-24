@@ -42,7 +42,7 @@ export default function SettleModalFormDemo() {
           <input
             id={nameId}
             placeholder="matt-ui-docs"
-            className="h-9 rounded-lg border border-solid border-input/50 bg-background px-3 text-sm text-foreground outline-none transition-colors focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset dark:border-white/12 dark:bg-card"
+            className="h-9 rounded-lg border border-solid border-input bg-card px-3 text-sm text-foreground outline-none transition-colors focus:border-ring focus:ring-1 focus:ring-ring focus:ring-inset"
           />
         </div>
         <SpringSelect

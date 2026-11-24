@@ -87,20 +87,23 @@ const MarkdownCodeBlock = ({ lang, code }: { lang: string; code: string }) => {
   };
 
   return (
-    <div className="my-3.5 overflow-hidden rounded-lg border border-solid border-border bg-muted/30 dark:border-white/10 dark:bg-white/[0.03]">
-      <div className="flex items-center justify-between border-b border-solid border-border/80 bg-muted/70 px-3.5 py-1.5 dark:border-white/10 dark:bg-white/[0.05]">
+    <div className="my-3.5 overflow-hidden rounded-xl bg-muted/55">
+      <div className="flex items-center justify-between px-3.5 pt-2.5 pb-1">
         <span className="font-mono text-[11px] text-muted-foreground">{lang || "code"}</span>
         <button
           type="button"
           onClick={handleCopy}
           aria-label="复制代码块"
-          className={`inline-flex cursor-pointer items-center gap-1 rounded-md border border-solid border-transparent bg-transparent px-1.5 py-0.5 font-sans text-[11px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground ${AI_RESPONSE_FOCUS_RING}`}
+          className={`inline-flex size-6 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-muted-foreground transition-colors hover:bg-accent hover:text-foreground ${AI_RESPONSE_FOCUS_RING}`}
         >
-          {copied ? <Check className="size-3" /> : <Copy className="size-3" />}
-          <span>{copied ? "已复制" : "复制"}</span>
+          {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
         </button>
       </div>
-      <pre className="m-0 overflow-x-auto px-3.5 py-3 font-mono text-[12.5px] leading-relaxed text-foreground">
+      <pre
+        // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+        tabIndex={0}
+        className="m-0 overflow-x-auto px-3.5 pt-1 pb-3 font-mono text-[12.5px] leading-relaxed text-foreground outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset"
+      >
         <code>{code}</code>
       </pre>
     </div>

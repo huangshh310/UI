@@ -7,7 +7,7 @@
 import { Tabs } from "@base-ui/react/tabs";
 import { CaretLeftIcon, CaretRightIcon, MagnifyingGlassIcon } from "@phosphor-icons/react/dist/ssr";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CATEGORIES, DIRECTORY } from "@/registry/registry";
+import { CATEGORIES } from "@/registry/registry";
 import type { DirectoryFilter } from "@/registry/registry.types";
 import { SpecimenCard } from "./specimen-card";
 import { useDirectoryFilter } from "./use-directory-filter";
@@ -21,24 +21,16 @@ const TABS: { id: DirectoryFilter; label: string }[] = [
 ];
 
 const TAB_CLASSES =
-  "inline-flex shrink-0 cursor-pointer items-center gap-1.5 whitespace-nowrap scroll-mx-10 rounded-full px-3 py-1.5 text-sm font-medium text-muted-foreground outline-none transition-colors duration-(--ui-duration-fast) hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring aria-selected:bg-(--site-surface) aria-selected:text-foreground aria-selected:shadow-xs";
+  "inline-flex shrink-0 cursor-pointer items-center whitespace-nowrap scroll-mx-10 rounded-full px-3.5 py-1.5 text-sm font-medium text-muted-foreground outline-none transition-colors duration-(--ui-duration-fast) hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring aria-selected:bg-(--site-surface) aria-selected:text-foreground aria-selected:shadow-xs";
 
 const SCROLL_BUTTON_CLASSES =
-  "pointer-events-auto inline-flex size-7 cursor-pointer items-center justify-center rounded-full bg-(--site-surface) text-foreground shadow-xs ring-1 ring-border/70 transition-colors duration-(--ui-duration-fast) hover:bg-(--site-canvas)";
+  "pointer-events-auto inline-flex size-7 cursor-pointer items-center justify-center rounded-full bg-(--site-surface) text-foreground shadow-sm transition-colors duration-(--ui-duration-fast) hover:bg-accent";
 
 const scrollBehavior = (): ScrollBehavior =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
 
 const revealTab = (target: HTMLElement) => {
   target.scrollIntoView({ behavior: scrollBehavior(), inline: "nearest", block: "nearest" });
-};
-
-const countFor = (id: DirectoryFilter, recentSlugs: string[]): number => {
-  if (id === "all") return DIRECTORY.length;
-  if (id === "recent") {
-    return DIRECTORY.filter(({ component }) => recentSlugs.includes(component.slug)).length;
-  }
-  return DIRECTORY.filter(({ component }) => component.category === id).length;
 };
 
 /** 追踪横向滚动容器的左右溢出状态，并提供平滑步进滚动方法 */
@@ -77,8 +69,8 @@ const ScrollEdgeButton = ({ side, onClick }: { side: "left" | "right"; onClick: 
   <div
     className={
       side === "left"
-        ? "pointer-events-none absolute inset-y-0 left-0 flex items-center bg-linear-to-r from-(--site-stage) from-55% to-transparent pr-5 pl-1"
-        : "pointer-events-none absolute inset-y-0 right-0 flex items-center bg-linear-to-l from-(--site-stage) from-55% to-transparent pr-1 pl-5"
+        ? "pointer-events-none absolute inset-y-0 left-0 flex items-center bg-linear-to-r from-(--site-tile) from-55% to-transparent pr-5 pl-1"
+        : "pointer-events-none absolute inset-y-0 right-0 flex items-center bg-linear-to-l from-(--site-tile) from-55% to-transparent pr-1 pl-5"
     }
   >
     <button
@@ -98,15 +90,16 @@ const ScrollEdgeButton = ({ side, onClick }: { side: "left" | "right"; onClick: 
 );
 
 /** 单行可横向滚动的分类胶囊：宽度不足时保持胶囊形态，边缘渐隐并提供左右滚动按钮 */
-const CategoryTabs = ({ recentSlugs }: { recentSlugs: string[] }) => {
+const CategoryTabs = () => {
   const { listRef, overflow, syncOverflow, scrollTabs } = useHorizontalScroll();
 
   return (
-    <div className="relative inline-flex max-w-full min-w-0 items-center overflow-hidden rounded-full bg-(--site-stage)">
+    <div className="relative inline-flex max-w-full min-w-0 items-center overflow-hidden rounded-full bg-(--site-tile)">
       <Tabs.List
         ref={listRef}
+        aria-label="组件分类"
         onScroll={syncOverflow}
-        className="flex flex-nowrap items-center gap-1 overflow-x-auto p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex flex-nowrap items-center gap-0.5 overflow-x-auto p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {TABS.map(({ id, label }) => (
           <Tabs.Tab
@@ -116,13 +109,7 @@ const CategoryTabs = ({ recentSlugs }: { recentSlugs: string[] }) => {
             onClick={(event) => revealTab(event.currentTarget)}
             className={TAB_CLASSES}
           >
-            <span>{label}</span>
-            <span
-              aria-hidden="true"
-              className="font-mono text-[11px] text-muted-foreground tabular-nums"
-            >
-              {countFor(id, recentSlugs)}
-            </span>
+            {label}
           </Tabs.Tab>
         ))}
       </Tabs.List>
@@ -133,22 +120,20 @@ const CategoryTabs = ({ recentSlugs }: { recentSlugs: string[] }) => {
 };
 
 const DirectoryToolbar = ({
-  recentSlugs,
   query,
   onQueryChange,
 }: {
-  recentSlugs: string[];
   query: string;
   onQueryChange: (value: string) => void;
 }) => (
   <div className="flex flex-col-reverse items-start gap-3 pb-2 xl:flex-row xl:items-center xl:justify-between xl:gap-4">
-    <CategoryTabs recentSlugs={recentSlugs} />
-    <label className="flex h-10 w-full shrink-0 items-center gap-2.5 rounded-full bg-(--site-stage) px-4 text-sm transition-colors focus-within:bg-(--site-surface) focus-within:ring-2 focus-within:ring-ring focus-within:ring-inset sm:w-80 xl:w-64 2xl:w-72">
+    <CategoryTabs />
+    <label className="flex h-10 w-full shrink-0 items-center gap-2.5 rounded-full bg-(--site-surface) px-4 text-sm shadow-2xs transition-shadow focus-within:ring-2 focus-within:ring-ring sm:w-80 xl:w-64 2xl:w-72">
       <MagnifyingGlassIcon className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
       <input
         type="search"
         aria-label="搜索组件"
-        placeholder="搜索组件或示例…"
+        placeholder="搜索组件…"
         value={query}
         onChange={(event) => onQueryChange(event.target.value)}
         className="w-full bg-transparent outline-none placeholder:text-muted-foreground"
@@ -162,20 +147,18 @@ export const SpecimenDirectory = ({ recentSlugs }: { recentSlugs: string[] }) =>
 
   return (
     <Tabs.Root value={filter} onValueChange={(value) => setFilter(value as DirectoryFilter)}>
-      <DirectoryToolbar recentSlugs={recentSlugs} query={query} onQueryChange={setQuery} />
+      <DirectoryToolbar query={query} onQueryChange={setQuery} />
       <Tabs.Panel value={filter} className="pt-6 outline-none">
         {entries.length === 0 ? (
-          <div className="rounded-[26px] bg-(--site-stage) py-20 text-center">
-            <p className="text-sm text-muted-foreground">
-              没有匹配的示例。换一个关键字，或者清空搜索框。
-            </p>
+          <div className="rounded-3xl bg-(--site-surface) py-20 text-center shadow-xs">
+            <p className="text-sm text-muted-foreground">没有匹配的示例</p>
           </div>
         ) : (
           <div
             className={
               filter === "blocks"
                 ? "grid grid-cols-1 gap-6"
-                : "grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3"
+                : "grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"
             }
           >
             {entries.map((entry, index) => (

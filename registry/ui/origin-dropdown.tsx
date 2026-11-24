@@ -70,8 +70,7 @@ export const originDropdownItemVariants = cva(
       tone: {
         default:
           "text-foreground data-highlighted:bg-accent/85 data-highlighted:text-accent-foreground dark:data-highlighted:bg-white/10",
-        signal:
-          "text-signal data-highlighted:bg-signal/12 dark:text-blue-300 dark:data-highlighted:bg-signal/20",
+        signal: "text-info data-highlighted:bg-signal/12 dark:data-highlighted:bg-signal/20",
         destructive:
           "text-destructive data-highlighted:bg-destructive/10 dark:data-highlighted:bg-destructive/18",
       },
@@ -180,7 +179,7 @@ const ActionRow = ({
             item.tone === "destructive"
               ? "text-destructive"
               : item.tone === "signal"
-                ? "text-signal dark:text-blue-300"
+                ? "text-info"
                 : "text-muted-foreground group-data-highlighted/item:text-foreground",
           )}
         >
@@ -226,7 +225,7 @@ const CheckboxRow = ({
           "inline-flex size-4 shrink-0 items-center justify-center rounded-[5px] border border-solid transition-colors duration-(--ui-duration-instant)",
           item.checked
             ? "border-signal bg-signal text-signal-foreground"
-            : "border-input/70 bg-background text-transparent dark:border-white/20 dark:bg-card",
+            : "border-input bg-card text-transparent",
         )}
       >
         <Menu.CheckboxItemIndicator className="inline-flex items-center justify-center">

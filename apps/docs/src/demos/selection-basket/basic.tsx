@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export default function SelectionBasketBasicDemo() {
   const [count, setCount] = useState(3);
-  const [status, setStatus] = useState("点击操作或增减选中数");
+  const [status, setStatus] = useState("");
 
   return (
     <div className="flex flex-col items-center gap-3">
@@ -44,7 +44,7 @@ export default function SelectionBasketBasicDemo() {
           },
         ]}
       />
-      <span className="font-mono text-xs text-muted-foreground">{status}</span>
+      {status && <span className="font-mono text-xs text-muted-foreground">{status}</span>}
     </div>
   );
 }

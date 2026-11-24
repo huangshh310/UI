@@ -5,7 +5,7 @@ import { cva } from "class-variance-authority";
 import type { AiApprovalOption, AiApprovalRisk } from "./ai-approval-card.types.js";
 
 export const approvalCardVariants = cva(
-  "flex w-full flex-col overflow-hidden rounded-xl border border-solid border-border bg-card text-card-foreground shadow-xs dark:border-white/10",
+  "flex w-full flex-col overflow-hidden rounded-2xl border border-solid border-border bg-card text-card-foreground shadow-xs",
   {
     variants: {
       variant: {
@@ -35,25 +35,20 @@ export const APPROVAL_RISK_META: Record<
   low: {
     label: "低风险",
     dotClass: "bg-emerald-600 dark:bg-emerald-400",
-    badgeClass:
-      "border-emerald-600/20 bg-emerald-500/12 text-emerald-800 dark:border-emerald-400/25 dark:bg-emerald-500/15 dark:text-emerald-200",
+    badgeClass: "bg-emerald-500/12 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-200",
     iconWrapClass:
-      "border-emerald-600/20 bg-emerald-500/10 text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-500/15 dark:text-emerald-300",
+      "bg-emerald-500/10 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300",
   },
   medium: {
     label: "需确认",
     dotClass: "bg-amber-600 dark:bg-amber-400",
-    badgeClass:
-      "border-amber-600/25 bg-amber-500/12 text-amber-900 dark:border-amber-400/25 dark:bg-amber-500/15 dark:text-amber-200",
-    iconWrapClass:
-      "border-amber-600/20 bg-amber-500/10 text-amber-800 dark:border-amber-400/20 dark:bg-amber-500/15 dark:text-amber-300",
+    badgeClass: "bg-amber-500/12 text-amber-900 dark:bg-amber-500/15 dark:text-amber-200",
+    iconWrapClass: "bg-amber-500/10 text-amber-800 dark:bg-amber-500/15 dark:text-amber-300",
   },
   high: {
     label: "高危操作",
     dotClass: "bg-rose-600 dark:bg-rose-400",
-    badgeClass:
-      "border-rose-600/25 bg-rose-500/12 text-rose-800 dark:border-rose-400/25 dark:bg-rose-500/15 dark:text-rose-200",
-    iconWrapClass:
-      "border-rose-600/20 bg-rose-500/10 text-rose-700 dark:border-rose-400/20 dark:bg-rose-500/15 dark:text-rose-300",
+    badgeClass: "bg-rose-500/12 text-rose-800 dark:bg-rose-500/15 dark:text-rose-200",
+    iconWrapClass: "bg-rose-500/10 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300",
   },
 };

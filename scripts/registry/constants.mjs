@@ -35,7 +35,17 @@ export const IMPORT_REWRITES = { "@matt-ui/utils": "@/lib/utils" };
  * 标准 shadcn 主题里没有、需要随组件一起带过去的语义色。
  * 其余颜色（primary、accent 等）沿用使用者自己的主题。
  */
-export const EXTRA_COLOR_TOKENS = ["signal", "signal-foreground", "destructive-foreground"];
+export const EXTRA_COLOR_TOKENS = [
+  "signal",
+  "signal-foreground",
+  "destructive-foreground",
+  "success",
+  "success-foreground",
+  "warning",
+  "warning-foreground",
+  "info",
+  "info-foreground",
+];
 
 /** 需精确锁版本分发的 npm 依赖（见 ADR-001，与 pnpm-workspace.yaml 的 catalog 保持一致） */
 export const PINNED_NPM_DEPENDENCIES = {

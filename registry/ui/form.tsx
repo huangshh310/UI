@@ -53,7 +53,7 @@ export const formControlVariants = cva(
     variants: {
       variant: {
         default:
-          "border-input/50 bg-background shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:border-foreground/25 hover:bg-card dark:border-white/12 dark:bg-card/85 dark:hover:border-white/22 dark:hover:bg-card",
+          "border-input bg-card shadow-2xs hover:border-foreground/22 dark:hover:border-white/22",
         filled:
           "border-transparent bg-secondary/75 hover:bg-secondary focus-visible:bg-card dark:bg-white/7 dark:hover:bg-white/11",
         ghost:
@@ -108,9 +108,9 @@ export const formRadioItemVariants = cva(
   {
     variants: {
       variant: {
-        card: "rounded-xl border-input/50 bg-background p-3.5 shadow-[0_1px_2px_rgba(0,0,0,0.03)] hover:border-foreground/22 hover:bg-accent/35 has-data-checked:border-signal/60 has-data-checked:bg-signal/6 has-data-checked:shadow-none dark:border-white/12 dark:bg-card/85 dark:hover:border-white/22 dark:has-data-checked:border-signal/65",
+        card: "rounded-xl border-input bg-card p-3.5 shadow-2xs hover:border-foreground/22 hover:bg-accent/35 has-data-checked:border-signal/60 has-data-checked:bg-signal/8 has-data-checked:shadow-none dark:hover:border-white/22 dark:has-data-checked:border-signal/65",
         compact:
-          "rounded-lg border-input/50 bg-background px-3 py-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.03)] hover:border-foreground/22 hover:bg-accent/35 has-data-checked:border-signal/60 has-data-checked:bg-signal/6 has-data-checked:shadow-none dark:border-white/12 dark:bg-card/85 dark:hover:border-white/22 dark:has-data-checked:border-signal/65",
+          "rounded-lg border-input bg-card px-3 py-2.5 shadow-2xs hover:border-foreground/22 hover:bg-accent/35 has-data-checked:border-signal/60 has-data-checked:bg-signal/8 has-data-checked:shadow-none dark:hover:border-white/22 dark:has-data-checked:border-signal/65",
         minimal:
           "rounded-lg border-transparent bg-transparent px-2 py-1.5 shadow-none hover:bg-accent/45 has-data-checked:bg-accent/55",
       },
@@ -473,7 +473,7 @@ export const FormRadioGroup = ({
 );
 
 const RADIO_CIRCLE_CLASSES = cn(
-  "mt-0.5 inline-flex size-[17px] shrink-0 items-center justify-center rounded-full border border-solid border-input/70 bg-background transition-colors duration-(--ui-duration-fast) dark:border-white/22 dark:bg-card",
+  "mt-0.5 inline-flex size-[17px] shrink-0 items-center justify-center rounded-full border border-solid border-input bg-card transition-colors duration-(--ui-duration-fast)",
   "outline-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset",
   "data-checked:border-signal data-checked:bg-signal data-checked:shadow-[inset_0_1px_0_rgba(255,255,255,0.22)]",
 );

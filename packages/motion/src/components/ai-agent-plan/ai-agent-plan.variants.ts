@@ -61,8 +61,7 @@ export const PLAN_ROW_TONE: Record<AiPlanStepStatus, string> = {
 export const PLAN_GLYPH_TONE: Record<AiPlanStepStatus, string> = {
   completed:
     "border border-solid border-emerald-500/25 bg-emerald-500/10 text-emerald-600 dark:border-emerald-400/25 dark:bg-emerald-500/15 dark:text-emerald-400",
-  running:
-    "border border-solid border-signal/35 bg-signal/10 text-signal dark:border-signal/40 dark:bg-signal/15",
+  running: "bg-signal/12 text-info dark:bg-signal/20",
   pending: "border border-solid border-border bg-card text-muted-foreground dark:border-white/15",
   failed:
     "border border-solid border-destructive/35 bg-destructive/10 text-destructive dark:border-destructive/45 dark:bg-destructive/15",

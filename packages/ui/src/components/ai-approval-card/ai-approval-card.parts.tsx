@@ -16,7 +16,7 @@ const CMD_OPERATORS = new Set(["&&", "||", "|", ";", ">", ">>"]);
 
 const classifyCmdToken = (token: string, expectCmd: boolean): string => {
   if (CMD_OPERATORS.has(token)) return "font-semibold text-emerald-400";
-  if (expectCmd) return "font-medium text-sky-300";
+  if (expectCmd) return "font-medium text-[#b49eff]";
   if (token.startsWith("-")) return "text-amber-300";
   if (/^["'].*["']$/.test(token)) return "text-emerald-300";
   return "text-zinc-100";
@@ -86,20 +86,19 @@ export const ApprovalCommandTerminal = ({
 }) => {
   const { copied, copy } = useCopyCommand(command);
   return (
-    <div className="overflow-hidden rounded-lg border border-solid border-zinc-800/90 bg-zinc-950 text-zinc-100 shadow-xs">
-      <div className="flex items-center justify-between gap-2 border-b border-solid border-zinc-800/80 bg-zinc-900/85 px-3 py-1.5">
-        <div className="flex min-w-0 items-center gap-2 font-mono text-[11px] text-zinc-300">
-          <span aria-hidden="true" className="flex shrink-0 items-center gap-1">
-            <span className="size-2 rounded-full bg-zinc-700" />
-            <span className="size-2 rounded-full bg-zinc-700" />
-            <span className="size-2 rounded-full bg-zinc-700" />
-          </span>
+    <div className="overflow-hidden rounded-xl bg-zinc-950 text-zinc-100">
+      <div className="flex items-center justify-between gap-2 px-3.5 pt-2.5 pb-1">
+        <div className="flex min-w-0 items-center gap-2 font-mono text-[11px] text-zinc-400">
           <Terminal aria-hidden="true" className="size-3 shrink-0 text-emerald-400" />
           <span className="truncate">{workingDir ?? "shell"}</span>
         </div>
         <TerminalCopyButton copied={copied} onCopy={copy} />
       </div>
-      <div className="overflow-x-auto px-3.5 py-2.5">
+      <div
+        // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+        tabIndex={0}
+        className="overflow-x-auto px-3.5 pt-1 pb-3 outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset"
+      >
         <div className="flex min-w-max items-center gap-2 font-mono text-xs leading-relaxed">
           <span aria-hidden="true" className="select-none font-semibold text-emerald-400">
             $
@@ -133,20 +132,16 @@ export const ApprovalOptionList = ({
           aria-pressed={active}
           onClick={() => onSelect(opt.id)}
           className={cn(
-            "flex w-full cursor-pointer items-start gap-2.5 rounded-lg border border-solid px-3 py-2.5 text-left transition-colors",
+            "flex w-full cursor-pointer items-start gap-2.5 rounded-xl px-3.5 py-2.5 text-left transition-colors",
             APPROVAL_FOCUS_RING,
-            active
-              ? "border-foreground/30 bg-muted/40 text-foreground shadow-2xs dark:border-white/25 dark:bg-white/[0.06]"
-              : "border-border/75 bg-transparent text-foreground hover:border-foreground/20 hover:bg-muted/25 dark:border-white/10 dark:hover:bg-white/[0.03]",
+            active ? "bg-accent text-foreground" : "bg-muted/45 text-foreground hover:bg-muted/80",
           )}
         >
           <span
             aria-hidden="true"
             className={cn(
               "mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-full border border-solid transition-colors",
-              active
-                ? "border-foreground bg-foreground text-background"
-                : "border-muted-foreground/45 bg-transparent",
+              active ? "border-primary bg-primary text-primary-foreground" : "border-input bg-card",
             )}
           >
             {active && <span className="size-1.5 rounded-full bg-current" />}

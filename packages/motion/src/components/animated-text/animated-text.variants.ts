@@ -11,7 +11,7 @@ import type {
 export const ANIMATED_TEXT_TONE_CLASSES: Record<AnimatedTextTone, string> = {
   default: "text-foreground",
   muted: "text-muted-foreground",
-  signal: "text-signal dark:text-blue-400",
+  signal: "text-info",
   emerald: "text-emerald-700 dark:text-emerald-400",
 };
 

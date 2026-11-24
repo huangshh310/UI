@@ -7,10 +7,10 @@ import { AiSurface, applySurfacePatch, type SurfacePatch, type SurfaceView } fro
 import { useState } from "react";
 
 const BTN_OUTLINE =
-  "cursor-pointer rounded-lg border border-solid border-border bg-card px-2.5 py-1 font-sans text-xs font-medium text-foreground shadow-xs transition-colors outline-none hover:bg-accent/50 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-inset disabled:cursor-not-allowed disabled:opacity-45";
+  "cursor-pointer rounded-lg bg-card px-3 py-1.5 font-sans text-xs font-medium text-foreground shadow-2xs transition-colors outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-45";
 
 const BTN_PRIMARY =
-  "cursor-pointer rounded-lg border border-solid border-primary bg-primary px-2.5 py-1 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-colors outline-none hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-45";
+  "cursor-pointer rounded-lg bg-primary px-3 py-1.5 font-sans text-xs font-medium text-primary-foreground shadow-xs transition-colors outline-none hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-45";
 
 const INITIAL_VIEW: SurfaceView = {
   main: {
@@ -109,26 +109,21 @@ export const AiSurfaceBasic = () => {
 
   return (
     <div className="flex w-full flex-col gap-3">
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-solid border-border/75 bg-muted/30 px-3.5 py-2">
-        <span className="font-mono text-xs text-muted-foreground tabular-nums">
-          {`增量帧进度：${step} / ${PATCH_STEPS.length}`}
-        </span>
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            disabled={step === 0}
-            onClick={() => {
-              setView(INITIAL_VIEW);
-              setStep(0);
-            }}
-            className={BTN_OUTLINE}
-          >
-            重置初始态
-          </button>
-          <button type="button" disabled={!streaming} onClick={advance} className={BTN_PRIMARY}>
-            {streaming ? "推送下一帧 Patch" : "流式更新已完成"}
-          </button>
-        </div>
+      <div className="flex items-center justify-end gap-2">
+        <button
+          type="button"
+          disabled={step === 0}
+          onClick={() => {
+            setView(INITIAL_VIEW);
+            setStep(0);
+          }}
+          className={BTN_OUTLINE}
+        >
+          重置初始态
+        </button>
+        <button type="button" disabled={!streaming} onClick={advance} className={BTN_PRIMARY}>
+          {streaming ? "推送下一帧 Patch" : "流式更新已完成"}
+        </button>
       </div>
       <AiSurface uischema={view} streaming={streaming} />
     </div>

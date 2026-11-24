@@ -11,7 +11,7 @@ export type ColorGamutBoundary = "srgb" | "p3" | false;
 export interface ColorPickerProps {
   /** 受控 CSS 色值字符串 */
   value?: string;
-  /** 非受控初始 CSS 色值字符串，默认 #2563eb */
+  /** 非受控初始 CSS 色值字符串，默认 #7a5ee4 */
   defaultValue?: string;
   /** 拖拽或按键过程中的实时色值回调 */
   onValueChange?: (value: string) => void;

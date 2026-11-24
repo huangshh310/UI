@@ -71,8 +71,7 @@ export const settleModalIconVariants = cva(
       tone: {
         default:
           "border-border/80 bg-secondary/70 text-foreground dark:border-white/10 dark:bg-white/7",
-        signal:
-          "border-signal/25 bg-signal/12 text-signal dark:border-signal/35 dark:bg-signal/20 dark:text-blue-200",
+        signal: "border-transparent bg-signal/12 text-info dark:bg-signal/22",
         destructive:
           "border-destructive/25 bg-destructive/10 text-destructive dark:border-destructive/35 dark:bg-destructive/18",
       },
